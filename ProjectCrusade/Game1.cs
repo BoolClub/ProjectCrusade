@@ -75,7 +75,8 @@ namespace ProjectCrusade
 			// Exit() is obsolete on iOS
 			#if !__IOS__
 			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-			    Keyboard.GetState ().IsKeyDown (Keys.Escape)) {
+				Keyboard.GetState ().IsKeyDown (Keys.Escape) || (Keyboard.GetState().IsKeyDown(Keys.Q) &&
+					Keyboard.GetState().IsKeyDown(Keys.LeftWindows))) {
 				Exit ();
 			}
 			#endif

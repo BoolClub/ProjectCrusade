@@ -1,8 +1,10 @@
 ﻿using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
+using System.Runtime.InteropServices;
 
 namespace ProjectCrusade {
 
@@ -18,6 +20,9 @@ namespace ProjectCrusade {
 		what we decided we are doing for our game. */
 		private int sanity = 100;
 
+		/* The player's position */
+		private Vector2 position;
+
 		/* The width and height of the player on the screen. */
 		private int width = 32, height = 32;
 
@@ -27,6 +32,8 @@ namespace ProjectCrusade {
 		/* The 'type' that the player is (see below). */
 		private PlayerType playertype;
 
+		/* Player's collision area. */
+		Rectangle collisionBox;
 
 
 		//CONSTRUCTOR
@@ -40,6 +47,8 @@ namespace ProjectCrusade {
 
 		public void initialize() {
 			//Do all the initializing for the player here.
+			position = new Vector2(0,0);
+			collisionBox = new Rectangle((int)position.X, (int)position.Y, width, height);
 		}
 		public void update(double time) {
 			//Do all the updating for the player here.
@@ -56,12 +65,19 @@ namespace ProjectCrusade {
 		public void setName(String name) { playerName = name; }
 		public void setType(PlayerType type) { playertype = type; }
 
+		public void setPosition(Vector2 pos) { this.position = pos; }
+		public void setPosition(float x, float y) { this.position.X = x; this.position.Y = y; }
+
 		//GETTERS
 		public int getWidth() { return width; }
 		public int getHeight() { return height; }
 		public int getSanity() { return sanity; }
 		public String getName() { return playerName; }
+
 		public PlayerType getPlayerType() { return playertype; }
+		public Vector2 getPosition() { return position; }
+
+		public Rectangle getCollisionBox() { return collisionBox; }
 
 	} //END OF 'PLAYER' CLASS
 
