@@ -13,11 +13,9 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>BuildMachineOSBuild</key>
-	<string>14E46</string>
+	<string>14C1514</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>ProjectCrusade</string>
 	<key>MonoBundleExecutable</key>
 	<string>ProjectCrusade.exe</string>
 	<key>CFBundleExecutable</key>
@@ -37,7 +35,7 @@
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>14E46</string>
+	<string>14C1514</string>
 	<key>DTSDKName</key>
 	<string>macosx10.10</string>
 	<key>DTXcode</key>
@@ -45,6 +43,6 @@
 	<key>DTXcodeBuild</key>
 	<string>6E35b</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © adeola.uthman</string>
+	<string>Copyright © christian</string>
 </dict>
 </plist>
