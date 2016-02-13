@@ -17,12 +17,12 @@ namespace ProjectCrusade
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
-
+		Texture2D testSprite;
 		public Game1 ()
 		{
 			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";	            
-			graphics.IsFullScreen = true;		
+			graphics.IsFullScreen = false;		
 		}
 
 		/// <summary>
@@ -35,6 +35,11 @@ namespace ProjectCrusade
 		{
 			// TODO: Add your initialization logic here
 			base.Initialize ();
+<<<<<<< HEAD
+=======
+			testSprite = new Texture2D (graphics.GraphicsDevice, 1, 1);
+			testSprite.SetData (new Color[]{ Color.White });
+>>>>>>> origin/master
 		}
 
 		/// <summary>
@@ -76,8 +81,10 @@ namespace ProjectCrusade
 		{
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 		
-			//TODO: Add your drawing code here
-            
+			spriteBatch.Begin ();
+			spriteBatch.Draw (testSprite, new Rectangle (100, 100, 50, 50), Color.White);
+			spriteBatch.End ();
+
 			base.Draw (gameTime);
 		}
 	}
