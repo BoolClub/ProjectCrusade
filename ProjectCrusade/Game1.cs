@@ -35,7 +35,6 @@ namespace ProjectCrusade
 		{
 			// TODO: Add your initialization logic here
 			base.Initialize ();
-				
 		}
 
 		/// <summary>
