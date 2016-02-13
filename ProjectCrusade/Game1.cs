@@ -35,11 +35,8 @@ namespace ProjectCrusade
 		{
 			// TODO: Add your initialization logic here
 			base.Initialize ();
-<<<<<<< HEAD
-=======
 			testSprite = new Texture2D (graphics.GraphicsDevice, 1, 1);
 			testSprite.SetData (new Color[]{ Color.White });
->>>>>>> origin/master
 		}
 
 		/// <summary>
