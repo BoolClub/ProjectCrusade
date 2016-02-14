@@ -77,6 +77,7 @@
     <Compile Include="GameScreenManager.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="World.cs" />
+    <Compile Include="Tiles\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -88,8 +89,10 @@
     <Folder Include="Player\" />
     <Folder Include="Screens\" />
     <Folder Include="Content\Textures\" />
+    <Folder Include="Tiles\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
+    <BundleResource Include="Content\Textures\tiles.png" />
   </ItemGroup>
 </Project>

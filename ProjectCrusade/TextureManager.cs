@@ -19,6 +19,8 @@ namespace ProjectCrusade
 
 			//Load all textures here
 			textures["circle"] = content.Load<Texture2D>("Textures/circle");
+
+			textures ["tiles"] = content.Load<Texture2D> ("Textures/tiles");
 		}
 
 		public Texture2D GetTexture(string id) { return textures[id]; }
