@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
 
 namespace ProjectCrusade
 {
@@ -17,10 +18,15 @@ namespace ProjectCrusade
 		{
 			textures = new Dictionary<string, Texture2D> ();
 
-			//Load all textures here
-			textures["circle"] = content.Load<Texture2D>("Textures/circle");
+			//Automatically load all files in Textures folder.
 
-			textures ["tiles"] = content.Load<Texture2D> ("Textures/tiles");
+			DirectoryInfo dir = new DirectoryInfo (content.RootDirectory + "/Textures");
+
+			FileInfo[] files = dir.GetFiles ("*.*");
+			foreach (FileInfo file in files) {
+				string key = Path.GetFileNameWithoutExtension (file.Name);
+				textures [key] = content.Load<Texture2D> ("Textures/" + key);
+			}
 		}
 
 		public Texture2D GetTexture(string id) { return textures[id]; }
