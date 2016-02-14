@@ -24,6 +24,8 @@ namespace ProjectCrusade
 
 		List<Vector2> things = new List<Vector2>(); //temp
 
+		GameScreenManager screenManager;
+
 		public Game1 ()
 		{
 			graphics = new GraphicsDeviceManager (this);
