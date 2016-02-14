@@ -29,6 +29,7 @@ namespace ProjectCrusade
 			Position = new Vector2 ();
 			Rotation = 0.0f;
 			Scale = 1.0f;
+			Update ();
 		}
 
 		/// <summary>

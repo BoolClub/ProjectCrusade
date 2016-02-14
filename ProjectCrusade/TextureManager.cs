@@ -15,8 +15,10 @@ namespace ProjectCrusade
 		Dictionary<string, Texture2D> textures;
 		public TextureManager (ContentManager content)
 		{
+			textures = new Dictionary<string, Texture2D> ();
+
 			//Load all textures here
-			textures["circle"] = content.Load<Texture2D>("Circle");
+			textures["circle"] = content.Load<Texture2D>("Textures/circle");
 		}
 
 		public Texture2D GetTexture(string id) { return textures[id]; }

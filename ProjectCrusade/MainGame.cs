@@ -14,19 +14,15 @@ namespace ProjectCrusade
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
-	public class Game1 : Game
+	public class MainGame : Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
-		Texture2D testSprite;
-
-		Camera camera;
-
-		List<Vector2> things = new List<Vector2>(); //temp
-
 		GameScreenManager screenManager;
+		TextureManager textureManager;
 
-		public Game1 ()
+
+		public MainGame ()
 		{
 			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";	            
@@ -34,7 +30,6 @@ namespace ProjectCrusade
 			graphics.PreferredBackBufferWidth = 1280;
 			graphics.PreferredBackBufferHeight = 720;
 			IsMouseVisible = true;
-			Window.Title = "Better than MS Paint";
 		}
 
 		/// <summary>
@@ -45,12 +40,10 @@ namespace ProjectCrusade
 		/// </summary>
 		protected override void Initialize ()
 		{
-			// TODO: Add your initialization logic here
-			base.Initialize ();
-			testSprite = new Texture2D (graphics.GraphicsDevice, 1, 1);
-			testSprite.SetData (new Color[]{ Color.White });
+			screenManager = new GameScreenManager (new MainGameScreen());
 
-			camera = new Camera ();
+
+			base.Initialize ();
 
 		}
 
@@ -63,7 +56,9 @@ namespace ProjectCrusade
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
-			//TODO: use this.Content to load your game content here 
+			//Load all textures
+			textureManager = new TextureManager (Content);
+
 		}
 
 		/// <summary>
@@ -83,14 +78,7 @@ namespace ProjectCrusade
 			}
 			#endif
 
-			camera.Rotation = 1.0f*(float)Math.Sin((float)gameTime.TotalGameTime.TotalMilliseconds/1000);
-			camera.Scale += 0.001f;
-
-			if (Mouse.GetState ().LeftButton == ButtonState.Pressed)
-				things.Add (Vector2.Transform(new Vector2 (Mouse.GetState ().X, Mouse.GetState ().Y),camera.InverseMatrix));
-
-			camera.Update ();
-
+			screenManager.Update (gameTime);
 
 
 			base.Update (gameTime);
@@ -104,13 +92,7 @@ namespace ProjectCrusade
 		{
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 		
-			spriteBatch.Begin (SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, camera.TransformMatrix);
-			spriteBatch.Draw (testSprite, new Rectangle (100, 100, 50, 50), Color.White);
-
-			foreach (Vector2 thing in things)
-				spriteBatch.Draw (testSprite, thing, Color.White);
-
-			spriteBatch.End ();
+			screenManager.Draw (spriteBatch, textureManager);
 
 			base.Draw (gameTime);
 		}

@@ -12,8 +12,10 @@ namespace ProjectCrusade
 	{
 		Stack<GameScreen> gameScreens;
 
-		public GameScreenManager ()
+		public GameScreenManager (GameScreen initialGameScreen)
 		{
+			gameScreens = new Stack<GameScreen> ();
+			PushGameScreen (initialGameScreen);
 		}
 
 		public void PushGameScreen(GameScreen screen) {
@@ -29,6 +31,11 @@ namespace ProjectCrusade
 			gameScreens.Peek ().Update (gameTime);
 		}
 
+		/// <summary>
+		/// Draw all screens. Note that each screen needs to call SpriteBatch.Begin separately, because different matrix transformations can be applied to each screen.
+		/// </summary>
+		/// <param name="spriteBatch">Sprite batch.</param>
+		/// <param name="textureManager">Texture manager.</param>
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
 		{
 			foreach (GameScreen screen in gameScreens)
