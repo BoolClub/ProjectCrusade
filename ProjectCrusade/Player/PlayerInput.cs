@@ -13,74 +13,51 @@ namespace ProjectCrusade
 	* static method in the update method.
 	*/
 
-	public class PlayerInput {
+	public static class PlayerInput {
 		/*
 		 * Booleans for checking which direction the player is moving in. Also an extra boolean
 		 * just for checking if the player is moving in general, which we may or may not use later.
 		 */
-		public static bool Up { get; private set; }
-		public static bool Down { get; private set; }
-		public static bool Left { get; private set; }
-		public static bool Right { get; private set; }
 		public static bool Moving { get; private set; }
 
-
-		public PlayerInput () {}
+		public static Player player;
 
 
 
 		//PLAYER INPUT
-		public static void CheckInput() { 
-			//Up
-			if (Keyboard.GetState ().IsKeyDown (Keys.Up)) {
-				Up = true;
-				Down = false;
-				Left = false;
-				Right = false;
+		public static void CheckInput(GameTime time) {
+			KeyboardState keyState = Keyboard.GetState ();
+
+			float calcDisp = (float)time.ElapsedGameTime.TotalSeconds * player.Speed;
+
+			Vector2 disp = Vector2.Zero;
+
+
+			//Move player.
+			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown(Keys.Right))
+				disp += new Vector2 (calcDisp, 0);
+				Moving = true;	
+			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown(Keys.Left))
+				disp += new Vector2 (-calcDisp, 0);
 				Moving = true;
-				Console.WriteLine ("Moving Up");
+			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown(Keys.Down))
+				disp += new Vector2 (0, calcDisp);
+				Moving = true;
+			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown(Keys.Up))
+				disp += new Vector2 (0, -calcDisp);
+				Moving = true;
+
+
+			//Normalize displacement so that you travel the same speed diagonally. 
+			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
+				disp /= (float)Math.Sqrt (2.0);
+			}
+			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Down) && keyState.IsKeyDown (Keys.Left)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
+				disp /= (float)Math.Sqrt (2.0);
 			}
 
-			//Down
-			if (Keyboard.GetState ().IsKeyDown (Keys.Down)) {
-				Up = false;
-				Down = true;
-				Left = false;
-				Right = false;
-				Moving = true;
-				Console.WriteLine ("Moving Down");
-			}
-
-			//Left
-			if (Keyboard.GetState ().IsKeyDown (Keys.Left)) {
-				Up = false;
-				Down = false;
-				Left = true;
-				Right = false;
-				Moving = true;
-				Console.WriteLine ("Moving Left");
-			}
-
-			//Right
-			if (Keyboard.GetState ().IsKeyDown (Keys.Right)) {
-				Up = false;
-				Down = false;
-				Left = false;
-				Right = true;
-				Moving = true;
-				Console.WriteLine ("Moving Right");
-			}
-
-			//Idle
-			if ( !(Keyboard.GetState ().IsKeyDown (Keys.Right)) && !(Keyboard.GetState ().IsKeyDown (Keys.Left)
-				&& !(Keyboard.GetState ().IsKeyDown (Keys.Up)) && !(Keyboard.GetState ().IsKeyDown (Keys.Down))) ) {
-				Up = false;
-				Down = false;
-				Left = false;
-				Right = false;
-				Moving = false;
-				Console.WriteLine ("Idle");
-			}
+			//This method was actually added to the Spite class, not the Player class.
+			player.addToPosition(disp);
 		}
 
 	} //END OF PLAYERINPUT CLASS

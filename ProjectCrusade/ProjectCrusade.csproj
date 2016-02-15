@@ -80,7 +80,11 @@
     <Compile Include="Misc\Camera.cs" />
     <Compile Include="Misc\IUD.cs" />
     <Compile Include="Inventory\InventorySlot.cs" />
-    <Compile Include="Inventory\Item.cs" />
+    <Compile Include="Inventory\Inventory.cs" />
+    <Compile Include="Items\Apple.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\FoodItem.cs" />
+    <Compile Include="Items\Coin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -96,6 +100,7 @@
     <Folder Include="Managers\" />
     <Folder Include="Misc\" />
     <Folder Include="Inventory\" />
+    <Folder Include="Items\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />

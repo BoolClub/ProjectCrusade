@@ -40,6 +40,11 @@ namespace ProjectCrusade
 		{
 		}
 
+
+		public void addToPosition(Vector2 vec) {
+			Position += vec;
+		}
+
 		abstract public void Initialize ();
 
 		abstract public void Update (GameTime gameTime);

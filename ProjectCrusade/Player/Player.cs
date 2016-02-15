@@ -57,38 +57,13 @@ namespace ProjectCrusade {
 		public override void Initialize() {
 			//Do all the initializing for the player here.
 			Position = new Vector2(0,0);
+			PlayerInput.player = this;
 		}
 		public override void Update(GameTime time) {
 			//Do all the updating for the player here.
 
-<<<<<<< HEAD
 			//Checking for player input.
-			PlayerInput.CheckInput();
-=======
-			KeyboardState keyState = Keyboard.GetState ();
-
-			float calcDisp = (float)time.ElapsedGameTime.TotalSeconds * Speed;
-
-			Vector2 disp = Vector2.Zero;
-
-
-			//Move player.
-			if (keyState.IsKeyDown (Keys.D))
-				disp += new Vector2 (calcDisp, 0);
-			if (keyState.IsKeyDown (Keys.A))
-				disp += new Vector2 (-calcDisp, 0);
-			if (keyState.IsKeyDown (Keys.S))
-				disp += new Vector2 (0, calcDisp);
-			if (keyState.IsKeyDown (Keys.W))
-				disp += new Vector2 (0, -calcDisp);
-
-
-			//Normalize displacement so that you travel the same speed diagonally. 
-			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
-				disp /= (float)Math.Sqrt (2.0);
-			}
-			Position += disp;
->>>>>>> origin/master
+			PlayerInput.CheckInput(time);
 
 		}
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
