@@ -30,6 +30,9 @@ namespace ProjectCrusade {
 		/// <value>The type of the player.</value>
 		public PlayerType PlayerType { get; private set; }
 
+
+
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectCrusade.Player"/> class.
 		/// </summary>
@@ -49,6 +52,10 @@ namespace ProjectCrusade {
 		}
 		public override void Update(GameTime time) {
 			//Do all the updating for the player here.
+
+			//Checking for player input.
+			PlayerInput.CheckInput();
+
 		}
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
 			//Do all the drawing for the player here.
@@ -63,6 +70,7 @@ namespace ProjectCrusade {
 		//SETTERS
 		public void Damage(int amount) { Sanity -= amount; }
 		public void Heal(int amount) { Sanity += amount; }
+
 
 	} //END OF 'PLAYER' CLASS
 

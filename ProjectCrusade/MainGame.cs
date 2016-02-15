@@ -42,7 +42,6 @@ namespace ProjectCrusade
 		{
 			screenManager = new GameScreenManager (new MainGameScreen());
 
-
 			base.Initialize ();
 
 		}
@@ -79,7 +78,6 @@ namespace ProjectCrusade
 			#endif
 
 			screenManager.Update (gameTime);
-
 
 			base.Update (gameTime);
 		}
