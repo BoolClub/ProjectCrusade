@@ -23,6 +23,8 @@ namespace ProjectCrusade
 		}
 		public override void Update (GameTime gameTime)
 		{
+			world.Update (gameTime);
+			camera.Position = world.GetPlayerPosition () - new Vector2(MainGame.WINDOW_WIDTH / 2, MainGame.WINDOW_HEIGHT / 2);
 			camera.Update ();
 
 			//Update the player
@@ -32,7 +34,7 @@ namespace ProjectCrusade
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager)
 		{
 
-			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager);
 

@@ -21,8 +21,11 @@ namespace ProjectCrusade
 
 		Tile[,] tiles;
 
+		Player player;
+
 		public World (int width, int height)
 		{
+			player = new Player ("test", PlayerType.Wizard);
 			Width = width;
 			Height = height;
 
@@ -35,7 +38,7 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime)
 		{
-
+			player.Update (gameTime);
 		}
 
 		Rectangle getTileSourceRect(Tile t)
@@ -57,9 +60,14 @@ namespace ProjectCrusade
 					spriteBatch.Draw (textureManager.GetTexture ("tiles"), null, new Rectangle(i*TILE_WIDTH, j*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH),getTileSourceRect(tiles[i,j]), null, 0, null, Color.White, SpriteEffects.None, 0);
 				}
 			}
+			player.Draw (spriteBatch, textureManager);
 		}
 		//TODO: Add procedural world generation
 
+
+		public Vector2 GetPlayerPosition() {
+			return player.Position;
+		}
 	}
 }
 
