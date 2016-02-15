@@ -14,10 +14,7 @@ namespace ProjectCrusade
 	*/
 
 	public static class PlayerInput {
-		/*
-		 * Booleans for checking which direction the player is moving in. Also an extra boolean
-		 * just for checking if the player is moving in general, which we may or may not use later.
-		 */
+		
 		public static bool Moving { get; private set; }
 
 		public static Player player;

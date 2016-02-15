@@ -1,6 +1,11 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/15/2016 2:57:54 AM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/15/2016 10:56:23 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Player/PlayerInput.cs">
+    <Files>
+      <File FileName="ProjectCrusade/Player/Player.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Player/PlayerInput.cs" Line="17" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -11,13 +11,12 @@ namespace ProjectCrusade
 		public override string ItemInfo() {
 			return CurrentStackSize + " coin(s).";
 		}
-
-
-
-
 	} //END OF COIN CLASS
 
 
 
-}//END OF NAMESPACE
+
+
+
+}
 
