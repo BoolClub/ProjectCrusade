@@ -16,6 +16,10 @@ namespace ProjectCrusade
 	/// </summary>
 	public class MainGame : Game
 	{
+
+		public const int WINDOW_WIDTH = 1280;
+		public const int WINDOW_HEIGHT = 720;
+
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		GameScreenManager screenManager;
@@ -27,8 +31,8 @@ namespace ProjectCrusade
 			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";	            
 			graphics.IsFullScreen = false;		
-			graphics.PreferredBackBufferWidth = 1280;
-			graphics.PreferredBackBufferHeight = 720;
+			graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
+			graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
 			IsMouseVisible = true;
 		}
 

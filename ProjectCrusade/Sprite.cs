@@ -13,19 +13,19 @@ namespace ProjectCrusade
 		/// Gets or sets the position.
 		/// </summary>
 		/// <value>The position of the sprite in the world.</value>
-		public Vector2 Position { get; set; }
+		public Vector2 Position { get; protected set; }
 
 
 		/// <summary>
 		/// Gets the width.
 		/// </summary>
 		/// <value>The width of the player on the screen. </value>
-		public int Width { get; private set; }
+		public int Width { get; protected set; }
 		/// <summary>
 		/// Gets the height.
 		/// </summary>
 		/// <value>The height of the player on the screen.</value>
-		public int Height { get; private set; }
+		public int Height { get; protected set; }
 
 
 		/// <summary>
