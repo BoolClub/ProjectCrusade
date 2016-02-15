@@ -13,6 +13,11 @@ namespace ProjectCrusade
 		public float Rotation {get; set;}
 		public float Scale { get; set; }
 
+		//Used to create camera perspective.
+		public float FieldOfView { get; set; }
+		public float Height { get; set; }
+
+
 		/// <summary>
 		/// Passed into SpriteBatch.Begin to transform all drawn sprites from world space to screen space.
 		/// </summary>
@@ -29,6 +34,8 @@ namespace ProjectCrusade
 			Position = new Vector2 ();
 			Rotation = 0.0f;
 			Scale = 1.0f;
+			Height = -0.5f;
+			FieldOfView = (float)Math.PI / 3 * 2;
 			Update ();
 		}
 
@@ -36,10 +43,11 @@ namespace ProjectCrusade
 		/// Updates transformation matrices.
 		/// </summary>
 		public void Update() {
-
-			TransformMatrix = Matrix.CreateRotationZ (Rotation) *
-				Matrix.CreateScale (new Vector3 (Scale, Scale, 1.0f)) *
-				Matrix.CreateTranslation (-Position.X, -Position.Y, 0);
+			//TODO: implement proper perspective
+			TransformMatrix = 
+				Matrix.CreateRotationZ (Rotation) *
+			Matrix.CreateScale (new Vector3 (Scale, Scale, 1.0f)) *
+			Matrix.CreateTranslation (-Position.X, -Position.Y, Height);
 			InverseMatrix = Matrix.Invert (TransformMatrix);
 		}
 

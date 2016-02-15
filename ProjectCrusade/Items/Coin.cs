@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 namespace ProjectCrusade
 {
@@ -6,10 +6,9 @@ namespace ProjectCrusade
 	{
 		public Coin () {
 			Stackable = true;
-			ItemID = 2;
 		}
 
-		public override String ItemInfo() {
+		public override string ItemInfo() {
 			return CurrentStackSize + " coin(s).";
 		}
 

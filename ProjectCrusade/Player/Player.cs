@@ -30,7 +30,7 @@ namespace ProjectCrusade {
 		/// <value>The type of the player.</value>
 		public PlayerType PlayerType { get; private set; }
 
-
+		public Inventory Inventory;
 
 
 		/// <summary>

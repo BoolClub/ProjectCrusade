@@ -34,25 +34,29 @@ namespace ProjectCrusade
 
 
 			//Move player.
-			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown(Keys.Right))
+			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
 				disp += new Vector2 (calcDisp, 0);
 				Moving = true;	
-			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown(Keys.Left))
+			}
+			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown (Keys.Left)) {
 				disp += new Vector2 (-calcDisp, 0);
 				Moving = true;
-			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown(Keys.Down))
+			}
+			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown (Keys.Down)) {
 				disp += new Vector2 (0, calcDisp);
 				Moving = true;
-			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown(Keys.Up))
+			}
+			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown (Keys.Up)) {
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
+			}
 
 
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
 				disp /= (float)Math.Sqrt (2.0);
 			}
-			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Down) && keyState.IsKeyDown (Keys.Left)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
+			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Down)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
 				disp /= (float)Math.Sqrt (2.0);
 			}
 

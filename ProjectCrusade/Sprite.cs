@@ -13,7 +13,7 @@ namespace ProjectCrusade
 		/// Gets or sets the position.
 		/// </summary>
 		/// <value>The position of the sprite in the world.</value>
-		public Vector2 Position { get; protected set; }
+		public Vector2 Position { get; set; }
 
 
 		/// <summary>

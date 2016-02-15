@@ -6,6 +6,7 @@ namespace ProjectCrusade
 	{
 		Air = 0,
 		Floor = 1,
+		Wall = 2,
 	}
 	public struct Tile
 	{

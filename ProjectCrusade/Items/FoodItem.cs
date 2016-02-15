@@ -12,7 +12,7 @@ namespace ProjectCrusade
 
 		//A method for consuming the food item.
 		public abstract void Consume();
-	
+		
 	
 	} //END OF FOODITEM CLASS
 

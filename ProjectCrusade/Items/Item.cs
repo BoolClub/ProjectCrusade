@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace ProjectCrusade
 {
 	/// <summary>
@@ -9,13 +8,10 @@ namespace ProjectCrusade
 	public abstract class Item {
 		
 		//This boolean determines whether or not the item can be stacked.
-		public bool Stackable;
-
-		//This integer represents the item's ID. Each ItemType has it's own ID.
-		public int ItemID { get; set; }
+		public static bool Stackable;
 
 		//The current stack size of a stackable item.
-		public int CurrentStackSize { get; set; }
+		public int CurrentStackSize { get; protected set; }
 
 		//The maximum stack that a stackable item can hold.
 		protected const int MaxStackSize = 64;
@@ -25,7 +21,7 @@ namespace ProjectCrusade
 		public Item() {}
 
 		//Returns information about the item. This can be displayed on the screen so the player knows what each item does.
-		public abstract String ItemInfo ();
+		public abstract string ItemInfo ();
 
 		//Used for when the item you want to stack only has a stack of one.
 		public void addToStack() {

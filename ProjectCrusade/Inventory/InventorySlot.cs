@@ -11,7 +11,7 @@ namespace ProjectCrusade
 	public class InventorySlot
 	{
 		public Item Item { get; set; }
-		public bool HasItem;
+		public bool HasItem { get { return Item == null; } }
 
 
 		public InventorySlot () {
@@ -23,19 +23,10 @@ namespace ProjectCrusade
 		}
 	
 		public void Update(GameTime time) {
-			checkHasItem ();
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
 
-		}
-
-
-
-	
-		//Checks if this inventory slot currently has an item.
-		private void checkHasItem() {
-			HasItem = (Item == null);
 		}
 
 
@@ -49,7 +40,7 @@ namespace ProjectCrusade
 			//However, if there is an item...
 			} else {
 				//If they are the same item...
-				if (Item.ItemID == itm.ItemID) {
+				if (Item.GetType()==itm.GetType()) {
 					
 					//If the item is stackable, then add to the stack.
 					if (Item.Stackable == true) {
