@@ -6,6 +6,7 @@ namespace ProjectCrusade
 	{
 		public Coin () {
 			Stackable = true;
+			Type = ItemType.Coin;
 		}
 
 		public override string ItemInfo() {

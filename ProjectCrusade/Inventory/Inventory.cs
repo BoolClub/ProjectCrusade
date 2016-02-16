@@ -65,8 +65,9 @@ namespace ProjectCrusade
 
 			if (numItems == Rows * Columns) {
 				IsFull = true;
-			} else
+			} else {
 				IsFull = false;
+			}
 		}
 
 

@@ -16,20 +16,20 @@ namespace ProjectCrusade
 		{
 			camera = new Camera ();
 			world = new World (16, 16);
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
+//=======
+//>>>>>>> Stashed changes
 		}
 		public override void Update (GameTime gameTime)
 		{
 			world.Update (gameTime);
 			camera.Position = world.GetPlayerPosition () - new Vector2(MainGame.WINDOW_WIDTH / 2, MainGame.WINDOW_HEIGHT / 2);
 			camera.Update ();
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager)
@@ -39,11 +39,11 @@ namespace ProjectCrusade
 
 			world.Draw (spriteBatch, textureManager);
 
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 			spriteBatch.Draw (textureManager.GetTexture ("circle"), new Rectangle(100,100,100,100), Color.White);
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 			spriteBatch.End ();
 
 		}

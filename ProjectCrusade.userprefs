@@ -1,9 +1,9 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/15/2016 10:56:23 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/16/2016 10:16:10 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Player/PlayerInput.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Inventory/InventorySlot.cs">
     <Files>
-      <File FileName="ProjectCrusade/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Player/PlayerInput.cs" Line="17" Column="3" />
+      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="42" Column="17" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="46" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

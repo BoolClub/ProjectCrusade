@@ -5,7 +5,7 @@ namespace ProjectCrusade
 	public class Apple : FoodItem
 	{
 		public Apple () {
-			ItemID = 1;
+			Type = ItemType.Apple;
 		}
 
 		public override void Consume() {
@@ -24,7 +24,7 @@ namespace ProjectCrusade
 	public class Water : FoodItem
 	{
 		public Water () {
-			ItemID = 3;
+			Type = ItemType.Water;
 		}
 
 		public override void Consume() {

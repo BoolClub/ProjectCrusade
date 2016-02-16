@@ -8,8 +8,8 @@ namespace ProjectCrusade
 			//Cannot stack a sword
 			Stackable = false;
 
-			//Item's id
-			ItemID = 4;
+			//Item's type
+			Type = ItemType.Wooden_Sword;
 
 			//A wooden sword is not degradable
 			Degradable = false;
@@ -35,7 +35,7 @@ namespace ProjectCrusade
 		public StarterArrow () {
 			//Arrows can be stacked.
 			Stackable = true;
-			ItemID = 5;
+			Type = ItemType.Starter_Arrow;
 			Degradable = false;
 			Useable = true;
 		}

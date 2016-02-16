@@ -40,12 +40,12 @@ namespace ProjectCrusade
 			//However, if there is an item...
 			} else {
 				//If they are the same item...
-				if (Item.GetType()==itm.GetType()) {
+				if (Item.Type == itm.Type) {
 					
 					//If the item is stackable, then add to the stack.
-					if (Item.Stackable == true) {
+					if (this.Item.Stackable == true) {
 						
-						Item.addToStack (itm.CurrentStackSize);
+						this.Item.addToStack (itm.CurrentStackSize);
 
 					//If it is not stackable, write this message.
 					} else {

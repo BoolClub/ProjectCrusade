@@ -6,7 +6,10 @@ namespace ProjectCrusade
 	/// </summary>
 	/// <value>An Item.</value>
 	public abstract class Item {
-		
+
+		//An enum for the type of item. Each item has a different type.
+		public ItemType Type { get; protected set; } 
+
 		//This boolean determines whether or not the item can be stacked.
 		public static bool Stackable;
 
@@ -37,5 +40,14 @@ namespace ProjectCrusade
 		}
 	}
 
+
+
+	public enum ItemType {
+		Apple,
+		Water,
+		Coin,
+		Wooden_Sword,
+		Starter_Arrow,
+	}
 }
 
