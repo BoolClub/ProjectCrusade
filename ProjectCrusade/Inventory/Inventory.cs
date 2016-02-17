@@ -19,7 +19,7 @@ namespace ProjectCrusade
 		InventorySlot[,] slots;
 
 		//The slot that is currently being selected. Used for performing actions on inventory items.
-		public static InventorySlot selectedSlot;
+		public InventorySlot selectedSlot;
 
 
 		//The number of items in the inventory (see 'checkInventoryFull' method below).
@@ -50,7 +50,13 @@ namespace ProjectCrusade
 			for (int x = 0; x < Columns; x++) {
 				for (int y = 0; y < Rows; y++) {
 
-					Rectangle r = new Rectangle ((int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x, (int)screenPosition.Y+(Item.SpriteWidth + SlotSpacing) * y, Item.SpriteWidth, Item.SpriteWidth);
+					//Screen rectangle
+					Rectangle r = 
+						new Rectangle (
+							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x,
+							(int)screenPosition.Y+(Item.SpriteWidth + SlotSpacing) * y, 
+							Item.SpriteWidth, 
+							Item.SpriteWidth);
 
 					slots [x,y] = new InventorySlot (r);
 				}
@@ -63,24 +69,13 @@ namespace ProjectCrusade
 
 		}
 
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
+		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager) {}
+
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
 			for (int i = 0; i < Columns; i++)
 				for (int j = 0; j < Rows; j++) {
 					
-					if (selectedSlot != slots[i, j]) {
-						int disp = SlotSpacing + Item.SpriteWidth;
-
-						int x = (int)screenPosition.X + disp * i;
-						int y = (int)screenPosition.Y + disp * j;
-
-						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
-
-						spriteBatch.Draw (textureManager.WhitePixel, r, Color.White * 0.5f);
-						if (slots [i, j].HasItem)
-							spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
-					
-					} else {
 						
 						int disp = SlotSpacing + Item.SpriteWidth;
 
@@ -89,9 +84,15 @@ namespace ProjectCrusade
 
 						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
-						spriteBatch.Draw (textureManager.WhitePixel, r, Color.Red * 0.5f);
-						if (slots[i,j].HasItem)
-							spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+					spriteBatch.Draw (textureManager.WhitePixel, r, ((slots[i,j]==selectedSlot) ? Color.Red : Color.White) * 0.5f);
+						if (slots [i, j].HasItem) {
+						spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, Color.White, SpriteEffects.None, 0);
+							spriteBatch.DrawString (
+								fontManager.GetFont ("Arial"),
+								String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+								new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+								Color.Black);
+						
 					}
 				}
 

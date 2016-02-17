@@ -58,7 +58,7 @@ namespace ProjectCrusade
 			//Render inventory (do not transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
-			world.PlayerInventory.Draw (spriteBatch, textureManager);
+			world.PlayerInventory.Draw (spriteBatch, textureManager, fontManager);
 
 			spriteBatch.End ();
 		}
