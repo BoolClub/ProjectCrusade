@@ -18,6 +18,10 @@ namespace ProjectCrusade
 		//The slots
 		InventorySlot[,] slots;
 
+		//The slot that is currently being selected. Used for performing actions on inventory items.
+		public static InventorySlot selectedSlot;
+
+
 		//The number of items in the inventory (see 'checkInventoryFull' method below).
 		private int numItems = 0;
 
@@ -45,7 +49,7 @@ namespace ProjectCrusade
 		public void Initialize() {
 			for (int x = 0; x < Columns; x++) {
 				for (int y = 0; y < Rows; y++) {
-					slots [x,y] = new InventorySlot ();
+					slots [x,y] = new InventorySlot (x,y);
 
 				}
 			}
@@ -53,22 +57,38 @@ namespace ProjectCrusade
 
 		public void Update(GameTime time) {
 			checkInventoryFull ();
+			checkInventoryItemSelected ();
+
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
 
 			for (int i = 0; i < Columns; i++)
 				for (int j = 0; j < Rows; j++) {
-					int disp = SlotSpacing + Item.SpriteWidth;
+					
+					if (slots [i, j] != selectedSlot) {
+						int disp = SlotSpacing + Item.SpriteWidth;
 
-					int x = (int)screenPosition.X + disp * i;
-					int y = (int)screenPosition.Y + disp * j;
+						int x = (int)screenPosition.X + disp * i;
+						int y = (int)screenPosition.Y + disp * j;
 
-					Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
-					spriteBatch.Draw (textureManager.WhitePixel, r, Color.White * 0.5f);
-					if (slots[i,j].HasItem)
-						spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+						spriteBatch.Draw (textureManager.WhitePixel, r, Color.White * 0.5f);
+						if (slots [i, j].HasItem)
+							spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+					} else {
+						int disp = SlotSpacing + Item.SpriteWidth;
+
+						int x = (int)screenPosition.X + disp * i;
+						int y = (int)screenPosition.Y + disp * j;
+
+						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+
+						spriteBatch.Draw (textureManager.WhitePixel, r, Color.Red * 0.5f);
+						if (slots[i,j].HasItem)
+							spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+					}
 				}
 
 		}
@@ -110,6 +130,21 @@ namespace ProjectCrusade
 					}
 				}
 			return true;
+		}
+
+
+		/// <summary>
+		/// Checks if an item in the inventory is going to be selected.
+		/// </summary>
+		/// <value> SelectedSlot </value>
+		private void checkInventoryItemSelected() {
+			for (int j = 0; j < Rows; j++) {
+				for (int i = 0; i < Columns; i++) {
+					if (slots [i, j].CollisionBox ().Contains (Mouse.GetState ().Position) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+						selectedSlot = slots [i, j];
+					}
+				}
+			}
 		}
 
 

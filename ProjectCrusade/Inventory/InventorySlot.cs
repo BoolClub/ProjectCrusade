@@ -13,7 +13,11 @@ namespace ProjectCrusade
 		public bool HasItem { get { return Item != null; } }
 
 
-		public InventorySlot () {
+		public Vector2 Position;
+
+
+		public InventorySlot (int x, int y) {
+			Position = new Vector2 (x,y);
 			Item = null;
 		}
 
@@ -25,7 +29,7 @@ namespace ProjectCrusade
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
-
+			
 		}
 
 
@@ -67,7 +71,9 @@ namespace ProjectCrusade
 		}
 
 
-
+		public Rectangle CollisionBox() {
+			return new Rectangle ((int)Position.X*Item.SpriteWidth,  (int)Position.Y*Item.SpriteWidth, Item.SpriteWidth, Item.SpriteWidth);
+		}
 	
 	
 	} //END OF INVENTORYSLOT CLASS

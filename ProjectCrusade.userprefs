@@ -1,43 +1,11 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/17/2016 12:17:33 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/17/2016 12:26:32 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/MainGame.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Inventory/Inventory.cs">
     <Files>
-      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/Item.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/Food.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/FoodItem.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Tiles/Tile.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World.cs" Line="111" Column="7" />
-      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/Weapons.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/SwordItem.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/ArrowItem.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/WeaponItem.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Items/Misc.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/TextureManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/MainGame.cs" Line="67" Column="29" />
-      <File FileName="ProjectCrusade/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/GameScreenManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/FontManager.cs" Line="18" Column="68" />
-      <File FileName="ProjectCrusade/Content/Content.mgcb" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Content/Fonts/Arial.spritefont" Line="24" Column="49" />
+      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="143" Column="130" />
+      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="75" Column="76" />
+      <File FileName="ProjectCrusade/Player/Player.cs" Line="48" Column="34" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ProjectCrusade" expanded="True">
-            <Node name="ProjectCrusade" expanded="True">
-              <Node name="Content" expanded="True">
-                <Node name="Fonts" expanded="True" />
-              </Node>
-              <Node name="Managers" expanded="True" />
-              <Node name="MainGame.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

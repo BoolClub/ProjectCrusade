@@ -46,7 +46,7 @@ namespace ProjectCrusade
 			game.Exit ();
 			}
 			catch(NullReferenceException ex) {
-
+				Console.WriteLine(ex.StackTrace);
 			}
 		}
 

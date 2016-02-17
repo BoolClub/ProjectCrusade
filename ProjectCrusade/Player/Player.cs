@@ -45,6 +45,7 @@ namespace ProjectCrusade {
 			Speed = 200;
 			Inventory = new Inventory (4, 8);
 			Inventory.AddItem (new Apple ());
+			Inventory.AddItem (new Apple());
 		}
 
 		/// <summary>
