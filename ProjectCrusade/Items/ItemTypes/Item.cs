@@ -55,13 +55,11 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Activated when the player, e.g., left clicks
 		/// </summary>
-		/// <param name="player">Player.</param>
-		public abstract void PrimaryUse(Player player); 
+		public virtual void PrimaryUse(Player player) { }
 		/// <summary>
 		/// Optional use for when the player, e.g., right clicks
 		/// </summary>
-		/// <param name="player">Player.</param>
-		public abstract void SecondaryUse(Player player);
+		public virtual void SecondaryUse(Player player) { }
 	}
 
 

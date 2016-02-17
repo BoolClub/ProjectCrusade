@@ -16,10 +16,6 @@ namespace ProjectCrusade
 		{
 			player.Heal (HealValue);
 		}
-		public override void SecondaryUse (Player player)
-		{
-			throw new NotImplementedException ();
-		}
 		
 	
 	} //END OF FOODITEM CLASS
