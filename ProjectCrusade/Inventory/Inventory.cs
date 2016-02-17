@@ -53,8 +53,8 @@ namespace ProjectCrusade
 					//Screen rectangle
 					Rectangle r = 
 						new Rectangle (
-							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x,
-							(int)screenPosition.Y+(Item.SpriteWidth + SlotSpacing) * y, 
+							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x + SlotSpacing,
+							(int)screenPosition.Y+ (Item.SpriteWidth + SlotSpacing) * y, 
 							Item.SpriteWidth, 
 							Item.SpriteWidth);
 
