@@ -1,12 +1,6 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/17/2016 7:34:39 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/17/2016 11:14:45 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Inventory/Inventory.cs">
-    <Files>
-      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="94" Column="3" />
-      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

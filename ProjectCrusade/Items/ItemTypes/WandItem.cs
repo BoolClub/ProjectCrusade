@@ -2,12 +2,12 @@
 
 namespace ProjectCrusade
 {
-	public abstract class ArrowItem : WeaponItem
+	public abstract class WandItem : WeaponItem
 	{
-		public ArrowItem ()
+		public WandItem ()
 		{
 			//Can stack arrows
-			Stackable = true;
+			Stackable = false;
 		}
 
 		//All arrows have same behavior

@@ -28,7 +28,7 @@ namespace ProjectCrusade {
 		/// Gets the type of the player.
 		/// </summary>
 		/// <value>The type of the player.</value>
-		public PlayerType PlayerType { get; private set; }
+		public static PlayerType PlayerType { get; private set; }
 
 		public Inventory Inventory;
 
@@ -39,7 +39,6 @@ namespace ProjectCrusade {
 		public Player (String name, PlayerType type) {
 			PlayerName = name;
 			PlayerType = type;
-			Initialize ();
 			Width = 32;
 			Height = 32;
 			Speed = 200;
@@ -49,6 +48,11 @@ namespace ProjectCrusade {
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
+			Inventory.AddItem (new WoodenSword ());
+			Inventory.AddItem (new StarterArrow ());
+			Inventory.AddItem (new MagicWand ());
+
+			Initialize ();
 		}
 
 		/// <summary>

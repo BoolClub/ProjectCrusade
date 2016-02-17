@@ -89,6 +89,7 @@
     <Compile Include="GUI\Menu.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="World\Tile.cs" />
+    <Compile Include="Items\ItemTypes\WandItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

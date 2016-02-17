@@ -72,6 +72,7 @@ namespace ProjectCrusade
 		Coin		 	= 2,
 		WoodenSword 	= 3,
 		StarterArrow	= 4,
+		MagicWand		= 5,
 	}
 }
 

@@ -68,6 +68,11 @@ namespace ProjectCrusade
 			checkInventoryFull ();
 			checkInventoryItemSelected ();
 
+			if (selectedSlot != null) {
+				if (Keyboard.GetState ().IsKeyDown (Keys.J)) {
+					Console.WriteLine (selectedSlot.Item.ItemInfo ());
+				}
+			}
 		}
 
 		//TODO: remove this method
@@ -187,7 +192,7 @@ namespace ProjectCrusade
 							
 						//If you then click on another slot that is not the selected slot...
 						if (selectedSlot != slots [i, j] && selectedSlot != null) {
-						
+
 							//If that slot doesn't have an item.
 							if (slots [i, j].HasItem == false) {
 								
@@ -218,6 +223,7 @@ namespace ProjectCrusade
 								} else {
 
 									Console.WriteLine ("You cannot stack this item.");
+									selectedSlot = null;
 
 								}
 
