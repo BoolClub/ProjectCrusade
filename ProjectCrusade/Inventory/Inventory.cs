@@ -157,6 +157,7 @@ namespace ProjectCrusade
 						
 						//If there is a selected slot.
 						} else {
+							
 							//If you then click on another slot that is not the selected slot...
 							if (selectedSlot != slots [i, j]) {
 								
@@ -164,8 +165,31 @@ namespace ProjectCrusade
 								if (slots [i, j].HasItem == false) {
 									
 									slots [i, j].AddItem (selectedSlot.Item);
+
+								//If it does have an item.
 								} else {
-									
+
+									//If the items are of the same type.
+									if (slots [i, j].Item.Type == selectedSlot.Item.Type) {
+
+										//If they are stackable
+										if (slots [i, j].Item.Stackable == true) {
+											
+											slots [i, j].Item.AddToStack (selectedSlot.Item.CurrentStackSize);
+										
+										} else {
+
+											Console.WriteLine ("You cannot stack this item.");
+
+										}
+
+									//If they are not the same item you cannot stack them.
+									} else {
+
+										Console.WriteLine ("You cannot stack this item.");
+
+									}
+
 								}
 
 							}
