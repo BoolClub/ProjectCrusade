@@ -14,10 +14,38 @@ namespace ProjectCrusade
 		public TileType Type;
 		public bool Solid;
 
-		public Tile (TileType type, bool solid = true)
+
+		public enum Orientation
+		{
+			Up,
+			Left,
+			Down,
+			Right
+		}
+
+		Orientation TileOrientation;
+
+		public float Rotation {
+			get { 
+				switch (this.TileOrientation) {
+				case Orientation.Up:
+					return 0 * (float)Math.PI / 2;
+				case Orientation.Left:
+					return 1 * (float)Math.PI / 2;
+				case Orientation.Down:
+					return 2 * (float)Math.PI / 2;
+				case Orientation.Right:
+					return 3 * (float)Math.PI / 2;
+				}
+				return 0;
+			}
+		}
+
+		public Tile (TileType type, bool solid = true, Orientation orientation = Orientation.Up)
 		{
 			Type = type;
 			Solid = solid;
+			TileOrientation = orientation;
 		}
 	}
 }
