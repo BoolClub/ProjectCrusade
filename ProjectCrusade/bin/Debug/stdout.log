@@ -1,4 +1,1 @@
-You cannot stack this item.
-You cannot stack this item.
-You cannot stack this item.
-You cannot stack this item.
+  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00002] in <filename unknown>:0 

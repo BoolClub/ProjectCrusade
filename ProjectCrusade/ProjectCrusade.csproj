@@ -113,6 +113,7 @@
     <BundleResource Include="Content\Textures\circle.png" />
     <BundleResource Include="Content\Textures\tiles.png" />
     <BundleResource Include="Content\Textures\items.png" />
+    <BundleResource Include="Content\Textures\Apple.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />
