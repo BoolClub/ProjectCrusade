@@ -34,7 +34,7 @@ namespace ProjectCrusade
 		const int SlotSpacing = 8;
 
 		Vector2 screenPosition = new Vector2 (10, 10);
-
+		bool dragging = false;
 
 		public Inventory (int rows, int columns) {
 			Rows = rows;
@@ -54,7 +54,7 @@ namespace ProjectCrusade
 					//Screen rectangle
 					Rectangle r = 
 						new Rectangle (
-							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x + SlotSpacing,
+							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x,
 							(int)screenPosition.Y+ (Item.SpriteWidth + SlotSpacing) * y, 
 							Item.SpriteWidth, 
 							Item.SpriteWidth);
@@ -70,6 +70,8 @@ namespace ProjectCrusade
 
 		}
 
+		//TODO: remove this method
+		//needed to satisfy IUD requirements
 		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager) {}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
@@ -77,26 +79,51 @@ namespace ProjectCrusade
 			for (int i = 0; i < Columns; i++)
 				for (int j = 0; j < Rows; j++) {
 					
-						
-						int disp = SlotSpacing + Item.SpriteWidth;
+					
+					int disp = SlotSpacing + Item.SpriteWidth;
 
-						int x = (int)screenPosition.X + disp * i;
-						int y = (int)screenPosition.Y + disp * j;
+					int x = (int)screenPosition.X + disp * i;
+					int y = (int)screenPosition.Y + disp * j;
 
-						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+					Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
 					spriteBatch.Draw (textureManager.WhitePixel, r, ((slots[i,j]==selectedSlot) ? Color.Red : Color.White) * 0.5f);
-						if (slots [i, j].HasItem) {
-						spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, Color.White, SpriteEffects.None, 0);
-							spriteBatch.DrawString (
-								fontManager.GetFont ("Arial"),
-								String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
-								new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
-								Color.Black);
-						
+					if (slots [i, j].HasItem) {
+						spriteBatch.Draw (textureManager.GetTexture ("items"),
+							null,
+							r,
+							slots [i, j].Item.getTextureSourceRect (),
+							null,
+							0,
+							null,
+							Color.White,
+							SpriteEffects.None,
+							0);
+						spriteBatch.DrawString (
+							fontManager.GetFont ("Arial"),
+							String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+							new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+							Color.Black);
 					}
 				}
 
+			if (selectedSlot != null) {
+				if (selectedSlot.HasItem) {
+
+					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
+
+					spriteBatch.Draw (textureManager.GetTexture ("items"),
+						null,
+						r,
+						selectedSlot.Item.getTextureSourceRect (),
+						null,
+						0,
+						null,
+						Color.White,
+						SpriteEffects.None,
+						0);
+				}
+			}
 		}
 
 
@@ -146,48 +173,40 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <value> SelectedSlot </value>
 		private void checkInventoryItemSelected() {
+
 			for (int j = 0; j < Rows; j++) {
 				for (int i = 0; i < Columns; i++) {
-					
-					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState().Position.Y) && 
+						(Mouse.GetState().LeftButton == ButtonState.Pressed && PlayerInput.PrevMouseState.LeftButton==ButtonState.Released)) {
 
 						//If there is no selected slot, set the selected slot.
-						if (selectedSlot == null) {
+						if (selectedSlot == null && slots [i, j].HasItem) {
 						
 							selectedSlot = slots [i, j];
-						
-						//If there is a selected slot.
-						} else {
+						}
 							
-							//If you then click on another slot that is not the selected slot...
-							if (selectedSlot != slots [i, j]) {
+						//If you then click on another slot that is not the selected slot...
+						if (selectedSlot != slots [i, j] && selectedSlot != null) {
+						
+							//If that slot doesn't have an item.
+							if (slots [i, j].HasItem == false) {
 								
-								//If that slot doesn't have an item.
-								if (slots [i, j].HasItem == false) {
-									
-									slots [i, j].AddItem (selectedSlot.Item);
-									selectedSlot = null;
+								slots [i, j].AddItem (selectedSlot.Item);
+								selectedSlot.Item = null;
+								selectedSlot = null;
 
 								//If it does have an item.
-								} else {
+							} else {
 
-									//If the items are of the same type.
-									if (slots [i, j].Item.Type == selectedSlot.Item.Type) {
+								//If the items are of the same type.
+								if (slots [i, j].Item.Type == selectedSlot.Item.Type) {
 
-										//If they are stackable
-										if (slots [i, j].Item.Stackable == true) {
-											
-											slots [i, j].Item.AddToStack (selectedSlot.Item.CurrentStackSize);
-											selectedSlot = null;
-
-										} else {
-
-											Console.WriteLine ("You cannot stack this item.");
-											selectedSlot = null;
-
-										}
-
-									//If they are not the same item you cannot stack them.
+									//If they are stackable
+									if (slots [i, j].Item.Stackable == true) {
+									
+										slots [i, j].Item.AddToStack (selectedSlot.Item.CurrentStackSize);
+										selectedSlot.Item = null;
+										selectedSlot = null;
 									} else {
 
 										Console.WriteLine ("You cannot stack this item.");
@@ -195,9 +214,16 @@ namespace ProjectCrusade
 
 									}
 
+									//If they are not the same item you cannot stack them.
+								} else {
+
+									Console.WriteLine ("You cannot stack this item.");
+
 								}
 
 							}
+
+
 						}
 					}
 
