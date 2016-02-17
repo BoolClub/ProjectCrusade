@@ -89,6 +89,7 @@
     <Compile Include="Items\Misc.cs" />
     <Compile Include="Items\ItemTypes\SwordItem.cs" />
     <Compile Include="Items\ItemTypes\ArrowItem.cs" />
+    <Compile Include="Managers\FontManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -106,10 +107,15 @@
     <Folder Include="Inventory\" />
     <Folder Include="Items\" />
     <Folder Include="Items\ItemTypes\" />
+    <Folder Include="Content\Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
     <BundleResource Include="Content\Textures\tiles.png" />
     <BundleResource Include="Content\Textures\items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Arial.spritefont" />
+    <Content Include="Content\Fonts\Arial.xnb" />
   </ItemGroup>
 </Project>

@@ -24,6 +24,7 @@ namespace ProjectCrusade
 		SpriteBatch spriteBatch;
 		GameScreenManager screenManager;
 		TextureManager textureManager;
+		FontManager fontManager;
 
 
 		public MainGame ()
@@ -64,6 +65,8 @@ namespace ProjectCrusade
 			whitePix.SetData (new Color[] { Color.White });
 			//Load all textures
 			textureManager = new TextureManager (Content, whitePix);
+			//Load all fonts
+			fontManager = new FontManager (Content);
 
 		}
 
@@ -98,6 +101,10 @@ namespace ProjectCrusade
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 		
 			screenManager.Draw (spriteBatch, textureManager);
+			spriteBatch.Begin ();
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade", new Vector2 (10, WINDOW_HEIGHT - 50), Color.White);
+			spriteBatch.End ();
+
 
 			base.Draw (gameTime);
 		}
