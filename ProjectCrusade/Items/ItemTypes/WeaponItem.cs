@@ -16,6 +16,8 @@ namespace ProjectCrusade
 		//Boolean for whether or not the player is capable of using the weapon (based on level or class).
 		protected bool Useable { get; set; }
 
+		protected abstract int Damage { get; }
+
 
 		public WeaponItem () {}
 

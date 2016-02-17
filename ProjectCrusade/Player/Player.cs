@@ -36,8 +36,6 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectCrusade.Player"/> class.
 		/// </summary>
-		/// <param name="name">Player name.</param>
-		/// <param name="type">Player type.</param>
 		public Player (String name, PlayerType type) {
 			PlayerName = name;
 			PlayerType = type;
@@ -45,12 +43,13 @@ namespace ProjectCrusade {
 			Width = 32;
 			Height = 32;
 			Speed = 200;
+			Inventory = new Inventory (4, 8);
+			Inventory.AddItem (new Apple ());
 		}
 
 		/// <summary>
-		/// Gets the speed.
+		/// How many pixels/sec the player moves.
 		/// </summary>
-		/// <value>How many pixels/sec the player moves.</value>
 		public float Speed { get; private set; } 
 
 
@@ -61,6 +60,8 @@ namespace ProjectCrusade {
 		}
 		public override void Update(GameTime time) {
 			//Do all the updating for the player here.
+
+			Inventory.Update (time);
 
 			//Checking for player input.
 			PlayerInput.CheckInput(time);

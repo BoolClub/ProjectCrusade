@@ -28,15 +28,18 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		const int SPRITE_SHEET_WIDTH = 1024;
+		const int SpriteSheetWidth = 1024;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
-		const int TILE_WIDTH = 32;
+		const int TileWidth = 32;
 
 		List<WorldLayer> layers;
 
 		Player player;
+
+
+		public Inventory PlayerInventory { get { return player.Inventory; } }
 
 		public World (int width, int height)
 		{
@@ -78,23 +81,23 @@ namespace ProjectCrusade
 
 		int worldToTileCoordX(int x) 
 		{
-			return x / TILE_WIDTH;
+			return x / TileWidth;
 		}
 		int worldToTileCoordY(int y) 
 		{
-			return y / TILE_WIDTH;
+			return y / TileWidth;
 		}
 
 		Rectangle getTileSourceRect(Tile t)
 		{
 			int id = (int)t.Type;
 
-			int spriteSheetTileWidth = SPRITE_SHEET_WIDTH / TILE_WIDTH;
+			int spriteSheetTileWidth = SpriteSheetWidth / TileWidth;
 
 			int y = id / spriteSheetTileWidth;
 			int x = id % spriteSheetTileWidth;
 
-			return new Rectangle (x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
+			return new Rectangle (x * TileWidth, y * TileWidth, TileWidth, TileWidth);
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
@@ -104,7 +107,7 @@ namespace ProjectCrusade
 			foreach (WorldLayer layer in layers) {
 				for (int i = 0; i < Width; i++) {
 					for (int j = 0; j < Height; j++) {
-						if (layer.Tiles[i,j].Type!=TileType.Air) spriteBatch.Draw (textureManager.GetTexture ("tiles"), null, new Rectangle (i * TILE_WIDTH, j * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH), getTileSourceRect (layer.Tiles [i, j]), null, 0, null, Color.White, SpriteEffects.None, 0);
+						if (layer.Tiles[i,j].Type!=TileType.Air) spriteBatch.Draw (textureManager.GetTexture ("tiles"), null, new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth), getTileSourceRect (layer.Tiles [i, j]), null, 0, null, Color.White, SpriteEffects.None, 0);
 					}
 				}
 			}

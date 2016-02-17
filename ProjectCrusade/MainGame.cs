@@ -59,8 +59,11 @@ namespace ProjectCrusade
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
+
+			Texture2D whitePix = new Texture2D (graphics.GraphicsDevice, 1, 1);
+			whitePix.SetData (new Color[] { Color.White });
 			//Load all textures
-			textureManager = new TextureManager (Content);
+			textureManager = new TextureManager (Content, whitePix);
 
 		}
 

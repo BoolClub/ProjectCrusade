@@ -1,4 +1,6 @@
-﻿
+﻿using Microsoft.Xna.Framework;
+
+
 namespace ProjectCrusade
 {
 	/// <summary>
@@ -7,11 +9,16 @@ namespace ProjectCrusade
 	/// <value>An Item.</value>
 	public abstract class Item {
 
+		//We are assuming square sprite sheets and square sprites.
+		public const int SpriteSheetWidth = 256;
+		public const int SpriteWidth = 32;
+
+
 		//An enum for the type of item. Each item has a different type.
 		public ItemType Type { get; protected set; } 
 
 		//This boolean determines whether or not the item can be stacked.
-		public static bool Stackable;
+		public bool Stackable;
 
 		//The current stack size of a stackable item.
 		public int CurrentStackSize { get; protected set; }
@@ -26,28 +33,47 @@ namespace ProjectCrusade
 		//Returns information about the item. This can be displayed on the screen so the player knows what each item does.
 		public abstract string ItemInfo ();
 
-		//Used for when the item you want to stack only has a stack of one.
-		public void addToStack() {
-			if (CurrentStackSize < MaxStackSize) {
-				CurrentStackSize++;
-			}
-		}
-		//Used for when the other item has a stack larger than one. In that case you insert that item's stack into the parameter.
-		public void addToStack(int amount) {
+		/// <summary>
+		/// Increment size of stack. 
+		/// </summary>
+		/// <param name="amount">Number of items to add to stack. Default=1</param>
+		public void AddToStack(int amount = 1) {
 			if (CurrentStackSize < MaxStackSize) {
 				CurrentStackSize += amount;
 			}
 		}
+
+		public Rectangle getTextureSourceRect()
+		{
+			int sheetWidthSprites = SpriteSheetWidth / SpriteWidth;
+
+			int x = (int)Type % sheetWidthSprites;
+			int y = (int)Type / sheetWidthSprites;
+
+			return new Rectangle (x * SpriteWidth, y * SpriteWidth, SpriteWidth, SpriteWidth);
+		}
+		/// <summary>
+		/// Activated when the player, e.g., left clicks
+		/// </summary>
+		/// <param name="player">Player.</param>
+		public abstract void PrimaryUse(Player player); 
+		/// <summary>
+		/// Optional use for when the player, e.g., right clicks
+		/// </summary>
+		/// <param name="player">Player.</param>
+		public abstract void SecondaryUse(Player player);
 	}
 
 
-
+	/// <summary>
+	/// Used as an ID for each item. 
+	/// </summary>
 	public enum ItemType {
-		Apple,
-		Water,
-		Coin,
-		Wooden_Sword,
-		Starter_Arrow,
+		Apple		 	= 0,
+		Water		 	= 1,
+		Coin		 	= 2,
+		WoodenSword 	= 3,
+		StarterArrow	= 4,
 	}
 }
 

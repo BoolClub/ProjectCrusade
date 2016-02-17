@@ -4,13 +4,17 @@ namespace ProjectCrusade
 {
 	public class Apple : FoodItem
 	{
+
+		public override int HealValue {
+			get {
+				return 10;
+			}
+		}
+
 		public Apple () {
 			Type = ItemType.Apple;
 		}
 
-		public override void Consume() {
-			//Add to the player's health.
-		}
 
 		public override String ItemInfo() {
 			return "An apple. Restores health.";
@@ -23,13 +27,16 @@ namespace ProjectCrusade
 
 	public class Water : FoodItem
 	{
+		public override int HealValue {
+			get {
+				return 1;
+			}
+		}
 		public Water () {
 			Type = ItemType.Water;
 		}
 
-		public override void Consume() {
-			//Add to the player's health.
-		}
+
 
 		public override String ItemInfo() {
 			return "Nice, refreshing water.";

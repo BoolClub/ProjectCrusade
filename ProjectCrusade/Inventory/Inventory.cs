@@ -16,7 +16,7 @@ namespace ProjectCrusade
 		public int Columns { get; private set; }
 
 		//The slots
-		InventorySlot[] slots;
+		InventorySlot[,] slots;
 
 		//The number of items in the inventory (see 'checkInventoryFull' method below).
 		private int numItems = 0;
@@ -24,12 +24,18 @@ namespace ProjectCrusade
 		//Boolean for whether or not the inventory is full.
 		public bool IsFull = false;
 
+		/// <summary>
+		/// Slot spacing in pixels.
+		/// </summary>
+		const int SlotSpacing = 8;
+
+		Vector2 screenPosition = new Vector2 (10, 10);
 
 
 		public Inventory (int rows, int columns) {
 			Rows = rows;
 			Columns = columns;
-			slots = new InventorySlot[Rows * Columns];
+			slots = new InventorySlot[Columns, Rows];
 			Initialize ();
 		}
 
@@ -37,9 +43,10 @@ namespace ProjectCrusade
 
 
 		public void Initialize() {
-			for (int x = 0; x < Rows; x++) {
-				for (int y = 0; y < Columns; y++) {
-					slots [x + y * Rows] = new InventorySlot ();
+			for (int x = 0; x < Columns; x++) {
+				for (int y = 0; y < Rows; y++) {
+					slots [x,y] = new InventorySlot ();
+
 				}
 			}
 		}
@@ -50,6 +57,20 @@ namespace ProjectCrusade
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
 
+			for (int i = 0; i < Columns; i++)
+				for (int j = 0; j < Rows; j++) {
+					int disp = SlotSpacing + Item.SpriteWidth;
+
+					int x = (int)screenPosition.X + disp * i;
+					int y = (int)screenPosition.Y + disp * j;
+
+					Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+
+					spriteBatch.Draw (textureManager.WhitePixel, r, Color.White * 0.5f);
+					if (slots[i,j].HasItem)
+						spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+				}
+
 		}
 
 
@@ -58,6 +79,7 @@ namespace ProjectCrusade
 		private void checkInventoryFull() {
 			numItems = 0;
 			foreach (InventorySlot slot in slots) {
+				
 				if (slot.HasItem == true) {
 					numItems++;
 				}
@@ -68,6 +90,26 @@ namespace ProjectCrusade
 			} else {
 				IsFull = false;
 			}
+		}
+
+		/// <summary>
+		/// Adds an item to the first empty/similar slot in the inventory.
+		/// </summary>
+		/// <returns><c>true</c>, if item was added, <c>false</c> otherwise.</returns>
+		public bool AddItem(Item item) 
+		{
+			//TODO: check if similar item exists in inventory.
+			if (IsFull)
+				return false;
+
+			for (int j = 0; j < Rows; j++)
+				for (int i = 0; i < Columns; i++) {
+					if (!slots [i,j].HasItem) {
+						slots [i,j].AddItem (item);
+						return true;
+					}
+				}
+			return true;
 		}
 
 

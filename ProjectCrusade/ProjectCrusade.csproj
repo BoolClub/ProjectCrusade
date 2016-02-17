@@ -87,6 +87,8 @@
     <Compile Include="Items\ItemTypes\Item.cs" />
     <Compile Include="Items\ItemTypes\WeaponItem.cs" />
     <Compile Include="Items\Misc.cs" />
+    <Compile Include="Items\ItemTypes\SwordItem.cs" />
+    <Compile Include="Items\ItemTypes\ArrowItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -108,5 +110,6 @@
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
     <BundleResource Include="Content\Textures\tiles.png" />
+    <BundleResource Include="Content\Textures\items.png" />
   </ItemGroup>
 </Project>

@@ -12,9 +12,13 @@ namespace ProjectCrusade
 	/// </summary>
 	public class TextureManager
 	{
+		/// <summary>
+		/// Used to draw rectangles.
+		/// </summary>
+		public Texture2D WhitePixel { get; private set; }
 
 		Dictionary<string, Texture2D> textures;
-		public TextureManager (ContentManager content)
+		public TextureManager (ContentManager content, Texture2D whitePix)
 		{
 			textures = new Dictionary<string, Texture2D> ();
 
@@ -27,6 +31,7 @@ namespace ProjectCrusade
 				string key = Path.GetFileNameWithoutExtension (file.Name);
 				textures [key] = content.Load<Texture2D> ("Textures/" + key);
 			}
+			WhitePixel = whitePix;
 		}
 
 		public Texture2D GetTexture(string id) { return textures[id]; }
