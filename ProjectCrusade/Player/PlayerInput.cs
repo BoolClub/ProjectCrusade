@@ -19,7 +19,7 @@ namespace ProjectCrusade
 
 		public static Player player;
 
-
+		public static MouseState PrevMouseState { get; set; }
 
 		//PLAYER INPUT
 		public static void CheckInput(GameTime time) {
@@ -59,6 +59,9 @@ namespace ProjectCrusade
 
 			//This method was actually added to the Spite class, not the Player class.
 			player.addToPosition(disp);
+
+			//update previous mouse state
+			PrevMouseState = Mouse.GetState ();
 		}
 
 	} //END OF PLAYERINPUT CLASS
