@@ -100,7 +100,7 @@ namespace ProjectCrusade
 		{
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 		
-			screenManager.Draw (spriteBatch, textureManager);
+			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade", new Vector2 (10, WINDOW_HEIGHT - 50), Color.White);
 			spriteBatch.End ();

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace ProjectCrusade
 {
@@ -11,17 +12,23 @@ namespace ProjectCrusade
 	{
 		Camera camera;
 		World world;
+		KeyboardState prevKeyboardState;
 
 		public MainGameScreen ()
 		{
 			camera = new Camera ();
 			world = new World (16, 16);
+			prevKeyboardState = Keyboard.GetState ();
 		}
-		public override void Update (GameTime gameTime)
+		public override void Update (GameTime gameTime, GameScreenManager screenManager)
 		{
 			world.Update (gameTime);
 			cameraFollow ();
 			camera.Update ();
+
+			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
+				screenManager.PushGameScreen (new PauseMenuScreen ());
+			prevKeyboardState = Keyboard.GetState ();
 		}
 
 		/// <summary>
@@ -38,7 +45,7 @@ namespace ProjectCrusade
 			camera.Position+= (world.GetPlayerPosition () - new Vector2(MainGame.WINDOW_WIDTH / 2, MainGame.WINDOW_HEIGHT / 2) - camera.Position) * speed;
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
 
 			//Render world (do transform)

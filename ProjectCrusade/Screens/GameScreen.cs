@@ -11,8 +11,8 @@ namespace ProjectCrusade
 		{
 		}
 
-		abstract public void Update(GameTime gameTime);
-		abstract public void Draw (SpriteBatch spriteBatch, TextureManager textureManager);
+		abstract public void Update(GameTime gameTime, GameScreenManager screenManager);
+		abstract public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager);
 	}
 }
 

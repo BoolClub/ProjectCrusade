@@ -13,12 +13,12 @@ namespace ProjectCrusade
 		{
 		}
 
-		public override void Update (GameTime gameTime)
+		public override void Update (GameTime gameTime, GameScreenManager screenManager)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
 			throw new NotImplementedException ();
 		}

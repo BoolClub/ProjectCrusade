@@ -28,7 +28,8 @@ namespace ProjectCrusade
 		public void Update(GameTime gameTime)
 		{
 			//Only update top screen.
-			gameScreens.Peek ().Update (gameTime);
+			gameScreens.Peek ().Update (gameTime, this);
+
 		}
 
 		/// <summary>
@@ -36,10 +37,13 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <param name="spriteBatch">Sprite batch.</param>
 		/// <param name="textureManager">Texture manager.</param>
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
-			foreach (GameScreen screen in gameScreens)
-				screen.Draw (spriteBatch, textureManager);
+			//We need to draw the last screen last, so we reverse the stack.
+			var reverseStack = new Stack<GameScreen> (gameScreens.ToArray ());
+
+			foreach (GameScreen screen in reverseStack)
+				screen.Draw (spriteBatch, textureManager, fontManager);
 		}
 
 	}
