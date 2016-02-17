@@ -36,6 +36,8 @@ namespace ProjectCrusade
 		Vector2 screenPosition = new Vector2 (10, 10);
 
 
+		bool dragging = false;
+
 		public Inventory (int rows, int columns) {
 			Rows = rows;
 			Columns = columns;
@@ -85,9 +87,9 @@ namespace ProjectCrusade
 						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
 					spriteBatch.Draw (textureManager.WhitePixel, r, ((slots[i,j]==selectedSlot) ? Color.Red : Color.White) * 0.5f);
-						if (slots [i, j].HasItem) {
+					if (slots [i, j].HasItem && !(selectedSlot==slots[i,j] && dragging)) {
 						spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, Color.White, SpriteEffects.None, 0);
-							spriteBatch.DrawString (
+						spriteBatch.DrawString (
 								fontManager.GetFont ("Arial"),
 								String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
 								new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
@@ -95,7 +97,28 @@ namespace ProjectCrusade
 						
 					}
 				}
+			//Draw dragging object
+			if (selectedSlot!=null)
+			if (selectedSlot.HasItem) {
 
+				//Draw half-size
+				spriteBatch.Draw (
+					textureManager.GetTexture ("items"),
+					null,
+					new Rectangle(
+						Mouse.GetState().Position.X,
+						Mouse.GetState().Position.Y,
+						Item.SpriteWidth/2,
+						Item.SpriteWidth/2),
+					selectedSlot.Item.getTextureSourceRect (),
+					null,
+					0,
+					null,
+					Color.White,
+					SpriteEffects.None,
+					0);
+
+			}
 		}
 
 
@@ -149,9 +172,20 @@ namespace ProjectCrusade
 				for (int i = 0; i < Columns; i++) {
 					
 
-					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && PlayerInput.MouseClickedLeft) {
 						selectedSlot = slots [i, j];
+						if (selectedSlot.HasItem)
+							dragging = true;
 					}
+				}
+			}
+		}
+
+		private void checkItemsDrag()
+		{
+			if (selectedSlot != null) {
+				if (selectedSlot.HasItem) {
+					
 				}
 			}
 		}

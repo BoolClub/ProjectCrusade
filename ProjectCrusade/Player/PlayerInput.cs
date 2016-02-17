@@ -20,6 +20,10 @@ namespace ProjectCrusade
 		public static Player player;
 
 
+		public static MouseState prevMouseState;
+
+
+		public static bool MouseClickedLeft { get { return Mouse.GetState ().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released; } }
 
 		//PLAYER INPUT
 		public static void CheckInput(GameTime time) {
@@ -59,6 +63,8 @@ namespace ProjectCrusade
 
 			//This method was actually added to the Spite class, not the Player class.
 			player.addToPosition(disp);
+
+			prevMouseState = Mouse.GetState ();
 		}
 
 	} //END OF PLAYERINPUT CLASS
