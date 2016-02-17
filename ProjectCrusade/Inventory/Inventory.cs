@@ -148,10 +148,30 @@ namespace ProjectCrusade
 			for (int j = 0; j < Rows; j++) {
 				for (int i = 0; i < Columns; i++) {
 					
-
 					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
-						selectedSlot = slots [i, j];
+
+						//If there is no selected slot, set the selected slot.
+						if (selectedSlot == null) {
+						
+							selectedSlot = slots [i, j];
+						
+						//If there is a selected slot.
+						} else {
+							//If you then click on another slot that is not the selected slot...
+							if (selectedSlot != slots [i, j]) {
+								
+								//If that slot doesn't have an item.
+								if (slots [i, j].HasItem == false) {
+									
+									slots [i, j].AddItem (selectedSlot.Item);
+								} else {
+									
+								}
+
+							}
+						}
 					}
+
 				}
 			}
 		}
