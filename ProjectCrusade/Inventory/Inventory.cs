@@ -49,8 +49,7 @@ namespace ProjectCrusade
 		public void Initialize() {
 			for (int x = 0; x < Columns; x++) {
 				for (int y = 0; y < Rows; y++) {
-					slots [x,y] = new InventorySlot (x,y);
-
+					slots [x,y] = new InventorySlot (x*32,y*32);
 				}
 			}
 		}
@@ -66,7 +65,7 @@ namespace ProjectCrusade
 			for (int i = 0; i < Columns; i++)
 				for (int j = 0; j < Rows; j++) {
 					
-					if (slots [i, j] != selectedSlot) {
+					if (selectedSlot != slots[i, j]) {
 						int disp = SlotSpacing + Item.SpriteWidth;
 
 						int x = (int)screenPosition.X + disp * i;
@@ -77,7 +76,9 @@ namespace ProjectCrusade
 						spriteBatch.Draw (textureManager.WhitePixel, r, Color.White * 0.5f);
 						if (slots [i, j].HasItem)
 							spriteBatch.Draw (textureManager.GetTexture ("items"), null, r, slots [i, j].Item.getTextureSourceRect (), null, 0, null, null, SpriteEffects.None, 0);
+					
 					} else {
+						
 						int disp = SlotSpacing + Item.SpriteWidth;
 
 						int x = (int)screenPosition.X + disp * i;
@@ -95,7 +96,9 @@ namespace ProjectCrusade
 
 
 
-		//Checks if the inventory is full. If it is, then you cannot add another item.
+		/// <summary>
+		/// Checks if the inventory is full. If it is, you cannot add another item.
+		/// </summary>
 		private void checkInventoryFull() {
 			numItems = 0;
 			foreach (InventorySlot slot in slots) {
@@ -140,7 +143,7 @@ namespace ProjectCrusade
 		private void checkInventoryItemSelected() {
 			for (int j = 0; j < Rows; j++) {
 				for (int i = 0; i < Columns; i++) {
-					if (slots [i, j].CollisionBox ().Contains (Mouse.GetState ().Position) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+					if (slots [i, j].CollisionBox ().Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
 						selectedSlot = slots [i, j];
 					}
 				}

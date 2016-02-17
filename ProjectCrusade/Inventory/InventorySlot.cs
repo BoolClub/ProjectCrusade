@@ -72,7 +72,7 @@ namespace ProjectCrusade
 
 
 		public Rectangle CollisionBox() {
-			return new Rectangle ((int)Position.X*Item.SpriteWidth,  (int)Position.Y*Item.SpriteWidth, Item.SpriteWidth, Item.SpriteWidth);
+			return new Rectangle ((int)Position.X,  (int)Position.Y, Item.SpriteWidth, Item.SpriteWidth);
 		}
 	
 	
