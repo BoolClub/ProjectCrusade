@@ -114,7 +114,17 @@ namespace ProjectCrusade
 			foreach (WorldLayer layer in layers) {
 				for (int i = 0; i < Width; i++) {
 					for (int j = 0; j < Height; j++) {
-						if (layer.Tiles[i,j].Type!=TileType.Air) spriteBatch.Draw (textureManager.GetTexture ("tiles"), null, new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth), getTileSourceRect (layer.Tiles [i, j]), null, 0, null, Color.White, SpriteEffects.None, 0);
+						if (layer.Tiles[i,j].Type!=TileType.Air) 
+							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
+								null,
+								new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth),
+								getTileSourceRect (layer.Tiles [i, j]),
+								null,
+								layer.Tiles[i,j].Rotation,
+								null,
+								Color.White,
+								SpriteEffects.None,
+								0);
 					}
 				}
 			}
