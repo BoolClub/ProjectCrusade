@@ -70,8 +70,6 @@
     <Compile Include="Screens\PauseMenuScreen.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="MainGame.cs" />
-    <Compile Include="World.cs" />
-    <Compile Include="Tiles\Tile.cs" />
     <Compile Include="Player\PlayerInput.cs" />
     <Compile Include="Managers\GameScreenManager.cs" />
     <Compile Include="Managers\TextureManager.cs" />
@@ -89,6 +87,8 @@
     <Compile Include="Items\ItemTypes\ArrowItem.cs" />
     <Compile Include="Managers\FontManager.cs" />
     <Compile Include="GUI\Menu.cs" />
+    <Compile Include="World\World.cs" />
+    <Compile Include="World\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -100,7 +100,6 @@
     <Folder Include="Player\" />
     <Folder Include="Screens\" />
     <Folder Include="Content\Textures\" />
-    <Folder Include="Tiles\" />
     <Folder Include="Managers\" />
     <Folder Include="Misc\" />
     <Folder Include="Inventory\" />
@@ -108,6 +107,7 @@
     <Folder Include="Items\ItemTypes\" />
     <Folder Include="Content\Fonts\" />
     <Folder Include="GUI\" />
+    <Folder Include="World\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />

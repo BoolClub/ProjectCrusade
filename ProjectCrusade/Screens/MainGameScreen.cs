@@ -42,7 +42,7 @@ namespace ProjectCrusade
 			const float speed = 0.05f;
 
 			//Expontial following
-			camera.Position+= (world.GetPlayerPosition () - new Vector2(MainGame.WINDOW_WIDTH / 2, MainGame.WINDOW_HEIGHT / 2) - camera.Position) * speed;
+			camera.Position+= (world.GetPlayerPosition () - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
@@ -52,7 +52,6 @@ namespace ProjectCrusade
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager);
-			spriteBatch.Draw (textureManager.GetTexture ("circle"), new Rectangle(100,100,100,100), Color.White);
 			spriteBatch.End ();
 
 

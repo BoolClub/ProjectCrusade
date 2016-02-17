@@ -17,8 +17,8 @@ namespace ProjectCrusade
 	public class MainGame : Game
 	{
 
-		public const int WINDOW_WIDTH = 1280;
-		public const int WINDOW_HEIGHT = 720;
+		public const int WindowWidth = 1280;
+		public const int WindowHeight = 720;
 
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
@@ -32,8 +32,8 @@ namespace ProjectCrusade
 			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";	            
 			graphics.IsFullScreen = false;		
-			graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
-			graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
+			graphics.PreferredBackBufferWidth = WindowWidth;
+			graphics.PreferredBackBufferHeight = WindowHeight;
 			IsMouseVisible = true;
 		}
 
@@ -102,7 +102,7 @@ namespace ProjectCrusade
 		
 			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade Alpha", new Vector2 (10, WINDOW_HEIGHT - 50), Color.White);
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade Alpha", new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
 
 

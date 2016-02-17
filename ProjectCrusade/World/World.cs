@@ -57,9 +57,16 @@ namespace ProjectCrusade
 		{
 			Vector2 prevPosition = player.Position;
 			player.Update (gameTime);
-
+			Vector2 newPosition = player.Position;
+			player.Position = prevPosition;
+			//X collision
+			player.Position = new Vector2(newPosition.X, player.Position.X);
 			if (playerWallCollision ())
-				player.Position = prevPosition;
+				player.Position = new Vector2(prevPosition.X, player.Position.Y);
+			//Y collision
+			player.Position = new Vector2(player.Position.X, newPosition.Y);
+			if (playerWallCollision ())
+				player.Position = new Vector2(player.Position.X, prevPosition.Y);
 		}
 
 		bool playerWallCollision() {

@@ -20,7 +20,7 @@ namespace ProjectCrusade
 		{
 			screenManager = _screenManager;
 			prevKeyboardState = Keyboard.GetState ();
-			menu = new Menu ((new Vector2(MainGame.WINDOW_WIDTH*0.5f, MainGame.WINDOW_HEIGHT*0.5f)), "Arial", 20);
+			menu = new Menu ((new Vector2(MainGame.WindowWidth*0.5f, MainGame.WindowHeight*0.5f)), "Arial", 20);
 			MenuItem menuItem1 = new MenuItem ("Resume");
 			menuItem1.Activated += new MenuItem.ActivatedHandler (Option1);
 			MenuItem menuItem2 = new MenuItem ("Quit");
@@ -62,6 +62,10 @@ namespace ProjectCrusade
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
 			spriteBatch.Begin ();
+
+			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), Color.Black * 0.5f);
+
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "Paused", menu.Position - new Vector2 (0, 50), Color.White);
 
 			menu.Draw (spriteBatch, fontManager);
 
