@@ -40,6 +40,7 @@ namespace ProjectCrusade
 			Rows = rows;
 			Columns = columns;
 			slots = new InventorySlot[Columns, Rows];
+			selectedSlot = null;
 			Initialize ();
 		}
 
@@ -165,6 +166,7 @@ namespace ProjectCrusade
 								if (slots [i, j].HasItem == false) {
 									
 									slots [i, j].AddItem (selectedSlot.Item);
+									selectedSlot = null;
 
 								//If it does have an item.
 								} else {
@@ -176,10 +178,12 @@ namespace ProjectCrusade
 										if (slots [i, j].Item.Stackable == true) {
 											
 											slots [i, j].Item.AddToStack (selectedSlot.Item.CurrentStackSize);
-										
+											selectedSlot = null;
+
 										} else {
 
 											Console.WriteLine ("You cannot stack this item.");
+											selectedSlot = null;
 
 										}
 
@@ -187,6 +191,7 @@ namespace ProjectCrusade
 									} else {
 
 										Console.WriteLine ("You cannot stack this item.");
+										selectedSlot = null;
 
 									}
 
