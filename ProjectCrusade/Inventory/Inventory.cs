@@ -49,7 +49,10 @@ namespace ProjectCrusade
 		public void Initialize() {
 			for (int x = 0; x < Columns; x++) {
 				for (int y = 0; y < Rows; y++) {
-					slots [x,y] = new InventorySlot (x*32,y*32);
+
+					Rectangle r = new Rectangle ((int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x, (int)screenPosition.Y+(Item.SpriteWidth + SlotSpacing) * y, Item.SpriteWidth, Item.SpriteWidth);
+
+					slots [x,y] = new InventorySlot (r);
 				}
 			}
 		}
@@ -143,7 +146,9 @@ namespace ProjectCrusade
 		private void checkInventoryItemSelected() {
 			for (int j = 0; j < Rows; j++) {
 				for (int i = 0; i < Columns; i++) {
-					if (slots [i, j].CollisionBox ().Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+					
+
+					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X + SlotSpacing, Mouse.GetState().Position.Y) && Mouse.GetState().LeftButton == ButtonState.Pressed) {
 						selectedSlot = slots [i, j];
 					}
 				}
