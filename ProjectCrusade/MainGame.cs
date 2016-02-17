@@ -87,7 +87,7 @@ namespace ProjectCrusade
 			}
 			#endif
 
-			screenManager.Update (gameTime);
+			screenManager.Update (gameTime, this);
 
 			base.Update (gameTime);
 		}
@@ -102,7 +102,7 @@ namespace ProjectCrusade
 		
 			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade", new Vector2 (10, WINDOW_HEIGHT - 50), Color.White);
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade Alpha", new Vector2 (10, WINDOW_HEIGHT - 50), Color.White);
 			spriteBatch.End ();
 
 

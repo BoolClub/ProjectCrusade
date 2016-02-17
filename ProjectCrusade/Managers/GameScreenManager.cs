@@ -25,10 +25,10 @@ namespace ProjectCrusade
 			gameScreens.Pop ();
 		}
 
-		public void Update(GameTime gameTime)
+		public void Update(GameTime gameTime, MainGame game)
 		{
 			//Only update top screen.
-			gameScreens.Peek ().Update (gameTime, this);
+			gameScreens.Peek ().Update (gameTime, this, game);
 
 		}
 
@@ -45,7 +45,6 @@ namespace ProjectCrusade
 			foreach (GameScreen screen in reverseStack)
 				screen.Draw (spriteBatch, textureManager, fontManager);
 		}
-
 	}
 }
 

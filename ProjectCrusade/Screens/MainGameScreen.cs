@@ -20,14 +20,14 @@ namespace ProjectCrusade
 			world = new World (16, 16);
 			prevKeyboardState = Keyboard.GetState ();
 		}
-		public override void Update (GameTime gameTime, GameScreenManager screenManager)
+		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
 			world.Update (gameTime);
 			cameraFollow ();
 			camera.Update ();
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
-				screenManager.PushGameScreen (new PauseMenuScreen ());
+				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
 			prevKeyboardState = Keyboard.GetState ();
 		}
 

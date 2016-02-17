@@ -35,13 +35,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <LinkMode>SdkOnly</LinkMode>
     <UseRefCounting>false</UseRefCounting>
     <UseSGen>false</UseSGen>
-    <IncludeMonoRuntime>true</IncludeMonoRuntime>
-    <CreatePackage>true</CreatePackage>
-    <CodeSigningKey>Developer ID Application</CodeSigningKey>
-    <EnableCodeSigning>true</EnableCodeSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <CreatePackage>false</CreatePackage>
+    <EnableCodeSigning>false</EnableCodeSigning>
     <EnablePackageSigning>false</EnablePackageSigning>
     <Profiling>false</Profiling>
   </PropertyGroup>
@@ -90,6 +88,7 @@
     <Compile Include="Items\ItemTypes\SwordItem.cs" />
     <Compile Include="Items\ItemTypes\ArrowItem.cs" />
     <Compile Include="Managers\FontManager.cs" />
+    <Compile Include="GUI\Menu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -108,6 +107,7 @@
     <Folder Include="Items\" />
     <Folder Include="Items\ItemTypes\" />
     <Folder Include="Content\Fonts\" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
