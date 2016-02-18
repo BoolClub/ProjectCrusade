@@ -4,7 +4,7 @@ namespace ProjectCrusade
 {
 	public class Coin : Item
 	{
-		public Coin () {
+		public Coin (int stackSize = 1) : base(stackSize) {
 			Stackable = true;
 			Type = ItemType.Coin;
 		}
@@ -13,14 +13,6 @@ namespace ProjectCrusade
 			return CurrentStackSize + " coin(s).";
 		}
 
-		public override void PrimaryUse (Player player)
-		{
-			throw new System.NotImplementedException ();
-		}
-		public override void SecondaryUse (Player player)
-		{
-			throw new System.NotImplementedException ();
-		}
 	} //END OF COIN CLASS
 
 

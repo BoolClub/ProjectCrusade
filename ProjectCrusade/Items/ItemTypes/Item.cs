@@ -28,7 +28,7 @@ namespace ProjectCrusade
 
 
 
-		public Item() {}
+		public Item(int stackSize = 1) { CurrentStackSize = stackSize;}
 
 		//Returns information about the item. This can be displayed on the screen so the player knows what each item does.
 		public abstract string ItemInfo ();

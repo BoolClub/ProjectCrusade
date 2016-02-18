@@ -20,6 +20,7 @@ namespace ProjectCrusade
 		public static Player player;
 
 		public static MouseState PrevMouseState { get; set; }
+		public static KeyboardState PrevKeyState { get; set; }
 
 		//PLAYER INPUT
 		public static void CheckInput(GameTime time) {
@@ -62,6 +63,8 @@ namespace ProjectCrusade
 
 			//update previous mouse state
 			PrevMouseState = Mouse.GetState ();
+			//update previous keyboard state
+			PrevKeyState = Keyboard.GetState ();
 		}
 
 	} //END OF PLAYERINPUT CLASS
