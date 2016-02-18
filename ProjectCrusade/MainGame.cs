@@ -25,7 +25,7 @@ namespace ProjectCrusade
 		GameScreenManager screenManager;
 		TextureManager textureManager;
 		FontManager fontManager;
-
+		FrameRateCounter frameCounter;
 
 		public MainGame ()
 		{
@@ -46,6 +46,8 @@ namespace ProjectCrusade
 		protected override void Initialize ()
 		{
 			screenManager = new GameScreenManager (new MainGameScreen());
+
+			frameCounter = new FrameRateCounter ();
 
 			base.Initialize ();
 
@@ -89,6 +91,8 @@ namespace ProjectCrusade
 
 			screenManager.Update (gameTime, this);
 
+			frameCounter.Update (gameTime);
+
 			base.Update (gameTime);
 		}
 
@@ -102,7 +106,7 @@ namespace ProjectCrusade
 		
 			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "ProjectCrusade Alpha", new Vector2 (10, WindowHeight - 50), Color.White);
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), String.Format("ProjectCrusade Alpha\nframetime {0} ms", frameCounter.AverageElapsedMilliseconds), new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
 
 
