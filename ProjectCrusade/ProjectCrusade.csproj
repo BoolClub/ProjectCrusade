@@ -91,6 +91,7 @@
     <Compile Include="World\Tile.cs" />
     <Compile Include="Items\ItemTypes\WandItem.cs" />
     <Compile Include="FrameRateCounter.cs" />
+    <Compile Include="Entity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

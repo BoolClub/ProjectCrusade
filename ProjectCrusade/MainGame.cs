@@ -17,8 +17,8 @@ namespace ProjectCrusade
 	public class MainGame : Game
 	{
 
-		public const int WindowWidth = 1280;
-		public const int WindowHeight = 720;
+		public const int WindowWidth = 1024;
+		public const int WindowHeight = 640;
 
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;

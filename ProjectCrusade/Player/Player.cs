@@ -10,7 +10,7 @@ namespace ProjectCrusade {
 	/// <summary>
 	/// This is the player class. It will hold all the information for the player.
 	/// </summary>
-	public class Player : Sprite {
+	public class Player : Entity {
 
 		/// <summary>
 		/// Gets the sanity.

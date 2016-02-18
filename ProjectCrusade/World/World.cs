@@ -38,6 +38,8 @@ namespace ProjectCrusade
 
 		Player player;
 
+		List<Entity> entities;
+
 
 		public Inventory PlayerInventory { get { return player.Inventory; } }
 
@@ -51,36 +53,48 @@ namespace ProjectCrusade
 			layers.Add (new WorldLayer (width, height, TileType.Floor)); // floor layer
 			layers.Add (new WorldLayer (width, height, TileType.Wall)); // wall layer
 			for (int i = 1; i<width - 1; i++)for (int j = 1; j<width - 1; j++) { layers[1].Tiles[i,j].Type = TileType.Air; layers[1].Tiles[i,j].Solid=false; }
+			entities = new List<Entity> ();
+
+			entities.Add (player);
 		}
 
 		public void Update(GameTime gameTime)
 		{
-			Vector2 prevPosition = player.Position;
-			player.Update (gameTime);
-			Vector2 newPosition = player.Position;
-			player.Position = prevPosition;
-			//X collision
-			player.Position = new Vector2(newPosition.X, player.Position.X);
-			if (playerWallCollision ())
-				player.Position = new Vector2(prevPosition.X, player.Position.Y);
-			//Y collision
-			player.Position = new Vector2(player.Position.X, newPosition.Y);
-			if (playerWallCollision ())
-				player.Position = new Vector2(player.Position.X, prevPosition.Y);
+			foreach (Entity entity in entities) {
+				updateEntity (gameTime, entity);
+			}
+
 		}
 
-		bool playerWallCollision() {
+		void updateEntity(GameTime gameTime, Entity entity)
+		{
 
-			if (layers [1].Tiles [worldToTileCoordX (player.CollisionBox.Left),worldToTileCoordY (player.CollisionBox.Top)].Solid)
+			Vector2 prevPosition = entity.Position;
+			entity.Update (gameTime);
+			Vector2 newPosition = entity.Position;
+			entity.Position = prevPosition;
+			//X collision
+			entity.Position = new Vector2(newPosition.X, entity.Position.X);
+			if (entityWallCollision (entity))
+				entity.Position = new Vector2(prevPosition.X, entity.Position.Y);
+			//Y collision
+			entity.Position = new Vector2(entity.Position.X, newPosition.Y);
+			if (entityWallCollision (entity))
+				entity.Position = new Vector2(entity.Position.X, prevPosition.Y);
+		}
+
+		bool entityWallCollision(Entity entity) {
+
+			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (player.CollisionBox.Right),worldToTileCoordY (player.CollisionBox.Top)].Solid)
+			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (player.CollisionBox.Left),worldToTileCoordY (player.CollisionBox.Bottom)].Solid)
+			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (player.CollisionBox.Right),worldToTileCoordY (player.CollisionBox.Bottom)].Solid)
+			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 			return false;
 
