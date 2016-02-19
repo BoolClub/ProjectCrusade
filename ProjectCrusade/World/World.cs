@@ -36,17 +36,17 @@ namespace ProjectCrusade
 
 		List<WorldLayer> layers;
 
-		Player player;
+		public Player Player;
 
 		List<Entity> entities;
 
 
-		public Inventory PlayerInventory { get { return player.Inventory; } }
+		public Inventory PlayerInventory { get { return Player.Inventory; } }
 
 		public World (int width, int height)
 		{
-			player = new Player ("test", PlayerType.Wizard);
-			player.Position = new Vector2 (100, 100);
+			Player = new Player ("test", PlayerType.Wizard);
+			Player.Position = new Vector2 (100, 100);
 			Width = width;
 			Height = height;
 			layers = new List<WorldLayer> ();
@@ -55,7 +55,7 @@ namespace ProjectCrusade
 			for (int i = 1; i<width - 1; i++)for (int j = 1; j<width - 1; j++) { layers[1].Tiles[i,j].Type = TileType.Air; layers[1].Tiles[i,j].Solid=false; }
 			entities = new List<Entity> ();
 
-			entities.Add (player);
+			entities.Add (Player);
 		}
 
 		public void Update(GameTime gameTime)
@@ -64,13 +64,18 @@ namespace ProjectCrusade
 				updateEntity (gameTime, entity);
 			}
 
+			for (int i = entities.Count - 1; i >= 0; i--) {
+				if (entities [i].Delete)
+					entities.RemoveAt (i);
+			}
+
 		}
 
 		void updateEntity(GameTime gameTime, Entity entity)
 		{
 
 			Vector2 prevPosition = entity.Position;
-			entity.Update (gameTime);
+			entity.Update (gameTime, this);
 			Vector2 newPosition = entity.Position;
 			entity.Position = prevPosition;
 			//X collision
@@ -142,13 +147,16 @@ namespace ProjectCrusade
 					}
 				}
 			}
-			player.Draw (spriteBatch, textureManager);
+
+
+			foreach (Entity entity in entities)
+				entity.Draw (spriteBatch, textureManager);
 		}
 		//TODO: Add procedural world generation
 
 
 		public Vector2 GetPlayerPosition() {
-			return player.Position;
+			return Player.Position;
 		}
 	}
 }

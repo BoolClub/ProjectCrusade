@@ -1,6 +1,31 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/18/2016 2:19:29 AM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/19/2016 4:17:22 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/GUI/Menu.cs">
+    <Files>
+      <File FileName="ProjectCrusade/MainGame.cs" Line="34" Column="30" />
+      <File FileName="ProjectCrusade/Sprite.cs" Line="49" Column="1" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="39" Column="17" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="50" Column="1" />
+      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="24" Column="1" />
+      <File FileName="ProjectCrusade/GUI/Menu.cs" Line="39" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ProjectCrusade" expanded="True">
+            <Node name="ProjectCrusade" expanded="True">
+              <Node name="Entity" expanded="True" />
+              <Node name="GUI" expanded="True">
+                <Node name="Menu.cs" selected="True" />
+              </Node>
+              <Node name="Screens" expanded="True" />
+              <Node name="World" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

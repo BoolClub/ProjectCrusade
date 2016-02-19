@@ -11,11 +11,11 @@ namespace ProjectCrusade
 		}
 
 		//All swords have same behavior
-		public override void PrimaryUse (Player player)
+		public override void PrimaryUse (Player player, World world)
 		{
 			throw new NotImplementedException ();
 		}
-		public override void SecondaryUse (Player player)
+		public override void SecondaryUse (Player player, World world)
 		{
 			throw new NotImplementedException ();
 		}

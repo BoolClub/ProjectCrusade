@@ -26,6 +26,7 @@ namespace ProjectCrusade
 		//The maximum stack that a stackable item can hold.
 		protected const int MaxStackSize = 64;
 
+		public abstract bool Depletable { get; }
 
 
 		public Item(int stackSize = 1) { CurrentStackSize = stackSize;}
@@ -55,11 +56,11 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Activated when the player, e.g., left clicks
 		/// </summary>
-		public virtual void PrimaryUse(Player player) { }
+		public virtual void PrimaryUse(Player player, World world) { }
 		/// <summary>
 		/// Optional use for when the player, e.g., right clicks
 		/// </summary>
-		public virtual void SecondaryUse(Player player) { }
+		public virtual void SecondaryUse(Player player, World world) { }
 	}
 
 

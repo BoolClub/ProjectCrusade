@@ -66,10 +66,11 @@ namespace ProjectCrusade {
 			Position = new Vector2(0,0);
 			PlayerInput.player = this;
 		}
-		public override void Update(GameTime time) {
+		public override void Update(GameTime time, World world) {
 			//Do all the updating for the player here.
 
-			Inventory.Update (time);
+			Inventory.Update (time, world);
+
 
 			//Checking for player input.
 			PlayerInput.CheckInput(time);

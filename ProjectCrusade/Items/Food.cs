@@ -5,6 +5,7 @@ namespace ProjectCrusade
 	public class Apple : FoodItem
 	{
 
+		public override bool Depletable { get { return false; } }
 		public override int HealValue {
 			get {
 				return 10;
@@ -36,7 +37,7 @@ namespace ProjectCrusade
 			Type = ItemType.Water;
 		}
 
-
+		public override bool Depletable { get { return true; } } 
 
 		public override String ItemInfo() {
 			return "Nice, refreshing water.";

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
-	public class Inventory : IUD {
+	public class Inventory {
 
 		//The number of rows and columns (inventory slots) to have in the Inventory.
 		public int Rows { get; private set; }
@@ -19,7 +19,7 @@ namespace ProjectCrusade
 		InventorySlot[,] slots;
 
 		//The slot that is currently being selected. Used for moving inventory items.
-		public InventorySlot selectedSlot;
+		public InventorySlot SelectedSlot;
 		//The slot that is currently active. Used for performing actions on inventory items.
 		int activeSlotIndex;
 		//returns the slot that corresponds to activeSlotIndex
@@ -46,12 +46,19 @@ namespace ProjectCrusade
 
 		Vector2 screenPosition = new Vector2 (16, 16);
 
+		public Rectangle BoundingRect { get { return new Rectangle (
+				(int)screenPosition.X, 
+				(int)screenPosition.Y, 
+				(Item.SpriteWidth + SlotSpacing) * Columns,
+				(Item.SpriteWidth + SlotSpacing) * Rows);
+				} }
+
 
 		public Inventory (int rows, int columns) {
 			Rows = rows;
 			Columns = columns;
 			slots = new InventorySlot[Columns, Rows];
-			selectedSlot = null;
+			SelectedSlot = null;
 			Opacity = 0.25f;
 			Initialize ();
 		}
@@ -77,13 +84,15 @@ namespace ProjectCrusade
 			activeSlotIndex = 0;
 		}
 
-		public void Update(GameTime time) {
+
+
+		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 			checkInventoryItemSelected ();
 
-			if (selectedSlot != null) {
+			if (SelectedSlot != null) {
 				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp(Keys.J)) {
-					Console.WriteLine (selectedSlot.Item.ItemInfo ());
+					Console.WriteLine (SelectedSlot.Item.ItemInfo ());
 				}
 			}
 
@@ -98,6 +107,14 @@ namespace ProjectCrusade
 				activeSlotIndex += Rows * Columns;
 			if (activeSlotIndex >= Rows*Columns)
 				activeSlotIndex -= Rows * Columns;
+
+
+			//Use active item
+
+			if (
+				Mouse.GetState ().LeftButton == ButtonState.Pressed &&
+				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && !BoundingRect.Contains (Mouse.GetState ().Position))
+				activeSlot.Item.PrimaryUse (world.Player, world);
 		}
 
 		//TODO: remove this method
@@ -120,7 +137,7 @@ namespace ProjectCrusade
 					//draw background of slot
 					spriteBatch.Draw (textureManager.WhitePixel, r, (slots[i,j]==activeSlot ? Color.Red : Color.White) * Opacity);
 					//draw item itself
-					if (slots [i, j].HasItem && slots[i,j]!=selectedSlot) {
+					if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
 						spriteBatch.Draw (textureManager.GetTexture ("items"),
 							null,
 							r,
@@ -139,15 +156,15 @@ namespace ProjectCrusade
 					}
 				}
 
-			if (selectedSlot != null) {
-				if (selectedSlot.HasItem) {
+			if (SelectedSlot != null) {
+				if (SelectedSlot.HasItem) {
 
 					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
 
 					spriteBatch.Draw (textureManager.GetTexture ("items"),
 						null,
 						r,
-						selectedSlot.Item.getTextureSourceRect (),
+						SelectedSlot.Item.getTextureSourceRect (),
 						null,
 						0,
 						null,
@@ -212,37 +229,37 @@ namespace ProjectCrusade
 						(Mouse.GetState().LeftButton == ButtonState.Pressed && PlayerInput.PrevMouseState.LeftButton==ButtonState.Released)) {
 
 						//If there is no selected slot, set the selected slot.
-						if (selectedSlot == null && slots [i, j].HasItem) {
+						if (SelectedSlot == null && slots [i, j].HasItem) {
 						
-							selectedSlot = slots [i, j];
+							SelectedSlot = slots [i, j];
 						}
 							
 						//If you then click on another slot that is not the selected slot...
-						if (selectedSlot != slots [i, j] && selectedSlot != null) {
+						if (SelectedSlot != slots [i, j] && SelectedSlot != null) {
 
 							//If that slot doesn't have an item.
 							if (slots [i, j].HasItem == false) {
 								
-								slots [i, j].AddItem (selectedSlot.Item);
-								selectedSlot.Item = null;
-								selectedSlot = null;
+								slots [i, j].AddItem (SelectedSlot.Item);
+								SelectedSlot.Item = null;
+								SelectedSlot = null;
 
 								//If it does have an item.
 							} else {
 
 								//If the items are of the same type.
-								if (slots [i, j].Item.Type == selectedSlot.Item.Type) {
+								if (slots [i, j].Item.Type == SelectedSlot.Item.Type) {
 
 									//If they are stackable
 									if (slots [i, j].Item.Stackable == true) {
 									
-										slots [i, j].Item.AddToStack (selectedSlot.Item.CurrentStackSize);
-										selectedSlot.Item = null;
-										selectedSlot = null;
+										slots [i, j].Item.AddToStack (SelectedSlot.Item.CurrentStackSize);
+										SelectedSlot.Item = null;
+										SelectedSlot = null;
 									} else {
 
 										Console.WriteLine ("You cannot stack this item.");
-										selectedSlot = null;
+										SelectedSlot = null;
 
 									}
 
@@ -250,7 +267,7 @@ namespace ProjectCrusade
 								} else {
 
 									Console.WriteLine ("You cannot stack this item.");
-									selectedSlot = null;
+									SelectedSlot = null;
 
 								}
 

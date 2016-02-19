@@ -4,11 +4,15 @@ namespace ProjectCrusade
 {
 	public class WoodenSword : SwordItem
 	{
+
+
 		protected override int Damage {
 			get {
 				return 10;
 			}
 		}
+
+		public override bool Depletable { get { return false; }  }
 
 		public WoodenSword () : base() {
 
@@ -47,6 +51,8 @@ namespace ProjectCrusade
 			}
 		}
 
+		public override bool Depletable { get { return false; } }
+
 		public StarterArrow () {
 			//Arrows can be stacked.
 			Stackable = true;
@@ -77,6 +83,7 @@ namespace ProjectCrusade
 			}
 		}
 
+		public override bool Depletable { get { return false; } }
 		public MagicWand () {
 			//Arrows can be stacked.
 			Stackable = true;

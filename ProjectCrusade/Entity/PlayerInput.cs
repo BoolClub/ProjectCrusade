@@ -22,6 +22,7 @@ namespace ProjectCrusade
 		public static MouseState PrevMouseState { get; set; }
 		public static KeyboardState PrevKeyState { get; set; }
 
+
 		//PLAYER INPUT
 		public static void CheckInput(GameTime time) {
 			KeyboardState keyState = Keyboard.GetState ();
