@@ -15,6 +15,9 @@ namespace ProjectCrusade
 		public int Rows { get; private set; }
 		public int Columns { get; private set; }
 
+
+		public bool Toggle { get; set; }
+
 		//The slots
 		InventorySlot[,] slots;
 
@@ -88,33 +91,37 @@ namespace ProjectCrusade
 
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
-			checkInventoryItemSelected ();
 
-			if (SelectedSlot != null) {
-				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp(Keys.J)) {
-					Console.WriteLine (SelectedSlot.Item.ItemInfo ());
+			//If the inventory is open...
+			if (Toggle) {
+				checkInventoryItemSelected ();
+
+				if (SelectedSlot != null) {
+					if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
+						Console.WriteLine (SelectedSlot.Item.ItemInfo ());
+					}
 				}
+
+				if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
+					activeSlotIndex++;
+				if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
+					activeSlotIndex--;
+
+
+				//TODO: Implement better controls.
+				if (activeSlotIndex < 0)
+					activeSlotIndex += Rows * Columns;
+				if (activeSlotIndex >= Rows * Columns)
+					activeSlotIndex -= Rows * Columns;
+
+
+				//Use active item
+
+				if (
+					Mouse.GetState ().LeftButton == ButtonState.Pressed &&
+					PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && !BoundingRect.Contains (Mouse.GetState ().Position))
+					activeSlot.Item.PrimaryUse (world.Player, world);
 			}
-
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
-				activeSlotIndex++;
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
-				activeSlotIndex--;
-
-
-			//TODO: Implement better controls.
-			if (activeSlotIndex < 0)
-				activeSlotIndex += Rows * Columns;
-			if (activeSlotIndex >= Rows*Columns)
-				activeSlotIndex -= Rows * Columns;
-
-
-			//Use active item
-
-			if (
-				Mouse.GetState ().LeftButton == ButtonState.Pressed &&
-				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && !BoundingRect.Contains (Mouse.GetState ().Position))
-				activeSlot.Item.PrimaryUse (world.Player, world);
 		}
 
 		//TODO: remove this method
@@ -123,54 +130,56 @@ namespace ProjectCrusade
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
-			for (int i = 0; i < Columns; i++)
-				for (int j = 0; j < Rows; j++) {
-					
-					
-					int disp = SlotSpacing + Item.SpriteWidth;
+			if (Toggle) {
+				for (int i = 0; i < Columns; i++)
+					for (int j = 0; j < Rows; j++) {
+						
+						
+						int disp = SlotSpacing + Item.SpriteWidth;
 
-					int x = (int)screenPosition.X + disp * i;
-					int y = (int)screenPosition.Y + disp * j;
+						int x = (int)screenPosition.X + disp * i;
+						int y = (int)screenPosition.Y + disp * j;
 
-					Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
-					//draw background of slot
-					spriteBatch.Draw (textureManager.WhitePixel, r, (slots[i,j]==activeSlot ? Color.Red : Color.White) * Opacity);
-					//draw item itself
-					if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
+						//draw background of slot
+						spriteBatch.Draw (textureManager.WhitePixel, r, (slots [i, j] == activeSlot ? Color.Red : Color.White) * Opacity);
+						//draw item itself
+						if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
+							spriteBatch.Draw (textureManager.GetTexture ("items"),
+								null,
+								r,
+								slots [i, j].Item.getTextureSourceRect (),
+								null,
+								0,
+								null,
+								Color.White,
+								SpriteEffects.None,
+								0);
+							spriteBatch.DrawString (
+								fontManager.GetFont ("Arial"),
+								String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+								new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+								Color.Black);
+						}
+					}
+
+				if (SelectedSlot != null) {
+					if (SelectedSlot.HasItem) {
+
+						Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
+
 						spriteBatch.Draw (textureManager.GetTexture ("items"),
 							null,
 							r,
-							slots [i, j].Item.getTextureSourceRect (),
+							SelectedSlot.Item.getTextureSourceRect (),
 							null,
 							0,
 							null,
 							Color.White,
 							SpriteEffects.None,
 							0);
-						spriteBatch.DrawString (
-							fontManager.GetFont ("Arial"),
-							String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
-							new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
-							Color.Black);
 					}
-				}
-
-			if (SelectedSlot != null) {
-				if (SelectedSlot.HasItem) {
-
-					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
-
-					spriteBatch.Draw (textureManager.GetTexture ("items"),
-						null,
-						r,
-						SelectedSlot.Item.getTextureSourceRect (),
-						null,
-						0,
-						null,
-						Color.White,
-						SpriteEffects.None,
-						0);
 				}
 			}
 		}
