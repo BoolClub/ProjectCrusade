@@ -50,10 +50,6 @@ namespace ProjectCrusade
 				Moving = true;
 			}
 
-			if (keyState.IsKeyDown (Keys.I) && PlayerInput.PrevKeyState.IsKeyUp(Keys.I)) {
-				player.Inventory.Toggle = !player.Inventory.Toggle;
-			}
-
 
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
@@ -66,10 +62,6 @@ namespace ProjectCrusade
 			//This method was actually added to the Spite class, not the Player class.
 			player.addToPosition(disp);
 
-			//update previous mouse state
-			PrevMouseState = Mouse.GetState ();
-			//update previous keyboard state
-			PrevKeyState = Keyboard.GetState ();
 		}
 
 	} //END OF PLAYERINPUT CLASS

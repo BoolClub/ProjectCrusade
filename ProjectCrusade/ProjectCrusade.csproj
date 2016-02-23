@@ -92,6 +92,7 @@
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Entity\PlayerInput.cs" />
     <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Screens\InventoryScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

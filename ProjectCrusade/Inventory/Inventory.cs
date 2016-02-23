@@ -16,8 +16,6 @@ namespace ProjectCrusade
 		public int Columns { get; private set; }
 
 
-		public bool Toggle { get; set; }
-
 		//The slots
 		InventorySlot[,] slots;
 
@@ -46,6 +44,7 @@ namespace ProjectCrusade
 		const int SlotSpacing = 8;
 
 		public float Opacity { get; set; }
+		public float MainbarOpacity { get; set; }
 
 		Vector2 screenPosition = new Vector2 (16, 16);
 
@@ -63,6 +62,7 @@ namespace ProjectCrusade
 			slots = new InventorySlot[Columns, Rows];
 			SelectedSlot = null;
 			Opacity = 0.25f;
+			MainbarOpacity = 0.5f;
 			Initialize ();
 		}
 
@@ -92,76 +92,96 @@ namespace ProjectCrusade
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 
-			//If the inventory is open...
-			if (Toggle) {
-				checkInventoryItemSelected ();
+			checkInventoryItemSelected ();
 
-				if (SelectedSlot != null) {
-					if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
-						Console.WriteLine (SelectedSlot.Item.ItemInfo ());
-					}
+			if (SelectedSlot != null) {
+				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
+					Console.WriteLine (SelectedSlot.Item.ItemInfo ());
 				}
+			}
 
-				if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
-					activeSlotIndex++;
-				if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
-					activeSlotIndex--;
-
-
-				//TODO: Implement better controls.
-				if (activeSlotIndex < 0)
-					activeSlotIndex += Rows * Columns;
-				if (activeSlotIndex >= Rows * Columns)
-					activeSlotIndex -= Rows * Columns;
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
+				activeSlotIndex++;
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
+				activeSlotIndex--;
 
 
-				//Use active item
+			//TODO: Implement better controls.
+			if (activeSlotIndex < 0)
+				activeSlotIndex += Rows * Columns;
+			if (activeSlotIndex >= Rows * Columns)
+				activeSlotIndex -= Rows * Columns;
 
-				if (
-					Mouse.GetState ().LeftButton == ButtonState.Pressed &&
-					PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && !BoundingRect.Contains (Mouse.GetState ().Position))
-					activeSlot.Item.PrimaryUse (world.Player, world);
+			//loop over number keys
+			for (int i = 0; i < Columns; i++) {
+				if (Columns > 10)
+					throw new Exception ("Cannot have a mainbar larger than 10!");
+				if (Keyboard.GetState ().IsKeyDown (Keys.D0 + i) &&
+				    PlayerInput.PrevKeyState.IsKeyUp (Keys.D0 + i))
+					activeSlotIndex = i;
+			}
+
+			//Use active item
+			if (Mouse.GetState ().LeftButton == ButtonState.Pressed &&
+				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && 
+				!BoundingRect.Contains (Mouse.GetState ().Position) && 
+				activeSlot.HasItem)
+				activeSlot.Item.PrimaryUse (world.Player, world);
+		}
+
+		void drawSlot(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, int i, int j, 
+			float opacity)
+		{
+
+			int disp = SlotSpacing + Item.SpriteWidth;
+
+			int x = (int)screenPosition.X + disp * i;
+			int y = (int)screenPosition.Y + disp * j;
+
+			Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+
+			//draw background of slot
+			spriteBatch.Draw (textureManager.WhitePixel, r,  (slots [i, j] == activeSlot ? Color.Red : Color.White) * opacity);
+			//draw item itself
+			if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
+				spriteBatch.Draw (textureManager.GetTexture ("items"),
+					null,
+					r,
+					slots [i, j].Item.getTextureSourceRect (),
+					null,
+					0,
+					null,
+					Color.White,
+					SpriteEffects.None,
+					0);
+				spriteBatch.DrawString (
+					fontManager.GetFont ("Arial"),
+					String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+					new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+					Color.Black);
 			}
 		}
 
-		//TODO: remove this method
-		//needed to satisfy IUD requirements
-		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager) {}
 
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
+		/// <summary>
+		/// Draw mainbar.
+		/// </summary>
+		public void DrawPartial(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
-			if (Toggle) {
+			//Draw only the top row
+			for (int i = 0; i < Columns; i++) {
+				drawSlot (spriteBatch, textureManager, fontManager, i, 0, MainbarOpacity);
+			}
+		
+		}
+		/// <summary>
+		/// Draw entire inventory.
+		/// </summary>
+		public void DrawComplete(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
+
 				for (int i = 0; i < Columns; i++)
 					for (int j = 0; j < Rows; j++) {
-						
-						
-						int disp = SlotSpacing + Item.SpriteWidth;
-
-						int x = (int)screenPosition.X + disp * i;
-						int y = (int)screenPosition.Y + disp * j;
-
-						Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
-
-						//draw background of slot
-						spriteBatch.Draw (textureManager.WhitePixel, r, (slots [i, j] == activeSlot ? Color.Red : Color.White) * Opacity);
-						//draw item itself
-						if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
-							spriteBatch.Draw (textureManager.GetTexture ("items"),
-								null,
-								r,
-								slots [i, j].Item.getTextureSourceRect (),
-								null,
-								0,
-								null,
-								Color.White,
-								SpriteEffects.None,
-								0);
-							spriteBatch.DrawString (
-								fontManager.GetFont ("Arial"),
-								String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
-								new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
-								Color.Black);
-						}
+						drawSlot (spriteBatch, textureManager, fontManager, i, j, Opacity);
 					}
 
 				if (SelectedSlot != null) {
@@ -181,7 +201,6 @@ namespace ProjectCrusade
 							0);
 					}
 				}
-			}
 		}
 
 
@@ -251,7 +270,7 @@ namespace ProjectCrusade
 						//If you then click on another slot that is not the selected slot...
 						if (SelectedSlot != slots [i, j] && SelectedSlot != null) {
 
-							//If that slot doesn't have an item.
+							//If that slot	 doesn't have an item.
 							if (slots [i, j].HasItem == false) {
 								
 								slots [i, j].AddItem (SelectedSlot.Item);

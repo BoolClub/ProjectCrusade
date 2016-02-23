@@ -28,6 +28,9 @@ namespace ProjectCrusade
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
+			if (Keyboard.GetState ().IsKeyDown (Keys.I) && prevKeyboardState.IsKeyUp(Keys.I))
+				screenManager.PushGameScreen (new InventoryScreen (screenManager, world));
+
 			prevKeyboardState = Keyboard.GetState ();
 		}
 
@@ -58,7 +61,7 @@ namespace ProjectCrusade
 			//Render inventory (do not transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
-			world.PlayerInventory.Draw (spriteBatch, textureManager, fontManager);
+			world.PlayerInventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
 			spriteBatch.End ();
 		}
