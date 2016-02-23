@@ -237,10 +237,15 @@ namespace ProjectCrusade
 					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState().Position.Y) && 
 						(Mouse.GetState().LeftButton == ButtonState.Pressed && PlayerInput.PrevMouseState.LeftButton==ButtonState.Released)) {
 
+						if (slots [i, j] == SelectedSlot && SelectedSlot != null) {
+							SelectedSlot = null;
+							continue;
+						}
 						//If there is no selected slot, set the selected slot.
 						if (SelectedSlot == null && slots [i, j].HasItem) {
 						
 							SelectedSlot = slots [i, j];
+							continue;
 						}
 							
 						//If you then click on another slot that is not the selected slot...
@@ -279,13 +284,9 @@ namespace ProjectCrusade
 									SelectedSlot = null;
 
 								}
-
 							}
-
-
 						}
 					}
-
 				}
 			}
 		}

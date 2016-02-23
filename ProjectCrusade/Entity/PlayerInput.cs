@@ -50,7 +50,7 @@ namespace ProjectCrusade
 				Moving = true;
 			}
 
-			if (keyState.IsKeyDown (Keys.I)) {
+			if (keyState.IsKeyDown (Keys.I) && PlayerInput.PrevKeyState.IsKeyUp(Keys.I)) {
 				player.Inventory.Toggle = !player.Inventory.Toggle;
 			}
 
