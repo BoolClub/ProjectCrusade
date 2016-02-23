@@ -154,11 +154,12 @@ namespace ProjectCrusade
 					Color.White,
 					SpriteEffects.None,
 					0);
-				spriteBatch.DrawString (
-					fontManager.GetFont ("Arial"),
-					String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
-					new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
-					Color.Black);
+				if (slots[i,j].Item.Stackable) 
+					spriteBatch.DrawString (
+						fontManager.GetFont ("Arial"),
+						String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+						new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+						Color.Black);
 			}
 		}
 
@@ -167,43 +168,45 @@ namespace ProjectCrusade
 		/// Draw mainbar.
 		/// </summary>
 		public void DrawPartial(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
-
 			//Draw only the top row
 			for (int i = 0; i < Columns; i++) {
 				drawSlot (spriteBatch, textureManager, fontManager, i, 0, MainbarOpacity);
 			}
-		
+			drawDraggingItem (spriteBatch, textureManager, fontManager);
 		}
 		/// <summary>
 		/// Draw entire inventory.
 		/// </summary>
 		public void DrawComplete(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
-				for (int i = 0; i < Columns; i++)
-					for (int j = 0; j < Rows; j++) {
-						drawSlot (spriteBatch, textureManager, fontManager, i, j, Opacity);
-					}
-
-				if (SelectedSlot != null) {
-					if (SelectedSlot.HasItem) {
-
-						Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
-
-						spriteBatch.Draw (textureManager.GetTexture ("items"),
-							null,
-							r,
-							SelectedSlot.Item.getTextureSourceRect (),
-							null,
-							0,
-							null,
-							Color.White,
-							SpriteEffects.None,
-							0);
-					}
+			for (int i = 0; i < Columns; i++)
+				for (int j = 0; j < Rows; j++) {
+					drawSlot (spriteBatch, textureManager, fontManager, i, j, Opacity);
 				}
+			drawDraggingItem (spriteBatch, textureManager, fontManager);
+
 		}
 
+		void drawDraggingItem(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		{
+			if (SelectedSlot != null) {
+				if (SelectedSlot.HasItem) {
 
+					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
+
+					spriteBatch.Draw (textureManager.GetTexture ("items"),
+						null,
+						r,
+						SelectedSlot.Item.getTextureSourceRect (),
+						null,
+						0,
+						null,
+						Color.White,
+						SpriteEffects.None,
+						0);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Checks if the inventory is full. If it is, you cannot add another item.
