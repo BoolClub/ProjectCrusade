@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-using System.Runtime.InteropServices;
 
 namespace ProjectCrusade {
 	/// <summary>
@@ -13,36 +12,30 @@ namespace ProjectCrusade {
 	public class Player : Entity {
 
 		/// <summary>
-		/// Gets the sanity.
+		/// This is the player's "health." The variable is called "sanity" since this is what we decided we are doing for our game. 
 		/// </summary>
-		/// <value>This is the player's "health." The variable is called "sanity" since this is what we decided we are doing for our game. </value>
 		public int Sanity { get; private set; }
 
 		/// <summary>
 		/// Gets the name of the player.
 		/// </summary>
-		/// <value>The name of the player.</value>
 		public string PlayerName { get; private set; }
 
 		/// <summary>
 		/// Gets the type of the player.
 		/// </summary>
-		/// <value>The type of the player.</value>
 		public static PlayerType PlayerType { get; private set; }
 
 		public Inventory Inventory;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ProjectCrusade.Player"/> class.
-		/// </summary>
 		public Player (String name, PlayerType type) {
 			PlayerName = name;
 			PlayerType = type;
 			Width = 32;
 			Height = 32;
 			Speed = 200;
-			Inventory = new Inventory (4, 8);
+			Inventory = new Inventory (4, 10);
 			Inventory.AddItem (new Apple ());
 			Inventory.AddItem (new Apple());
 			Inventory.AddItem (new Coin(5));

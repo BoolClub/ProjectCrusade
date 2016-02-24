@@ -96,7 +96,7 @@ namespace ProjectCrusade
 
 			if (SelectedSlot != null) {
 				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
-					Console.WriteLine (SelectedSlot.Item.ItemInfo ());
+					Console.WriteLine (SelectedSlot.Item.ItemInfo);
 				}
 			}
 
@@ -116,8 +116,13 @@ namespace ProjectCrusade
 			for (int i = 0; i < Columns; i++) {
 				if (Columns > 10)
 					throw new Exception ("Cannot have a mainbar larger than 10!");
-				if (Keyboard.GetState ().IsKeyDown (Keys.D0 + i) &&
-				    PlayerInput.PrevKeyState.IsKeyUp (Keys.D0 + i))
+				if (i != 9 && 
+					Keyboard.GetState ().IsKeyDown (Keys.D1 + i) &&
+				    PlayerInput.PrevKeyState.IsKeyUp (Keys.D1 + i))
+					activeSlotIndex = i;
+				else if (i==9 && 
+					Keyboard.GetState ().IsKeyDown (Keys.D0) &&
+					PlayerInput.PrevKeyState.IsKeyUp (Keys.D0))
 					activeSlotIndex = i;
 			}
 
@@ -138,10 +143,13 @@ namespace ProjectCrusade
 			int x = (int)screenPosition.X + disp * i;
 			int y = (int)screenPosition.Y + disp * j;
 
+
+			//Box expanded by two to occupy a bit more space than item sprite itself.
+			Rectangle rBox = new Rectangle (x-2, y-2, Item.SpriteWidth+4, Item.SpriteWidth+4);
 			Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
 			//draw background of slot
-			spriteBatch.Draw (textureManager.WhitePixel, r,  (slots [i, j] == activeSlot ? Color.Red : Color.White) * opacity);
+			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), rBox,  (slots [i, j] == activeSlot ? Color.Red : Color.White) * opacity);
 			//draw item itself
 			if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
 				spriteBatch.Draw (textureManager.GetTexture ("items"),
@@ -233,25 +241,18 @@ namespace ProjectCrusade
 		/// <returns><c>true</c>, if item was added, <c>false</c> otherwise.</returns>
 		public bool AddItem(Item item) 
 		{
-			//TODO: check if similar item exists in inventory.
-			if (IsFull)
-				return false;
-
 			for (int j = 0; j < Rows; j++)
 				for (int i = 0; i < Columns; i++) {
-					if (!slots [i,j].HasItem) {
-						slots [i,j].AddItem (item);
+					if (slots [i,j].AddItem (item))
 						return true;
-					}
 				}
-			return true;
+			return false;
 		}
 
 
 		/// <summary>
 		/// Checks if an item in the inventory is going to be selected.
 		/// </summary>
-		/// <value> SelectedSlot </value>
 		private void checkInventoryItemSelected() {
 
 			for (int j = 0; j < Rows; j++) {
