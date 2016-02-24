@@ -45,7 +45,7 @@ namespace ProjectCrusade
 
 		public World (int width, int height)
 		{
-			Player = new Player ("test", PlayerType.Wizard);
+			Player = new Player ("test", PlayerType.Wizard, this);
 			Player.Position = new Vector2 (100, 100);
 			Width = width;
 			Height = height;

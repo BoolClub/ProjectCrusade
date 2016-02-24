@@ -1,15 +1,14 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/23/2016 3:10:09 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/24/2016 10:34:47 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Inventory/Inventory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Entity/PlayerInput.cs">
     <Files>
-      <File FileName="ProjectCrusade/MainGame.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Sprite.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="54" Column="42" />
-      <File FileName="ProjectCrusade/GUI/Menu.cs" Line="39" Column="3" />
-      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="254" Column="23" />
-      <File FileName="ProjectCrusade/Items/ItemTypes/Item.cs" Line="74" Column="12" />
+      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="250" Column="4" />
+      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="58" Column="48" />
+      <File FileName="ProjectCrusade/Entity/Player.cs" Line="9" Column="15" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="33" Column="68" />
+      <File FileName="ProjectCrusade/Items/FoodItem.cs" Line="61" Column="77" />
+      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="81" Column="3" />
+      <File FileName="ProjectCrusade/Items/Item.cs" Line="104" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

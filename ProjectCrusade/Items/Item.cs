@@ -41,6 +41,7 @@ namespace ProjectCrusade
 		Bread			= 6,
 		StoneSword		= 7,
 		IronSword		= 8,
+
 	}
 
 
@@ -95,6 +96,15 @@ namespace ProjectCrusade
 
 			return new Rectangle (x * SpriteWidth, y * SpriteWidth, SpriteWidth, SpriteWidth);
 		}
+
+		public bool isFood() {
+			if (Type == ItemType.Apple || Type == ItemType.Bread || Type == ItemType.Water) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// Activated when the player, e.g., left clicks
 		/// </summary>

@@ -12,7 +12,13 @@ namespace ProjectCrusade
 		//All food items heal.
 		public override void PrimaryUse (Player player, World world)
 		{
-			player.Heal (HealValue);
+			if (player.Sanity + HealValue <= 100) {
+				player.Heal (HealValue);
+				Console.WriteLine ("Sanity: " + player.Sanity);
+			} else {
+				player.Sanity = 100;
+				Console.WriteLine ("Sanity: " + player.Sanity);
+			}
 		}
 		
 	
@@ -39,7 +45,7 @@ namespace ProjectCrusade
 		public override bool Stackable 			{ get { return false; 	} }
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }
-		public override string ItemInfo 		{ get { return "Nice, refreshing water"; 		} }
+		public override string ItemInfo 		{ get { return "Nice, refreshing water."; 		} }
 
 		public Water () { }
 	} //END OF WATER CLASS
@@ -52,7 +58,7 @@ namespace ProjectCrusade
 		public override bool Stackable 			{ get { return false; 	} }
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }
-		public override string ItemInfo 		{ get { return "Nice, refreshing bread"; 		} }
+		public override string ItemInfo 		{ get { return "A big loaf of bread."; 	} }
 
 		public Bread () { }
 	} 

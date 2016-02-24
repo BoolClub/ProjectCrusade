@@ -51,6 +51,22 @@ namespace ProjectCrusade
 			}
 
 
+			//Primary Use Items
+			if (keyState.IsKeyDown (Keys.Q)) {
+				if (player.Inventory.activeSlot != null) {
+					
+					if (player.Inventory.activeSlot.HasItem) {
+						player.Inventory.activeSlot.Item.PrimaryUse (player, player.world);
+
+						//Only remove the item if it is food, since it cannot be stacked and therefore there would only be one of it.
+						if (player.Inventory.activeSlot.Item.isFood ()) {
+							player.Inventory.activeSlot.RemoveItem ();
+						}
+					}
+
+				}
+			}
+
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
 				disp /= (float)Math.Sqrt (2.0);

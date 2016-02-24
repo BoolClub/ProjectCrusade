@@ -24,7 +24,7 @@ namespace ProjectCrusade
 		//The slot that is currently active. Used for performing actions on inventory items.
 		int activeSlotIndex;
 		//returns the slot that corresponds to activeSlotIndex
-		InventorySlot activeSlot { get { 
+		public InventorySlot activeSlot { get { 
 				int x = activeSlotIndex % Columns;
 				int y = activeSlotIndex / Columns;
 				return slots[x,y];

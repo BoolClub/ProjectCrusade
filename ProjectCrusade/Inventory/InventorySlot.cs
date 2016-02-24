@@ -70,7 +70,17 @@ namespace ProjectCrusade
 			}
 		}
 
-	
+		/// <summary>
+		/// Removes an item from the inventory
+		/// </summary>
+		/// <returns><c>true</c>, if item was removed, <c>false</c> otherwise.</returns>
+		public bool RemoveItem() {
+			this.Item = null;
+
+			if (Item == null) { return true; } else { return false; }
+		}
+
+
 	} //END OF INVENTORYSLOT CLASS
 
 

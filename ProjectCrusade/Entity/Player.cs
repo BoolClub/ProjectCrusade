@@ -14,7 +14,7 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// This is the player's "health." The variable is called "sanity" since this is what we decided we are doing for our game. 
 		/// </summary>
-		public int Sanity { get; private set; }
+		public int Sanity { get; set; }
 
 		/// <summary>
 		/// Gets the name of the player.
@@ -26,15 +26,21 @@ namespace ProjectCrusade {
 		/// </summary>
 		public static PlayerType PlayerType { get; private set; }
 
-		public Inventory Inventory;
+		public Inventory Inventory { get; }
+
+		public World world;
 
 
-		public Player (String name, PlayerType type) {
+		public Player (String name, PlayerType type, World w) {
 			PlayerName = name;
 			PlayerType = type;
 			Width = 32;
 			Height = 32;
 			Speed = 200;
+
+			Sanity = 50;
+
+			world = w;
 			Inventory = new Inventory (4, 10);
 			Inventory.AddItem (new Apple ());
 			Inventory.AddItem (new Apple());
