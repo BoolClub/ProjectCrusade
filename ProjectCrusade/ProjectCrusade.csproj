@@ -91,6 +91,7 @@
     <Compile Include="Items\SwordItem.cs" />
     <Compile Include="Items\WandItem.cs" />
     <Compile Include="Items\WeaponItem.cs" />
+    <Compile Include="World\Light.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

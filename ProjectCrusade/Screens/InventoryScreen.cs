@@ -12,12 +12,15 @@ namespace ProjectCrusade
 		public InventoryScreen (GameScreenManager screenManager, World _world)
 		{
 			world = _world;
+			world.Player.Inventory.Open = true;
 		}
 
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
-			if (Keyboard.GetState ().IsKeyDown (Keys.I) && PlayerInput.PrevKeyState.IsKeyUp (Keys.I))
+			if (Keyboard.GetState ().IsKeyDown (Keys.I) && PlayerInput.PrevKeyState.IsKeyUp (Keys.I)) {
 				screenManager.PopGameScreen ();
+				world.Player.Inventory.Open = false;
+			}
 
 			world.Player.Inventory.Update (gameTime, world);
 		}

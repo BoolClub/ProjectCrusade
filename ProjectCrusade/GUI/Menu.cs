@@ -71,7 +71,13 @@ namespace ProjectCrusade
 		public void Draw(SpriteBatch spriteBatch, FontManager fontManager)
 		{
 			for (int i = 0; i < menuItems.Count; i++) {
-				spriteBatch.DrawString (fontManager.GetFont(fontName), menuItems [i].Text, Position + new Vector2 (0, i * TextHeight), i==selectedMenuItem ? Color.Red : Color.White);
+				spriteBatch.DrawString (
+					fontManager.GetFont(fontName), 
+					menuItems [i].Text, 
+					Position + new Vector2 (
+						-(float)fontManager.GetFont(fontName).MeasureString(menuItems[i].Text).X/2, 
+						i * TextHeight), 
+					i==selectedMenuItem ? Color.Red : Color.White);
 			}
 		}
 	}
