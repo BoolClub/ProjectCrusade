@@ -71,13 +71,18 @@ namespace ProjectCrusade
 		}
 
 		/// <summary>
-		/// Removes an item from the inventory
+		/// Removes some number of items from the slot (one by default)
 		/// </summary>
 		/// <returns><c>true</c>, if item was removed, <c>false</c> otherwise.</returns>
-		public bool RemoveItem() {
-			this.Item = null;
+		public bool RemoveItem(int count = 1) {
+			if (Item == null || Item.CurrentStackSize==0)
+				return false;
+			int prevSize = Item.CurrentStackSize;
 
-			if (Item == null) { return true; } else { return false; }
+			Item.AddToStack (-count);
+			if (Item.CurrentStackSize <= 0)
+				Item = null;
+			return true;
 		}
 
 

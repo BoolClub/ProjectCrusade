@@ -12,13 +12,8 @@ namespace ProjectCrusade
 		//All food items heal.
 		public override void PrimaryUse (World world)
 		{
-			if (world.Player.Sanity + HealValue <= 100) {
 				world.Player.Heal (HealValue);
 				Console.WriteLine ("Sanity: " + world.Player.Sanity);
-			} else {
-				world.Player.Sanity = 100;
-				Console.WriteLine ("Sanity: " + world.Player.Sanity);
-			}
 		}
 		
 	

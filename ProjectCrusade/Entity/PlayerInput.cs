@@ -52,14 +52,15 @@ namespace ProjectCrusade
 
 
 			//Primary Use Items
-			if (keyState.IsKeyDown (Keys.Q)) {
+			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
 				if (player.Inventory.ActiveSlot != null) {
 					
 					if (player.Inventory.ActiveSlot.HasItem) {
+						
 						player.Inventory.ActiveSlot.Item.PrimaryUse (player.world);
 
-						//Only remove the item if it is food, since it cannot be stacked and therefore there would only be one of it.
-						if (player.Inventory.ActiveSlot.Item.isFood ()) {
+						//If the item is depletable, it is removed when used.
+						if (player.Inventory.ActiveSlot.Item.Depletable) {
 							player.Inventory.ActiveSlot.RemoveItem ();
 						}
 					}
@@ -75,7 +76,7 @@ namespace ProjectCrusade
 				disp /= (float)Math.Sqrt (2.0);
 			}
 
-			//This method was actually added to the Spite class, not the Player class.
+			//This method was actually added to the Sprite class, not the Player class.
 			player.addToPosition(disp);
 
 		}

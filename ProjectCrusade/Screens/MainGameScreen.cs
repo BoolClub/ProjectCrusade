@@ -63,6 +63,10 @@ namespace ProjectCrusade
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
+			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
+
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 10) - fontManager.GetFont ("Arial").MeasureString (text), Color.White);
+
 			spriteBatch.End ();
 		}
 	}

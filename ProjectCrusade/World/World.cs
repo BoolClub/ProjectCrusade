@@ -42,6 +42,8 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
+		Color ambientLighting = Color.Black;
+
 
 		public World (int width, int height)
 		{
@@ -77,9 +79,10 @@ namespace ProjectCrusade
 		}
 
 
-		float lightFalloffFunction(float distance) {
-			distance /= Item.SpriteWidth;
-			return 1.0f / (distance * distance + 1.0f);
+		//where distance2 is the squared distance
+		float lightFalloffFunction(float distance2) {
+			distance2 /= Item.SpriteWidth*Item.SpriteWidth;
+			return 1.0f / (distance2 + 1.0f);
 		}
 
 		void updateLighting()
@@ -87,13 +90,17 @@ namespace ProjectCrusade
 			foreach (WorldLayer layer in layers) {
 				for (int i = 0; i < Width; i++) {
 					for (int j = 0; j < Height; j++) {
-						Vector3 totalColor = Vector3.Zero;
+						Vector3 totalColor = ambientLighting.ToVector3();
 						//TODO: optimize this. Bad complexity. 
+						//TODO: update within a certain distance of each light
+						//		This will become inefficient when the world becomes large.
 						foreach (Light light in lights) {
-							float distance = (tileToWorldCoord (i, j) - light.Position).Length();
+							float distance = (tileToWorldCoord (i, j)
+								- light.Position).LengthSquared();
 							totalColor+=light.Strength * light.Color.ToVector3() * lightFalloffFunction (distance);
 
 						}
+
 						layer.Tiles [i, j].Color.R = (byte)(MathHelper.Clamp(totalColor.X * 255, 0, 255));
 						layer.Tiles [i, j].Color.G = (byte)(MathHelper.Clamp(totalColor.Y * 255, 0, 255));
 						layer.Tiles [i, j].Color.B = (byte)(MathHelper.Clamp(totalColor.Z * 255, 0, 255));

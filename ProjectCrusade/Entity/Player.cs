@@ -16,6 +16,10 @@ namespace ProjectCrusade {
 		/// </summary>
 		public int Sanity { get; set; }
 
+
+		//Different classes might have different max sanities
+		public int MaxSanity { get; set; }
+
 		/// <summary>
 		/// Gets the name of the player.
 		/// </summary>
@@ -31,6 +35,7 @@ namespace ProjectCrusade {
 		public World world;
 
 
+
 		public Player (String name, PlayerType type, World w) {
 			PlayerName = name;
 			PlayerType = type;
@@ -39,6 +44,7 @@ namespace ProjectCrusade {
 			Speed = 200;
 
 			Sanity = 50;
+			MaxSanity = 100;
 
 			world = w;
 			Inventory = new Inventory (4, 10);
@@ -71,11 +77,6 @@ namespace ProjectCrusade {
 			Inventory.Update (time, world);
 
 
-			//Use active item
-			if (Mouse.GetState ().LeftButton == ButtonState.Pressed &&
-				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && 
-				Inventory.ActiveSlot.HasItem)
-				Inventory.ActiveSlot.Item.PrimaryUse (world);
 
 
 			//Checking for player input.
@@ -94,7 +95,13 @@ namespace ProjectCrusade {
 
 		//SETTERS
 		public void Damage(int amount) { Sanity -= amount; }
-		public void Heal(int amount) { Sanity += amount; }
+		public void Heal(int amount) { 
+
+			if (Sanity + amount >= MaxSanity)
+				Sanity += amount;
+			else
+				Sanity = MaxSanity;
+		}
 
 
 	} //END OF 'PLAYER' CLASS
