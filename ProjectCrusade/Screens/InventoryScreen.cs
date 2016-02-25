@@ -7,7 +7,7 @@ namespace ProjectCrusade
 {
 	public class InventoryScreen : GameScreen
 	{
-
+		public const float Opacity = 0.5f;
 		World world;
 		public InventoryScreen (GameScreenManager screenManager, World _world)
 		{
@@ -29,7 +29,11 @@ namespace ProjectCrusade
 		{
 			spriteBatch.Begin ();
 
-
+			spriteBatch.Draw (
+				textureManager.WhitePixel, 
+				new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), 
+				Color.Black * Opacity);
+			
 			world.Player.Inventory.DrawComplete (spriteBatch, textureManager, fontManager);
 
 			spriteBatch.End ();

@@ -48,8 +48,8 @@ namespace ProjectCrusade
 		public float Opacity { get; set; }
 		public float MainbarOpacity { get; set; }
 
-		Vector2 mainbarPosition = new Vector2 (16, 16);
-		Vector2 screenPosition = new Vector2 (16, 16);
+		Vector2 mainbarPosition;
+		Vector2 screenPosition;
 
 		Vector2 tooltipPosition;
 		string tooltipText;
@@ -65,6 +65,9 @@ namespace ProjectCrusade
 		public Inventory (int rows, int columns) {
 			Rows = rows;
 			Columns = columns;
+
+			mainbarPosition = new Vector2 (MainGame.WindowWidth / 2 - BoundingRect.Width / 2, 16);
+			screenPosition = new Vector2(MainGame.WindowWidth - BoundingRect.Width, MainGame.WindowHeight - BoundingRect.Height)*0.5f; 
 			slots = new InventorySlot[Columns, Rows];
 			SelectedSlot = null;
 			Opacity = 0.25f;
@@ -130,6 +133,11 @@ namespace ProjectCrusade
 		void updateTooltip()
 		{
 			bool foundCursor = false;
+			if (SelectedSlot != null) {
+				tooltipText = SelectedSlot.Item.ItemInfo;
+				tooltipPosition = Mouse.GetState ().Position.ToVector2();
+				foundCursor = true;
+			}
 			if (Open) {
 				for (int i = 0; i < Columns; i++) {
 					if (foundCursor)
@@ -158,8 +166,10 @@ namespace ProjectCrusade
 
 			int disp = SlotSpacing + Item.SpriteWidth;
 
-			int x = (int)screenPosition.X + disp * i;
-			int y = (int)screenPosition.Y + disp * j;
+
+
+			int x = (int)(Open ? screenPosition.X : mainbarPosition.X) + disp * i;
+			int y = (int)(Open ? screenPosition.Y : mainbarPosition.Y) + disp * j;
 
 
 			//Box expanded by two to occupy a bit more space than item sprite itself.
@@ -184,7 +194,7 @@ namespace ProjectCrusade
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),
 						String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
-						new Vector2 (slots [i, j].CollisionBox.X, slots [i, j].CollisionBox.Y),
+						new Vector2 (x,y),
 						Color.Black);
 			}
 		}
