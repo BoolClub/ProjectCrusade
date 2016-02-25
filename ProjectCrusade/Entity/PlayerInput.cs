@@ -53,14 +53,14 @@ namespace ProjectCrusade
 
 			//Primary Use Items
 			if (keyState.IsKeyDown (Keys.Q)) {
-				if (player.Inventory.activeSlot != null) {
+				if (player.Inventory.ActiveSlot != null) {
 					
-					if (player.Inventory.activeSlot.HasItem) {
-						player.Inventory.activeSlot.Item.PrimaryUse (player, player.world);
+					if (player.Inventory.ActiveSlot.HasItem) {
+						player.Inventory.ActiveSlot.Item.PrimaryUse (player.world);
 
 						//Only remove the item if it is food, since it cannot be stacked and therefore there would only be one of it.
-						if (player.Inventory.activeSlot.Item.isFood ()) {
-							player.Inventory.activeSlot.RemoveItem ();
+						if (player.Inventory.ActiveSlot.Item.isFood ()) {
+							player.Inventory.ActiveSlot.RemoveItem ();
 						}
 					}
 
