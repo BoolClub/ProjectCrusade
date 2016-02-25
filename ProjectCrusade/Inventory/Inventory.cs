@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace ProjectCrusade
 {
 	public class Inventory {
-
+		
 		//The number of rows and columns (inventory slots) to have in the Inventory.
 		public int Rows { get; private set; }
 		public int Columns { get; private set; }
@@ -24,13 +24,15 @@ namespace ProjectCrusade
 		//The slot that is currently active. Used for performing actions on inventory items.
 		int activeSlotIndex;
 		//returns the slot that corresponds to activeSlotIndex
-		public InventorySlot activeSlot { get { 
+		public InventorySlot ActiveSlot { get {
 				int x = activeSlotIndex % Columns;
 				int y = activeSlotIndex / Columns;
 				return slots[x,y];
 			}
 		}
 
+		//Whether or not full inventory is open
+		public bool Open { get; set; }
 
 		//The number of items in the inventory (see 'checkInventoryFull' method below).
 		private int numItems = 0;
@@ -92,7 +94,10 @@ namespace ProjectCrusade
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 
-			checkInventoryItemSelected ();
+			if (Open) checkInventoryItemSelected ();
+			if (!Open)
+				SelectedSlot = null;
+
 
 			if (SelectedSlot != null) {
 				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
@@ -108,9 +113,9 @@ namespace ProjectCrusade
 
 			//TODO: Implement better controls.
 			if (activeSlotIndex < 0)
-				activeSlotIndex += Rows * Columns;
-			if (activeSlotIndex >= Rows * Columns)
-				activeSlotIndex -= Rows * Columns;
+				activeSlotIndex += Columns;
+			if (activeSlotIndex >= Columns)
+				activeSlotIndex -= Columns;
 
 			//loop over number keys
 			for (int i = 0; i < Columns; i++) {
@@ -126,12 +131,6 @@ namespace ProjectCrusade
 					activeSlotIndex = i;
 			}
 
-			//Use active item
-			if (Mouse.GetState ().LeftButton == ButtonState.Pressed &&
-				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && 
-				!BoundingRect.Contains (Mouse.GetState ().Position) && 
-				activeSlot.HasItem)
-				activeSlot.Item.PrimaryUse (world.Player, world);
 		}
 
 		void drawSlot(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, int i, int j, 
@@ -149,7 +148,7 @@ namespace ProjectCrusade
 			Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
 			//draw background of slot
-			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), rBox,  (slots [i, j] == activeSlot ? Color.Red : Color.White) * opacity);
+			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), rBox,  (slots [i, j] == ActiveSlot ? Color.Red : Color.White) * opacity);
 			//draw item itself
 			if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
 				spriteBatch.Draw (textureManager.GetTexture ("items"),

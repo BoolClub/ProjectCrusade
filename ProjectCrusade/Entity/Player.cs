@@ -71,6 +71,13 @@ namespace ProjectCrusade {
 			Inventory.Update (time, world);
 
 
+			//Use active item
+			if (Mouse.GetState ().LeftButton == ButtonState.Pressed &&
+				PlayerInput.PrevMouseState.LeftButton == ButtonState.Released && 
+				Inventory.ActiveSlot.HasItem)
+				Inventory.ActiveSlot.Item.PrimaryUse (world);
+
+
 			//Checking for player input.
 			PlayerInput.CheckInput(time);
 

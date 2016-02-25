@@ -18,11 +18,11 @@ namespace ProjectCrusade
 		}
 
 		//All arrows have same behavior
-		public override void PrimaryUse (Player player, World world)
+		public override void PrimaryUse (World world)
 		{
 			throw new NotImplementedException ();
 		}
-		public override void SecondaryUse (Player player, World world)
+		public override void SecondaryUse (World world)
 		{
 			throw new NotImplementedException ();
 		}

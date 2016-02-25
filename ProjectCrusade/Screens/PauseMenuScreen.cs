@@ -65,7 +65,15 @@ namespace ProjectCrusade
 
 			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), Color.Black * 0.5f);
 
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), "Paused", menu.Position - new Vector2 (0, 50), Color.White);
+			string text = "Paused";
+
+			spriteBatch.DrawString (
+				fontManager.GetFont ("Arial"), 
+				text, 
+				menu.Position - new Vector2 (
+					(float)fontManager.GetFont("Arial").MeasureString(text).X/2, 
+					50), 
+				Color.White);
 
 			menu.Draw (spriteBatch, fontManager);
 

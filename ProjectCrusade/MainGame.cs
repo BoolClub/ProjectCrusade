@@ -106,14 +106,18 @@ namespace ProjectCrusade
 		/// <summary>
 		/// This is called when the game should draw itself.
 		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw (GameTime gameTime)
 		{
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 		
 			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), String.Format("ProjectCrusade Alpha\nframetime {0} ms", frameCounter.AverageElapsedMilliseconds), new Vector2 (10, WindowHeight - 50), Color.White);
+			spriteBatch.DrawString (
+				fontManager.GetFont ("Arial"), 
+				String.Format("ProjectCrusade {1}\nframetime {0} ms", 
+					frameCounter.AverageElapsedMilliseconds, 
+					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),
+					new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
 
 

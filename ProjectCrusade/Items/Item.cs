@@ -108,11 +108,11 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Activated when the player, e.g., left clicks
 		/// </summary>
-		public virtual void PrimaryUse(Player player, World world) { }
+		public virtual void PrimaryUse(World world) { }
 		/// <summary>
 		/// Optional use for when the player, e.g., right clicks
 		/// </summary>
-		public virtual void SecondaryUse(Player player, World world) { }
+		public virtual void SecondaryUse(World world) { }
 	}
 
 }

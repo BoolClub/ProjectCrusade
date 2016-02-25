@@ -45,7 +45,7 @@ namespace ProjectCrusade
 			const float speed = 0.05f;
 
 			//Expontial following
-			camera.Position+= (world.GetPlayerPosition () - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
+			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
@@ -61,7 +61,7 @@ namespace ProjectCrusade
 			//Render inventory (do not transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
-			world.PlayerInventory.DrawPartial (spriteBatch, textureManager, fontManager);
+			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
 			spriteBatch.End ();
 		}

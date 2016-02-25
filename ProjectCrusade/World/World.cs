@@ -15,7 +15,7 @@ namespace ProjectCrusade
 
 			for (int i = 0; i < width; i++)
 				for (int j = 0; j < height; j++)
-					Tiles [i, j] = new Tile (solidType);
+					Tiles [i, j] = new Tile (solidType, true, Color.White);
 		}
 	}
 
@@ -40,8 +40,8 @@ namespace ProjectCrusade
 
 		List<Entity> entities;
 
+		List<Light> lights;
 
-		public Inventory PlayerInventory { get { return Player.Inventory; } }
 
 		public World (int width, int height)
 		{
@@ -56,6 +56,9 @@ namespace ProjectCrusade
 			entities = new List<Entity> ();
 
 			entities.Add (Player);
+
+			lights = new List<Light> ();
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 10.0f));
 		}
 
 		public void Update(GameTime gameTime)
@@ -69,6 +72,34 @@ namespace ProjectCrusade
 					entities.RemoveAt (i);
 			}
 
+			lights [0].Position = Player.Position;
+			updateLighting ();
+		}
+
+
+		float lightFalloffFunction(float distance) {
+			distance /= Item.SpriteWidth;
+			return 1.0f / (distance * distance + 1.0f);
+		}
+
+		void updateLighting()
+		{
+			foreach (WorldLayer layer in layers) {
+				for (int i = 0; i < Width; i++) {
+					for (int j = 0; j < Height; j++) {
+						Vector3 totalColor = Vector3.Zero;
+						//TODO: optimize this. Bad complexity. 
+						foreach (Light light in lights) {
+							float distance = (tileToWorldCoord (i, j) - light.Position).Length();
+							totalColor+=light.Strength * light.Color.ToVector3() * lightFalloffFunction (distance);
+
+						}
+						layer.Tiles [i, j].Color.R = (byte)(MathHelper.Clamp(totalColor.X * 255, 0, 255));
+						layer.Tiles [i, j].Color.G = (byte)(MathHelper.Clamp(totalColor.Y * 255, 0, 255));
+						layer.Tiles [i, j].Color.B = (byte)(MathHelper.Clamp(totalColor.Z * 255, 0, 255));
+					}
+				}
+			}
 		}
 
 		void updateEntity(GameTime gameTime, Entity entity)
@@ -114,6 +145,12 @@ namespace ProjectCrusade
 			return y / TileWidth;
 		}
 
+		//get upper-right-hand corner of a tile
+		Vector2 tileToWorldCoord(int x, int y)
+		{
+			return new Vector2 (TileWidth * x, TileWidth * y);
+		}
+
 		Rectangle getTileSourceRect(Tile t)
 		{
 			int id = (int)t.Type;
@@ -141,7 +178,7 @@ namespace ProjectCrusade
 								null,
 								layer.Tiles[i,j].Rotation,
 								null,
-								Color.White,
+								layer.Tiles[i,j].Color,
 								SpriteEffects.None,
 								0);
 					}
@@ -155,9 +192,6 @@ namespace ProjectCrusade
 		//TODO: Add procedural world generation
 
 
-		public Vector2 GetPlayerPosition() {
-			return Player.Position;
-		}
 	}
 }
 
