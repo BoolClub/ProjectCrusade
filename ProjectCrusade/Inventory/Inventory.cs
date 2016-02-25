@@ -48,7 +48,11 @@ namespace ProjectCrusade
 		public float Opacity { get; set; }
 		public float MainbarOpacity { get; set; }
 
+		Vector2 mainbarPosition = new Vector2 (16, 16);
 		Vector2 screenPosition = new Vector2 (16, 16);
+
+		Vector2 tooltipPosition;
+		string tooltipText;
 
 		public Rectangle BoundingRect { get { return new Rectangle (
 				(int)screenPosition.X, 
@@ -67,9 +71,6 @@ namespace ProjectCrusade
 			MainbarOpacity = 0.5f;
 			Initialize ();
 		}
-
-
-
 
 		public void Initialize() {
 			for (int x = 0; x < Columns; x++) {
@@ -98,13 +99,6 @@ namespace ProjectCrusade
 			if (!Open)
 				SelectedSlot = null;
 
-
-			if (SelectedSlot != null) {
-				if (Keyboard.GetState ().IsKeyDown (Keys.J) && PlayerInput.PrevKeyState.IsKeyUp (Keys.J)) {
-					Console.WriteLine (SelectedSlot.Item.ItemInfo);
-				}
-			}
-
 			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
 				activeSlotIndex++;
 			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
@@ -130,8 +124,33 @@ namespace ProjectCrusade
 					PlayerInput.PrevKeyState.IsKeyUp (Keys.D0))
 					activeSlotIndex = i;
 			}
-
+			updateTooltip ();
 		}
+
+		void updateTooltip()
+		{
+			bool foundCursor = false;
+			if (Open) {
+				for (int i = 0; i < Columns; i++) {
+					if (foundCursor)
+						break;
+					for (int j = 0; j < Rows; j++) {
+						if (foundCursor)
+							break;
+						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
+							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
+								tooltipText = slots [i, j].Item.ItemInfo;
+								tooltipPosition = Mouse.GetState ().Position.ToVector2();
+							}
+							foundCursor = true;
+						}
+					}
+				}
+			}
+			if (!foundCursor)
+				tooltipText = "";
+		}
+
 
 		void drawSlot(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, int i, int j, 
 			float opacity)
@@ -191,7 +210,7 @@ namespace ProjectCrusade
 					drawSlot (spriteBatch, textureManager, fontManager, i, j, Opacity);
 				}
 			drawDraggingItem (spriteBatch, textureManager, fontManager);
-
+			drawTooltip (spriteBatch, fontManager);
 		}
 
 		void drawDraggingItem(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
@@ -212,6 +231,18 @@ namespace ProjectCrusade
 						SpriteEffects.None,
 						0);
 				}
+			}
+		}
+
+		void drawTooltip(SpriteBatch spriteBatch, FontManager fontManager)
+		{
+			if (tooltipText != "" && Open) {
+				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
+					tooltipPosition
+					+ new Vector2(1,1-fontManager.GetFont("Arial").MeasureString(tooltipText).Y), Color.Black);
+				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
+					tooltipPosition
+					+ new Vector2(0,0-fontManager.GetFont("Arial").MeasureString(tooltipText).Y), Color.White);
 			}
 		}
 
