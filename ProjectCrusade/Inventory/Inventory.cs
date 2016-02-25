@@ -102,9 +102,11 @@ namespace ProjectCrusade
 			if (!Open)
 				SelectedSlot = null;
 
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0 ||
+				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex++;
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0 ||
+				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex--;
 
 
