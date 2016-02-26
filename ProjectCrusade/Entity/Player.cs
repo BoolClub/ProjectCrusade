@@ -14,11 +14,11 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// This is the player's "health." The variable is called "sanity" since this is what we decided we are doing for our game. 
 		/// </summary>
-		public int Sanity { get; set; }
+		public float Sanity { get; set; }
 
 
 		//Different classes might have different max sanities
-		public int MaxSanity { get; set; }
+		public float MaxSanity { get; set; }
 
 		/// <summary>
 		/// Gets the name of the player.
@@ -97,7 +97,7 @@ namespace ProjectCrusade {
 		public void Damage(int amount) { Sanity -= amount; }
 		public void Heal(int amount) { 
 
-			if (Sanity + amount >= MaxSanity)
+			if (Sanity + amount <= MaxSanity)
 				Sanity += amount;
 			else
 				Sanity = MaxSanity;
@@ -116,7 +116,7 @@ namespace ProjectCrusade {
 		Rogue,
 		Knight,
 		Wizard,
-		Arrowman,
+		Archer,
 	} //END OF PLAYERTYPE ENUM
 
 
