@@ -12,7 +12,7 @@ namespace ProjectCrusade
 
 		public ArrowItem ()
 		{
-			if (Player.PlayerType == PlayerType.Arrowman) {
+			if (Player.PlayerType == PlayerType.Archer) {
 				Useable = true;
 			} else {
 				Useable = false;

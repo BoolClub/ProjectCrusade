@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
@@ -67,6 +68,23 @@ namespace ProjectCrusade
 
 				}
 			}
+
+			//Quickly add an item -- (just for testing purposes)
+			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyDown (Keys.N)) {
+				List<Item> t = new List<Item> ();
+				t.Add (new Apple());
+				t.Add (new Water ());
+				t.Add (new Bread ());
+				t.Add (new Coin ());
+				t.Add (new WoodenSword ());
+				t.Add (new IronSword ());
+				t.Add (new StoneSword ());
+				t.Add (new StarterArrow ());
+				t.Add (new MagicWand ());
+
+				player.Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
+			}
+
 
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {

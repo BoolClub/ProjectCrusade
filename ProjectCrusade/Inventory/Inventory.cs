@@ -92,19 +92,19 @@ namespace ProjectCrusade
 			}
 			activeSlotIndex = 0;
 		}
-
-
-
+			
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 
 			if (Open) checkInventoryItemSelected ();
-			if (!Open)
-				SelectedSlot = null;
+			if (!Open) SelectedSlot = null;
 
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0)
+
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0 ||
+				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex++;
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0)
+			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0 ||
+				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex--;
 
 
@@ -246,13 +246,15 @@ namespace ProjectCrusade
 
 		void drawTooltip(SpriteBatch spriteBatch, FontManager fontManager)
 		{
+			// TODO: Draw a background for the tooltip so that it's easier to read.
 			if (tooltipText != "" && Open) {
 				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
 					tooltipPosition
-					+ new Vector2(1,1-fontManager.GetFont("Arial").MeasureString(tooltipText).Y), Color.Black);
+					+ new Vector2 (1, 1 - fontManager.GetFont ("Arial").MeasureString (tooltipText).Y), Color.Black);
 				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
 					tooltipPosition
-					+ new Vector2(0,0-fontManager.GetFont("Arial").MeasureString(tooltipText).Y), Color.White);
+					+ new Vector2 (0, 0 - fontManager.GetFont ("Arial").MeasureString (tooltipText).Y), Color.White);
+			
 			}
 		}
 
