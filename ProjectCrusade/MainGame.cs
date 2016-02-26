@@ -45,7 +45,6 @@ namespace ProjectCrusade
 		/// </summary>
 		protected override void Initialize ()
 		{
-			screenManager = new GameScreenManager (new MainGameScreen());
 
 			frameCounter = new FrameRateCounter ();
 
@@ -69,6 +68,9 @@ namespace ProjectCrusade
 			textureManager = new TextureManager (Content, whitePix);
 			//Load all fonts
 			fontManager = new FontManager (Content);
+
+			screenManager = new GameScreenManager (new MainGameScreen(textureManager));
+
 
 		}
 

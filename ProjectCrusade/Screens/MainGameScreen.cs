@@ -15,10 +15,10 @@ namespace ProjectCrusade
 		KeyboardState prevKeyboardState;
 		HUDManager hud;
 
-		public MainGameScreen ()
+		public MainGameScreen (TextureManager textureManager)
 		{
 			camera = new Camera ();
-			world = new World (32, 32);
+			world = new World (textureManager, 32, 32);
 			prevKeyboardState = Keyboard.GetState ();
 			hud = new HUDManager (world);
 		}

@@ -92,6 +92,7 @@
     <Compile Include="Items\WandItem.cs" />
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
+    <Compile Include="World\Room.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
     <Compile Include="Managers\HUDManager.cs" />
   </ItemGroup>
@@ -119,6 +120,7 @@
     <BundleResource Include="Content\Textures\items.png" />
     <BundleResource Include="Content\Textures\Apple.png" />
     <BundleResource Include="Content\Textures\inventory_box.png" />
+    <BundleResource Include="Content\Textures\testRoom.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />
