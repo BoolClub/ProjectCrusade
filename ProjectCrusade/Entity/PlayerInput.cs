@@ -82,7 +82,7 @@ namespace ProjectCrusade
 				t.Add (new StarterArrow ());
 				t.Add (new MagicWand ());
 
-				player.Inventory.AddItem (t [new Random ().Next (9)]);
+				player.Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
 			}
 
 
