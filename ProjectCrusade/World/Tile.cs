@@ -14,7 +14,7 @@ namespace ProjectCrusade
 		//We don't use getters/setters because this is a struct, which encapsulates only data
 		public TileType Type;
 		public bool Solid;
-		public Color Color; //used for lighting purposes
+		public Vector3 Color; //used for lighting purposes
 
 		public enum Orientation
 		{
@@ -42,7 +42,7 @@ namespace ProjectCrusade
 			}
 		}
 
-		public Tile (TileType type, bool solid, Color color, Orientation orientation = Orientation.Up)
+		public Tile (TileType type, bool solid, Vector3 color, Orientation orientation = Orientation.Up)
 		{
 			Type = type;
 			Solid = solid;
