@@ -70,7 +70,7 @@ namespace ProjectCrusade
 			screenPosition = new Vector2(MainGame.WindowWidth - BoundingRect.Width, MainGame.WindowHeight - BoundingRect.Height)*0.5f; 
 			slots = new InventorySlot[Columns, Rows];
 			SelectedSlot = null;
-			Opacity = 0.25f;
+			Opacity = 0.5f;
 			MainbarOpacity = 0.5f;
 			Initialize ();
 		}
@@ -96,7 +96,7 @@ namespace ProjectCrusade
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 
-			if (Open) checkInventoryItemSelected ();
+			if (Open) checkInventoryItemSelected (); Opacity = 0.75f; MainbarOpacity = 0.75f;
 			if (!Open) SelectedSlot = null;
 
 

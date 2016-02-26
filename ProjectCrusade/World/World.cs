@@ -44,7 +44,7 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
-		Color ambientLighting = new Color(0.1f,0.1f,0.1f);
+		Color ambientLighting = new Color(0.35f,0.35f,0.35f);
 
 
 		/// <summary>
