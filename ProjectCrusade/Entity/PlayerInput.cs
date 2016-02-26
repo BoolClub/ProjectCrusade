@@ -70,7 +70,7 @@ namespace ProjectCrusade
 			}
 
 			//Quickly add an item -- (just for testing purposes)
-			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyDown (Keys.N)) {
+			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
 				List<Item> t = new List<Item> ();
 				t.Add (new Apple());
 				t.Add (new Water ());
