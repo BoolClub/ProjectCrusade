@@ -19,15 +19,14 @@ namespace ProjectCrusade
 		}
 
 
-		public void update(GameTime time) {
-			sanitybar.Update (time, world.Player.Sanity);
+		public void Update(GameTime time) {
+			sanitybar.Update (time, world.Player.Sanity, world.Player.MaxSanity);
 		}
 
-		public void draw(SpriteBatch spriteBatch, FontManager fM) {
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fM) {
 			drawHUDBackground (spriteBatch);
 
-
-			sanitybar.Draw (spriteBatch, fM);
+			sanitybar.Draw (spriteBatch, textureManager, fM);
 		}
 
 

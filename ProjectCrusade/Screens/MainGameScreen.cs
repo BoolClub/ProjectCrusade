@@ -27,7 +27,7 @@ namespace ProjectCrusade
 			world.Update (gameTime);
 			cameraFollow ();
 			camera.Update ();
-			hud.update (gameTime);
+			hud.Update (gameTime);
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
@@ -67,7 +67,7 @@ namespace ProjectCrusade
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
 			//Draw the hud
-			hud.draw (spriteBatch, fontManager);
+			hud.Draw (spriteBatch, textureManager, fontManager);
 
 			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
 
