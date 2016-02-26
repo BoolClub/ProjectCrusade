@@ -43,7 +43,7 @@ namespace ProjectCrusade {
 			Height = 32;
 			Speed = 200;
 
-			Sanity = 50;
+			Sanity = 20;
 			MaxSanity = 100;
 
 			world = w;

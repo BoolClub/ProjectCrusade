@@ -31,7 +31,7 @@ namespace ProjectCrusade
 			}
 		}
 
-		public void Draw(SpriteBatch spriteBatch) {
+		public void Draw(SpriteBatch spriteBatch, FontManager fontManager) {
 			Texture2D rectangleTexture = new Texture2D (MainGame.graphics.GraphicsDevice, (int)sanity*2, HEIGHT);
 			Color[] data = new Color[(int)sanity*2 * HEIGHT];
 
@@ -42,6 +42,9 @@ namespace ProjectCrusade
 			rectangleTexture.SetData(data);
 
 			spriteBatch.Draw (rectangleTexture, position, barColor);
+
+			String barName = "Sanity: ";
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), barName, new Vector2(position.X - 55, position.Y), Color.White);
 		}
 
 	} //END OF SANITYBARGUI CLASS

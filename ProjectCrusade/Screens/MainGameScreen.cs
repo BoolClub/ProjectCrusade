@@ -67,7 +67,7 @@ namespace ProjectCrusade
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
 			//Draw the hud
-			hud.draw (spriteBatch);
+			hud.draw (spriteBatch, fontManager);
 
 			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
 
