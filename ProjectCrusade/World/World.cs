@@ -35,7 +35,6 @@ namespace ProjectCrusade
 		const int TileWidth = 32;
 
 
-
 		List<WorldLayer> layers;
 
 		public Player Player;
@@ -46,6 +45,7 @@ namespace ProjectCrusade
 
 		Color ambientLighting = new Color(0.35f,0.35f,0.35f);
 
+		List<Room> rooms;
 
 		/// <summary>
 		/// How often to update lighting in ms. Updating lighting is expensive. 
@@ -54,33 +54,37 @@ namespace ProjectCrusade
 		float lastLightingUpdate = 0.0f;
 
 
-		int frameCount = 0;
 
-		public World (int width, int height)
+		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
 			Player.Position = new Vector2 (100, 100);
 			Width = width;
 			Height = height;
+
+			//Init layers & tiles.
 			layers = new List<WorldLayer> ();
 			layers.Add (new WorldLayer (width, height, TileType.Floor)); // floor layer
 			layers.Add (new WorldLayer (width, height, TileType.Wall)); // wall layer
-			for (int i = 1; i<width - 1; i++)for (int j = 1; j<width - 1; j++) { layers[1].Tiles[i,j].Type = TileType.Air; layers[1].Tiles[i,j].Solid=false; }
+			for (int i = 1; i<width - 1; i++)
+				for (int j = 1; j<width - 1; j++) 
+				{ 
+					layers[1].Tiles[i,j].Type = TileType.Air;
+					layers[1].Tiles[i,j].Solid=false; 
+				}
 
-			layers [1].Tiles [10, 4].Solid = true;
-			layers [1].Tiles [11, 4].Solid = true;
-			layers [1].Tiles [12, 4].Solid = true;
-			layers [1].Tiles [10, 4].Type = TileType.Wall;
-			layers [1].Tiles [11, 4].Type = TileType.Wall;
-			layers [1].Tiles [12, 4].Type = TileType.Wall;
-
+			//Init entities.
 			entities = new List<Entity> ();
-
 			entities.Add (Player);
 
+			//Init lights.
 			lights = new List<Light> ();
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
+
+			//Init rooms.
+			rooms = new List<Room> ();
+			generateRoom (new Point (2,2), textureManager.GetTexture ("testRoom")); 
 		}
 
 		public void Update(GameTime gameTime)
@@ -296,6 +300,28 @@ namespace ProjectCrusade
 		//TODO: Add procedural world generation
 
 
+		void generateRoom(Point position, Texture2D template)
+		{
+			rooms.Add (new Room(new Rectangle(position.X, position.Y, template.Width, template.Height)));
+
+			Color[] data = new Color[template.Width * template.Height];
+
+			template.GetData<Color> (data);
+
+			for (int i = 0; i < template.Width; i++) {
+				for (int j = 0; j < template.Height; j++) {
+
+					//index of layer represented by green component
+					int layerInd = (int)data [i + j * template.Width].G;
+
+					//red component becomes tile ID
+					layers [layerInd].Tiles [position.X + i, position.Y + j].Type = (TileType)data [i + j * template.Width].R;
+
+					//If on wall layer, make solid.
+					layers [layerInd].Tiles [position.X + i, position.Y + j].Solid = layerInd == 1;
+				}
+			}
+		}
 	}
 }
 
