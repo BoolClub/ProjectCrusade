@@ -20,7 +20,7 @@ namespace ProjectCrusade
 		public const int WindowWidth = 1024;
 		public const int WindowHeight = 640;
 
-		GraphicsDeviceManager graphics;
+		public static GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		GameScreenManager screenManager;
 		TextureManager textureManager;

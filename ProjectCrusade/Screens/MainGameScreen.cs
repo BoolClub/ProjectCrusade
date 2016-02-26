@@ -13,18 +13,21 @@ namespace ProjectCrusade
 		Camera camera;
 		World world;
 		KeyboardState prevKeyboardState;
+		HUDManager hud;
 
 		public MainGameScreen ()
 		{
 			camera = new Camera ();
 			world = new World (32, 32);
 			prevKeyboardState = Keyboard.GetState ();
+			hud = new HUDManager (world);
 		}
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
 			world.Update (gameTime);
 			cameraFollow ();
 			camera.Update ();
+			hud.update (gameTime);
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
@@ -63,12 +66,20 @@ namespace ProjectCrusade
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
+			//Draw the hud
+			hud.draw (spriteBatch);
+
 			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
 
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 10) - fontManager.GetFont ("Arial").MeasureString (text), Color.White);
+			spriteBatch.DrawString (fontManager.GetFont ("Arial"), text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - fontManager.GetFont ("Arial").MeasureString (text), Color.White);
 
 			spriteBatch.End ();
 		}
-	}
-}
+
+
+
+
+
+	} //END OF MAINGAMESCREEN CLASS
+} //END OF NAMESPACE
 
