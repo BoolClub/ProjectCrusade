@@ -1,15 +1,39 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/26/2016 12:52:08 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/25/2016 8:11:25 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Entity/PlayerInput.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Managers/TextureManager.cs">
     <Files>
-      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="250" Column="4" />
-      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="58" Column="48" />
-      <File FileName="ProjectCrusade/Entity/Player.cs" Line="9" Column="15" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="33" Column="68" />
-      <File FileName="ProjectCrusade/Items/FoodItem.cs" Line="61" Column="77" />
-      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="81" Column="3" />
-      <File FileName="ProjectCrusade/Items/Item.cs" Line="104" Column="18" />
+      <File FileName="ProjectCrusade/MainGame.cs" Line="94" Column="39" />
+      <File FileName="ProjectCrusade/Sprite.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="88" Column="4" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/GUI/Menu.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Screens/InventoryScreen.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Screens/GameScreen.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Managers/TextureManager.cs" Line="32" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ProjectCrusade" expanded="True">
+            <Node name="ProjectCrusade" expanded="True">
+              <Node name="Content" expanded="True">
+                <Node name="Textures" expanded="True">
+                  <Node name="Rooms" expanded="True" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Items" expanded="True" />
+              <Node name="Managers" expanded="True" />
+              <Node name="World" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

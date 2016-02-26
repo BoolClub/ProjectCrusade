@@ -93,6 +93,8 @@
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
     <Compile Include="World\Room.cs" />
+    <Compile Include="GUI\SanityBarGUI.cs" />
+    <Compile Include="Managers\HUDManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
