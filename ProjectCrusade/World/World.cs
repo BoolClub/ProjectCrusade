@@ -197,7 +197,7 @@ namespace ProjectCrusade
 			Vector2 newPosition = entity.Position;
 			entity.Position = prevPosition;
 			//X collision
-			entity.Position = new Vector2(newPosition.X, entity.Position.X);
+			entity.Position = new Vector2(newPosition.X, entity.Position.Y);
 			if (entityWallCollision (entity))
 				entity.Position = new Vector2(prevPosition.X, entity.Position.Y);
 			//Y collision
