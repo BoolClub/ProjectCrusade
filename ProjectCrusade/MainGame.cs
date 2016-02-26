@@ -108,7 +108,7 @@ namespace ProjectCrusade
 		/// </summary>
 		protected override void Draw (GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
+			graphics.GraphicsDevice.Clear (Color.Black);
 		
 			screenManager.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.Begin ();

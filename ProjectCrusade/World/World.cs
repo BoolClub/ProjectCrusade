@@ -34,6 +34,8 @@ namespace ProjectCrusade
 		/// </summary>
 		const int TileWidth = 32;
 
+
+
 		List<WorldLayer> layers;
 
 		public Player Player;
@@ -42,8 +44,17 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
-		Color ambientLighting = Color.Black;
+		Color ambientLighting = new Color(0.1f,0.1f,0.1f);
 
+
+		/// <summary>
+		/// How often to update lighting in ms. Updating lighting is expensive. 
+		/// </summary>
+		const float lightingUpdatePeriod = 32.0f;
+		float lastLightingUpdate = 0.0f;
+
+
+		int frameCount = 0;
 
 		public World (int width, int height)
 		{
@@ -68,7 +79,8 @@ namespace ProjectCrusade
 			entities.Add (Player);
 
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.White, 10.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
+			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 		}
 
 		public void Update(GameTime gameTime)
@@ -83,7 +95,12 @@ namespace ProjectCrusade
 			}
 
 			lights [0].Position = Player.Position;
-			updateLighting ();
+			//Updating lighting can be expensive, so only do it so often. 
+			if (lastLightingUpdate > lightingUpdatePeriod) {
+				updateLighting ();
+				lastLightingUpdate = 0;
+			}
+			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 
 
@@ -131,7 +148,7 @@ namespace ProjectCrusade
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
-					layers [0].Tiles [i, j].Color = Vector3.Zero;
+					layers [0].Tiles [i, j].Color = ambientLighting.ToVector3();
 
 			foreach (Light light in lights) {
 

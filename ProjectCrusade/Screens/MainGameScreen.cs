@@ -17,7 +17,7 @@ namespace ProjectCrusade
 		public MainGameScreen ()
 		{
 			camera = new Camera ();
-			world = new World (16, 16);
+			world = new World (32, 32);
 			prevKeyboardState = Keyboard.GetState ();
 		}
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
