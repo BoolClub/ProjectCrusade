@@ -114,8 +114,8 @@ namespace ProjectCrusade
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (
 				fontManager.GetFont ("Arial"), 
-				String.Format("ProjectCrusade {1}\nframetime {0} ms", 
-					frameCounter.AverageElapsedMilliseconds, 
+				String.Format("ProjectCrusade {1}\nframerate {0} fps", 
+					Math.Round(1000/(frameCounter.AverageElapsedMilliseconds),2), 
 					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),
 					new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
