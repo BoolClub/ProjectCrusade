@@ -12,13 +12,16 @@ namespace ProjectCrusade
 		Vector2 position;
 		float sanity;
 		float maxSanity;
-		const int Height = 20;
-		const int Width = 200;
+		const int Height = 32;
+		const int Width = 256;
+
+	
+
 		Color barColor = new Color ();
 
 		public SanityBarGUI (float sanityAmount) {
 			sanity = sanityAmount;
-			position = new Vector2 (MainGame.WindowWidth / 2 - Width/2, MainGame.WindowHeight - 35);
+			position = new Vector2 (MainGame.WindowWidth / 2 - Width/2, MainGame.WindowHeight - Height);
 		}
 
 		public void Update(GameTime time, float sanityAmount, float maxSanity) {
@@ -40,16 +43,7 @@ namespace ProjectCrusade
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
-			Texture2D rectangleTexture = new Texture2D (MainGame.graphics.GraphicsDevice, (int)(sanity/maxSanity*Width), Height);
-			Color[] data = new Color[(int)sanity*2 * Height];
-
-			for (int i = 0; i < data.Length; i++) {
-				data [i] = barColor;
-			}
-
-			rectangleTexture.SetData(data);
-
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)position.X, (int)position.Y, (int)sanity*2, Height), barColor);
+			spriteBatch.Draw (textureManager.GetTexture("healthBar"), position,null,new Rectangle(0,0,(int)(sanity/maxSanity*Width), Height), null, 0, null, barColor, SpriteEffects.None, 0);
 
 			string barName = "Sanity: ";
 			spriteBatch.DrawString (fontManager.GetFont ("Arial"), barName, new Vector2(position.X - 55, position.Y), Color.White);
