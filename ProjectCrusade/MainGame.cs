@@ -26,6 +26,9 @@ namespace ProjectCrusade
 		TextureManager textureManager;
 		FontManager fontManager;
 		FrameRateCounter frameCounter;
+		FrameRateCounter frameCounterDraw;
+
+		const int targetFrameRate = 60;
 
 		public MainGame ()
 		{
@@ -34,6 +37,9 @@ namespace ProjectCrusade
 			graphics.IsFullScreen = false;		
 			graphics.PreferredBackBufferWidth = WindowWidth;
 			graphics.PreferredBackBufferHeight = WindowHeight;
+			graphics.SynchronizeWithVerticalRetrace = true;
+//			this.TargetElapsedTime = TimeSpan.FromMilliseconds (1e3f / targetFrameRate);
+			IsFixedTimeStep = true;
 			IsMouseVisible = true;
 		}
 
@@ -47,6 +53,7 @@ namespace ProjectCrusade
 		{
 
 			frameCounter = new FrameRateCounter ();
+			frameCounterDraw = new FrameRateCounter ();
 
 			base.Initialize ();
 
@@ -116,14 +123,16 @@ namespace ProjectCrusade
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (
 				fontManager.GetFont ("Arial"), 
-				String.Format("ProjectCrusade {1}\nframerate {0} fps", 
-					Math.Round(1000/(frameCounter.AverageElapsedMilliseconds),2), 
+				String.Format("ProjectCrusade {2}\n{0} update\n{1} draw", 
+					(int)frameCounter.AverageFrameRate, 
+					(int)frameCounterDraw.AverageFrameRate,
 					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),
 					new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
 
 
 			base.Draw (gameTime);
+			frameCounterDraw.Update (gameTime);
 		}
 	}
 }

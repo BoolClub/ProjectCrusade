@@ -275,18 +275,19 @@ namespace ProjectCrusade
 		{
 
 
-			foreach (WorldLayer layer in layers) {
+			for (int k = 0; k<layers.Count;k++)
+			{
 				for (int i = 0; i < Width; i++) {
 					for (int j = 0; j < Height; j++) {
-						if (layer.Tiles[i,j].Type!=TileType.Air) 
+						if (layers[k].Tiles[i,j].Type!=TileType.Air) 
 							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
 								null,
 								new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth),
-								getTileSourceRect (layer.Tiles [i, j]),
+								getTileSourceRect (layers[k].Tiles [i, j]),
 								null,
-								layer.Tiles[i,j].Rotation,
+								layers[k].Tiles[i,j].Rotation,
 								null,
-								new Color(layer.Tiles[i,j].Color),
+								new Color(layers[k].Tiles[i,j].Color),
 								SpriteEffects.None,
 								0);
 					}

@@ -88,7 +88,7 @@ namespace ProjectCrusade {
 
 			Texture2D t = textureManager.GetTexture ("circle");
 
-			spriteBatch.Draw (t, CollisionBox, Color.White);
+			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, Color.White, SpriteEffects.None, 0);
 		}
 
 

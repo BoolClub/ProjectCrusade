@@ -122,6 +122,7 @@
     <BundleResource Include="Content\Textures\inventory_box.png" />
     <BundleResource Include="Content\Textures\testRoom.png" />
     <BundleResource Include="Content\Textures\healthBar.png" />
+    <BundleResource Include="Content\Textures\healthBarFill.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />

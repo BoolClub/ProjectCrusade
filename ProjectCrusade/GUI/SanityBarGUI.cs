@@ -14,7 +14,7 @@ namespace ProjectCrusade
 		float maxSanity;
 		const int Height = 32;
 		const int Width = 256;
-
+		const float animRate = 0.1f;
 	
 
 		Color barColor = new Color ();
@@ -25,7 +25,7 @@ namespace ProjectCrusade
 		}
 
 		public void Update(GameTime time, float sanityAmount, float maxSanity) {
-			sanity = sanityAmount;
+			sanity += (sanityAmount-sanity)*animRate;
 			this.maxSanity = maxSanity;
 			float fracSanity = sanityAmount / maxSanity;
 			float interpRed = MathHelper.Clamp (1 - 2 * fracSanity, 0, 1);
@@ -43,7 +43,7 @@ namespace ProjectCrusade
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
-			spriteBatch.Draw (textureManager.GetTexture("healthBar"), position,null,new Rectangle(0,0,(int)(sanity/maxSanity*Width), Height), null, 0, null, barColor, SpriteEffects.None, 0);
+			spriteBatch.Draw (textureManager.GetTexture("healthBarFill"), position,null,new Rectangle(0,0,(int)(sanity/maxSanity*Width), Height), null, 0, null, barColor, SpriteEffects.None, 0);
 
 			string barName = "Sanity: ";
 			spriteBatch.DrawString (fontManager.GetFont ("Arial"), barName, new Vector2(position.X - 55, position.Y), Color.White);
