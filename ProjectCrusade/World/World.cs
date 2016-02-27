@@ -5,20 +5,6 @@ using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
-	public struct WorldLayer {
-
-		public Tile[,] Tiles;
-
-		public WorldLayer(int width, int height, TileType solidType = TileType.Air) {
-
-			Tiles = new Tile[width, height];
-
-			for (int i = 0; i < width; i++)
-				for (int j = 0; j < height; j++)
-					Tiles [i, j] = new Tile (solidType, true, Color.White.ToVector3());
-		}
-	}
-
 	public class World
 	{
 		public int Width { get; private set; }
@@ -35,7 +21,6 @@ namespace ProjectCrusade
 		const int TileWidth = 32;
 
 
-		List<WorldLayer> layers;
 
 		public Player Player;
 
@@ -46,6 +31,8 @@ namespace ProjectCrusade
 		Color ambientLighting = new Color(0.35f,0.35f,0.35f);
 
 		List<Room> rooms;
+
+		public Tile[,] Tiles;
 
 		/// <summary>
 		/// How often to update lighting in ms. Updating lighting is expensive. 
@@ -62,16 +49,15 @@ namespace ProjectCrusade
 			Width = width;
 			Height = height;
 
-			//Init layers & tiles.
-			layers = new List<WorldLayer> ();
-			layers.Add (new WorldLayer (width, height, TileType.Floor)); // floor layer
-			layers.Add (new WorldLayer (width, height, TileType.Wall)); // wall layer
-			for (int i = 1; i<width - 1; i++)
-				for (int j = 1; j<width - 1; j++) 
+			//Init tiles
+			Tiles = new Tile[Width,Height];
+			for (int i = 0; i<width; i++)
+			{
+				for (int j = 0; j<width ; j++) 
 				{ 
-					layers[1].Tiles[i,j].Type = TileType.Air;
-					layers[1].Tiles[i,j].Solid=false; 
+					Tiles [i, j].Type = TileType.Floor;
 				}
+			}
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -138,7 +124,7 @@ namespace ProjectCrusade
 			for(;;){  /* loop */
 				ret.Add( new Point(x0,y0) );
 				if (x0==x1 && y0==y1) break;
-				if (layers [1].Tiles [x0, y0].Solid)
+				if (Tiles [x0, y0].Solid)
 					break; // break if rays hit wall--no use of iterating if light won't pass a wall
 				e2 = 2*err;
 				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -152,7 +138,7 @@ namespace ProjectCrusade
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
-					layers [0].Tiles [i, j].Color = ambientLighting.ToVector3();
+					Tiles [i, j].Color = ambientLighting.ToVector3();
 
 			foreach (Light light in lights) {
 
@@ -178,7 +164,7 @@ namespace ProjectCrusade
 				}
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
-						layers [0].Tiles [i, j].Color += colorsTemp [i, j];
+						Tiles [i, j].Color += colorsTemp [i, j];
 					}
 			}
 
@@ -229,16 +215,16 @@ namespace ProjectCrusade
 
 		bool entityWallCollision(Entity entity) {
 
-			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 
-			if (layers [1].Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 			return false;
 
@@ -274,22 +260,19 @@ namespace ProjectCrusade
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
 		{
 
-
-			foreach (WorldLayer layer in layers) {
-				for (int i = 0; i < Width; i++) {
-					for (int j = 0; j < Height; j++) {
-						if (layer.Tiles[i,j].Type!=TileType.Air) 
-							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
-								null,
-								new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth),
-								getTileSourceRect (layer.Tiles [i, j]),
-								null,
-								layer.Tiles[i,j].Rotation,
-								null,
-								new Color(layer.Tiles[i,j].Color),
-								SpriteEffects.None,
-								0);
-					}
+			for (int i = 0; i < Width; i++) {
+				for (int j = 0; j < Height; j++) {
+					if (Tiles[i,j].Type!=TileType.Air) 
+						spriteBatch.Draw (textureManager.GetTexture ("tiles"),
+							null,
+							new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth),
+							getTileSourceRect (Tiles [i, j]),
+							null,
+							Tiles[i,j].Rotation,
+							null,
+							new Color(Tiles[i,j].Color),
+							SpriteEffects.None,
+							0);
 				}
 			}
 
@@ -315,10 +298,10 @@ namespace ProjectCrusade
 					int layerInd = (int)data [i + j * template.Width].G;
 
 					//red component becomes tile ID
-					layers [layerInd].Tiles [position.X + i, position.Y + j].Type = (TileType)data [i + j * template.Width].R;
+					Tiles [position.X + i, position.Y + j].Type = (TileType)data [i + j * template.Width].R;
 
 					//If on wall layer, make solid.
-					layers [layerInd].Tiles [position.X + i, position.Y + j].Solid = layerInd == 1;
+					Tiles [position.X + i, position.Y + j].Solid = layerInd == 1;
 				}
 			}
 		}

@@ -27,7 +27,7 @@ namespace ProjectCrusade
 			world.Update (gameTime);
 			cameraFollow ();
 			camera.Update ();
-			hud.update (gameTime);
+			hud.Update (gameTime);
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
@@ -45,7 +45,7 @@ namespace ProjectCrusade
 			//In range (0,1]
 			//0: no movement
 			//1: perfect tracking
-			const float speed = 0.05f;
+			const float speed = 0.1f;
 
 			//Expontial following
 			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
@@ -60,14 +60,13 @@ namespace ProjectCrusade
 			world.Draw (spriteBatch, textureManager);
 			spriteBatch.End ();
 
-
 			//Render inventory (do not transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
 			//Draw the hud
-			hud.draw (spriteBatch, fontManager);
+			hud.Draw (spriteBatch, textureManager, fontManager);
 
 			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
 

@@ -48,8 +48,8 @@ namespace ProjectCrusade {
 
 			world = w;
 			Inventory = new Inventory (4, 10);
-			Inventory.AddItem (new Apple ());
-			Inventory.AddItem (new Apple());
+			for (int i = 0; i < 15; i++)
+				Inventory.AddItem (new Apple ());
 			Inventory.AddItem (new Coin(5));
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
@@ -88,7 +88,7 @@ namespace ProjectCrusade {
 
 			Texture2D t = textureManager.GetTexture ("circle");
 
-			spriteBatch.Draw (t, CollisionBox, Color.White);
+			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, Color.White, SpriteEffects.None, 0);
 		}
 
 
