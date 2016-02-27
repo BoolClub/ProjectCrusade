@@ -24,7 +24,7 @@ namespace ProjectCrusade
 		}
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
-			world.Update (gameTime);
+			world.Update (gameTime, camera);
 			cameraFollow ();
 			camera.Update ();
 			hud.Update (gameTime);
