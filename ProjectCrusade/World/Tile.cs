@@ -5,9 +5,27 @@ namespace ProjectCrusade
 {
 	public enum TileType 
 	{
-		Air = 0,
-		Floor = 1,
-		Wall = 2,
+		Air=255,
+		Grass=0,
+		TreeTop=1,
+		FlowersGrass=2,
+		CaveFloor=16,
+		TreeBottom=17,
+		CaveUnreachable=32,
+		CaveSideLeft=33,
+		SandCornersTopLeft=34,
+		SandTop = 35,
+		SandCornersTopRight=36,
+		CaveWall=48,
+		CaveCornerBottomRight=49,
+		SandSideLeft=50,
+		Sand=51,
+		SandSideRight=52,
+		CaveSideRight=64,
+		CaveCornerBottomLeft=65,
+		SandCornersBottomLeft=66,
+		SandBottom=67,
+		SandCornersBottomRight=68,
 	}
 	public struct Tile
 	{

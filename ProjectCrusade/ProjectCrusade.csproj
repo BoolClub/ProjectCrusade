@@ -128,5 +128,7 @@
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />
     <Content Include="Content\Fonts\Arial.xnb" />
+    <Content Include="Content\Levels\world_Wall.csv" />
+    <Content Include="Content\Levels\world_Floor.csv" />
   </ItemGroup>
 </Project>

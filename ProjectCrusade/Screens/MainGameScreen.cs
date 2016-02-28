@@ -18,7 +18,7 @@ namespace ProjectCrusade
 		public MainGameScreen (TextureManager textureManager)
 		{
 			camera = new Camera ();
-			world = new World (textureManager, 32, 32);
+			world = new World (textureManager, 48, 48);
 			prevKeyboardState = Keyboard.GetState ();
 			hud = new HUDManager (world);
 		}

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace ProjectCrusade
 {
@@ -15,14 +16,14 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		public const int SpriteSheetWidth = 1024;
+		public const int SpriteSheetWidth = 512;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
 		public const int TileWidth = 32;
 
 
-		const int ChunkWidth = 32;
+		const int ChunkWidth = 16;
 
 		Dictionary<Point, WorldChunk> chunks;
 
@@ -41,7 +42,7 @@ namespace ProjectCrusade
 		const float lightingUpdatePeriod = 32.0f;
 		float lastLightingUpdate = 0.0f;
 
-		readonly Texture2D worldTexture;
+		Tile[,] worldTiles;
 
 		public World (TextureManager textureManager, int width, int height)
 		{
@@ -52,10 +53,7 @@ namespace ProjectCrusade
 
 			chunks = new Dictionary<Point, WorldChunk> (1);
 
-			worldTexture = textureManager.GetTexture ("world");
-			chunks[new Point(0,0)] = new WorldChunk (worldTexture, new Rectangle (0, 0, ChunkWidth, ChunkWidth));
-
-
+			constructWorldTiles ("Content/Levels/world_Floor.csv", "Content/Levels/world_Wall.csv");
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -70,6 +68,7 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
+			loadChunks (camera);
 			foreach (Entity entity in entities) {
 				updateEntity (gameTime, entity);
 			}
@@ -79,7 +78,6 @@ namespace ProjectCrusade
 					entities.RemoveAt (i);
 			}
 
-			loadChunks (camera);
 
 			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
@@ -149,9 +147,9 @@ namespace ProjectCrusade
 			for (int i = 0; i < chunkCoords.Width; i++)
 				for (int j = 0; j < chunkCoords.Height; j++) {
 					Point p = new Point (chunkCoords.Left + i, chunkCoords.Top + j);
-					if (p.X >= 0 && p.Y >= 0 && p.X < worldTexture.Width / ChunkWidth && p.Y < worldTexture.Height / ChunkWidth) {
+					if (p.X >= 0 && p.Y >= 0 && p.X < Width / ChunkWidth && p.Y < Height / ChunkWidth) {
 						if (!chunks.ContainsKey (p))
-							chunks [p] = new WorldChunk (worldTexture,
+							chunks [p] = new WorldChunk (ref worldTiles,
 								new Rectangle (p.X * ChunkWidth, p.Y * ChunkWidth, ChunkWidth, ChunkWidth));
 						else {
 							chunks [p].Visible = true;
@@ -231,6 +229,32 @@ namespace ProjectCrusade
 //
 //			}
 		}
+
+		/// <summary>
+		/// Constructs the world texture from a CSV file exported from Tiled. 
+		/// </summary>
+		/// <param name="floorFile">Floor file path</param>
+		/// <param name="wallFile">Wall file path</param>
+		void constructWorldTiles(string floorFile, string wallFile)
+		{
+			worldTiles = new Tile[Width,Height];
+			StreamReader sFloor = new StreamReader(TitleContainer.OpenStream (floorFile));
+			for (int j = 0; j < Height; j++) {
+				string line = sFloor.ReadLine ();
+				var vals = line.Split (',');
+
+				if (vals.Length != Width)
+					throw new Exception ("File format does not match width!");
+
+				for (int i = 0; i < Width; i++) {
+					int v = Convert.ToInt32 (vals [i]);
+					if (v == -1)
+						worldTiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
+					else worldTiles [i, j] = new Tile((TileType)v, false, new Vector3(1,1,1));
+				}
+			}
+		}
+
 
 		void updateEntity(GameTime gameTime, Entity entity)
 		{

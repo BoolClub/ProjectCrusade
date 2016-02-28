@@ -11,27 +11,17 @@ namespace ProjectCrusade
 		public readonly int Height;
 		public bool Visible { get; set; }
 
-		public WorldChunk (Texture2D templateTexture, Rectangle sourceRect)
+		public WorldChunk (ref Tile[,] tiles, Rectangle sourceRect)
 		{
 			Width = sourceRect.Width;
 			Height = sourceRect.Height;
 			Visible = true;
-			Color[] data = new Color[sourceRect.Width * sourceRect.Height];
-			templateTexture.GetData<Color> (0, sourceRect, data, 0, sourceRect.Width*sourceRect.Height);
 
 			Tiles = new Tile[sourceRect.Width, sourceRect.Height];
 
 			for (int i = 0; i < sourceRect.Width; i++) {
 				for (int j = 0; j < sourceRect.Height; j++) {
-
-					//index of layer represented by green component
-					int layerInd = (int)data [i + j * sourceRect.Width].G;
-
-					//red component becomes tile ID
-					Tiles [i, j].Type = (TileType)data [i + j * sourceRect.Width].R;
-
-					//If on wall layer, make solid.
-					Tiles [i, j].Solid = layerInd == 1;
+					Tiles [i, j] = tiles [i + sourceRect.Left, j + sourceRect.Top];
 				}
 			}
 		}
