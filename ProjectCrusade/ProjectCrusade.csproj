@@ -94,7 +94,6 @@
     <Compile Include="World\Light.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
     <Compile Include="Managers\HUDManager.cs" />
-    <Compile Include="World\WorldChunk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

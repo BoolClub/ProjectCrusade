@@ -1,35 +1,36 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/27/2016 3:48:45 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/27/2016 3:48:45 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/MainGame.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/World/WorldChunk.cs">
     <Files>
-      <File FileName="ProjectCrusade/MainGame.cs" Line="43" Column="26" />
+      <File FileName="ProjectCrusade/MainGame.cs" Line="28" Column="33" />
       <File FileName="ProjectCrusade/Sprite.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="299" Column="9" />
-      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="72" Column="69" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="259" Column="37" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="21" Column="45" />
       <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/GUI/Menu.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Screens/InventoryScreen.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Screens/GameScreen.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Managers/TextureManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/GUI/SanityBarGUI.cs" Line="27" Column="19" />
+      <File FileName="ProjectCrusade/GUI/SanityBarGUI.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Managers/HUDManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Entity/Player.cs" Line="91" Column="100" />
-      <File FileName="ProjectCrusade/Misc/Camera.cs" Line="38" Column="37" />
+      <File FileName="ProjectCrusade/Entity/Player.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Misc/Camera.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/World/WorldChunk.cs" Line="43" Column="20" />
+      <File FileName="ProjectCrusade/World/Tile.cs" Line="21" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectCrusade" expanded="True">
             <Node name="ProjectCrusade" expanded="True">
-              <Node name="Content" expanded="True" />
-              <Node name="Entity" expanded="True" />
-              <Node name="GUI" expanded="True" />
-              <Node name="Inventory" expanded="True" />
-              <Node name="Misc" expanded="True" />
+              <Node name="Content" expanded="True">
+                <Node name="Levels" expanded="True" />
+              </Node>
               <Node name="Screens" expanded="True" />
-              <Node name="World" expanded="True" />
-              <Node name="MainGame.cs" selected="True" />
+              <Node name="World" expanded="True">
+                <Node name="WorldChunk.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
