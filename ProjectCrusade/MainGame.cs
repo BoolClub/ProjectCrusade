@@ -17,8 +17,8 @@ namespace ProjectCrusade
 	public class MainGame : Game
 	{
 
-		public const int WindowWidth = 1024;
-		public const int WindowHeight = 640;
+		public static int WindowWidth = 1024;
+		public static int WindowHeight = 640;
 
 		public static GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
@@ -52,6 +52,7 @@ namespace ProjectCrusade
 		protected override void Initialize ()
 		{
 
+
 			frameCounter = new FrameRateCounter ();
 			frameCounterDraw = new FrameRateCounter ();
 
@@ -68,6 +69,10 @@ namespace ProjectCrusade
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
+			//Reset window size in case preferred dimensions fails.
+			WindowWidth = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
+			WindowHeight = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+
 
 			Texture2D whitePix = new Texture2D (graphics.GraphicsDevice, 1, 1);
 			whitePix.SetData (new Color[] { Color.White });
@@ -77,6 +82,7 @@ namespace ProjectCrusade
 			fontManager = new FontManager (Content);
 
 			screenManager = new GameScreenManager (new MainGameScreen(textureManager));
+
 
 
 		}

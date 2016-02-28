@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace ProjectCrusade
 {
@@ -15,16 +16,13 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		public const int SpriteSheetWidth = 1024;
+		public const int SpriteSheetWidth = 512;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
 		public const int TileWidth = 32;
 
 
-		const int ChunkWidth = 32;
-
-		Dictionary<Point, WorldChunk> chunks;
 
 		public Player Player;
 
@@ -41,7 +39,7 @@ namespace ProjectCrusade
 		const float lightingUpdatePeriod = 32.0f;
 		float lastLightingUpdate = 0.0f;
 
-		readonly Texture2D worldTexture;
+		Tile[,] worldTiles;
 
 		public World (TextureManager textureManager, int width, int height)
 		{
@@ -50,12 +48,13 @@ namespace ProjectCrusade
 			Width = width;
 			Height = height;
 
-			chunks = new Dictionary<Point, WorldChunk> (1);
+			constructWorldTiles ("Content/Levels/world_Floor.csv", "Content/Levels/world_Wall.csv");
 
-			worldTexture = textureManager.GetTexture ("world");
-			chunks[new Point(0,0)] = new WorldChunk (worldTexture, new Rectangle (0, 0, ChunkWidth, ChunkWidth));
+			int tilesSize = 0;
 
-
+			foreach (Tile t in worldTiles)
+				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
+			Console.WriteLine ("World size: {0}KB", tilesSize/1024);
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -79,7 +78,6 @@ namespace ProjectCrusade
 					entities.RemoveAt (i);
 			}
 
-			loadChunks (camera);
 
 			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
@@ -89,12 +87,6 @@ namespace ProjectCrusade
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
-
-		Tile getTile(int x, int y) { 
-			Point chunkCoord = new Point (x / ChunkWidth, y / ChunkWidth);
-			return chunks [chunkCoord].Tiles [x % ChunkWidth, y % ChunkWidth];
-		}
-			
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
@@ -126,48 +118,13 @@ namespace ProjectCrusade
 			for(;;){  /* loop */
 				ret.Add( new Point(x0,y0) );
 				if (x0==x1 && y0==y1) break;
-				if (getTile(x0,y0).Solid)
+				if (worldTiles[x0,y0].Solid)
 					break; // break if rays hit wall--no use of iterating if light won't pass a wall
 				e2 = 2*err;
 				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
 				if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
 			}
 			return ret;
-		}
-
-		void loadChunks(Camera camera)
-		{
-			Rectangle chunkCoords = new Rectangle (
-				camera.ViewRectangle.Left / (ChunkWidth*TileWidth),
-				camera.ViewRectangle.Top / (ChunkWidth*TileWidth),
-				camera.ViewRectangle.Right / (ChunkWidth*TileWidth)+1,
-				camera.ViewRectangle.Bottom / (ChunkWidth*TileWidth)+1);
-			
-			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
-				c.Value.Visible = false;
-			}
-			for (int i = 0; i < chunkCoords.Width; i++)
-				for (int j = 0; j < chunkCoords.Height; j++) {
-					Point p = new Point (chunkCoords.Left + i, chunkCoords.Top + j);
-					if (p.X >= 0 && p.Y >= 0 && p.X < worldTexture.Width / ChunkWidth && p.Y < worldTexture.Height / ChunkWidth) {
-						if (!chunks.ContainsKey (p))
-							chunks [p] = new WorldChunk (worldTexture,
-								new Rectangle (p.X * ChunkWidth, p.Y * ChunkWidth, ChunkWidth, ChunkWidth));
-						else {
-							chunks [p].Visible = true;
-						}
-					}
-				}
-
-		}
-
-		void setTileColor(int x, int y, Vector3 color)
-		{
-			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color = color;
-		}
-		void incrementTileColor(int x, int y, Vector3 color)
-		{
-			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color += color;
 		}
 
 		void updateLighting()
@@ -232,6 +189,51 @@ namespace ProjectCrusade
 //			}
 		}
 
+		/// <summary>
+		/// Constructs the world texture from a CSV file exported from Tiled. 
+		/// </summary>
+		/// <param name="floorFile">Floor file path</param>
+		/// <param name="wallFile">Wall file path</param>
+		void constructWorldTiles(string floorFile, string wallFile)
+		{
+			worldTiles = new Tile[Width,Height];
+			StreamReader sFloor = new StreamReader(TitleContainer.OpenStream (floorFile));
+			for (int j = 0; j < Height; j++) {
+				string line = sFloor.ReadLine ();
+				var vals = line.Split (',');
+
+				if (vals.Length != Width)
+					throw new Exception ("Floor file format does not match width!");
+
+				for (int i = 0; i < Width; i++) {
+					int v = Convert.ToInt32 (vals [i]);
+					if (v == -1)
+						worldTiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
+					else worldTiles [i, j] = new Tile((TileType)v, false, new Vector3(1,1,1));
+				}
+			}
+			sFloor.Close ();
+			StreamReader sWall = new StreamReader(TitleContainer.OpenStream (wallFile));
+			for (int j = 0; j < Height; j++) {
+				string line = sWall.ReadLine ();
+				var vals = line.Split (',');
+
+				if (vals.Length != Width)
+					throw new Exception ("Walls file format does not match width!");
+
+				for (int i = 0; i < Width; i++) {
+					int v = Convert.ToInt32 (vals [i]);
+					//Only include a wall file if not air
+					//Overwrites floor tiles
+					if (v != -1) 
+						worldTiles [i, j] = new Tile((TileType)v, true, new Vector3(1,1,1));
+				}
+			}
+			sFloor.Close ();
+
+		}
+
+
 		void updateEntity(GameTime gameTime, Entity entity)
 		{
 
@@ -251,17 +253,17 @@ namespace ProjectCrusade
 
 		bool entityWallCollision(Entity entity) {
 
-			if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)).Solid)
+			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)).Solid)
+			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
-			return true;
+			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+				return true;
 
-			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
-			return true;
+			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+				return true;
 			return false;
 
 		}
@@ -281,6 +283,19 @@ namespace ProjectCrusade
 			return new Vector2 (TileWidth * x, TileWidth * y);
 		}
 
+
+		Rectangle getTileSourceRect(Tile t)
+		{
+			int id = (int)t.Type;
+
+			int spriteSheetTileWidth = World.SpriteSheetWidth / World.TileWidth;
+
+			int y = id / spriteSheetTileWidth;
+			int x = id % spriteSheetTileWidth;
+
+			return new Rectangle (x * World.TileWidth, y * World.TileWidth, World.TileWidth, World.TileWidth);
+		}
+
 		/// <summary>
 		/// Draw the world and each of its chunks
 		/// </summary>
@@ -292,12 +307,26 @@ namespace ProjectCrusade
 			//Used for per-tile culling
 			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
 
-			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
-				if (c.Value.Visible) {
-					c.Value.Draw (spriteBatch, textureManager, new Point (c.Key.X * ChunkWidth * TileWidth, c.Key.Y * ChunkWidth * TileWidth), cameraRectTiles);
-				}
+			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right+1; i++)
+				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom+1; j++) {
+					if (i < 0 || i >= Width || j < 0 || j >= Height)
+						continue;
 
-			}
+					if (worldTiles [i, j].Type != TileType.Air)
+						spriteBatch.Draw (textureManager.GetTexture ("tiles"),
+							null,
+							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+							getTileSourceRect (worldTiles [i, j]),
+							null,
+							worldTiles [i, j].Rotation,
+							null,
+							Color.White,
+							SpriteEffects.None,
+							0);
+				}
+				
+
+
 			foreach (Entity entity in entities)
 				entity.Draw (spriteBatch, textureManager);
 		}
