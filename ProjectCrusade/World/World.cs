@@ -22,7 +22,7 @@ namespace ProjectCrusade
 		public const int TileWidth = 32;
 
 
-		const int ChunkWidth = 16;
+		const int ChunkWidth = 32;
 
 		Dictionary<Point, WorldChunk> chunks;
 
@@ -137,20 +137,26 @@ namespace ProjectCrusade
 
 		void loadChunks(Camera camera)
 		{
-			chunks = new Dictionary<Point, WorldChunk> ();
 			Rectangle chunkCoords = new Rectangle (
-				                   camera.ViewRectangle.Left / ChunkWidth,
-				                   camera.ViewRectangle.Top / ChunkWidth,
-				                   camera.ViewRectangle.Right / ChunkWidth + 1,
-				                   camera.ViewRectangle.Bottom / ChunkWidth + 1);
+				camera.ViewRectangle.Left / (ChunkWidth*TileWidth),
+				camera.ViewRectangle.Top / (ChunkWidth*TileWidth),
+				camera.ViewRectangle.Right / (ChunkWidth*TileWidth)+1,
+				camera.ViewRectangle.Bottom / (ChunkWidth*TileWidth)+1);
 			
+			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
+				c.Value.Visible = false;
+			}
 			for (int i = 0; i < chunkCoords.Width; i++)
 				for (int j = 0; j < chunkCoords.Height; j++) {
 					Point p = new Point (chunkCoords.Left + i, chunkCoords.Top + j);
-
-					if (!chunks.ContainsKey(p) && p.X >=0 && p.Y >=0 && p.X < worldTexture.Width / ChunkWidth && p.Y < worldTexture.Height / ChunkWidth)
-						chunks [p] = new WorldChunk (worldTexture,
-							new Rectangle (p.X * ChunkWidth, p.Y * ChunkWidth, ChunkWidth, ChunkWidth));
+					if (p.X >= 0 && p.Y >= 0 && p.X < worldTexture.Width / ChunkWidth && p.Y < worldTexture.Height / ChunkWidth) {
+						if (!chunks.ContainsKey (p))
+							chunks [p] = new WorldChunk (worldTexture,
+								new Rectangle (p.X * ChunkWidth, p.Y * ChunkWidth, ChunkWidth, ChunkWidth));
+						else {
+							chunks [p].Visible = true;
+						}
+					}
 				}
 
 		}
@@ -275,15 +281,23 @@ namespace ProjectCrusade
 			return new Vector2 (TileWidth * x, TileWidth * y);
 		}
 
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
+		/// <summary>
+		/// Draw the world and each of its chunks
+		/// </summary>
+		/// <param name="camera">Camera needed for tile culling</param>
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, Camera camera)
 		{
+
+			//View of camera in tile space
+			//Used for per-tile culling
+			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
+
 			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
-				Stopwatch s = Stopwatch.StartNew ();
-				c.Value.Draw (spriteBatch, textureManager, new Point (c.Key.X * ChunkWidth * TileWidth, c.Key.Y * ChunkWidth * TileWidth));
+				if (c.Value.Visible) {
+					c.Value.Draw (spriteBatch, textureManager, new Point (c.Key.X * ChunkWidth * TileWidth, c.Key.Y * ChunkWidth * TileWidth), cameraRectTiles);
+				}
 
-				Console.WriteLine (s.ElapsedMilliseconds);
 			}
-
 			foreach (Entity entity in entities)
 				entity.Draw (spriteBatch, textureManager);
 		}
