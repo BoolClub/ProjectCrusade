@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ProjectCrusade
 {
@@ -14,13 +15,16 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		const int SpriteSheetWidth = 1024;
+		public const int SpriteSheetWidth = 1024;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
-		const int TileWidth = 32;
+		public const int TileWidth = 32;
 
 
+		const int ChunkWidth = 32;
+
+		Dictionary<Point, WorldChunk> chunks;
 
 		public Player Player;
 
@@ -30,9 +34,6 @@ namespace ProjectCrusade
 
 		Color ambientLighting = new Color(0.35f,0.35f,0.35f);
 
-		List<Room> rooms;
-
-		public Tile[,] Tiles;
 
 		/// <summary>
 		/// How often to update lighting in ms. Updating lighting is expensive. 
@@ -40,7 +41,7 @@ namespace ProjectCrusade
 		const float lightingUpdatePeriod = 32.0f;
 		float lastLightingUpdate = 0.0f;
 
-
+		readonly Texture2D worldTexture;
 
 		public World (TextureManager textureManager, int width, int height)
 		{
@@ -49,15 +50,12 @@ namespace ProjectCrusade
 			Width = width;
 			Height = height;
 
-			//Init tiles
-			Tiles = new Tile[Width,Height];
-			for (int i = 0; i<width; i++)
-			{
-				for (int j = 0; j<width ; j++) 
-				{ 
-					Tiles [i, j].Type = TileType.Floor;
-				}
-			}
+			chunks = new Dictionary<Point, WorldChunk> (1);
+
+			worldTexture = textureManager.GetTexture ("world");
+			chunks[new Point(0,0)] = new WorldChunk (worldTexture, new Rectangle (0, 0, ChunkWidth, ChunkWidth));
+
+
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -68,12 +66,9 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
-			//Init rooms.
-			rooms = new List<Room> ();
-			generateRoom (new Point (2,2), textureManager.GetTexture ("testRoom")); 
 		}
 
-		public void Update(GameTime gameTime)
+		public void Update(GameTime gameTime, Camera camera)
 		{
 			foreach (Entity entity in entities) {
 				updateEntity (gameTime, entity);
@@ -84,15 +79,22 @@ namespace ProjectCrusade
 					entities.RemoveAt (i);
 			}
 
+			loadChunks (camera);
+
 			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
-				updateLighting ();
+//				updateLighting ();
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 
+		Tile getTile(int x, int y) { 
+			Point chunkCoord = new Point (x / ChunkWidth, y / ChunkWidth);
+			return chunks [chunkCoord].Tiles [x % ChunkWidth, y % ChunkWidth];
+		}
+			
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
@@ -124,7 +126,7 @@ namespace ProjectCrusade
 			for(;;){  /* loop */
 				ret.Add( new Point(x0,y0) );
 				if (x0==x1 && y0==y1) break;
-				if (Tiles [x0, y0].Solid)
+				if (getTile(x0,y0).Solid)
 					break; // break if rays hit wall--no use of iterating if light won't pass a wall
 				e2 = 2*err;
 				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -133,12 +135,46 @@ namespace ProjectCrusade
 			return ret;
 		}
 
+		void loadChunks(Camera camera)
+		{
+			Rectangle chunkCoords = new Rectangle (
+				camera.ViewRectangle.Left / (ChunkWidth*TileWidth),
+				camera.ViewRectangle.Top / (ChunkWidth*TileWidth),
+				camera.ViewRectangle.Right / (ChunkWidth*TileWidth)+1,
+				camera.ViewRectangle.Bottom / (ChunkWidth*TileWidth)+1);
+			
+			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
+				c.Value.Visible = false;
+			}
+			for (int i = 0; i < chunkCoords.Width; i++)
+				for (int j = 0; j < chunkCoords.Height; j++) {
+					Point p = new Point (chunkCoords.Left + i, chunkCoords.Top + j);
+					if (p.X >= 0 && p.Y >= 0 && p.X < worldTexture.Width / ChunkWidth && p.Y < worldTexture.Height / ChunkWidth) {
+						if (!chunks.ContainsKey (p))
+							chunks [p] = new WorldChunk (worldTexture,
+								new Rectangle (p.X * ChunkWidth, p.Y * ChunkWidth, ChunkWidth, ChunkWidth));
+						else {
+							chunks [p].Visible = true;
+						}
+					}
+				}
+
+		}
+
+		void setTileColor(int x, int y, Vector3 color)
+		{
+			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color = color;
+		}
+		void incrementTileColor(int x, int y, Vector3 color)
+		{
+			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color += color;
+		}
 
 		void updateLighting()
 		{
-			for (int i = 0; i < Width; i++)
-				for (int j = 0; j < Height; j++)
-					Tiles [i, j].Color = ambientLighting.ToVector3();
+//			for (int i = 0; i < Width; i++)
+//				for (int j = 0; j < Height; j++)
+//					setTileColor(i,j,ambientLighting.ToVector3());
 
 			foreach (Light light in lights) {
 
@@ -164,7 +200,7 @@ namespace ProjectCrusade
 				}
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
-						Tiles [i, j].Color += colorsTemp [i, j];
+//						incrementTileColor(i,j,colorsTemp [i, j]);
 					}
 			}
 
@@ -215,17 +251,17 @@ namespace ProjectCrusade
 
 		bool entityWallCollision(Entity entity) {
 
-			if (Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)).Solid)
 				return true;
 
-			if (Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)).Solid)
 				return true;
 
-			if (Tiles [worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
-				return true;
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
+			return true;
 
-			if (Tiles [worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
-				return true;
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
+			return true;
 			return false;
 
 		}
@@ -245,66 +281,28 @@ namespace ProjectCrusade
 			return new Vector2 (TileWidth * x, TileWidth * y);
 		}
 
-		Rectangle getTileSourceRect(Tile t)
-		{
-			int id = (int)t.Type;
-
-			int spriteSheetTileWidth = SpriteSheetWidth / TileWidth;
-
-			int y = id / spriteSheetTileWidth;
-			int x = id % spriteSheetTileWidth;
-
-			return new Rectangle (x * TileWidth, y * TileWidth, TileWidth, TileWidth);
-		}
-
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
+		/// <summary>
+		/// Draw the world and each of its chunks
+		/// </summary>
+		/// <param name="camera">Camera needed for tile culling</param>
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, Camera camera)
 		{
 
-			for (int i = 0; i < Width; i++) {
-				for (int j = 0; j < Height; j++) {
-					if (Tiles[i,j].Type!=TileType.Air) 
-						spriteBatch.Draw (textureManager.GetTexture ("tiles"),
-							null,
-							new Rectangle (i * TileWidth, j * TileWidth, TileWidth, TileWidth),
-							getTileSourceRect (Tiles [i, j]),
-							null,
-							Tiles[i,j].Rotation,
-							null,
-							new Color(Tiles[i,j].Color),
-							SpriteEffects.None,
-							0);
+			//View of camera in tile space
+			//Used for per-tile culling
+			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
+
+			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
+				if (c.Value.Visible) {
+					c.Value.Draw (spriteBatch, textureManager, new Point (c.Key.X * ChunkWidth * TileWidth, c.Key.Y * ChunkWidth * TileWidth), cameraRectTiles);
 				}
+
 			}
-
-
 			foreach (Entity entity in entities)
 				entity.Draw (spriteBatch, textureManager);
 		}
 		//TODO: Add procedural world generation
 
-
-		void generateRoom(Point position, Texture2D template)
-		{
-			rooms.Add (new Room(new Rectangle(position.X, position.Y, template.Width, template.Height)));
-
-			Color[] data = new Color[template.Width * template.Height];
-
-			template.GetData<Color> (data);
-
-			for (int i = 0; i < template.Width; i++) {
-				for (int j = 0; j < template.Height; j++) {
-
-					//index of layer represented by green component
-					int layerInd = (int)data [i + j * template.Width].G;
-
-					//red component becomes tile ID
-					Tiles [position.X + i, position.Y + j].Type = (TileType)data [i + j * template.Width].R;
-
-					//If on wall layer, make solid.
-					Tiles [position.X + i, position.Y + j].Solid = layerInd == 1;
-				}
-			}
-		}
 	}
 }
 

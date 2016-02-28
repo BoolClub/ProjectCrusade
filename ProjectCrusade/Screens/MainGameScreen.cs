@@ -24,7 +24,7 @@ namespace ProjectCrusade
 		}
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
-			world.Update (gameTime);
+			world.Update (gameTime, camera);
 			cameraFollow ();
 			camera.Update ();
 			hud.Update (gameTime);
@@ -57,7 +57,7 @@ namespace ProjectCrusade
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
-			world.Draw (spriteBatch, textureManager);
+			world.Draw (spriteBatch, textureManager, camera);
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)

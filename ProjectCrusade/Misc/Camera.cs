@@ -17,6 +17,17 @@ namespace ProjectCrusade
 		public float FieldOfView { get; set; }
 		public float Height { get; set; }
 
+		//Bug: Does not support rotation or scaling
+		public Rectangle ViewRectangle {
+			get {
+				return new Rectangle (
+					(int)Position.X,
+					(int)Position.Y,
+					MainGame.WindowWidth,
+					MainGame.WindowHeight);
+			}
+		}
+
 
 		/// <summary>
 		/// Passed into SpriteBatch.Begin to transform all drawn sprites from world space to screen space.
