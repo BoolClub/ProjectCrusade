@@ -44,9 +44,6 @@ namespace ProjectCrusade
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 			spriteBatch.Draw (textureManager.GetTexture("healthBarFill"), position,null,new Rectangle(0,0,(int)(sanity/maxSanity*Width), Height), null, 0, null, barColor, SpriteEffects.None, 0);
-
-			string barName = "Sanity: ";
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), barName, new Vector2(position.X - 55, position.Y), Color.White);
 		}
 
 	} //END OF SANITYBARGUI CLASS
