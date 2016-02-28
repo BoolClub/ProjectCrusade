@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ProjectCrusade
 {
@@ -83,7 +84,7 @@ namespace ProjectCrusade
 			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
-				updateLighting ();
+//				updateLighting ();
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -136,11 +137,13 @@ namespace ProjectCrusade
 
 		void loadChunks(Camera camera)
 		{
+			chunks = new Dictionary<Point, WorldChunk> ();
 			Rectangle chunkCoords = new Rectangle (
 				                   camera.ViewRectangle.Left / ChunkWidth,
 				                   camera.ViewRectangle.Top / ChunkWidth,
 				                   camera.ViewRectangle.Right / ChunkWidth + 1,
 				                   camera.ViewRectangle.Bottom / ChunkWidth + 1);
+			
 			for (int i = 0; i < chunkCoords.Width; i++)
 				for (int j = 0; j < chunkCoords.Height; j++) {
 					Point p = new Point (chunkCoords.Left + i, chunkCoords.Top + j);
@@ -152,11 +155,20 @@ namespace ProjectCrusade
 
 		}
 
+		void setTileColor(int x, int y, Vector3 color)
+		{
+			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color = color;
+		}
+		void incrementTileColor(int x, int y, Vector3 color)
+		{
+			chunks [new Point (x, y)].Tiles [x % ChunkWidth, y % ChunkWidth].Color += color;
+		}
+
 		void updateLighting()
 		{
 //			for (int i = 0; i < Width; i++)
 //				for (int j = 0; j < Height; j++)
-//					getTile(i,j).Color = ambientLighting.ToVector3();
+//					setTileColor(i,j,ambientLighting.ToVector3());
 
 			foreach (Light light in lights) {
 
@@ -182,7 +194,7 @@ namespace ProjectCrusade
 				}
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
-//						Tiles [i, j].Color += colorsTemp [i, j];
+//						incrementTileColor(i,j,colorsTemp [i, j]);
 					}
 			}
 
@@ -239,11 +251,11 @@ namespace ProjectCrusade
 			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)).Solid)
 				return true;
 
-				if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
-				return true;
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
+			return true;
 
-				if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
-				return true;
+			if (getTile(worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)).Solid)
+			return true;
 			return false;
 
 		}
@@ -265,9 +277,12 @@ namespace ProjectCrusade
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
 		{
-			foreach (KeyValuePair<Point, WorldChunk> c in chunks)
-				c.Value.Draw (spriteBatch, textureManager, new Point(c.Key.X * ChunkWidth*TileWidth, c.Key.Y*ChunkWidth*TileWidth	));
+			foreach (KeyValuePair<Point, WorldChunk> c in chunks) {
+				Stopwatch s = Stopwatch.StartNew ();
+				c.Value.Draw (spriteBatch, textureManager, new Point (c.Key.X * ChunkWidth * TileWidth, c.Key.Y * ChunkWidth * TileWidth));
 
+				Console.WriteLine (s.ElapsedMilliseconds);
+			}
 
 			foreach (Entity entity in entities)
 				entity.Draw (spriteBatch, textureManager);

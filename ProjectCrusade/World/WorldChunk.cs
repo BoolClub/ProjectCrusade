@@ -39,12 +39,11 @@ namespace ProjectCrusade
 			
 			for (int i = 0; i < Width; i++) {
 				for (int j = 0; j < Height; j++) {
-					Tile t = Tiles [i, j];
-					if (t.Type!=TileType.Air) 
+					if (Tiles [i, j].Type!=TileType.Air) 
 						spriteBatch.Draw (textureManager.GetTexture ("tiles"),
 							null,
 							new Rectangle (position.X + i * World.TileWidth, position.Y + j * World.TileWidth, World.TileWidth, World.TileWidth),
-							getTileSourceRect (t),
+							getTileSourceRect (Tiles [i, j]),
 							null,
 							Tiles[i,j].Rotation,
 							null,
