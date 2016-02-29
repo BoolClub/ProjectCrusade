@@ -82,7 +82,7 @@ namespace ProjectCrusade
 			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
-//				updateLighting ();
+				updateLighting ();
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -129,9 +129,9 @@ namespace ProjectCrusade
 
 		void updateLighting()
 		{
-//			for (int i = 0; i < Width; i++)
-//				for (int j = 0; j < Height; j++)
-//					setTileColor(i,j,ambientLighting.ToVector3());
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++)
+					worldTiles[i,j].Color = ambientLighting.ToVector3();
 
 			foreach (Light light in lights) {
 
@@ -157,7 +157,7 @@ namespace ProjectCrusade
 				}
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
-//						incrementTileColor(i,j,colorsTemp [i, j]);
+						worldTiles[i,j].Color+=colorsTemp [i, j];
 					}
 			}
 
@@ -320,7 +320,7 @@ namespace ProjectCrusade
 							null,
 							worldTiles [i, j].Rotation,
 							null,
-							Color.White,
+							new Color(worldTiles[i,j].Color),
 							SpriteEffects.None,
 							0);
 				}
