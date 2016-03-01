@@ -94,6 +94,7 @@
     <Compile Include="World\Light.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
     <Compile Include="Managers\HUDManager.cs" />
+    <Compile Include="World\Fluid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

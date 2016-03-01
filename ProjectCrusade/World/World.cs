@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace ProjectCrusade
 {
@@ -41,6 +42,10 @@ namespace ProjectCrusade
 
 		Tile[,] worldTiles;
 
+		Fluid fluid;
+		Thread fluidThread;
+		int fluidUpdateTimeout = 5;
+
 		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
@@ -65,6 +70,14 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
+
+			fluid = new Fluid (width, 0.01f);
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++)
+					if (worldTiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
+
+			fluidThread = new Thread (new ThreadStart (fluidUpdate));
+			fluidThread.Start ();
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
@@ -86,6 +99,13 @@ namespace ProjectCrusade
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+		}
+		void fluidUpdate()
+		{
+
+			while(true)
+			fluid.Update ();
+			Thread.Sleep (fluidUpdateTimeout);
 		}
 
 		//where distance2 is the squared distance (in tile lengths)
@@ -239,6 +259,8 @@ namespace ProjectCrusade
 
 			Vector2 prevPosition = entity.Position;
 			entity.Update (gameTime, this);
+			Point p = worldToTileCoord (entity.Position);
+			entity.Position += fluid.GetVel (p.X, p.Y);
 			Vector2 newPosition = entity.Position;
 			entity.Position = prevPosition;
 			//X collision
@@ -275,6 +297,10 @@ namespace ProjectCrusade
 		int worldToTileCoordY(int y) 
 		{
 			return y / TileWidth;
+		}
+
+		Point worldToTileCoord(Vector2 pos) {
+			return new Point ((int)(pos.X / TileWidth), (int)(pos.Y / TileWidth));
 		}
 
 		//get upper-right-hand corner of a tile
@@ -331,6 +357,8 @@ namespace ProjectCrusade
 				entity.Draw (spriteBatch, textureManager);
 		}
 		//TODO: Add procedural world generation
+
+
 
 	}
 }
