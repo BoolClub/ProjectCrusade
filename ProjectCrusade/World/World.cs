@@ -78,6 +78,11 @@ namespace ProjectCrusade
 
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
+
+			for (int i = 0; i < Width; i+=2)
+				for (int j = 0; j < Height; j+=2) {
+					entities.Add (new Particle (tileToWorldCoord (i,j)));
+				}
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
@@ -103,9 +108,10 @@ namespace ProjectCrusade
 		void fluidUpdate()
 		{
 
-			while(true)
-			fluid.Update ();
-			Thread.Sleep (fluidUpdateTimeout);
+			while (true) {
+				fluid.Update ();
+				Thread.Sleep (fluidUpdateTimeout);
+			}
 		}
 
 		//where distance2 is the squared distance (in tile lengths)
@@ -260,7 +266,13 @@ namespace ProjectCrusade
 			Vector2 prevPosition = entity.Position;
 			entity.Update (gameTime, this);
 			Point p = worldToTileCoord (entity.Position);
-			entity.Position += fluid.GetVel (p.X, p.Y);
+			if (entity is Player) {
+				Vector2 vel = 10*(entity.Position - prevPosition);
+				fluid.SetVel (p.X, p.Y, vel);
+			} else { 
+				entity.Position += fluid.GetVel (p.X, p.Y);
+			}
+
 			Vector2 newPosition = entity.Position;
 			entity.Position = prevPosition;
 			//X collision
@@ -347,6 +359,7 @@ namespace ProjectCrusade
 							worldTiles [i, j].Rotation,
 							null,
 							new Color(worldTiles[i,j].Color),
+//							new Color(new Vector3(fluid.GetVel(i,j), 0)),
 							SpriteEffects.None,
 							0);
 				}

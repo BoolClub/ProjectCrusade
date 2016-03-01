@@ -28,18 +28,22 @@ namespace ProjectCrusade
 				v0 [i] = 0.0f;
 				boundary [i] = false;
 			}
-			u [IX (width, 10, 10)] = 100.0f;
 		}
 
 		public void Update()
 		{
 			VelStep (width, ref u, ref v, ref u0, ref v0, 0.01f, timeStep);
-			u [IX (width, 10, 10)] = 50.0f;
-			u0[IX (width, 10, 10)] = 50.0f;
+
 		}
 
 		public Vector2 GetVel(int i, int j) { 
 			return new Vector2 (u [IX (width, i, j)], v [IX (width, i, j)]);
+		}
+
+		public void SetVel(int i, int j, Vector2 val)
+		{
+			u [IX (width, i, j)] = val.X;
+			v [IX (width, i, j)] = val.Y;
 		}
 
 		public void SetBoundaryValue(int i, int j, bool value)

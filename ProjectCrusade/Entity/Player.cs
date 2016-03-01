@@ -41,7 +41,7 @@ namespace ProjectCrusade {
 			PlayerType = type;
 			Width = 32;
 			Height = 32;
-			Speed = 200;
+			Speed = 600;
 
 			Sanity = 20;
 			MaxSanity = 100;
