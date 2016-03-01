@@ -94,8 +94,8 @@ namespace ProjectCrusade
 				disp /= (float)Math.Sqrt (2.0);
 			}
 
-			//This method was actually added to the Sprite class, not the Player class.
-			player.addToPosition(disp);
+
+			player.Position+=disp;
 
 		}
 

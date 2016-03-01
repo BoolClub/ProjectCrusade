@@ -1,2 +1,38 @@
-2016-02-28 15:12:32.079 ProjectCrusade[789:20747] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
-2016-02-28 15:12:32.080 ProjectCrusade[789:20747] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-02-29 20:06:07.927 ProjectCrusade[1269:60285] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-02-29 20:06:07.928 ProjectCrusade[1269:60285] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+
+Unhandled Exception:
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+  at ProjectCrusade.World.entityWallCollision (ProjectCrusade.Entity entity) <0xdfae090 + 0x0018d> in <filename unknown>:0 
+  at ProjectCrusade.World.updateEntity (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.Entity entity) <0xdfabd58 + 0x00357> in <filename unknown>:0 
+  at ProjectCrusade.World.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.Camera camera) <0xdfabb68 + 0x0006f> in <filename unknown>:0 
+  at ProjectCrusade.MainGameScreen.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.GameScreenManager screenManager, ProjectCrusade.MainGame game) <0xdfab878 + 0x000c7> in <filename unknown>:0 
+  at ProjectCrusade.GameScreenManager.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.MainGame game) <0xdfab7d8 + 0x00034> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.Update (Microsoft.Xna.Framework.GameTime gameTime) <0xdf91d10 + 0x00237> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.DoUpdate (Microsoft.Xna.Framework.GameTime gameTime) <0xdf91848 + 0x00043> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Tick () <0xdf90d38 + 0x00503> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.GameWindow.OnRenderFrame (MonoMac.OpenGL.FrameEventArgs e) <0xdf90c50 + 0x0007b> in <filename unknown>:0 
+  at MonoMac.OpenGL.MonoMacGameView.RenderScene () <0xdf878e0 + 0x00250> in <filename unknown>:0 
+  at MonoMac.OpenGL.MonoMacGameView.<StartAnimation>m__1 () <0xdfc1528 + 0x00013> in <filename unknown>:0 
+  at MonoMac.Foundation.NSActionDispatcher.Apply () <0xdfc1508 + 0x00014> in <filename unknown>:0 
+  at (wrapper native-to-managed) System.Object:[MonoMac.Foundation.NSActionDispatcher:Void Apply()] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector)
+  at (wrapper managed-to-native) MonoMac.AppKit.NSApplication:NSApplicationMain (int,string[])
+  at MonoMac.AppKit.NSApplication.Main (System.String[] args) <0x5987588 + 0x00073> in <filename unknown>:0 
+  at ProjectCrusade.Program.Main (System.String[] args) <0x630f30 + 0x00073> in <filename unknown>:0 
+[ERROR] FATAL UNHANDLED EXCEPTION: System.IndexOutOfRangeException: Index was outside the bounds of the array.
+  at ProjectCrusade.World.entityWallCollision (ProjectCrusade.Entity entity) <0xdfae090 + 0x0018d> in <filename unknown>:0 
+  at ProjectCrusade.World.updateEntity (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.Entity entity) <0xdfabd58 + 0x00357> in <filename unknown>:0 
+  at ProjectCrusade.World.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.Camera camera) <0xdfabb68 + 0x0006f> in <filename unknown>:0 
+  at ProjectCrusade.MainGameScreen.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.GameScreenManager screenManager, ProjectCrusade.MainGame game) <0xdfab878 + 0x000c7> in <filename unknown>:0 
+  at ProjectCrusade.GameScreenManager.Update (Microsoft.Xna.Framework.GameTime gameTime, ProjectCrusade.MainGame game) <0xdfab7d8 + 0x00034> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.Update (Microsoft.Xna.Framework.GameTime gameTime) <0xdf91d10 + 0x00237> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.DoUpdate (Microsoft.Xna.Framework.GameTime gameTime) <0xdf91848 + 0x00043> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Tick () <0xdf90d38 + 0x00503> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.GameWindow.OnRenderFrame (MonoMac.OpenGL.FrameEventArgs e) <0xdf90c50 + 0x0007b> in <filename unknown>:0 
+  at MonoMac.OpenGL.MonoMacGameView.RenderScene () <0xdf878e0 + 0x00250> in <filename unknown>:0 
+  at MonoMac.OpenGL.MonoMacGameView.<StartAnimation>m__1 () <0xdfc1528 + 0x00013> in <filename unknown>:0 
+  at MonoMac.Foundation.NSActionDispatcher.Apply () <0xdfc1508 + 0x00014> in <filename unknown>:0 
+  at (wrapper native-to-managed) System.Object:[MonoMac.Foundation.NSActionDispatcher:Void Apply()] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector)
+  at (wrapper managed-to-native) MonoMac.AppKit.NSApplication:NSApplicationMain (int,string[])
+  at MonoMac.AppKit.NSApplication.Main (System.String[] args) <0x5987588 + 0x00073> in <filename unknown>:0 
+  at ProjectCrusade.Program.Main (System.String[] args) <0x630f30 + 0x00073> in <filename unknown>:0 
