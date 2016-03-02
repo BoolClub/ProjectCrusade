@@ -53,7 +53,7 @@ namespace ProjectCrusade
 
 
 			//Primary Use Items
-			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
+			/*if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
 				if (player.Inventory.ActiveSlot != null) {
 					
 					if (player.Inventory.ActiveSlot.HasItem) {
@@ -84,7 +84,7 @@ namespace ProjectCrusade
 
 				player.Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
 			}
-
+*/
 
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {

@@ -17,7 +17,7 @@ namespace ProjectCrusade
 
 
 		public InventorySlot (Rectangle collisionRectangle) {
-			Item = null;
+			//Item = null;
 			CollisionBox = collisionRectangle;
 		}
 
@@ -38,43 +38,24 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <returns><c>true</c>, if item was successfully added, <c>false</c> otherwise.</returns>
 		/// <param name="itm">Item to move into slot.</param>
-		public bool AddItem(Item itm) {
-
-
-			//If there is no current item, then just add the item to this inventory slot.
-			if (Item == null) {
+		public int AddItem(Item itm) {
+			if (Item == null){ //If there is no current item, then just add the item to this inventory slot.
 				Item = itm;
-				return true;
-			//However, if there is an item...
-			} else {
-				//If they are the same item...
-				if (Item.Type == itm.Type) {
-					
-					//If the item is stackable, then add to the stack.
-					if (this.Item.Stackable) {
-						
-						this.Item.AddToStack (itm.CurrentStackSize);
-						return true;
-					//If it is not stackable, write this message.
-					} else {
-						Console.WriteLine ("You cannot stack that item.");
-						return false;
-					}
-
-				//If they are not the same item, write this message.
-				} else {
-
+				itm = null;
+			}else //However, if there is an item...
+				if (Item.identifier == itm.identifier) //If they are the same item...
+					itm.setCount(Item.add(itm.count));
+				else //If they are not the same item, write this message.
 					Console.WriteLine ("These are not the same item, you cannot put the item in this slot.");
-					return false;
-				}
-			}
+			return itm.count;
 		}
 
 		/// <summary>
 		/// Removes some number of items from the slot (one by default)
 		/// </summary>
 		/// <returns><c>true</c>, if item was removed, <c>false</c> otherwise.</returns>
-		public bool RemoveItem(int count = 1) {
+
+		/*public bool RemoveItem(int count = 1) {
 			if (Item == null || Item.CurrentStackSize==0)
 				return false;
 			int prevSize = Item.CurrentStackSize;
@@ -83,7 +64,7 @@ namespace ProjectCrusade
 			if (Item.CurrentStackSize <= 0)
 				Item = null;
 			return true;
-		}
+		}*/
 
 
 	} //END OF INVENTORYSLOT CLASS

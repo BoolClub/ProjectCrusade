@@ -47,15 +47,14 @@ namespace ProjectCrusade {
 			MaxSanity = 100;
 
 			world = w;
+
+			ItemManager ItemManager = new ItemManager();
+
 			Inventory = new Inventory (4, 10);
-			for (int i = 0; i < 15; i++)
-				Inventory.AddItem (new Apple ());
-			Inventory.AddItem (new Coin(5));
-			Inventory.AddItem (new Coin());
-			Inventory.AddItem (new Coin());
-			Inventory.AddItem (new WoodenSword ());
-			Inventory.AddItem (new StarterArrow ());
-			Inventory.AddItem (new MagicWand ());
+
+			Inventory.AddItem(ItemManager.getItem("gold"));
+			Inventory.AddItem(ItemManager.getItem("gold"));
+			Inventory.AddItem(ItemManager.getItem("gold"));
 
 			Initialize ();
 		}

@@ -59,6 +59,7 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.MacOS.3.3.0.0\lib\net45\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -84,18 +85,12 @@
     <Compile Include="Entity\PlayerInput.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Screens\InventoryScreen.cs" />
-    <Compile Include="Items\Coin.cs" />
-    <Compile Include="Items\ArrowItem.cs" />
-    <Compile Include="Items\FoodItem.cs" />
-    <Compile Include="Items\Item.cs" />
-    <Compile Include="Items\SwordItem.cs" />
-    <Compile Include="Items\WandItem.cs" />
-    <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
     <Compile Include="Managers\HUDManager.cs" />
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
+    <Compile Include="Managers\ItemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -109,7 +104,6 @@
     <Folder Include="Managers\" />
     <Folder Include="Misc\" />
     <Folder Include="Inventory\" />
-    <Folder Include="Items\" />
     <Folder Include="Content\Fonts\" />
     <Folder Include="GUI\" />
     <Folder Include="World\" />

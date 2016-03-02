@@ -30,7 +30,7 @@ namespace ProjectCrusade
 			hud.Update (gameTime);
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
-				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game), 100);
+				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
 			if (Keyboard.GetState ().IsKeyDown (Keys.I) && prevKeyboardState.IsKeyUp(Keys.I))
 				screenManager.PushGameScreen (new InventoryScreen (screenManager, world));
 
