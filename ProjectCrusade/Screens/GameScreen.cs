@@ -12,7 +12,7 @@ namespace ProjectCrusade
 		}
 
 		abstract public void Update(GameTime gameTime, GameScreenManager screenManager, MainGame game);
-		abstract public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager);
+		abstract public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity);
 	}
 }
 

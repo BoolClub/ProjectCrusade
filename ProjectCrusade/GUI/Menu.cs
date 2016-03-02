@@ -68,7 +68,7 @@ namespace ProjectCrusade
 
 		}
 
-		public void Draw(SpriteBatch spriteBatch, FontManager fontManager)
+		public void Draw(SpriteBatch spriteBatch, FontManager fontManager, float opacity)
 		{
 			for (int i = 0; i < menuItems.Count; i++) {
 				spriteBatch.DrawString (
@@ -77,7 +77,7 @@ namespace ProjectCrusade
 					Position + new Vector2 (
 						-(float)fontManager.GetFont(fontName).MeasureString(menuItems[i].Text).X/2, 
 						i * TextHeight), 
-					i==selectedMenuItem ? Color.Red : Color.White);
+					(i==selectedMenuItem ? Color.Red : Color.White)*opacity);
 			}
 		}
 	}

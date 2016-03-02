@@ -25,7 +25,7 @@ namespace ProjectCrusade
 			world.Player.Inventory.Update (gameTime, world);
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float drawOpacity)
 		{
 			spriteBatch.Begin ();
 

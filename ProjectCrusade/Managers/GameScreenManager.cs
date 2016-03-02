@@ -11,6 +11,8 @@ namespace ProjectCrusade
 	public class GameScreenManager
 	{
 		Stack<GameScreen> gameScreens;
+		float timeRemaining;
+		float maxTimeRemaining = -1;
 
 		public GameScreenManager (GameScreen initialGameScreen)
 		{
@@ -22,14 +24,33 @@ namespace ProjectCrusade
 			gameScreens.Push (screen);
 		}
 		public void PopGameScreen() {
-			gameScreens.Pop ();
+			PopGameScreen (0);
+		}
+
+		/// <summary>
+		/// Pops the game screen.
+		/// </summary>
+		/// <param name="transitionTime">Transition time in milliseconds.</param>
+		public void PopGameScreen(float transitionTime) {
+			
+			maxTimeRemaining = transitionTime;
+			timeRemaining = maxTimeRemaining;
 		}
 
 		public void Update(GameTime gameTime, MainGame game)
 		{
 			//Only update top screen.
 			gameScreens.Peek ().Update (gameTime, this, game);
-
+			if (timeRemaining > 0)
+				timeRemaining -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+			if (timeRemaining <= 0) {
+				if (maxTimeRemaining >= 0) {
+					gameScreens.Pop ();
+					maxTimeRemaining = -1;
+				}
+			
+				timeRemaining = 0;
+			}
 		}
 
 		/// <summary>
@@ -39,11 +60,13 @@ namespace ProjectCrusade
 		/// <param name="textureManager">Texture manager.</param>
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
-			//We need to draw the last screen last, so we reverse the stack.
+			//We need to draw the top screen last, so we reverse the stack.
 			var reverseStack = new Stack<GameScreen> (gameScreens.ToArray ());
-
-			foreach (GameScreen screen in reverseStack)
-				screen.Draw (spriteBatch, textureManager, fontManager);
+			int i = 0; 
+			foreach (GameScreen screen in reverseStack) {
+				screen.Draw (spriteBatch, textureManager, fontManager, ((i==gameScreens.Count-1 && maxTimeRemaining > 0) ? timeRemaining/maxTimeRemaining : 1.0f) );
+				i++;
+			}
 		}
 	}
 }

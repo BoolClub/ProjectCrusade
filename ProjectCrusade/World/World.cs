@@ -31,7 +31,7 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
-		Color ambientLighting = new Color(0.35f,0.35f,0.35f);
+		Color ambientLighting = new Color(0.2f, 0.2f, 0.3f);
 
 
 		/// <summary>
@@ -79,8 +79,8 @@ namespace ProjectCrusade
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
 
-			for (int i = 0; i < Width; i+=2)
-				for (int j = 0; j < Height; j+=2) {
+			for (int i = 2; i < Width-2; i+=2)
+				for (int j = 3; j < Height-3; j+=2) {
 					entities.Add (new Particle (tileToWorldCoord (i,j)));
 				}
 		}
@@ -287,6 +287,24 @@ namespace ProjectCrusade
 
 		bool entityWallCollision(Entity entity) {
 
+			if (worldToTileCoordX (entity.CollisionBox.Left) < 0)
+				return true;
+			if (worldToTileCoordX (entity.CollisionBox.Left) >= Width)
+				return true;
+			if (worldToTileCoordY (entity.CollisionBox.Top) < 0)
+				return true;
+			if (worldToTileCoordY (entity.CollisionBox.Top) >= Height)
+				return true;
+			if (worldToTileCoordX (entity.CollisionBox.Right) < 0)
+				return true;
+			if (worldToTileCoordX (entity.CollisionBox.Right) >= Width)
+				return true;
+			if (worldToTileCoordY (entity.CollisionBox.Bottom) < 0)
+				return true;
+			if (worldToTileCoordY (entity.CollisionBox.Bottom) >= Height)
+				return true;
+			
+
 			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
@@ -359,7 +377,7 @@ namespace ProjectCrusade
 							worldTiles [i, j].Rotation,
 							null,
 							new Color(worldTiles[i,j].Color),
-//							new Color(new Vector3(fluid.GetVel(i,j), 0)),
+//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
 							SpriteEffects.None,
 							0);
 				}

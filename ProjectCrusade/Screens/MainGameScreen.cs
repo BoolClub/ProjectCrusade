@@ -51,9 +51,8 @@ namespace ProjectCrusade
 			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
-
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 

@@ -18,7 +18,7 @@ namespace ProjectCrusade
 			throw new NotImplementedException ();
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
 			throw new NotImplementedException ();
 		}

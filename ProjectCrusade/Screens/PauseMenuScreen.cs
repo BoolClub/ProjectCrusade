@@ -33,7 +33,7 @@ namespace ProjectCrusade
 		//Unpause game
 		private void Option1(MenuItem m, EventArgs e)
 		{
-			screenManager.PopGameScreen ();
+			screenManager.PopGameScreen (100);
 		}
 
 
@@ -59,11 +59,11 @@ namespace ProjectCrusade
 			prevKeyboardState = Keyboard.GetState ();
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
 			spriteBatch.Begin ();
 
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), Color.Black * 0.5f);
+			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), Color.Black * 0.5f*opacity);
 
 			string text = "Paused";
 
@@ -73,9 +73,9 @@ namespace ProjectCrusade
 				menu.Position - new Vector2 (
 					(float)fontManager.GetFont("Arial").MeasureString(text).X/2, 
 					50), 
-				Color.White);
+				Color.White*opacity);
 
-			menu.Draw (spriteBatch, fontManager);
+			menu.Draw (spriteBatch, fontManager, opacity);
 
 
 			spriteBatch.End ();
