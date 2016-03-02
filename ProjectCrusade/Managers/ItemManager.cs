@@ -3,6 +3,13 @@ using System;
 using Microsoft.Xna.Framework;
 namespace ProjectCrusade
 {
+
+	//TODO:  
+	//		-Create item handler
+	//		-Create equipment system
+	//		-Assign data values for items
+
+
 	//Item types: equipment, consumable, misc
 	//Item Values
 	//	equipment
