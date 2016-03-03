@@ -38,7 +38,7 @@ namespace ProjectCrusade
 	{
 		Dictionary<string, Item> Item_data = new Dictionary<string, Item>()
 		{
-			{ "gold", new Item{identifier = "gold", name="Gold", tooltip="Lovely money.", max=1000, type="misc", TextureResource=getTextureSourceRect("gold")} }
+			{ "gold", new Item{identifier = "gold", name="Gold", tooltip="Lovely money.", count=1, max=1000, type="misc", TextureResource=getTextureSourceRect("gold")} }
 		};
 
 		public Item getItem(String d){
@@ -67,6 +67,7 @@ namespace ProjectCrusade
 
 	}
 
+	[Serializable]
 	public class Item
 	{
 		public String name;
@@ -79,9 +80,9 @@ namespace ProjectCrusade
 		public Rectangle TextureResource;
 
 		public int add(int x){
-			x-=count+x>max?max-count:0;
-			count+=x;
-			return x;
+			int remain = count + x - max;
+			count = remain < 0 ? count + x : max;
+			return remain > 0 ? remain : 0;
 		}
 		public bool remove(int x){
 			count=count-x<0?0:count-x;

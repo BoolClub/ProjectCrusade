@@ -17,7 +17,7 @@ namespace ProjectCrusade
 
 
 		//The slots
-		InventorySlot[,] slots;
+		public InventorySlot[,] slots;
 
 		//The slot that is currently being selected. Used for moving inventory items.
 		public InventorySlot SelectedSlot;
@@ -282,9 +282,9 @@ namespace ProjectCrusade
 		/// </summary>
 		public void AddItem(Item item) 
 		{
-			for (int j = 0; j < Rows && item.count>0; j++)
-				for (int i = 0; i < Columns && item.count>0; i++) {
-			 		item.setCount (slots [i, j].AddItem (item));
+			for (int j = 0; j < Rows && item!=null; j++)
+				for (int i = 0; i < Columns && item!=null; i++) {
+			 		item = slots[i, j].AddItem(item);
 				}
 		}
 

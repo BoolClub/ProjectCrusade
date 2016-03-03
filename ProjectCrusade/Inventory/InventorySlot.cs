@@ -38,16 +38,16 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <returns><c>true</c>, if item was successfully added, <c>false</c> otherwise.</returns>
 		/// <param name="itm">Item to move into slot.</param>
-		public int AddItem(Item itm) {
+		public Item AddItem(Item itm) {
 			if (Item == null){ //If there is no current item, then just add the item to this inventory slot.
-				Item = itm;
-				itm = null;
+				Item = ObjectCopier.Clone(itm);
+				itm.setCount (0);
 			}else //However, if there is an item...
 				if (Item.identifier == itm.identifier) //If they are the same item...
 					itm.setCount(Item.add(itm.count));
 				else //If they are not the same item, write this message.
 					Console.WriteLine ("These are not the same item, you cannot put the item in this slot.");
-			return itm.count;
+			return itm.count==0?null:itm;
 		}
 
 		/// <summary>
