@@ -38,7 +38,7 @@ namespace ProjectCrusade
 	{
 		Dictionary<string, Item> Item_data = new Dictionary<string, Item>()
 		{
-			{ "gold", new Item{identifier = "gold", name="Gold", tooltip="Lovely money.", count=1, max=1000, type="misc", TextureResource=getTextureSourceRect("gold")} }
+			{ "gold", new Item{Identifier = "gold", Name="Gold", Tooltip="Lovely money.", Count=1, Max=1000, Type="misc", TextureResource=getTextureSourceRect("gold")} }
 		};
 
 		public Item getItem(String d){
@@ -67,32 +67,33 @@ namespace ProjectCrusade
 
 	}
 
-	[Serializable]
 	public class Item
 	{
-		public String name;
-		public String identifier;
-		public String tooltip;
-		public int count;
-		public int max;
-		public String type; 
-		public float[] values = new float[10];
+		public String Name;
+		public String Identifier;
+		public String Tooltip;
+		public int Count;
+		public int Max;
+		public String Type; 
+		public float[] Values = new float[10];
 		public Rectangle TextureResource;
 
-		public int add(int x){
-			int remain = count + x - max;
-			count = remain < 0 ? count + x : max;
+		public T ShallowCopy<T>() where T : Item
+		{
+			return (T)(MemberwiseClone());
+		}
+
+		public int Add(int x){
+			int remain = Count + x - Max;
+			Count = remain < 0 ? Count + x : Max;
 			return remain > 0 ? remain : 0;
 		}
-		public bool remove(int x){
-			count=count-x<0?0:count-x;
-			return !(count - x < 0);
-		}
-		public void setCount(int x){
-			count = x;
+
+		public bool Remove(int x){
+			Count=Count-x<0?0:Count-x;
+			return !(Count - x < 0);
 		}
 	}
-
 
 }
 

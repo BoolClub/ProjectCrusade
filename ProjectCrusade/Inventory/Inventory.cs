@@ -134,7 +134,7 @@ namespace ProjectCrusade
 		{
 			bool foundCursor = false;
 			if (SelectedSlot != null) {
-				tooltipText = SelectedSlot.Item.tooltip;
+				tooltipText = SelectedSlot.Item.Tooltip;
 				tooltipPosition = Mouse.GetState ().Position.ToVector2();
 				foundCursor = true;
 			}
@@ -147,7 +147,7 @@ namespace ProjectCrusade
 							break;
 						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
 							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
-								tooltipText = slots [i, j].Item.tooltip;
+								tooltipText = slots [i, j].Item.Tooltip;
 								tooltipPosition = Mouse.GetState ().Position.ToVector2();
 							}
 							foundCursor = true;
@@ -190,10 +190,10 @@ namespace ProjectCrusade
 					Color.White,
 					SpriteEffects.None,
 					0);
-				if (slots[i,j].Item.count>1) 
+				if (slots[i,j].Item.Count>1) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),
-						String.Format ("{0}", slots [i, j].Item.count),
+						String.Format ("{0}", slots [i, j].Item.Count),
 						new Vector2 (x,y),
 						Color.Black);
 			}
@@ -282,10 +282,15 @@ namespace ProjectCrusade
 		/// </summary>
 		public void AddItem(Item item) 
 		{
-			for (int j = 0; j < Rows && item!=null; j++)
-				for (int i = 0; i < Columns && item!=null; i++) {
-			 		item = slots[i, j].AddItem(item);
+			for (int j = 0; j < Rows && item.Count != 0; j++) {
+				for (int i = 0; i < Columns && item.Count != 0; i++) {
+					item.Count = slots [i, j].AddItem (item);
 				}
+			}
+			if (item.Count <= 0) {
+				item = null;
+				SelectedSlot = null;
+			}
 		}
 
 
@@ -316,7 +321,6 @@ namespace ProjectCrusade
 
 							//If that slot	 doesn't have an item.
 							if (!slots[i, j].HasItem) {
-								
 								slots[i, j].AddItem (SelectedSlot.Item);
 								SelectedSlot.Item = null;
 								SelectedSlot = null;
@@ -325,9 +329,11 @@ namespace ProjectCrusade
 							} else {
 
 								//If the items are of the same type.
-								if (slots[i, j].Item.identifier.Equals(SelectedSlot.Item.identifier)) {
+								if (slots[i, j].Item.Identifier.Equals(SelectedSlot.Item.Identifier)) {
 									//Stack them
-									SelectedSlot.Item.setCount(slots[i, j].Item.add(SelectedSlot.Item.count));
+									SelectedSlot.Item.Count=slots[i, j].Item.Add(SelectedSlot.Item.Count);
+									if (SelectedSlot.Item.Count == 0)
+										SelectedSlot = null;
 									//If they are not the same item you cannot stack them.
 								} else {
 									Console.WriteLine ("You cannot stack this item.");
