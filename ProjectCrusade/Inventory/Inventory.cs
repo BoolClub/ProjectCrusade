@@ -134,7 +134,7 @@ namespace ProjectCrusade
 		{
 			bool foundCursor = false;
 			if (SelectedSlot != null) {
-				tooltipText = SelectedSlot.Item.Tooltip;
+				tooltipText = SelectedSlot.Item.Name+"- "+SelectedSlot.Item.Tooltip;
 				tooltipPosition = Mouse.GetState ().Position.ToVector2();
 				foundCursor = true;
 			}
@@ -147,7 +147,7 @@ namespace ProjectCrusade
 							break;
 						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
 							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
-								tooltipText = slots [i, j].Item.Tooltip;
+								tooltipText = slots[i,j].Item.Name+"- "+slots [i, j].Item.Tooltip;
 								tooltipPosition = Mouse.GetState ().Position.ToVector2();
 							}
 							foundCursor = true;
@@ -333,6 +333,7 @@ namespace ProjectCrusade
 									//Stack them
 									SelectedSlot.Item.Count=slots[i, j].Item.Add(SelectedSlot.Item.Count);
 									if (SelectedSlot.Item.Count == 0)
+										SelectedSlot.Item = null;
 										SelectedSlot = null;
 									//If they are not the same item you cannot stack them.
 								} else {
