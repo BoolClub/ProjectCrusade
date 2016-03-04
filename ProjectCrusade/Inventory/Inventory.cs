@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
+
+//TODO: Create equipment system
+
 namespace ProjectCrusade
 {
 	public class Inventory {

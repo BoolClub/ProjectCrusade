@@ -91,11 +91,21 @@
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
     <Compile Include="Managers\ItemManager.cs" />
+    <Compile Include="LightArea.cs" />
+    <Compile Include="ShadowmapResolver.cs" />
+    <Compile Include="QuadRenderComponent.cs" />
+    <Compile Include="Animation.cs" />
+    <Compile Include="GraphicsExp.cs" />
+    <Compile Include="TestObject.cs" />
+    <Compile Include="ItemBehavior.cs" />
+    <Compile Include="Item.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Content\Content.mgcb" />
     <None Include="packages.config" />
+    <None Include="Content\resolveShadowsEffect.fx" />
+    <None Include="Content\reductionEffect2.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -119,6 +129,7 @@
     <BundleResource Include="Content\Textures\healthBar.png" />
     <BundleResource Include="Content\Textures\healthBarFill.png" />
     <BundleResource Include="Content\Textures\world.png" />
+    <BundleResource Include="Content\Textures\Stone tile.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />

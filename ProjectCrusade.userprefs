@@ -1,41 +1,17 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/2/2016 10:42:02 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/4/2016 1:34:31 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/World/WorldChunk.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/ShadowmapResolver.cs">
     <Files>
-      <File FileName="ProjectCrusade/MainGame.cs" Line="28" Column="33" />
-      <File FileName="ProjectCrusade/Sprite.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="259" Column="37" />
-      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="21" Column="45" />
-      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/GUI/Menu.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Managers/ItemManager.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Screens/InventoryScreen.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Screens/GameScreen.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Inventory/InventorySlot.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="11" Column="20" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="59" Column="50" />
       <File FileName="ProjectCrusade/Managers/TextureManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/GUI/SanityBarGUI.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/HUDManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Entity/Player.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Misc/Camera.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/WorldChunk.cs" Line="43" Column="20" />
-      <File FileName="ProjectCrusade/World/Tile.cs" Line="21" Column="19" />
+      <File FileName="ProjectCrusade/ShadowmapResolver.cs" Line="27" Column="26" />
+      <File FileName="ProjectCrusade/QuadRenderComponent.cs" Line="4" Column="31" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ProjectCrusade" expanded="True">
-            <Node name="ProjectCrusade" expanded="True">
-              <Node name="Content" expanded="True">
-                <Node name="Levels" expanded="True" />
-              </Node>
-              <Node name="Screens" expanded="True" />
-              <Node name="World" expanded="True">
-                <Node name="WorldChunk.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

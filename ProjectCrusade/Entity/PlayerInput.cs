@@ -71,8 +71,9 @@ namespace ProjectCrusade
 			ItemManager ItemManager = new ItemManager();
 			//Quickly add an item -- (just for testing purposes)
 			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
-				player.Inventory.AddItem(ItemManager.getItem("gold"));
-				}
+				player.Inventory.AddItem (ItemManager.Data ["gold"]);
+				player.Inventory.AddItem (ItemManager.Data ["apple"]);
+			}
 
 
 			//Normalize displacement so that you travel the same speed diagonally. 

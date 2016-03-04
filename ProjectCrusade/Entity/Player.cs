@@ -52,11 +52,11 @@ namespace ProjectCrusade {
 
 			Inventory = new Inventory (4, 10);
 			//TODO: ReCode Items and add them to the inventory
-			Inventory.AddItem(ItemManager.getItem("gold"));
+			Inventory.AddItem(ItemManager.Data["gold"]);
 			Console.WriteLine (Inventory.slots[0, 0].Item.Identifier);
 			Console.WriteLine (Inventory.slots[0, 0].Item.Count);
-			Inventory.AddItem(ItemManager.getItem("gold"));
-			Inventory.AddItem(ItemManager.getItem("gold"));
+			Inventory.AddItem(ItemManager.Data["gold"]);
+			Inventory.AddItem(ItemManager.Data["gold"]);
 			Initialize ();
 
 		}
@@ -94,7 +94,8 @@ namespace ProjectCrusade {
 
 
 
-		//SETTERS
+		//SETTERS 
+		//	NOTE: Setters have been depreciated by newer equipment and item handlers 
 		public void Damage(int amount) { Sanity -= amount; }
 		public void Heal(int amount) { 
 
