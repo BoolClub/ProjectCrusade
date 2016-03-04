@@ -90,15 +90,15 @@
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
     <Compile Include="Managers\ItemManager.cs" />
-    <Compile Include="LightArea.cs" />
-    <Compile Include="ShadowmapResolver.cs" />
-    <Compile Include="QuadRenderComponent.cs" />
-    <Compile Include="Animation.cs" />
-    <Compile Include="GraphicsExp.cs" />
-    <Compile Include="TestObject.cs" />
-    <Compile Include="ItemBehavior.cs" />
-    <Compile Include="Item.cs" />
     <Compile Include="PlayerInput.cs" />
+    <Compile Include="Experimental Graphics\Animation.cs" />
+    <Compile Include="Experimental Graphics\GraphicsExp.cs" />
+    <Compile Include="Experimental Graphics\QuadRenderComponent.cs" />
+    <Compile Include="Experimental Graphics\ShadowmapResolver.cs" />
+    <Compile Include="Experimental Graphics\TestObject.cs" />
+    <Compile Include="Experimental Graphics\LightArea.cs" />
+    <Compile Include="Item\Item.cs" />
+    <Compile Include="Item\ItemBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -118,6 +118,8 @@
     <Folder Include="GUI\" />
     <Folder Include="World\" />
     <Folder Include="Entity\" />
+    <Folder Include="Experimental Graphics\" />
+    <Folder Include="Item\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
