@@ -79,10 +79,10 @@ namespace ProjectCrusade
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
 			//Disable particles until the black hole glitch is fixed.
-			/*for (int i = 3; i < Width-3; i+=2)
+			for (int i = 3; i < Width-3; i+=2)
 				for (int j = 3; j < Height-3; j+=2) {
 					entities.Add (new Particle (tileToWorldCoord (i,j)));
-				}*/
+				}
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
