@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
+
+//TODO: Create equipment system
+
 namespace ProjectCrusade
 {
 	public class Inventory {
@@ -17,7 +20,7 @@ namespace ProjectCrusade
 
 
 		//The slots
-		InventorySlot[,] slots;
+		public InventorySlot[,] slots;
 
 		//The slot that is currently being selected. Used for moving inventory items.
 		public InventorySlot SelectedSlot;
@@ -57,8 +60,8 @@ namespace ProjectCrusade
 		public Rectangle BoundingRect { get { return new Rectangle (
 				(int)screenPosition.X, 
 				(int)screenPosition.Y, 
-				(Item.SpriteWidth + SlotSpacing) * Columns,
-				(Item.SpriteWidth + SlotSpacing) * Rows);
+				(32 + SlotSpacing) * Columns,  //32 is replacing the old Item.SpriteWidth
+				(32 + SlotSpacing) * Rows);
 				} }
 
 
@@ -82,10 +85,10 @@ namespace ProjectCrusade
 					//Screen rectangle
 					Rectangle r = 
 						new Rectangle (
-							(int)screenPosition.X + (Item.SpriteWidth + SlotSpacing) * x,
-							(int)screenPosition.Y+ (Item.SpriteWidth + SlotSpacing) * y, 
-							Item.SpriteWidth, 
-							Item.SpriteWidth);
+							(int)screenPosition.X + (32 + SlotSpacing) * x,
+							(int)screenPosition.Y+ (32 + SlotSpacing) * y, 
+							32, 
+							32);
 
 					slots [x,y] = new InventorySlot (r);
 				}
@@ -134,7 +137,7 @@ namespace ProjectCrusade
 		{
 			bool foundCursor = false;
 			if (SelectedSlot != null) {
-				tooltipText = SelectedSlot.Item.ItemInfo;
+				tooltipText = SelectedSlot.Item.Name+"- "+SelectedSlot.Item.Tooltip;
 				tooltipPosition = Mouse.GetState ().Position.ToVector2();
 				foundCursor = true;
 			}
@@ -147,7 +150,7 @@ namespace ProjectCrusade
 							break;
 						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
 							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
-								tooltipText = slots [i, j].Item.ItemInfo;
+								tooltipText = slots[i,j].Item.Name+"- "+slots [i, j].Item.Tooltip;
 								tooltipPosition = Mouse.GetState ().Position.ToVector2();
 							}
 							foundCursor = true;
@@ -164,7 +167,7 @@ namespace ProjectCrusade
 			float opacity)
 		{
 
-			int disp = SlotSpacing + Item.SpriteWidth;
+			int disp = SlotSpacing + 32;
 
 
 
@@ -173,8 +176,8 @@ namespace ProjectCrusade
 
 
 			//Box expanded by two to occupy a bit more space than item sprite itself.
-			Rectangle rBox = new Rectangle (x-2, y-2, Item.SpriteWidth+4, Item.SpriteWidth+4);
-			Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
+			Rectangle rBox = new Rectangle (x-2, y-2, 32+4, 32+4);
+			Rectangle r = new Rectangle (x, y, 32, 32);
 
 			//draw background of slot
 			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), rBox,  (slots [i, j] == ActiveSlot ? Color.Red : Color.White) * opacity);
@@ -183,17 +186,17 @@ namespace ProjectCrusade
 				spriteBatch.Draw (textureManager.GetTexture ("items"),
 					null,
 					r,
-					slots [i, j].Item.getTextureSourceRect (),
+					slots [i, j].Item.TextureResource,
 					null,
 					0,
 					null,
 					Color.White,
 					SpriteEffects.None,
 					0);
-				if (slots[i,j].Item.Stackable) 
+				if (slots[i,j].Item.Count>1) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),
-						String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+						String.Format ("{0}", slots [i, j].Item.Count),
 						new Vector2 (x,y),
 						Color.Black);
 			}
@@ -228,12 +231,12 @@ namespace ProjectCrusade
 			if (SelectedSlot != null) {
 				if (SelectedSlot.HasItem) {
 
-					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, Item.SpriteWidth, Item.SpriteWidth);
+					Rectangle r = new Rectangle (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y, 32, 32);
 
 					spriteBatch.Draw (textureManager.GetTexture ("items"),
 						null,
 						r,
-						SelectedSlot.Item.getTextureSourceRect (),
+						SelectedSlot.Item.TextureResource,
 						null,
 						0,
 						null,
@@ -280,15 +283,30 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Adds an item to the first empty/similar slot in the inventory.
 		/// </summary>
-		/// <returns><c>true</c>, if item was added, <c>false</c> otherwise.</returns>
-		public bool AddItem(Item item) 
+		public void AddItem(Item item) 
 		{
-			for (int j = 0; j < Rows; j++)
-				for (int i = 0; i < Columns; i++) {
-					if (slots [i,j].AddItem (item))
-						return true;
+			for (int j = 0; j < Rows && item.Count != 0; j++) {
+				for (int i = 0; i < Columns && item.Count != 0; i++) {
+					item.Count = slots [i, j].AddItem (item);
 				}
-			return false;
+			}
+			if (item.Count <= 0) {
+				item = null;
+				SelectedSlot = null;
+			}
+		}
+		public void AddItem(Item item, int count)
+		{
+			item.Count = count;
+			for (int j = 0; j < Rows && item.Count != 0; j++) {
+				for (int i = 0; i < Columns && item.Count != 0; i++) {
+					item.Count = slots [i, j].AddItem (item);
+				}
+			}
+			if (item.Count <= 0) {
+				item = null;
+				SelectedSlot = null;
+			}
 		}
 
 
@@ -317,9 +335,8 @@ namespace ProjectCrusade
 						if (SelectedSlot != slots [i, j] && SelectedSlot != null) {
 
 							//If that slot	 doesn't have an item.
-							if (slots [i, j].HasItem == false) {
-								
-								slots [i, j].AddItem (SelectedSlot.Item);
+							if (!slots[i, j].HasItem) {
+								slots[i, j].AddItem (SelectedSlot.Item);
 								SelectedSlot.Item = null;
 								SelectedSlot = null;
 
@@ -327,27 +344,16 @@ namespace ProjectCrusade
 							} else {
 
 								//If the items are of the same type.
-								if (slots [i, j].Item.Type == SelectedSlot.Item.Type) {
-
-									//If they are stackable
-									if (slots [i, j].Item.Stackable == true) {
-									
-										slots [i, j].Item.AddToStack (SelectedSlot.Item.CurrentStackSize);
+								if (slots[i, j].Item.Identifier.Equals(SelectedSlot.Item.Identifier)) {
+									//Stack them
+									SelectedSlot.Item.Count=slots[i, j].Item.Add(SelectedSlot.Item.Count);
+									if (SelectedSlot.Item.Count == 0)
 										SelectedSlot.Item = null;
 										SelectedSlot = null;
-									} else {
-
-										Console.WriteLine ("You cannot stack this item.");
-										SelectedSlot = null;
-
-									}
-
 									//If they are not the same item you cannot stack them.
 								} else {
-
 									Console.WriteLine ("You cannot stack this item.");
 									SelectedSlot = null;
-
 								}
 							}
 						}
@@ -361,5 +367,4 @@ namespace ProjectCrusade
 
 
 } //END OF NAMESPACE
-
-
+	

@@ -59,6 +59,7 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.MacOS.3.3.0.0\lib\net45\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -84,23 +85,27 @@
     <Compile Include="Entity\PlayerInput.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Screens\InventoryScreen.cs" />
-    <Compile Include="Items\Coin.cs" />
-    <Compile Include="Items\ArrowItem.cs" />
-    <Compile Include="Items\FoodItem.cs" />
-    <Compile Include="Items\Item.cs" />
-    <Compile Include="Items\SwordItem.cs" />
-    <Compile Include="Items\WandItem.cs" />
-    <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
     <Compile Include="Managers\HUDManager.cs" />
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
+    <Compile Include="Managers\ItemManager.cs" />
+    <Compile Include="LightArea.cs" />
+    <Compile Include="ShadowmapResolver.cs" />
+    <Compile Include="QuadRenderComponent.cs" />
+    <Compile Include="Animation.cs" />
+    <Compile Include="GraphicsExp.cs" />
+    <Compile Include="TestObject.cs" />
+    <Compile Include="ItemBehavior.cs" />
+    <Compile Include="Item.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Content\Content.mgcb" />
     <None Include="packages.config" />
+    <None Include="Content\resolveShadowsEffect.fx" />
+    <None Include="Content\reductionEffect2.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -109,7 +114,6 @@
     <Folder Include="Managers\" />
     <Folder Include="Misc\" />
     <Folder Include="Inventory\" />
-    <Folder Include="Items\" />
     <Folder Include="Content\Fonts\" />
     <Folder Include="GUI\" />
     <Folder Include="World\" />
@@ -125,6 +129,7 @@
     <BundleResource Include="Content\Textures\healthBar.png" />
     <BundleResource Include="Content\Textures\healthBarFill.png" />
     <BundleResource Include="Content\Textures\world.png" />
+    <BundleResource Include="Content\Textures\Stone tile.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />

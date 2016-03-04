@@ -15,7 +15,7 @@ namespace ProjectCrusade
 	*/
 
 	public static class PlayerInput {
-		
+
 		public static bool Moving { get; private set; }
 
 		public static Player player;
@@ -50,39 +50,28 @@ namespace ProjectCrusade
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
 			}
-
-
+			//Sprint
+			if (keyState.IsKeyDown (Keys.LeftShift) && PrevKeyState.IsKeyUp(Keys.LeftShift)) {
+				player.Speed = 620;
+			}
+			if(keyState.IsKeyUp(Keys.LeftShift) && PrevKeyState.IsKeyDown(Keys.LeftShift)){
+				player.Speed = 340;
+			}
 			//Primary Use Items
 			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
 				if (player.Inventory.ActiveSlot != null) {
-					
 					if (player.Inventory.ActiveSlot.HasItem) {
-						
 						player.Inventory.ActiveSlot.Item.PrimaryUse (player.world);
-
-						//If the item is depletable, it is removed when used.
-						if (player.Inventory.ActiveSlot.Item.Depletable) {
-							player.Inventory.ActiveSlot.RemoveItem ();
-						}
+						if (player.Inventory.ActiveSlot.Item.Count <= 0)
+							player.Inventory.ActiveSlot.Item = null;
 					}
-
 				}
 			}
-
+			ItemManager ItemManager = new ItemManager();
 			//Quickly add an item -- (just for testing purposes)
 			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
-				List<Item> t = new List<Item> ();
-				t.Add (new Apple());
-				t.Add (new Water ());
-				t.Add (new Bread ());
-				t.Add (new Coin ());
-				t.Add (new WoodenSword ());
-				t.Add (new IronSword ());
-				t.Add (new StoneSword ());
-				t.Add (new StarterArrow ());
-				t.Add (new MagicWand ());
-
-				player.Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
+				player.Inventory.AddItem (ItemManager.Data ["gold"]);
+				player.Inventory.AddItem (ItemManager.Data ["apple"]);
 			}
 
 
