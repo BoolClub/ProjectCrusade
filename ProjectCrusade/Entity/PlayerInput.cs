@@ -57,12 +57,9 @@ namespace ProjectCrusade
 				if (player.Inventory.ActiveSlot != null) {
 					if (player.Inventory.ActiveSlot.HasItem) {
 						player.Inventory.ActiveSlot.Item.PrimaryUse (player.world);
-						//If the item is depletable, it is removed when used.
-						//if (player.Inventory.ActiveSlot.Item.Depletable) {
-						//	player.Inventory.ActiveSlot.RemoveItem ();
-						//}
+						if (player.Inventory.ActiveSlot.Item.Count <= 0)
+							player.Inventory.ActiveSlot.Item = null;
 					}
-
 				}
 			}
 			ItemManager ItemManager = new ItemManager();
