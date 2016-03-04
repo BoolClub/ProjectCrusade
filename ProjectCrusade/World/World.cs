@@ -31,7 +31,7 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
-		Color ambientLighting = new Color(0.2f, 0.2f, 0.3f);
+		Color ambientLighting = new Color(0.01f, 0.01f, 0.01f);
 
 
 		/// <summary>
@@ -67,8 +67,8 @@ namespace ProjectCrusade
 
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
-			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 8.0f));
+			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 5.0f));
 
 
 			fluid = new Fluid (width, 0.01f);
@@ -78,7 +78,6 @@ namespace ProjectCrusade
 
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
-			//Disable particles until the black hole glitch is fixed.
 			for (int i = 3; i < Width-3; i+=2)
 				for (int j = 3; j < Height-3; j+=2) {
 					entities.Add (new Particle (tileToWorldCoord (i,j)));
@@ -116,7 +115,7 @@ namespace ProjectCrusade
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
-			return 1.0f / (distance2 + 1.0f);
+			return 4.0f / (distance2 + 2.0f);
 		}
 
 		//From http://stackoverflow.com/questions/18525214/efficient-2d-tile-based-lighting-system
