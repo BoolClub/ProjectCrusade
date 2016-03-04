@@ -295,7 +295,19 @@ namespace ProjectCrusade
 				SelectedSlot = null;
 			}
 		}
-
+		public void AddItem(Item item, int count)
+		{
+			item.Count = count;
+			for (int j = 0; j < Rows && item.Count != 0; j++) {
+				for (int i = 0; i < Columns && item.Count != 0; i++) {
+					item.Count = slots [i, j].AddItem (item);
+				}
+			}
+			if (item.Count <= 0) {
+				item = null;
+				SelectedSlot = null;
+			}
+		}
 
 
 		/// <summary>

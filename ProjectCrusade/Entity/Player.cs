@@ -51,12 +51,8 @@ namespace ProjectCrusade {
 			ItemManager ItemManager = new ItemManager();
 
 			Inventory = new Inventory (4, 10);
-			//TODO: ReCode Items and add them to the inventory
-			Inventory.AddItem(ItemManager.Data["gold"]);
-			Console.WriteLine (Inventory.slots[0, 0].Item.Identifier);
-			Console.WriteLine (Inventory.slots[0, 0].Item.Count);
-			Inventory.AddItem(ItemManager.Data["gold"]);
-			Inventory.AddItem(ItemManager.Data["gold"]);
+			Inventory.AddItem (ItemManager.Data["gold"], 40);
+			Inventory.AddItem (ItemManager.Data ["apple"], 3);
 			Initialize ();
 
 		}
