@@ -200,11 +200,3 @@ These are not the same item, you cannot put the item in this slot.
 These are not the same item, you cannot put the item in this slot.
 These are not the same item, you cannot put the item in this slot.
 World size: 54KB
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
-  at ProjectCrusade.PauseMenuScreen.Option2 (ProjectCrusade.MenuItem m, System.EventArgs e) [0x00008] in /Users/christian.cosgrove/Projects/ProjectCrusade/ProjectCrusade/Screens/PauseMenuScreen.cs:46 
