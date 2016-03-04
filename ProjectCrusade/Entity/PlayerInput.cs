@@ -50,8 +50,13 @@ namespace ProjectCrusade
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
 			}
-
-
+			//Sprint
+			if (keyState.IsKeyDown (Keys.LeftShift) && PrevKeyState.IsKeyUp(Keys.LeftShift)) {
+				player.Speed = 620;
+			}
+			if(keyState.IsKeyUp(Keys.LeftShift) && PrevKeyState.IsKeyDown(Keys.LeftShift)){
+				player.Speed = 340;
+			}
 			//Primary Use Items
 			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
 				if (player.Inventory.ActiveSlot != null) {

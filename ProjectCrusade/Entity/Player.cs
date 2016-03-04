@@ -41,7 +41,7 @@ namespace ProjectCrusade {
 			PlayerType = type;
 			Width = 32;
 			Height = 32;
-			Speed = 600;
+			Speed = 340;
 
 			Sanity = 20;
 			MaxSanity = 100;
@@ -64,7 +64,7 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// How many pixels/sec the player moves.
 		/// </summary>
-		public float Speed { get; private set; } 
+		public float Speed { get; set; } 
 
 
 		public override void Initialize() {
