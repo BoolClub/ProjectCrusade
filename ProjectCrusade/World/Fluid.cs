@@ -42,8 +42,10 @@ namespace ProjectCrusade
 
 		public void SetVel(int i, int j, Vector2 val)
 		{
-			u [IX (width, i, j)] = val.X;
-			v [IX (width, i, j)] = val.Y;
+			if (!boundary [IX (width, i, j)]) {
+				u [IX (width, i, j)] = val.X;
+				v [IX (width, i, j)] = val.Y;
+			}
 		}
 
 		public void SetBoundaryValue(int i, int j, bool value)
