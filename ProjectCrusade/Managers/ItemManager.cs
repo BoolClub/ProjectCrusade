@@ -29,8 +29,16 @@ namespace ProjectCrusade
 			{ "gold", new Item{Identifier = "gold", Name="Gold", Tooltip="Lovely money.", Max=1000, Type="misc", TextureResource=getTextureSourceRect("GoldCoin"),} },
 			{ "apple", new Item{Identifier = "apple", Name="Apple", Tooltip="Tasty and red.", Max=12, Type="consumable", TextureResource=getTextureSourceRect("Apple"),
 				Behavior=new TupleList<string, float, int, int, int>{
-						{"HEALTH", 100, 0, -1, 0}
-			}}}
+						{"HEALTH", 10, 0, -1, 0}
+			}}},
+			{ "bread", new Item{Identifier = "bread", Name="Bread", Tooltip="A big loaf of bread", Max=12, Type="consumable", TextureResource=getTextureSourceRect("Bread"),
+					Behavior=new TupleList<string, float, int, int, int>{
+						{"HEALTH", 5, 0, -1, 0}
+					}}},
+			{ "water", new Item{Identifier = "water", Name="Water", Tooltip="Nice, refreshing water", Max=20, Type="consumable", TextureResource=getTextureSourceRect("Water"),
+					Behavior=new TupleList<string, float, int, int, int>{
+						{"HEALTH", 2, 0, -1, 0}
+					}}}
 			
 		};
 

@@ -82,7 +82,6 @@
     <Compile Include="World\Tile.cs" />
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Entity\Player.cs" />
-    <Compile Include="Entity\PlayerInput.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Screens\InventoryScreen.cs" />
     <Compile Include="World\Light.cs" />
@@ -99,6 +98,7 @@
     <Compile Include="TestObject.cs" />
     <Compile Include="ItemBehavior.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="PlayerInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

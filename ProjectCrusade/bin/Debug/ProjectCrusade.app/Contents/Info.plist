@@ -16,8 +16,6 @@
 	<string>14E46</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>ProjectCrusade</string>
 	<key>MonoBundleExecutable</key>
 	<string>ProjectCrusade.exe</string>
 	<key>CFBundleExecutable</key>

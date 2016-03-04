@@ -72,6 +72,8 @@ namespace ProjectCrusade
 			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
 				player.Inventory.AddItem (ItemManager.Data ["gold"]);
 				player.Inventory.AddItem (ItemManager.Data ["apple"]);
+				player.Inventory.AddItem (ItemManager.Data ["water"]);
+				player.Inventory.AddItem (ItemManager.Data ["bread"]);
 			}
 
 
