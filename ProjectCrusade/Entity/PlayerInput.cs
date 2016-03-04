@@ -53,21 +53,18 @@ namespace ProjectCrusade
 
 
 			//Primary Use Items
-			/*if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
+			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
 				if (player.Inventory.ActiveSlot != null) {
-					
 					if (player.Inventory.ActiveSlot.HasItem) {
-						
 						player.Inventory.ActiveSlot.Item.PrimaryUse (player.world);
-
 						//If the item is depletable, it is removed when used.
-						if (player.Inventory.ActiveSlot.Item.Depletable) {
-							player.Inventory.ActiveSlot.RemoveItem ();
-						}
+						//if (player.Inventory.ActiveSlot.Item.Depletable) {
+						//	player.Inventory.ActiveSlot.RemoveItem ();
+						//}
 					}
 
 				}
-			}*/
+			}
 			ItemManager ItemManager = new ItemManager();
 			//Quickly add an item -- (just for testing purposes)
 			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {

@@ -30,6 +30,12 @@ namespace ProjectCrusade
 			Count=Count-x<0?0:Count-x;
 			return !(Count - x < 0);
 		}
+
+		public void PrimaryUse(World world){
+			if (Type.Equals ("consumable"))
+				Count--;
+			ItemBehavior.RunBehavior(Type, Behavior, world);
+		}
 	}
 }
 
