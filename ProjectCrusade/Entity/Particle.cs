@@ -21,7 +21,7 @@ namespace ProjectCrusade
 			
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
 			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, 5,5), Color.Black);
 		}
