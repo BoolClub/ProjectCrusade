@@ -1,11 +1,13 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/7/2016 3:33:34 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/7/2016 4:23:14 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/World/World.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/Screens/MainGameScreen.cs">
     <Files>
       <File FileName="ProjectCrusade/Managers/ItemManager.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/PlayerInput.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Entity/Particle.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="8" Column="2" />
+      <File FileName="ProjectCrusade/Screens/InventoryScreen.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Managers/HUDManager.cs" Line="49" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
