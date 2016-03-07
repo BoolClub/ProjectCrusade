@@ -41,29 +41,26 @@ namespace ProjectCrusade {
 			PlayerType = type;
 			Width = 32;
 			Height = 32;
-			Speed = 600;
+			Speed = 340;
 
 			Sanity = 20;
 			MaxSanity = 100;
 
 			world = w;
-			Inventory = new Inventory (4, 10);
-			for (int i = 0; i < 15; i++)
-				Inventory.AddItem (new Apple ());
-			Inventory.AddItem (new Coin(5));
-			Inventory.AddItem (new Coin());
-			Inventory.AddItem (new Coin());
-			Inventory.AddItem (new WoodenSword ());
-			Inventory.AddItem (new StarterArrow ());
-			Inventory.AddItem (new MagicWand ());
 
+			ItemManager ItemManager = new ItemManager();
+
+			Inventory = new Inventory (4, 10);
+			Inventory.AddItem (ItemManager.Data["gold"], 40);
+			Inventory.AddItem (ItemManager.Data ["apple"], 3);
 			Initialize ();
+
 		}
 
 		/// <summary>
 		/// How many pixels/sec the player moves.
 		/// </summary>
-		public float Speed { get; private set; } 
+		public float Speed { get; set; } 
 
 
 		public override void Initialize() {
@@ -83,7 +80,7 @@ namespace ProjectCrusade {
 			PlayerInput.CheckInput(time);
 
 		}
-		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager) {
+		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 			//Do all the drawing for the player here.
 
 			Texture2D t = textureManager.GetTexture ("circle");
@@ -93,7 +90,8 @@ namespace ProjectCrusade {
 
 
 
-		//SETTERS
+		//SETTERS 
+		//	NOTE: Setters have been depreciated by newer equipment and item handlers 
 		public void Damage(int amount) { Sanity -= amount; }
 		public void Heal(int amount) { 
 

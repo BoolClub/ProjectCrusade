@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/4/2016 9:45:14 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/PlayerInput.cs">
+    <Files>
+      <File FileName="ProjectCrusade/Managers/ItemManager.cs" Line="40" Column="19" />
+      <File FileName="ProjectCrusade/PlayerInput.cs" Line="76" Column="55" />
+=======
 ﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="3/4/2016 8:02:48 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/MainGame.cs">
@@ -17,6 +25,7 @@
       <File FileName="ProjectCrusade/Entity/Player.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Misc/Camera.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/World/Tile.cs" Line="1" Column="1" />
+>>>>>>> BoolClub/dev
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

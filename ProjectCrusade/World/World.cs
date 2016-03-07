@@ -31,7 +31,7 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
-		Color ambientLighting = new Color(0.2f, 0.2f, 0.3f);
+		Color ambientLighting = new Color(0.01f, 0.01f, 0.01f);
 
 
 		/// <summary>
@@ -45,6 +45,7 @@ namespace ProjectCrusade
 		Fluid fluid;
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
+
 
 		public World (TextureManager textureManager, int width, int height)
 		{
@@ -67,8 +68,8 @@ namespace ProjectCrusade
 
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
-			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 8.0f));
+			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 5.0f));
 
 
 			fluid = new Fluid (width, 0.01f);
@@ -78,8 +79,7 @@ namespace ProjectCrusade
 
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
-
-			for (int i = 2; i < Width-2; i+=2)
+			for (int i = 3; i < Width-3; i+=2)
 				for (int j = 3; j < Height-3; j+=2) {
 					entities.Add (new Particle (tileToWorldCoord (i,j)));
 				}
@@ -116,7 +116,7 @@ namespace ProjectCrusade
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
-			return 1.0f / (distance2 + 1.0f);
+			return 4.0f / (distance2 + 2.0f);
 		}
 
 		//From http://stackoverflow.com/questions/18525214/efficient-2d-tile-based-lighting-system
@@ -356,9 +356,8 @@ namespace ProjectCrusade
 		/// Draw the world and each of its chunks
 		/// </summary>
 		/// <param name="camera">Camera needed for tile culling</param>
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, Camera camera)
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Camera camera)
 		{
-
 			//View of camera in tile space
 			//Used for per-tile culling
 			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
@@ -385,7 +384,7 @@ namespace ProjectCrusade
 
 
 			foreach (Entity entity in entities)
-				entity.Draw (spriteBatch, textureManager);
+				entity.Draw (spriteBatch, textureManager, fontManager);
 		}
 		//TODO: Add procedural world generation
 
