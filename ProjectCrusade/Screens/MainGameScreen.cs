@@ -30,7 +30,7 @@ namespace ProjectCrusade
 			hud.Update (gameTime);
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
-				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game), 100);
+				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game));
 			if (Keyboard.GetState ().IsKeyDown (Keys.I) && prevKeyboardState.IsKeyUp(Keys.I))
 				screenManager.PushGameScreen (new InventoryScreen (screenManager, world));
 
@@ -56,7 +56,8 @@ namespace ProjectCrusade
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
-			world.Draw (spriteBatch, textureManager, fontManager, camera);
+			world.Draw(spriteBatch, textureManager, camera);
+
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)
