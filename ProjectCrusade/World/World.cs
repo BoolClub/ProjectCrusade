@@ -46,6 +46,7 @@ namespace ProjectCrusade
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
 
+
 		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
@@ -355,9 +356,8 @@ namespace ProjectCrusade
 		/// Draw the world and each of its chunks
 		/// </summary>
 		/// <param name="camera">Camera needed for tile culling</param>
-		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, Camera camera)
+		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Camera camera)
 		{
-
 			//View of camera in tile space
 			//Used for per-tile culling
 			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
@@ -384,7 +384,7 @@ namespace ProjectCrusade
 
 
 			foreach (Entity entity in entities)
-				entity.Draw (spriteBatch, textureManager);
+				entity.Draw (spriteBatch, textureManager, fontManager);
 		}
 		//TODO: Add procedural world generation
 

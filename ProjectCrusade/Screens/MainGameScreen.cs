@@ -56,7 +56,11 @@ namespace ProjectCrusade
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
+<<<<<<< HEAD
 			world.Draw(spriteBatch, textureManager, camera);
+=======
+			world.Draw (spriteBatch, textureManager, fontManager, camera);
+>>>>>>> origin/BoolClub/master
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)
