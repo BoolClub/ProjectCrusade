@@ -15,7 +15,7 @@ namespace ProjectCrusade
 		const int height = 48;
 
 		//TESTING OUT THE NPC. IN THE REAL GAME THE NPC WILL NOT BE IN THE HUDMANAGER CLASS.
-		NPC npc;
+		//NPC npc;
 
 
 		public HUDManager (World w) {
