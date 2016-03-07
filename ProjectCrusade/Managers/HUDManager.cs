@@ -26,7 +26,7 @@ namespace ProjectCrusade
 
 
 			//Testing out NPCs and the TextBox.
-			npc = new NPC (world);
+			//npc = new NPC (world);
 
 			//Test speech
 			List<String> testSpeech = new List<String> ();
@@ -34,7 +34,7 @@ namespace ProjectCrusade
 			testSpeech.Add ("Once again, this is a test of the text box feature.");
 			//Right now, in the text box class, it is displaying testSpeech[1], or the second string that is above.
 
-			npc.TextBox.addSpokenText (testSpeech);
+			//npc.TextBox.addSpokenText (testSpeech);
 		}
 
 
@@ -42,7 +42,7 @@ namespace ProjectCrusade
 			sanitybar.Update (time, world.Player.Sanity, world.Player.MaxSanity);
 
 
-			npc.Update (time, world);
+			//npc.Update (time, world);
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fM) {
@@ -51,7 +51,7 @@ namespace ProjectCrusade
 			sanitybar.Draw (spriteBatch, textureManager, fM);
 
 
-			npc.Draw (spriteBatch, textureManager, fM);
+			//npc.Draw (spriteBatch, textureManager, fM);
 		}
 
 
