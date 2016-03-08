@@ -40,7 +40,7 @@ namespace ProjectCrusade
 		/// <param name="itm">Item to move into slot.</param>
 		public int AddItem(Item itm) {
 			if (Item == null){ //If there is no current item, then just add the item to this inventory slot.
-				Item = itm.ShallowCopy<Item>();
+				Item = itm.ShallowCopy();
 				itm.Count=0;
 			}else //However, if there is an item...
 				if (Item.Identifier == itm.Identifier) //If they are the same item...

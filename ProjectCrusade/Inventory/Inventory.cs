@@ -196,7 +196,7 @@ namespace ProjectCrusade
 				if (slots[i,j].Item.Count>1) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),
-						String.Format ("{0}", slots [i, j].Item.Count),
+						string.Format ("{0}", slots [i, j].Item.Count),
 						new Vector2 (x,y),
 						Color.Black);
 			}
@@ -287,28 +287,15 @@ namespace ProjectCrusade
 		{
 			for (int j = 0; j < Rows && item.Count != 0; j++) {
 				for (int i = 0; i < Columns && item.Count != 0; i++) {
-					item.Count = slots [i, j].AddItem (item);
-				}
-			}
-			if (item.Count <= 0) {
-				item = null;
-				SelectedSlot = null;
-			}
-		}
-		public void AddItem(Item item, int count)
-		{
-			item.Count = count;
-			for (int j = 0; j < Rows && item.Count != 0; j++) {
-				for (int i = 0; i < Columns && item.Count != 0; i++) {
-					item.Count = slots [i, j].AddItem (item);
-				}
-			}
-			if (item.Count <= 0) {
-				item = null;
-				SelectedSlot = null;
-			}
-		}
+					slots [i, j].AddItem (item);
 
+				}
+			}
+			if (item.Count <= 0) {
+				item = null;
+				SelectedSlot = null;
+			}
+		}
 
 		/// <summary>
 		/// Checks if an item in the inventory is going to be selected.

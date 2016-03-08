@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<items>
+	<item>
+		<spriteId>2</spriteId>
+		<identifier>gold</identifier>
+		<name>Gold</name>
+		<tooltip>Lovely money.</tooltip>
+		<max>256</max>
+		<type>misc</type>
+	</item>
+</items>

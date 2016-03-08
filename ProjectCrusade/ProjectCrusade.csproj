@@ -138,5 +138,8 @@
     <Content Include="Content\Fonts\Arial.xnb" />
     <Content Include="Content\Levels\world_Wall.csv" />
     <Content Include="Content\Levels\world_Floor.csv" />
+    <Content Include="Content\items.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

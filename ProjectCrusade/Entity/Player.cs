@@ -36,7 +36,7 @@ namespace ProjectCrusade {
 
 
 
-		public Player (String name, PlayerType type, World w) {
+		public Player (string name, PlayerType type, World w) {
 			PlayerName = name;
 			PlayerType = type;
 			Width = 32;
@@ -48,11 +48,9 @@ namespace ProjectCrusade {
 
 			world = w;
 
-			ItemManager ItemManager = new ItemManager();
 
 			Inventory = new Inventory (4, 10);
-			Inventory.AddItem (ItemManager.Data["gold"], 40);
-			Inventory.AddItem (ItemManager.Data ["apple"], 3);
+			Inventory.AddItem (ItemManager.Create ("gold", 20));
 			Initialize ();
 
 		}

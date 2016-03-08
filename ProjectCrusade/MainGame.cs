@@ -82,9 +82,6 @@ namespace ProjectCrusade
 			fontManager = new FontManager (Content);
 
 			screenManager = new GameScreenManager (new MainGameScreen(textureManager));
-
-
-
 		}
 
 		/// <summary>
@@ -129,7 +126,7 @@ namespace ProjectCrusade
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (
 				fontManager.GetFont ("Arial"), 
-				String.Format("ProjectCrusade {2}\n{0} update\n{1} draw", 
+				string.Format("ProjectCrusade {2}\n{0} update\n{1} draw", 
 					(int)frameCounter.AverageFrameRate, 
 					(int)frameCounterDraw.AverageFrameRate,
 					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),

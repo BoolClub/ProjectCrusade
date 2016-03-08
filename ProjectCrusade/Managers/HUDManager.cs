@@ -29,7 +29,7 @@ namespace ProjectCrusade
 			//npc = new NPC (world);
 
 			//Test speech
-			List<String> testSpeech = new List<String> ();
+			List<string> testSpeech = new List<string> ();
 			testSpeech.Add ("Hello, player! This is a piece of testing text!");
 			testSpeech.Add ("Once again, this is a test of the text box feature.");
 			//Right now, in the text box class, it is displaying testSpeech[1], or the second string that is above.

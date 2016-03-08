@@ -68,7 +68,7 @@ namespace ProjectCrusade
 			//Draw the hud
 			hud.Draw (spriteBatch, textureManager, fontManager);
 
-			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
+			string text = string.Format ("Sanity: {0}", world.Player.Sanity);
 
 			spriteBatch.DrawString (fontManager.GetFont ("Arial"), text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - fontManager.GetFont ("Arial").MeasureString (text), Color.White);
 
