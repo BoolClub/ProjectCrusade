@@ -4,6 +4,8 @@
 
 A tile-based game, the storyline of which we have not yet finalized. 
 
+[Please visit the wikis for information on style, story, and gameplay.](https://github.com/BoolClub/ProjectCrusade/wiki/ProjectCrusade-Wiki)
+
 ###Tiled
 For level design, it is best to use the Tiled level editor. You can download Tiled at:
 
