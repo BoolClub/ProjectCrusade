@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.2f, 0.2f, 0.3f);
+		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
 
 		/// <summary>
@@ -48,6 +48,7 @@ namespace ProjectCrusade
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
 
+		Random rand = new Random ();
 
 		public World (TextureManager textureManager, int width, int height)
 		{
@@ -90,9 +91,29 @@ namespace ProjectCrusade
 
 		void generateWorld()
 		{
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++) {
+					worldTiles [i, j] = new Tile (TileType.CaveFloor, false, Color.White.ToVector3 ());
+				}
 			//Init rooms
 			rooms = new List<Room>();
-			rooms.Add (new Room (new Rectangle (5, 5, 16, 16), ref worldTiles, "Content/Levels/RestRoom.tmx"));
+
+			const int numRooms = 15;
+
+			for (int i = 0; i < numRooms; i++) {
+				Point p = new Point (rand.Next (0, Width), rand.Next (0, Height));
+				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
+				bool intersectedOtherRoom = false;
+				foreach (Room r2 in rooms)
+					if (r2.Rect.Intersects (room.ExpandedRectangle)) {
+						intersectedOtherRoom = true;
+						break;
+					}
+				if (room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom)
+					continue;
+				room.GenerateRoom (ref worldTiles);
+				rooms.Add (room);
+			}
 			//TODO: procedural generation.
 
 
@@ -271,47 +292,6 @@ namespace ProjectCrusade
 			}
 			sWall.Close ();
 
-		}
-
-		void constructRoom(string floorFile, string wallFile, ref Tile[,] tiles)
-		{
-			//TODO: make this dynamic.
-			int width = 16;
-			int height = 16;
-
-			StreamReader sFloor = new StreamReader(TitleContainer.OpenStream (floorFile));
-			for (int j = 0; j < height; j++) {
-				string line = sFloor.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != width)
-					throw new Exception ("Floor file format does not match width!");
-
-				for (int i = 0; i < width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					if (v == -1)
-						tiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
-					else tiles [i, j] = new Tile((TileType)v, false, new Vector3(1,1,1));
-				}
-			}
-			sFloor.Close ();
-			StreamReader sWall = new StreamReader(TitleContainer.OpenStream (wallFile));
-			for (int j = 0; j < height; j++) {
-				string line = sWall.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != width)
-					throw new Exception ("Walls file format does not match width!");
-
-				for (int i = 0; i < width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					//Only include a wall file if not air
-					//Overwrites floor tiles
-					if (v != -1) 
-						tiles [i, j] = new Tile((TileType)v, true, new Vector3(1,1,1));
-				}
-			}
-			sWall.Close ();
 		}
 
 

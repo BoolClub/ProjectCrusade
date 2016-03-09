@@ -28,6 +28,8 @@ namespace ProjectCrusade
 		CaveSideLeft = 			53,
 		CaveSideRight = 		55,
 		CaveSideBottom = 		70,
+		CaveWallTopLeft = 		6,
+		CaveWallTopRight = 		7,
 	}
 	public struct Tile
 	{
