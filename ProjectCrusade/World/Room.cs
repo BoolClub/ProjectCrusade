@@ -12,7 +12,7 @@ namespace ProjectCrusade
 		public Rectangle Rect;
 
 		const int PaddingSpace = 2;
-		public Rectangle ExpandedRectangle { get { return new Rectangle (Rect.Left - PaddingSpace, Rect.Right + PaddingSpace, Rect.Width + 2 * PaddingSpace, Rect.Height + 2 * PaddingSpace); } }
+		public Rectangle ExpandedRect { get { return new Rectangle (Rect.Left - PaddingSpace, Rect.Top - PaddingSpace, Rect.Width + 2 * PaddingSpace, Rect.Height + 2 * PaddingSpace); } }
 
 		string file;
 

@@ -105,7 +105,7 @@ namespace ProjectCrusade
 				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
 				bool intersectedOtherRoom = false;
 				foreach (Room r2 in rooms)
-					if (r2.Rect.Intersects (room.ExpandedRectangle)) {
+					if (r2.Rect.Intersects (room.ExpandedRect)) {
 						intersectedOtherRoom = true;
 						break;
 					}
