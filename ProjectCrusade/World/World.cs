@@ -73,16 +73,11 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
-
-			//Init rooms
-			rooms = new List<Room>();
-			rooms.Add (new Room (new Rectangle (5, 5, 16, 16), ref worldTiles, "Content/Levels/RestRoom.tmx"));
-			//TODO: construct rooms
-
+			generateWorld ();
 
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
-			fluid.DecayRate = 0.05f;
+			fluid.DecayRate = 0.025f;
 			fluid.SmokeDiffusionConstant = 0.01f;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
@@ -92,6 +87,17 @@ namespace ProjectCrusade
 			fluidThread.Start ();
 
 		}
+
+		void generateWorld()
+		{
+			//Init rooms
+			rooms = new List<Room>();
+			rooms.Add (new Room (new Rectangle (5, 5, 16, 16), ref worldTiles, "Content/Levels/RestRoom.tmx"));
+			//TODO: procedural generation.
+
+
+		}
+
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
@@ -316,7 +322,7 @@ namespace ProjectCrusade
 			entity.Update (gameTime, this);
 			Point p = worldToTileCoord (entity.Position);
 			if (entity is Player) {
-				Vector2 vel = 10*(entity.Position - prevPosition);
+				Vector2 vel = 5*(entity.Position - prevPosition);
 				fluid.SetVel (p.X, p.Y, vel);
 				fluid.SetDensity (p.X, p.Y, 0.9f);
 			} else { 
