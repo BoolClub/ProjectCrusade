@@ -73,6 +73,13 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
+
+			//Init rooms
+			rooms = new List<Room>();
+			rooms.Add (new Room (new Rectangle (5, 5, 16, 16), ref worldTiles, "Content/Levels/RestRoom.tmx"));
+			//TODO: construct rooms
+
+
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
 			fluid.DecayRate = 0.05f;
@@ -84,10 +91,6 @@ namespace ProjectCrusade
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
 
-			//Init rooms
-			rooms = new List<Room>();
-			rooms.Add (new Room (new Rectangle (5, 5, 16, 16)));
-			//TODO: construct rooms
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
