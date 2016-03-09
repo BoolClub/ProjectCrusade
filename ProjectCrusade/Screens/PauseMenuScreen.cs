@@ -24,9 +24,10 @@ namespace ProjectCrusade
 			MenuItem menuItem1 = new MenuItem ("Resume");
 			menuItem1.Activated += new MenuItem.ActivatedHandler (Option1);
 			MenuItem menuItem2 = new MenuItem ("Quit");
-			menuItem1.Activated += new MenuItem.ActivatedHandler (Option2);
+			menuItem2.Activated += new MenuItem.ActivatedHandler (Option2);
 			menu.AddItem (menuItem1);
 			menu.AddItem (menuItem2);
+			this.game = game;
 		}
 
 

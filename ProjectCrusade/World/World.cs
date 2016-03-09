@@ -267,7 +267,7 @@ namespace ProjectCrusade
 			if (entity is Player) {
 				Vector2 vel = 10*(entity.Position - prevPosition);
 				fluid.SetVel (p.X, p.Y, vel);
-				fluid.SetDensity (p.X, p.Y, 0.5f);
+				fluid.SetDensity (p.X, p.Y, 0.9f);
 			} else { 
 				entity.Position += fluid.GetVel (p.X, p.Y);
 			}
@@ -394,7 +394,6 @@ namespace ProjectCrusade
 						0,
 						null,
 						Color.White*fluid.GetDensity(i,j),
-						//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
 						SpriteEffects.None,
 						0);
 				}
