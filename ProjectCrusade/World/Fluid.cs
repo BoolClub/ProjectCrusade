@@ -5,9 +5,12 @@ namespace ProjectCrusade
 {
 	public class Fluid
 	{
+		public float DecayRate = 0.1f;
+		public float SmokeDiffusionConstant = 0.001f;
+		public float Viscosity = 0.01f;
 		int width;
 
-		float[] u, v, u0, v0;
+		float[] u, v, u0, v0, d, d0;
 		bool[] boundary;
 
 		float timeStep;
@@ -20,25 +23,38 @@ namespace ProjectCrusade
 			v = new float[(width+2)*(width+2)];
 			u0 = new float[(width+2)*(width+2)];
 			v0 = new float[(width+2)*(width+2)];
+			d = new float[(width+2)*(width+2)];
+			d0 = new float[(width+2)*(width+2)];
 			boundary = new bool[(width + 2) * (width + 2)];
 			for (int i = 0; i < (width+2)*(width+2); i++) {
 				u [i] = 0.0f;
 				v [i] = 0.0f;
 				u0 [i] = 0.0f;
 				v0 [i] = 0.0f;
+				d [i] = 0.0f;
+				d0 [i] = 0.0f;
 				boundary [i] = false;
 			}
 		}
 
 		public void Update()
 		{
-			VelStep (width, ref u, ref v, ref u0, ref v0, 0.01f, timeStep);
-
+			DensStep (width, ref d, ref d0, ref u, ref v, Viscosity, timeStep);
+			VelStep (width, ref u, ref v, ref u0, ref v0, SmokeDiffusionConstant, timeStep);
 		}
 
 		public Vector2 GetVel(int i, int j) { 
 			return new Vector2 (u [IX (width, i, j)], v [IX (width, i, j)]);
 		}
+		public float GetDensity(int i, int j) { 
+			return d[IX(width,i,j)];
+		}
+		public void SetDensity(int i, int j, float val) { 
+			d[IX(width,i,j)] = val;
+			d0[IX(width,i,j)] = val;
+		}
+
+
 
 		public void SetVel(int i, int j, Vector2 val)
 		{
@@ -77,6 +93,8 @@ namespace ProjectCrusade
 			Diffuse(N, 0, ref x, ref x0, diff, dt);
 			Swap(ref x0, ref x);
 			Advect(N, 0, ref x, ref x0, ref u, ref v, dt);
+			for (int i = 0; i < N * N; i++)
+				d [i] *= (1-DecayRate);
 		}
 
 		public static int IX(int N, int i, int j)

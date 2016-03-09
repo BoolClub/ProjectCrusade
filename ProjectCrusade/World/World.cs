@@ -73,17 +73,14 @@ namespace ProjectCrusade
 
 
 			fluid = new Fluid (width, 0.01f);
+			fluid.DecayRate = 0.05f;
+			fluid.SmokeDiffusionConstant = 0.01f;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
 					if (worldTiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
 
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
-
-			for (int i = 2; i < Width-2; i+=2)
-				for (int j = 3; j < Height-3; j+=2) {
-					entities.Add (new Particle (tileToWorldCoord (i,j)));
-				}
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
@@ -270,6 +267,7 @@ namespace ProjectCrusade
 			if (entity is Player) {
 				Vector2 vel = 10*(entity.Position - prevPosition);
 				fluid.SetVel (p.X, p.Y, vel);
+				fluid.SetDensity (p.X, p.Y, 0.9f);
 			} else { 
 				entity.Position += fluid.GetVel (p.X, p.Y);
 			}
@@ -361,10 +359,10 @@ namespace ProjectCrusade
 		{
 			//View of camera in tile space
 			//Used for per-tile culling
-			Rectangle cameraRectTiles = new Rectangle(camera.ViewRectangle.X/TileWidth,camera.ViewRectangle.Y/TileWidth,camera.ViewRectangle.Width/TileWidth,camera.ViewRectangle.Height/TileWidth); 
+			Rectangle cameraRectTiles = new Rectangle (camera.ViewRectangle.X / TileWidth, camera.ViewRectangle.Y / TileWidth, camera.ViewRectangle.Width / TileWidth, camera.ViewRectangle.Height / TileWidth); 
 
-			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right+1; i++)
-				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom+1; j++) {
+			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
+				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
 					if (i < 0 || i >= Width || j < 0 || j >= Height)
 						continue;
 
@@ -376,12 +374,31 @@ namespace ProjectCrusade
 							null,
 							worldTiles [i, j].Rotation,
 							null,
-							new Color(worldTiles[i,j].Color),
+							new Color (worldTiles [i, j].Color),
 //							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
 							SpriteEffects.None,
 							0);
 				}
-				
+
+			//Draw smoke
+			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
+				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
+					if (i < 0 || i >= Width || j < 0 || j >= Height)
+						continue;
+
+					spriteBatch.Draw (textureManager.WhitePixel,
+						null,
+						new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+						null,
+						null,
+						0,
+						null,
+						Color.White*fluid.GetDensity(i,j),
+						SpriteEffects.None,
+						0);
+				}
+		
+					
 
 
 			foreach (Entity entity in entities)
