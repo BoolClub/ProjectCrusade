@@ -63,7 +63,7 @@ namespace ProjectCrusade
 		public abstract bool Stackable { get; }
 
 		//The current stack size of a stackable item.
-		public int CurrentStackSize { get; protected set; }
+		public int Count { get; protected set; }
 
 		//The maximum stack that a stackable item can hold.
 		public const int MaxStackSize = 64;
@@ -72,18 +72,18 @@ namespace ProjectCrusade
 		public abstract bool Depletable { get; }
 
 
-		public Item(int stackSize = 1) { CurrentStackSize = stackSize;}
+		public Item(int stackSize = 1) { Count = stackSize;}
 
 		//Returns information about the item. This can be displayed on the screen so the player knows what each item does.
-		public abstract string ItemInfo { get; }
+		public abstract string Tooltip { get; }
 
 		/// <summary>
 		/// Increment size of stack. 
 		/// </summary>
 		/// <param name="amount">Number of items to add to stack. Default=1</param>
 		public void AddToStack(int amount = 1) {
-			if (CurrentStackSize < MaxStackSize) {
-				CurrentStackSize += amount;
+			if (Count < MaxStackSize) {
+				Count += amount;
 			}
 		}
 

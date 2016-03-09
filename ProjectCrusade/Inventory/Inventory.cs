@@ -134,7 +134,7 @@ namespace ProjectCrusade
 		{
 			bool foundCursor = false;
 			if (SelectedSlot != null) {
-				tooltipText = SelectedSlot.Item.ItemInfo;
+				tooltipText = SelectedSlot.Item.Tooltip;
 				tooltipPosition = Mouse.GetState ().Position.ToVector2();
 				foundCursor = true;
 			}
@@ -147,7 +147,7 @@ namespace ProjectCrusade
 							break;
 						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
 							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
-								tooltipText = slots [i, j].Item.ItemInfo;
+								tooltipText = slots [i, j].Item.Tooltip;
 								tooltipPosition = Mouse.GetState ().Position.ToVector2();
 							}
 							foundCursor = true;
@@ -193,7 +193,7 @@ namespace ProjectCrusade
 				if (slots[i,j].Item.Stackable) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),
-						String.Format ("{0}", slots [i, j].Item.CurrentStackSize),
+						String.Format ("{0}", slots [i, j].Item.Count),
 						new Vector2 (x,y),
 						Color.Black);
 			}
@@ -332,7 +332,7 @@ namespace ProjectCrusade
 									//If they are stackable
 									if (slots [i, j].Item.Stackable == true) {
 									
-										slots [i, j].Item.AddToStack (SelectedSlot.Item.CurrentStackSize);
+										slots [i, j].Item.AddToStack (SelectedSlot.Item.Count);
 										SelectedSlot.Item = null;
 										SelectedSlot = null;
 									} else {

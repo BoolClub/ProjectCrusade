@@ -53,7 +53,7 @@ namespace ProjectCrusade
 					//If the item is stackable, then add to the stack.
 					if (this.Item.Stackable) {
 						
-						this.Item.AddToStack (itm.CurrentStackSize);
+						this.Item.AddToStack (itm.Count);
 						return true;
 					//If it is not stackable, write this message.
 					} else {
@@ -75,12 +75,12 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <returns><c>true</c>, if item was removed, <c>false</c> otherwise.</returns>
 		public bool RemoveItem(int count = 1) {
-			if (Item == null || Item.CurrentStackSize==0)
+			if (Item == null || Item.Count==0)
 				return false;
-			int prevSize = Item.CurrentStackSize;
+			int prevSize = Item.Count;
 
 			Item.AddToStack (-count);
-			if (Item.CurrentStackSize <= 0)
+			if (Item.Count <= 0)
 				Item = null;
 			return true;
 		}

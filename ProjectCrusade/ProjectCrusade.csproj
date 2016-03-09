@@ -96,6 +96,12 @@
     <Compile Include="Managers\HUDManager.cs" />
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
+    <Compile Include="Experimental Graphics\Animation.cs" />
+    <Compile Include="Experimental Graphics\GraphicsExp.cs" />
+    <Compile Include="Experimental Graphics\LightArea.cs" />
+    <Compile Include="Experimental Graphics\QuadRenderComponent.cs" />
+    <Compile Include="Experimental Graphics\ShadowmapResolver.cs" />
+    <Compile Include="Experimental Graphics\TestObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

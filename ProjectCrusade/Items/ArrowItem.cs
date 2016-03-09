@@ -35,13 +35,8 @@ namespace ProjectCrusade
 	public class StarterArrow : ArrowItem
 	{
 		public override ItemType Type 			{ get { return ItemType.StarterArrow; } }
-		public override string ItemInfo 		{ get { return "A basic arrow. I could shoot this using a bow."; } }
+		public override string Tooltip 		{ get { return "A basic arrow. I could shoot this using a bow."; } }
 		protected override int Damage 			{ get { return 10; } }
-
-		public StarterArrow () { 
-			
-		}
-
 	}
 
 }
