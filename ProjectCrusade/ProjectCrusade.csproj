@@ -102,6 +102,7 @@
     <Compile Include="Experimental Graphics\QuadRenderComponent.cs" />
     <Compile Include="Experimental Graphics\ShadowmapResolver.cs" />
     <Compile Include="Experimental Graphics\TestObject.cs" />
+    <Compile Include="World\Room.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -137,5 +138,6 @@
     <Content Include="Content\Fonts\Arial.xnb" />
     <Content Include="Content\Levels\world_Wall.csv" />
     <Content Include="Content\Levels\world_Floor.csv" />
+    <Content Include="Content\Levels\RestRoom.tmx" />
   </ItemGroup>
 </Project>
