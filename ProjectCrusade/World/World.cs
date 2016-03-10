@@ -79,7 +79,8 @@ namespace ProjectCrusade
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
 			fluid.DecayRate = 0.025f;
-			fluid.SmokeDiffusionConstant = 0.01f;
+			fluid.SmokeDiffusionConstant = 0.000001f;
+			fluid.Viscosity = 0.001f;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
 					if (worldTiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
@@ -100,6 +101,7 @@ namespace ProjectCrusade
 
 			const int numRooms = 15;
 
+
 			for (int i = 0; i < numRooms; i++) {
 				Point p = new Point (rand.Next (0, Width), rand.Next (0, Height));
 				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
@@ -116,7 +118,50 @@ namespace ProjectCrusade
 			}
 			//TODO: procedural generation.
 
+			List<Tuple<Point, int>> entrances = new List<Tuple<Point, int>> ();
+			for (int i = 0; i<rooms.Count;i++)
+				foreach (Point p in rooms[i].Entrances)
+					entrances.Add (new Tuple<Point, int>(new Point(p.X + rooms[i].Rect.Left, p.Y + rooms[i].Rect.Top), i));
+			
+			//TODO: improve complexity of this 
+			for (int ent1 = 0; ent1 < entrances.Count;ent1++)
+			{
+				for (int ent2 = 0; ent2 < ent1;ent2++)
+				{
+					
+					var e = entrances [ent1];
+					var e2 = entrances [ent2];
+					//Skip if the same room
+					if (e.Item2 == e2.Item2)
+						continue;
 
+
+					//Get line connecting two entrances
+					List<Point> line = GetLine (e.Item1, e2.Item1);
+
+					bool failed = false;
+
+					//Check if the line intersects with any rooms
+					foreach (Room r in rooms) {
+						for (int i = 0;i<line.Count;i++)
+						{
+							Point p = line [i];
+
+							if (r.Rect.Contains (p) && worldTiles[p.X,p.Y].Solid)
+								failed = true;
+						}
+					}
+					if (failed)
+						break;
+					//If no intersection,
+					if (!failed) {
+						for (int i = 1; i<line.Count-1;i++)
+						{
+							worldTiles [line[i].X, line[i].Y] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
+						}
+					}
+				}
+			}
 		}
 
 
