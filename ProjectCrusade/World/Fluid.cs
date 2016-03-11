@@ -50,8 +50,11 @@ namespace ProjectCrusade
 			return d[IX(width,i,j)];
 		}
 		public void SetDensity(int i, int j, float val) { 
-			d[IX(width,i,j)] = val;
-			d0[IX(width,i,j)] = val;
+			if (!boundary [IX (width, i, j)]) {
+				d [IX (width, i, j)] = val;
+
+				d0 [IX (width, i, j)] = val;
+			}
 		}
 
 
