@@ -115,6 +115,8 @@ namespace ProjectCrusade
 					currTile = finishedTiles.Pop();
 				}
 			}
+
+
 		}
 	}
 }

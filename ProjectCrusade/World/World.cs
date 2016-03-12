@@ -53,7 +53,6 @@ namespace ProjectCrusade
 		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
-			Player.Position = new Vector2 (100, 100);
 			Width = width;
 			Height = height;
 
@@ -75,6 +74,7 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
 			generateWorld ();
+			Player.Position = rooms [0].Center;
 
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
@@ -94,7 +94,7 @@ namespace ProjectCrusade
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					worldTiles [i, j] = new Tile (TileType.CaveFloor, false, Color.White.ToVector3 ());
+					worldTiles [i, j] = new Tile (TileType.CaveWall, false, Color.White.ToVector3 ());
 				}
 			//Init rooms
 			rooms = new List<Room>();

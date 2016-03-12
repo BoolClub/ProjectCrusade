@@ -11,6 +11,8 @@ namespace ProjectCrusade
 	{
 		public Rectangle Rect;
 
+		public Vector2 Center { get { return World.TileWidth * Rect.Center.ToVector2 (); } }
+
 		const int PaddingSpace = 2;
 		public Rectangle ExpandedRect { get { return new Rectangle (Rect.Left - PaddingSpace, Rect.Top - PaddingSpace, Rect.Width + 2 * PaddingSpace, Rect.Height + 2 * PaddingSpace); } }
 
@@ -32,6 +34,8 @@ namespace ProjectCrusade
 
 			Rect = new Rectangle (position.X, position.Y, width, height);
 		}
+
+
 
 		public void GenerateRoom(ref Tile[,] world)
 		{
