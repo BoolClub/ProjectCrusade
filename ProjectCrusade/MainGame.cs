@@ -51,7 +51,7 @@ namespace ProjectCrusade
 		/// </summary>
 		protected override void Initialize ()
 		{
-
+			
 
 			frameCounter = new FrameRateCounter ();
 			frameCounterDraw = new FrameRateCounter ();

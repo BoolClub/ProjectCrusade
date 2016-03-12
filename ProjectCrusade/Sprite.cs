@@ -41,9 +41,6 @@ namespace ProjectCrusade
 		}
 
 
-		abstract public void Initialize ();
-
-
 		abstract public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager);
 	}
 }

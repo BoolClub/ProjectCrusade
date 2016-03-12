@@ -11,11 +11,6 @@ namespace ProjectCrusade
 			Position = pos;
 		}
 
-		public override void Initialize ()
-		{
-			
-		}
-
 		public override void Update (GameTime gameTime, World world)
 		{
 			

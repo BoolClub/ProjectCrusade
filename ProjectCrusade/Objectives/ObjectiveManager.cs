@@ -12,17 +12,26 @@ namespace ProjectCrusade
 	public class ObjectiveManager
 	{
 		/// <summary>
-		/// A dictionary for storing all of the game's objectives. It stores them with a Name and a corresponding 
+		/// A dictionary for storing all of the game's objectives. It stores them with a string identifier and a corresponding 
 		/// Objective.
 		/// </summary>
-		public Dictionary<String, Objective> Objectives { get; set; }
+		Dictionary<String, Objective> objectives;
 
 
 
 		public ObjectiveManager () {
-			
+			objectives = new Dictionary<string, Objective> ();
 		}
 
+		public void ClearObjectives()
+		{
+			objectives.Clear ();
+		}
+
+		public void AddObjective(string identifier, Objective obj)
+		{
+			objectives [identifier] = obj;
+		}
 
 		public void Update(GameTime time, Player player, World world) {
 

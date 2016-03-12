@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 
 		/// <summary>
-		/// True/False for whether or not this objective is currently active.
+		/// True/False for whether or not you can complete this objective right now.
 		/// </summary>
 		public bool Active { get; set; }
 
@@ -42,7 +42,7 @@ namespace ProjectCrusade
 		/// Basically just shows what the player must do. (i.e. "Talk to a particular npc.").
 		/// </summary>
 		/// <value>The short description.</value>
-		public String Description { get; set; }
+		public string Description { get; set; }
 
 
 

@@ -23,45 +23,39 @@ namespace ProjectCrusade
 		/// This is the text box for the NPC. It will display the speech for the NPC to say when interacting
 		/// with the player.
 		/// </summary>
-		public TextBox TextBox = new TextBox();
+		public TextBox TextBox;
 
 		/// <summary>
 		/// Gets or sets the name of the NPC.
 		/// </summary>
 		/// <value>The name of the NPC.</value>
-		public String NPCName { get; set; }
+		public string Name { get; set; }
 
 
 
-		public NPC (String name, World w) {
-			NPCName = name;
+		public NPC (string name, World w) {
+			Name = name;
 			world = w;
-			Initialize ();
+			Width = 32; 
+			Height = 32;
+			Position = new Vector2 (0,0);
+			TextBox = new TextBox (Position);
 		}
 
 	
-		public override void Initialize () {
-			Width = 32; Height = 32;
-			Position = new Vector2 (0,0);
-		}
-
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 			//Draw a temporary box for the NPC
-			Texture2D box = new Texture2D (MainGame.graphics.GraphicsDevice, 32, 32);
-			Color[] data = new Color[32*32];
-			for (int i = 0; i < data.Length; i++) { data [i] = Color.Pink; }
-			box.SetData (data);
-			spriteBatch.Draw (box, Position, Color.Pink);
+
+			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Color.Pink);
 
 
 
 			//If interacting with the player...
-				TextBox.Draw (spriteBatch, textureManager, fontManager);
+			TextBox.Draw (spriteBatch, textureManager, fontManager);
 		}
 
 		public override void Update(GameTime gameTime, World world) {
-			//If interacting with the player...
-				TextBox.Update (gameTime, world);
+			
 		}
 
 
