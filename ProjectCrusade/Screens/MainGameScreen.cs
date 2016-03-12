@@ -14,11 +14,14 @@ namespace ProjectCrusade
 		World world;
 		KeyboardState prevKeyboardState;
 		HUDManager hud;
+		ObjectiveManager objManager;
+
 
 		public MainGameScreen (TextureManager textureManager)
 		{
 			camera = new Camera ();
-			world = new World (textureManager, 128, 128);
+			objManager = new ObjectiveManager ();
+			world = new World (textureManager, 128, 128, objManager);
 			prevKeyboardState = Keyboard.GetState ();
 			hud = new HUDManager (world);
 		}
@@ -28,6 +31,8 @@ namespace ProjectCrusade
 			cameraFollow ();
 			camera.Update ();
 			hud.Update (gameTime);
+			objManager.Update (gameTime, world.Player, world);
+
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game), 100);
@@ -57,7 +62,7 @@ namespace ProjectCrusade
 			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager, fontManager, camera);
-            
+
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)

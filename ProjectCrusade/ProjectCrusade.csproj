@@ -136,18 +136,13 @@
     <BundleResource Include="Content\Textures\circle.png" />
     <BundleResource Include="Content\Textures\tiles.png" />
     <BundleResource Include="Content\Textures\items.png" />
-    <BundleResource Include="Content\Textures\Apple.png" />
     <BundleResource Include="Content\Textures\inventory_box.png" />
-    <BundleResource Include="Content\Textures\testRoom.png" />
     <BundleResource Include="Content\Textures\healthBar.png" />
     <BundleResource Include="Content\Textures\healthBarFill.png" />
-    <BundleResource Include="Content\Textures\world.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />
     <Content Include="Content\Fonts\Arial.xnb" />
-    <Content Include="Content\Levels\world_Wall.csv" />
-    <Content Include="Content\Levels\world_Floor.csv" />
     <Content Include="Content\Levels\RestRoom.tmx" />
   </ItemGroup>
 </Project>
