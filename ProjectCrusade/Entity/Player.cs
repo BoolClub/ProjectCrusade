@@ -36,7 +36,7 @@ namespace ProjectCrusade {
 
 
 
-		public Player (String name, PlayerType type, World w) {
+		public Player (string name, PlayerType type, World w) {
 			PlayerName = name;
 			PlayerType = type;
 			Width = 31;
@@ -45,6 +45,10 @@ namespace ProjectCrusade {
 
 			Sanity = 20;
 			MaxSanity = 100;
+
+
+			Position = new Vector2(0,0);
+			PlayerInput.player = this;
 
 			world = w;
 			Inventory = new Inventory (4, 10);
@@ -57,7 +61,6 @@ namespace ProjectCrusade {
 			Inventory.AddItem (new StarterArrow ());
 			Inventory.AddItem (new MagicWand ());
 
-			Initialize ();
 		}
 
 		/// <summary>
@@ -66,11 +69,6 @@ namespace ProjectCrusade {
 		public float Speed { get; private set; } 
 
 
-		public override void Initialize() {
-			//Do all the initializing for the player here.
-			Position = new Vector2(0,0);
-			PlayerInput.player = this;
-		}
 		public override void Update(GameTime time, World world) {
 			//Do all the updating for the player here.
 
