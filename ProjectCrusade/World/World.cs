@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.2f, 0.2f, 0.3f);
+		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
 
 		/// <summary>
@@ -48,11 +48,11 @@ namespace ProjectCrusade
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
 
+		Random rand = new Random ();
 
 		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
-			Player.Position = new Vector2 (100, 100);
 			Width = width;
 			Height = height;
 
@@ -73,17 +73,14 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
-
-			//Init rooms
-			rooms = new List<Room>();
-			rooms.Add (new Room (new Rectangle (5, 5, 16, 16), ref worldTiles, "Content/Levels/RestRoom.tmx"));
-			//TODO: construct rooms
-
+			generateWorld ();
+			Player.Position = rooms [0].Center;
 
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
-			fluid.DecayRate = 0.05f;
-			fluid.SmokeDiffusionConstant = 0.01f;
+			fluid.DecayRate = 0.025f;
+			fluid.SmokeDiffusionConstant = 0.000001f;
+			fluid.Viscosity = 0.001f;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
 					if (worldTiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
@@ -92,6 +89,50 @@ namespace ProjectCrusade
 			fluidThread.Start ();
 
 		}
+
+		void generateWorld()
+		{
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++) {
+					worldTiles [i, j] = new Tile (TileType.CaveWall, false, Color.White.ToVector3 ());
+				}
+			//Init rooms
+			rooms = new List<Room>();
+
+			const int numRooms = 15;
+
+
+			for (int i = 0; i < numRooms; i++) {
+				Point p = new Point (rand.Next (0, Width) / 2 * 2, rand.Next (0, Height) / 2 * 2);
+				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
+				bool intersectedOtherRoom = false;
+				foreach (Room r2 in rooms)
+					if (r2.Rect.Intersects (room.ExpandedRect)) {
+						intersectedOtherRoom = true;
+						break;
+					}
+				if (room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom)
+					continue;
+				room.GenerateRoom (ref worldTiles);
+				rooms.Add (room);
+			}
+			//TODO: procedural generation.
+
+			List<Tuple<Point, int>> entrances = new List<Tuple<Point, int>> ();
+			for (int i = 0; i<rooms.Count;i++)
+				foreach (Point p in rooms[i].Entrances)
+					entrances.Add (new Tuple<Point, int>(new Point(p.X + rooms[i].Rect.Left, p.Y + rooms[i].Rect.Top), i));
+			
+			MazeGenerator generator = new MazeGenerator (Width, Height);
+			foreach (Room room in rooms) generator.ShadeRoom(room);
+			generator.Generate ();
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++) {
+					if (generator.IsHall(i,j))
+						worldTiles [i, j] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
+				}
+		}
+
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
@@ -267,47 +308,6 @@ namespace ProjectCrusade
 
 		}
 
-		void constructRoom(string floorFile, string wallFile, ref Tile[,] tiles)
-		{
-			//TODO: make this dynamic.
-			int width = 16;
-			int height = 16;
-
-			StreamReader sFloor = new StreamReader(TitleContainer.OpenStream (floorFile));
-			for (int j = 0; j < height; j++) {
-				string line = sFloor.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != width)
-					throw new Exception ("Floor file format does not match width!");
-
-				for (int i = 0; i < width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					if (v == -1)
-						tiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
-					else tiles [i, j] = new Tile((TileType)v, false, new Vector3(1,1,1));
-				}
-			}
-			sFloor.Close ();
-			StreamReader sWall = new StreamReader(TitleContainer.OpenStream (wallFile));
-			for (int j = 0; j < height; j++) {
-				string line = sWall.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != width)
-					throw new Exception ("Walls file format does not match width!");
-
-				for (int i = 0; i < width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					//Only include a wall file if not air
-					//Overwrites floor tiles
-					if (v != -1) 
-						tiles [i, j] = new Tile((TileType)v, true, new Vector3(1,1,1));
-				}
-			}
-			sWall.Close ();
-		}
-
 
 		void updateEntity(GameTime gameTime, Entity entity)
 		{
@@ -316,7 +316,7 @@ namespace ProjectCrusade
 			entity.Update (gameTime, this);
 			Point p = worldToTileCoord (entity.Position);
 			if (entity is Player) {
-				Vector2 vel = 10*(entity.Position - prevPosition);
+				Vector2 vel = 5*(entity.Position - prevPosition);
 				fluid.SetVel (p.X, p.Y, vel);
 				fluid.SetDensity (p.X, p.Y, 0.9f);
 			} else { 

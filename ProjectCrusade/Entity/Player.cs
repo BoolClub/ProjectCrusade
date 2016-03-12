@@ -39,8 +39,8 @@ namespace ProjectCrusade {
 		public Player (string name, PlayerType type, World w) {
 			PlayerName = name;
 			PlayerType = type;
-			Width = 32;
-			Height = 32;
+			Width = 31;
+			Height = 31;
 			Speed = 300;
 
 			Sanity = 20;
