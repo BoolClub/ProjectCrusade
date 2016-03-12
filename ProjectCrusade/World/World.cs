@@ -60,9 +60,9 @@ namespace ProjectCrusade
 			Width = width;
 			Height = height;
 
-			constructWorldTiles ("Content/Levels/world_Floor.csv", "Content/Levels/world_Wall.csv");
-
 			int tilesSize = 0;
+
+			worldTiles = new Tile[Width, Height];
 
 			foreach (Tile t in worldTiles)
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
@@ -110,7 +110,7 @@ namespace ProjectCrusade
 
 			for (int i = 0; i < numRooms; i++) {
 				//Lock room positions
-				Point p = new Point (rand.Next (0, Width) / 2 * 2, rand.Next (0, Height) / 2 * 2);
+				Point p = new Point (rand.Next (2, Width-2) / 2 * 2, rand.Next (2, Height-2) / 2 * 2);
 				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
 				bool intersectedOtherRoom = false;
 				foreach (Room r2 in rooms)

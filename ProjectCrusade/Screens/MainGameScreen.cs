@@ -18,7 +18,7 @@ namespace ProjectCrusade
 		public MainGameScreen (TextureManager textureManager)
 		{
 			camera = new Camera ();
-			world = new World (textureManager, 48, 48);
+			world = new World (textureManager, 128, 128);
 			prevKeyboardState = Keyboard.GetState ();
 			hud = new HUDManager (world);
 		}
@@ -48,7 +48,7 @@ namespace ProjectCrusade
 			const float speed = 0.1f;
 
 			//Expontial following
-			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) - camera.Position) * speed;
+			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) / camera.Scale - camera.Position / camera.Scale) * speed;
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)

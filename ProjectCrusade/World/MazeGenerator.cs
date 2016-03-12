@@ -178,7 +178,7 @@ namespace ProjectCrusade
 			maze [currTile.X, currTile.Y] = -1;
 			List<int> options = new List<int> ();
 			//TODO: change loop condition
-			for (int i = 0; i<1000;i++)
+			for (int i = 0; i<10000;i++)
 			{
 				options = getTraversalOptions (currTile);
 				if (options.Count > 0) {
@@ -230,7 +230,7 @@ namespace ProjectCrusade
 				Point currTile = deadEnd;
 				int neighbors;
 				int i = 0; 
-				while ((neighbors = numNeighborsSolid (currTile)) ==3 && i < 100) {
+				while ((neighbors = numNeighborsSolid (currTile)) ==3 && i < 1000) {
 					maze [currTile.X, currTile.Y] = 0;
 					if (currTile.X + 1 < width) if (maze [currTile.X + 1, currTile.Y] == -1) {
 						currTile = new Point (currTile.X + 1, currTile.Y);

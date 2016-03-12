@@ -21,10 +21,10 @@ namespace ProjectCrusade
 		public Rectangle ViewRectangle {
 			get {
 				return new Rectangle (
-					(int)Position.X,
-					(int)Position.Y,
-					MainGame.WindowWidth,
-					MainGame.WindowHeight);
+					(int)(Position.X / Scale),
+					(int)(Position.Y / Scale),
+					(int)(MainGame.WindowWidth / Scale),
+					(int)(MainGame.WindowHeight / Scale));
 			}
 		}
 
@@ -61,7 +61,6 @@ namespace ProjectCrusade
 			Matrix.CreateTranslation (-Position.X, -Position.Y, Height);
 			InverseMatrix = Matrix.Invert (TransformMatrix);
 		}
-
 		/// <summary>
 		/// Used to convert a position on the screen to a position in world space (i.e. cursor position to world space).
 		/// </summary>
