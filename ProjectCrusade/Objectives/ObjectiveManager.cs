@@ -23,6 +23,12 @@ namespace ProjectCrusade
 			objectives = new Dictionary<string, Objective> ();
 		}
 
+		public void PushListeners()
+		{
+			objectives ["TestObjective1"].ObjectiveReached += TestObjective1;
+			objectives ["TestObjective2"].ObjectiveReached += TestObjective2;
+		}
+
 		public void ClearObjectives()
 		{
 			objectives.Clear ();
@@ -37,6 +43,21 @@ namespace ProjectCrusade
 			foreach (var objective in objectives)
 				objective.Value.Update (time, player, world, this);
 		}
+
+
+		#region
+		public static void TestObjective1(Objective obj, ObjectiveManager manager, Player player, World world)
+		{
+			Console.WriteLine ("Objective 1 met!");
+		}
+		public static void TestObjective2(Objective obj, ObjectiveManager manager, Player player, World world)
+		{
+			player.Heal (50);
+
+			Console.WriteLine ("Objective 2 met!");
+		}
+
+		#endregion
 
 
 	} //END OF OBJECTIVE MANAGER CLASS

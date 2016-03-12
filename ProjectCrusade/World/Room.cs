@@ -20,9 +20,15 @@ namespace ProjectCrusade
 
 		public List<Point> Entrances;
 
+		/// <summary>
+		/// Key value pairs of objective locations, where rectangle locations are absolute (world coordinates)
+		/// </summary>
+		public List<Tuple<string, Rectangle>> Objectives;
+
 		public Room(Point position, string filename)
 		{
 			Entrances = new List<Point> ();
+			Objectives = new List<Tuple<string, Rectangle>> ();
 			file = filename;
 			XmlReader reader = XmlReader.Create (file);
 
@@ -79,6 +85,16 @@ namespace ProjectCrusade
 						
 					}
 				}
+			}
+
+			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup/object")) {
+				Rectangle objRect = new Rectangle (
+					                    int.Parse (objective.GetAttribute ("x")),
+					                    int.Parse (objective.GetAttribute ("y")), 
+					                    int.Parse (objective.GetAttribute ("width")),
+					                    int.Parse (objective.GetAttribute ("height")));
+				objRect.Offset (new Point(Rect.X * Item.SpriteWidth, Rect.Y * Item.SpriteWidth));
+				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));
 			}
 
 			//Get entrances

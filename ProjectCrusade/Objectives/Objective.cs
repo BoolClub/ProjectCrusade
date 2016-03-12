@@ -54,6 +54,11 @@ namespace ProjectCrusade
 			
 		}
 
+		public Objective(Rectangle region, bool active=true) {
+			Region = region;
+			Active = active;
+		}
+
 		public void Update(GameTime time, Player player, World world, ObjectiveManager objManager) {
 			if (player.CollisionBox.Intersects (Region) && Active) {
 				ObjectiveReached (this, objManager, player, world);

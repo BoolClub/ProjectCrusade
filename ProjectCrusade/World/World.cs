@@ -54,7 +54,7 @@ namespace ProjectCrusade
 
 		TileFamily family;
 
-		public World (TextureManager textureManager, int width, int height)
+		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
 			Width = width;
@@ -79,7 +79,7 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
-			generateWorld ();
+			generateWorld (objManager);
 			Player.Position = rooms [0].Center;
 
 			//Init fluid.
@@ -96,7 +96,7 @@ namespace ProjectCrusade
 
 		}
 
-		void generateWorld()
+		void generateWorld(ObjectiveManager objManager)
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
@@ -105,7 +105,7 @@ namespace ProjectCrusade
 			//Init rooms
 			rooms = new List<Room>();
 
-			const int numRooms = 15;
+			const int numRooms = 1;
 
 
 			for (int i = 0; i < numRooms; i++) {
@@ -129,7 +129,20 @@ namespace ProjectCrusade
 			for (int i = 0; i<rooms.Count;i++)
 				foreach (Point p in rooms[i].Entrances)
 					entrances.Add (new Tuple<Point, int>(new Point(p.X + rooms[i].Rect.Left, p.Y + rooms[i].Rect.Top), i));
-			
+
+
+			//get objectives
+			foreach (Room room in rooms) {
+				foreach (var objpair in room.Objectives) {
+					Objective obj = new Objective (objpair.Item2, true);
+
+					objManager.AddObjective (objpair.Item1, obj);
+				}
+			}
+			//Attach event listeners to loaded objectives
+			objManager.PushListeners ();
+
+
 			MazeGenerator generator = new MazeGenerator (Width, Height);
 			foreach (Room room in rooms) generator.ShadeRoom(room);
 			generator.Generate ();
@@ -139,6 +152,8 @@ namespace ProjectCrusade
 						worldTiles [i, j] = generator.GetMazeTile (family, i, j);
 				}
 		}
+
+
 
 
 		public void Update(GameTime gameTime, Camera camera)
