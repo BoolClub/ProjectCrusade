@@ -45,16 +45,21 @@ namespace ProjectCrusade
 		public string Description { get; set; }
 
 
+		public event ObjectiveReachedHandler ObjectiveReached;
+
+		public delegate void ObjectiveReachedHandler(Objective obj, ObjectiveManager manager, Player player, World world);
 
 		//Constructor
 		public Objective () {
 			
 		}
 
-
-
 		public void Update(GameTime time, Player player, World world, ObjectiveManager objManager) {
-
+			if (player.CollisionBox.Intersects (Region) && Active) {
+				ObjectiveReached (this, objManager, player, world);
+				Active = false;
+				Completed = true;
+			}
 		}
 
 	} //END OF OBJECTIVE CLASS

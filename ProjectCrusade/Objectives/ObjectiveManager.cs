@@ -15,7 +15,7 @@ namespace ProjectCrusade
 		/// A dictionary for storing all of the game's objectives. It stores them with a string identifier and a corresponding 
 		/// Objective.
 		/// </summary>
-		Dictionary<String, Objective> objectives;
+		Dictionary<string, Objective> objectives;
 
 
 
@@ -34,7 +34,8 @@ namespace ProjectCrusade
 		}
 
 		public void Update(GameTime time, Player player, World world) {
-
+			foreach (var objective in objectives)
+				objective.Value.Update (time, player, world, this);
 		}
 
 
