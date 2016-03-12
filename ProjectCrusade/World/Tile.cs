@@ -19,18 +19,21 @@ namespace ProjectCrusade
 		SandBottom=67,
 		SandCornersBottomRight=68,
 
-		CaveFloor = 			21,
-		CaveCornerTopLeft = 	37,
-		CaveCornerTopRight = 	39,
-		CaveCornerBottomLeft = 	69,
-		CaveCornerBottomRight = 71,
-		CaveSideTop = 			38,
-		CaveSideLeft = 			53,
-		CaveSideRight = 		55,
-		CaveSideBottom = 		70,
-		CaveWallTopLeft = 		6,
-		CaveWallTopRight = 		7,
-		CaveWall = 54
+		CaveFloor = 21,
+		CaveFloorBottomRight = 6,
+		CaveFloorBottomLeft = 7,
+		CaveFloorTopLeft=22,
+		CaveFloorTopRight=23,
+
+		CaveWall=54,
+		CaveWallTopLeft=37,
+		CaveWallTopRight = 39,
+		CaveWallBottomLeft = 69,
+		CaveWallBottomRight = 71,
+		CaveWallTop = 38,
+		CaveWallBottom = 70,
+		CaveWallLeft = 53,
+		CaveWallRight=55
 	}
 	public struct Tile
 	{

@@ -108,6 +108,7 @@
     <Compile Include="Entity\NPC.cs" />
     <Compile Include="GUI\TextBox.cs" />
     <Compile Include="World\MazeGenerator.cs" />
+    <Compile Include="World\TileFamily.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

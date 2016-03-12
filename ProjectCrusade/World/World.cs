@@ -52,6 +52,8 @@ namespace ProjectCrusade
 
 		Random rand = new Random ();
 
+		TileFamily family;
+
 		public World (TextureManager textureManager, int width, int height)
 		{
 			Player = new Player ("test", PlayerType.Wizard, this);
@@ -65,6 +67,8 @@ namespace ProjectCrusade
 			foreach (Tile t in worldTiles)
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
 			Console.WriteLine ("World size: {0}KB", tilesSize/1024);
+
+			family = new TileFamilies.Cave();
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -131,8 +135,8 @@ namespace ProjectCrusade
 			generator.Generate ();
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					if (generator.IsHall(i,j))
-						worldTiles [i, j] = new Tile (TileType.CaveFloor, false, Color.White.ToVector3 ());
+					if (!generator.IsRoom (i, j))
+						worldTiles [i, j] = generator.GetMazeTile (family, i, j);
 				}
 		}
 

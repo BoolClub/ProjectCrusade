@@ -91,6 +91,60 @@ namespace ProjectCrusade
 			return maze [i, j] == -1;
 		}
 
+		public bool IsRoom(int i, int j) {
+			return maze [i, j] > 0;
+		}
+
+		public Tile GetMazeTile(TileFamily family, int i, int j)
+		{
+			//If wall
+			if (maze [i, j] == 0) {
+				TileType ttype = family.Wall;
+
+				if (i - 1 >= 0 && j - 1 >= 0)
+				if (maze [i - 1, j] == -1 && maze [i, j - 1] == -1)
+					ttype = family.WallTopLeft;
+				if (i + 1 < width && j - 1 >= 0)
+				if (maze [i + 1, j] == -1 && maze [i, j - 1] == -1)
+					ttype = family.WallTopRight;
+				if (i - 1 >= 0 && j + 1 < height)
+				if (maze [i - 1, j] == -1 && maze [i, j + 1] == -1)
+					ttype = family.WallBottomLeft;
+				if (i + 1 < width && j + 1 < height)
+				if (maze [i + 1, j] == -1 && maze [i, j + 1] == -1)
+					ttype = family.WallBottomRight;
+				if (j - 1 >= 0)
+				if (maze [i, j - 1] == -1 && ttype==family.Wall)
+					ttype = family.WallTop;
+				if (j + 1 <height)
+				if (maze [i, j + 1] == -1 && ttype==family.Wall)
+					ttype = family.WallBottom;
+				if (i - 1 >= 0)
+				if (maze [i-1, j] == -1 && ttype==family.Wall)
+					ttype = family.WallLeft;
+				if (i+1 <width)
+				if (maze [i+1, j] == -1 && ttype==family.Wall)
+					ttype = family.WallRight;
+
+				if (i + 1 < width && j + 1 < height)
+				if (maze [i + 1, j + 1] == -1 && maze [i + 1, j] == 0 && maze [i, j + 1] == 0)
+					ttype = family.FloorTopLeft;
+				if (i - 1 >= 0 && j + 1 < height)
+				if (maze [i - 1, j + 1] == -1 && maze [i - 1, j] == 0 && maze [i, j + 1] == 0)
+					ttype = family.FloorTopRight;
+				if (i + 1 < width && j - 1 >= 0)
+				if (maze [i + 1, j - 1] == -1 && maze [i + 1, j] == 0 && maze [i, j - 1] == 0)
+					ttype = family.FloorBottomLeft;
+				if (i - 1 >= 0 && j - 1 >= 0)
+				if (maze [i - 1, j - 1] == -1 && maze [i - 1, j] == 0 && maze [i, j - 1] == 0)
+					ttype = family.FloorBottomRight;
+
+				return new Tile (ttype, true, Color.White.ToVector3 ());
+			} else {
+				return new Tile (family.Floor, false, Color.White.ToVector3 ());
+			}
+		}
+
 		public void Generate()
 		{
 			makeMaze ();
