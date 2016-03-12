@@ -69,13 +69,10 @@
     <Compile Include="Screens\PauseMenuScreen.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="MainGame.cs" />
-    <Compile Include="Managers\GameScreenManager.cs" />
-    <Compile Include="Managers\TextureManager.cs" />
     <Compile Include="Misc\Camera.cs" />
     <Compile Include="Misc\IUD.cs" />
     <Compile Include="Inventory\InventorySlot.cs" />
     <Compile Include="Inventory\Inventory.cs" />
-    <Compile Include="Managers\FontManager.cs" />
     <Compile Include="GUI\Menu.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="World\Tile.cs" />
@@ -93,7 +90,6 @@
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
     <Compile Include="GUI\SanityBarGUI.cs" />
-    <Compile Include="Managers\HUDManager.cs" />
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
     <Compile Include="Experimental Graphics\Animation.cs" />
@@ -109,6 +105,12 @@
     <Compile Include="GUI\TextBox.cs" />
     <Compile Include="World\MazeGenerator.cs" />
     <Compile Include="World\TileFamily.cs" />
+    <Compile Include="Screens\GameScreenManager.cs" />
+    <Compile Include="GUI\HUDManager.cs" />
+    <Compile Include="ContentManagers\TextureManager.cs" />
+    <Compile Include="ContentManagers\FontManager.cs" />
+    <Compile Include="ContentManagers\SongManager.cs" />
+    <Compile Include="ContentManagers\SoundEffectManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -119,7 +121,6 @@
   <ItemGroup>
     <Folder Include="Screens\" />
     <Folder Include="Content\Textures\" />
-    <Folder Include="Managers\" />
     <Folder Include="Misc\" />
     <Folder Include="Inventory\" />
     <Folder Include="Items\" />
@@ -127,6 +128,7 @@
     <Folder Include="GUI\" />
     <Folder Include="World\" />
     <Folder Include="Entity\" />
+    <Folder Include="ContentManagers\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
