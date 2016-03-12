@@ -103,7 +103,7 @@ namespace ProjectCrusade
 
 
 			for (int i = 0; i < numRooms; i++) {
-				Point p = new Point (rand.Next (0, Width), rand.Next (0, Height));
+				Point p = new Point (rand.Next (0, Width) / 2 * 2, rand.Next (0, Height) / 2 * 2);
 				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
 				bool intersectedOtherRoom = false;
 				foreach (Room r2 in rooms)
@@ -123,45 +123,14 @@ namespace ProjectCrusade
 				foreach (Point p in rooms[i].Entrances)
 					entrances.Add (new Tuple<Point, int>(new Point(p.X + rooms[i].Rect.Left, p.Y + rooms[i].Rect.Top), i));
 			
-			//TODO: improve complexity of this 
-			for (int ent1 = 0; ent1 < entrances.Count;ent1++)
-			{
-				for (int ent2 = 0; ent2 < ent1;ent2++)
-				{
-					
-					var e = entrances [ent1];
-					var e2 = entrances [ent2];
-					//Skip if the same room
-					if (e.Item2 == e2.Item2)
-						continue;
-
-
-					//Get line connecting two entrances
-					List<Point> line = GetLine (e.Item1, e2.Item1);
-
-					bool failed = false;
-
-					//Check if the line intersects with any rooms
-					foreach (Room r in rooms) {
-						for (int i = 0;i<line.Count;i++)
-						{
-							Point p = line [i];
-
-							if (r.Rect.Contains (p) && worldTiles[p.X,p.Y].Solid)
-								failed = true;
-						}
-					}
-					if (failed)
-						break;
-					//If no intersection,
-					if (!failed) {
-						for (int i = 1; i<line.Count-1;i++)
-						{
-							worldTiles [line[i].X, line[i].Y] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
-						}
-					}
+			MazeGenerator generator = new MazeGenerator (Width, Height);
+			foreach (Room room in rooms) generator.ShadeRoom(room);
+			generator.Generate ();
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++) {
+					if (generator.IsHall(i,j))
+						worldTiles [i, j] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
 				}
-			}
 		}
 
 

@@ -129,7 +129,7 @@ namespace ProjectCrusade
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (
 				fontManager.GetFont ("Arial"), 
-				String.Format("ProjectCrusade {2}\n{0} update\n{1} draw", 
+				String.Format("ProjectCrusade {2}\n{0} update, {1} draw", 
 					(int)frameCounter.AverageFrameRate, 
 					(int)frameCounterDraw.AverageFrameRate,
 					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),

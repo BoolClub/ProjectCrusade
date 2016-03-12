@@ -103,6 +103,7 @@
     <Compile Include="Experimental Graphics\ShadowmapResolver.cs" />
     <Compile Include="Experimental Graphics\TestObject.cs" />
     <Compile Include="World\Room.cs" />
+    <Compile Include="World\MazeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
