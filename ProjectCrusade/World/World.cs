@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.6f, 0.6f, 0.6f);
+		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
 
 		/// <summary>
