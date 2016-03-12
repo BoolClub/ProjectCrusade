@@ -33,7 +33,8 @@ namespace ProjectCrusade
 
 
 
-		public NPC (World w) {
+		public NPC (String name, World w) {
+			NPCName = name;
 			world = w;
 			Initialize ();
 		}
@@ -45,6 +46,15 @@ namespace ProjectCrusade
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
+			//Draw a temporary box for the NPC
+			Texture2D box = new Texture2D (MainGame.graphics.GraphicsDevice, 32, 32);
+			Color[] data = new Color[32*32];
+			for (int i = 0; i < data.Length; i++) { data [i] = Color.Pink; }
+			box.SetData (data);
+			spriteBatch.Draw (box, Position, Color.Pink);
+
+
+
 			//If interacting with the player...
 				TextBox.Draw (spriteBatch, textureManager, fontManager);
 		}
