@@ -278,6 +278,7 @@ namespace ProjectCrusade
 					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1 && maze [i, j-1] == -1)
 						newMaze [i, j] = -1;
 				}
+			maze = newMaze;
 		}
 
 		void makeBorder()
