@@ -150,6 +150,7 @@ namespace ProjectCrusade
 			makeMaze ();
 			pruneDeadEnds ();
 			clearThinWalls ();
+			removeFloatingPillars ();
 			makeBorder ();
 		}
 
@@ -265,6 +266,18 @@ namespace ProjectCrusade
 						newMaze [i, j] = -1;
 				}
 			maze = newMaze;
+		}
+
+		void removeFloatingPillars()
+		{
+			var newMaze = maze;
+			for (int i = 1; i < width - 1; i++)
+				for (int j = 1; j < height - 1; j++) {
+					if (maze [i, j] != 0)
+						continue;
+					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1 && maze [i, j-1] == -1)
+						newMaze [i, j] = -1;
+				}
 		}
 
 		void makeBorder()
