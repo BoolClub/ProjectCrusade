@@ -5,11 +5,11 @@ namespace ProjectCrusade
 {
 	public enum TileType 
 	{
-		Air=255,
-		Grass=0,
-		TreeTop=1,
-		FlowersGrass=2,
-		TreeBottom=17,
+		Air=0,
+		Grass=1,
+		TreeTop=2,
+		FlowersGrass=3,
+		TreeBottom=18,
 		SandCornersTopLeft=34,
 		SandTop = 35,
 		SandCornersTopRight=36,
