@@ -271,51 +271,6 @@ namespace ProjectCrusade
 //			}
 		}
 
-		/// <summary>
-		/// Constructs the world texture from a CSV file exported from Tiled. 
-		/// </summary>
-		/// <param name="floorFile">Floor file path</param>
-		/// <param name="wallFile">Wall file path</param>
-		void constructWorldTiles(string floorFile, string wallFile)
-		{
-			worldTiles = new Tile[Width,Height];
-			StreamReader sFloor = new StreamReader(TitleContainer.OpenStream (floorFile));
-			for (int j = 0; j < Height; j++) {
-				string line = sFloor.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != Width)
-					throw new Exception ("Floor file format does not match width!");
-
-				for (int i = 0; i < Width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					if (v == -1)
-						worldTiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
-					else worldTiles [i, j] = new Tile((TileType)v, false, new Vector3(1,1,1));
-				}
-			}
-			sFloor.Close ();
-			StreamReader sWall = new StreamReader(TitleContainer.OpenStream (wallFile));
-			for (int j = 0; j < Height; j++) {
-				string line = sWall.ReadLine ();
-				var vals = line.Split (',');
-
-				if (vals.Length != Width)
-					throw new Exception ("Walls file format does not match width!");
-
-				for (int i = 0; i < Width; i++) {
-					int v = Convert.ToInt32 (vals [i]);
-					//Only include a wall file if not air
-					//Overwrites floor tiles
-					if (v != -1) 
-						worldTiles [i, j] = new Tile((TileType)v, true, new Vector3(1,1,1));
-				}
-			}
-			sWall.Close ();
-
-		}
-
-
 		void updateEntity(GameTime gameTime, Entity entity)
 		{
 

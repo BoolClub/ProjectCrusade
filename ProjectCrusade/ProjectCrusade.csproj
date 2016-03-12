@@ -129,6 +129,8 @@
     <Folder Include="World\" />
     <Folder Include="Entity\" />
     <Folder Include="ContentManagers\" />
+    <Folder Include="Content\SoundEffects\" />
+    <Folder Include="Content\Songs\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
