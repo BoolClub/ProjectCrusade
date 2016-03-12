@@ -39,6 +39,21 @@ namespace ProjectCrusade
 					maze [room.Rect.Left + i, room.Rect.Top + j] = roomCount;
 				}
 			}
+			foreach (Point entrance in room.Entrances) {
+				Point globalPos = entrance + room.Rect.Location;
+				if (globalPos.X - 1 >= 0 && globalPos.X+1< width)
+				if (maze [globalPos.X - 1, globalPos.Y] == roomCount)
+					maze [globalPos.X + 1, globalPos.Y] = -1;
+				if (globalPos.X - 1 >= 0 && globalPos.X+1< width)
+				if (maze [globalPos.X + 1, globalPos.Y] == roomCount)
+					maze [globalPos.X - 1, globalPos.Y] = -1;
+				if (globalPos.Y - 1 >= 0 && globalPos.Y+1< height)
+				if (maze [globalPos.X, globalPos.Y-1] == roomCount)
+					maze [globalPos.X, globalPos.Y+1] = -1;
+				if (globalPos.Y - 1 >= 0 && globalPos.Y+1< height)
+				if (maze [globalPos.X, globalPos.Y+1] == roomCount)
+					maze [globalPos.X, globalPos.Y-1] = -1;
+			}
 		}
 
 		/// <summary>
@@ -78,6 +93,31 @@ namespace ProjectCrusade
 
 		public void Generate()
 		{
+			makeMaze ();
+			pruneDeadEnds ();
+			clearThinWalls ();
+			makeBorder ();
+		}
+
+		/// <summary>
+		/// Number of nearby neighbors with maze value 0. Used to look for dead ends, etc. 
+		/// </summary>
+		int numNeighborsSolid(Point p)
+		{
+			int neighbors = 0;
+			if (p.X+1 < width) if (maze [p.X + 1, p.Y] == 0)
+				neighbors++;
+			if (p.X-1>=0)if (maze [p.X - 1, p.Y] == 0)
+				neighbors++;
+			if (p.Y+1 < height) if (maze [p.X, p.Y+1] == 0)
+				neighbors++;
+			if (p.Y-1 >= 0) if (maze [p.X, p.Y-1] ==0)
+				neighbors++;
+			return neighbors;	
+		}
+
+		void makeMaze()
+		{
 			Stack<Point> finishedTiles = new Stack<Point> ();
 			Point currTile = new Point (0, 0);
 			maze [currTile.X, currTile.Y] = -1;
@@ -106,7 +146,7 @@ namespace ProjectCrusade
 						newTile = new Point (currTile.X, currTile.Y-2);
 						maze [currTile.X, currTile.Y-1] = -1;
 						break;
-						
+
 					}
 					finishedTiles.Push (currTile);
 					currTile = newTile;
@@ -115,9 +155,76 @@ namespace ProjectCrusade
 					currTile = finishedTiles.Pop();
 				}
 			}
-
-
 		}
+
+		void pruneDeadEnds()
+		{
+			const float pruningProbability = 1.0f;
+			List<Point> deadEnds = new List<Point>();
+			for (int i = 1; i < width-1; i++) {
+				for (int j = 1; j < height-1; j++) {
+					Point p = new Point (i, j);
+					if (numNeighborsSolid (p) == 3)
+						deadEnds.Add (p);
+				}
+			}
+
+			foreach (Point deadEnd in deadEnds) {
+				if (rand.NextDouble () > pruningProbability)
+					continue;
+				Point currTile = deadEnd;
+				int neighbors;
+				int i = 0; 
+				while ((neighbors = numNeighborsSolid (currTile)) ==3 && i < 100) {
+					maze [currTile.X, currTile.Y] = 0;
+					if (currTile.X + 1 < width) if (maze [currTile.X + 1, currTile.Y] == -1) {
+						currTile = new Point (currTile.X + 1, currTile.Y);
+						continue;
+					}
+					if (currTile.X - 1 >= 0) if (maze [currTile.X - 1, currTile.Y] == -1) {
+						currTile = new Point (currTile.X - 1, currTile.Y);
+						continue;
+					}
+					if (currTile.Y + 1 < height) if (maze [currTile.X, currTile.Y+1] == -1) {
+						currTile = new Point (currTile.X, currTile.Y+1);
+						continue;
+					}
+					if (currTile.Y - 1 >= 0) if (maze [currTile.X, currTile.Y-1] == -1) {
+						currTile = new Point (currTile.X, currTile.Y-1);
+						continue;
+					}
+					i++;
+				}
+			}
+		}
+
+		void clearThinWalls()
+		{
+			var newMaze = maze;
+			for (int i = 1; i < width - 1; i++)
+				for (int j = 1; j < height - 1; j++) {
+					if (maze [i, j] != 0)
+						continue;
+					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1)
+						newMaze [i, j] = -1;
+					if (maze [i, j+1] == -1 && maze [i, j+1] == -1)
+						newMaze [i, j] = -1;
+				}
+			maze = newMaze;
+		}
+
+		void makeBorder()
+		{
+			for (int i = 0; i < width; i++) {
+				maze [i, 0] = 0;
+				maze [i, height - 1] = 0;
+			}
+			for (int j = 0; j < height-1; j++) {
+				maze [0, j] = 0;
+				maze [width-1, j] = 0;
+			}
+		}
+
 	}
 }
 

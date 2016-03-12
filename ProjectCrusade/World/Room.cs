@@ -95,8 +95,6 @@ namespace ProjectCrusade
 				if (!roomTiles [width-1, j].Solid)
 					Entrances.Add (new Point (width-1, j));
 			}
-			foreach (Point p in Entrances)
-				roomTiles [p.X, p.Y] = new Tile (TileType.TreeTop, false, Color.White.ToVector3 ());
 			//TODO: Add error handling
 			for (int i = 0; i < Rect.Width; i++)
 				for (int j = 0; j < Rect.Height; j++) {
