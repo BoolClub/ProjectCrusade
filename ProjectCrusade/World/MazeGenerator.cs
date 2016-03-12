@@ -39,6 +39,21 @@ namespace ProjectCrusade
 					maze [room.Rect.Left + i, room.Rect.Top + j] = roomCount;
 				}
 			}
+			foreach (Point entrance in room.Entrances) {
+				Point globalPos = entrance + room.Rect.Location;
+				if (globalPos.X - 1 >= 0 && globalPos.X+1< width)
+				if (maze [globalPos.X - 1, globalPos.Y] == roomCount)
+					maze [globalPos.X + 1, globalPos.Y] = -1;
+				if (globalPos.X - 1 >= 0 && globalPos.X+1< width)
+				if (maze [globalPos.X + 1, globalPos.Y] == roomCount)
+					maze [globalPos.X - 1, globalPos.Y] = -1;
+				if (globalPos.Y - 1 >= 0 && globalPos.Y+1< height)
+				if (maze [globalPos.X, globalPos.Y-1] == roomCount)
+					maze [globalPos.X, globalPos.Y+1] = -1;
+				if (globalPos.Y - 1 >= 0 && globalPos.Y+1< height)
+				if (maze [globalPos.X, globalPos.Y+1] == roomCount)
+					maze [globalPos.X, globalPos.Y-1] = -1;
+			}
 		}
 
 		/// <summary>

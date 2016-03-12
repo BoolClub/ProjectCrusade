@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
+		Color ambientLighting = new Color(0.6f, 0.6f, 0.6f);
 
 
 		/// <summary>
@@ -47,6 +47,8 @@ namespace ProjectCrusade
 		Fluid fluid;
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
+
+		bool drawSmoke = false;
 
 		Random rand = new Random ();
 
@@ -94,7 +96,7 @@ namespace ProjectCrusade
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					worldTiles [i, j] = new Tile (TileType.CaveWall, false, Color.White.ToVector3 ());
+					worldTiles [i, j] = new Tile (TileType.CaveWall, true, Color.White.ToVector3 ());
 				}
 			//Init rooms
 			rooms = new List<Room>();
@@ -103,6 +105,7 @@ namespace ProjectCrusade
 
 
 			for (int i = 0; i < numRooms; i++) {
+				//Lock room positions
 				Point p = new Point (rand.Next (0, Width) / 2 * 2, rand.Next (0, Height) / 2 * 2);
 				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
 				bool intersectedOtherRoom = false;
@@ -129,7 +132,7 @@ namespace ProjectCrusade
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					if (generator.IsHall(i,j))
-						worldTiles [i, j] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
+						worldTiles [i, j] = new Tile (TileType.CaveFloor, false, Color.White.ToVector3 ());
 				}
 		}
 
@@ -432,23 +435,24 @@ namespace ProjectCrusade
 				}
 
 			//Draw smoke
-			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
-				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
-					if (i < 0 || i >= Width || j < 0 || j >= Height)
-						continue;
+			if (drawSmoke) {
+				for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
+					for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
+						if (i < 0 || i >= Width || j < 0 || j >= Height)
+							continue;
 
-					spriteBatch.Draw (textureManager.WhitePixel,
-						null,
-						new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-						null,
-						null,
-						0,
-						null,
-						Color.White*fluid.GetDensity(i,j),
-						SpriteEffects.None,
-						0);
-				}
-		
+						spriteBatch.Draw (textureManager.WhitePixel,
+							null,
+							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+							null,
+							null,
+							0,
+							null,
+							Color.White * fluid.GetDensity (i, j),
+							SpriteEffects.None,
+							0);
+					}
+			}
 					
 
 
