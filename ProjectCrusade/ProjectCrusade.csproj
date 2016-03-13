@@ -98,7 +98,6 @@
     <Compile Include="Experimental Graphics\QuadRenderComponent.cs" />
     <Compile Include="Experimental Graphics\ShadowmapResolver.cs" />
     <Compile Include="Experimental Graphics\TestObject.cs" />
-    <Compile Include="World\Room.cs" />
     <Compile Include="Objectives\Objective.cs" />
     <Compile Include="Objectives\ObjectiveManager.cs" />
     <Compile Include="Entity\NPC.cs" />
@@ -111,6 +110,7 @@
     <Compile Include="ContentManagers\FontManager.cs" />
     <Compile Include="ContentManagers\SongManager.cs" />
     <Compile Include="ContentManagers\SoundEffectManager.cs" />
+    <Compile Include="World\Room.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -131,6 +131,7 @@
     <Folder Include="ContentManagers\" />
     <Folder Include="Content\SoundEffects\" />
     <Folder Include="Content\Songs\" />
+    <Folder Include="Content\Levels\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Content\Textures\circle.png" />
@@ -143,6 +144,13 @@
   <ItemGroup>
     <Content Include="Content\Fonts\Arial.spritefont" />
     <Content Include="Content\Fonts\Arial.xnb" />
-    <Content Include="Content\Levels\RestRoom.tmx" />
+    <Content Include="Content\Levels\Level1\RestRoom.tmx" />
+    <Content Include="Content\Levels\Level1\Room7.tmx" />
+    <Content Include="Content\Levels\Level1\Room5.tmx" />
+    <Content Include="Content\Levels\Level1\Room6.tmx" />
+    <Content Include="Content\Levels\Level1\Room4.tmx" />
+    <Content Include="Content\Levels\Level1\Room3.tmx" />
+    <Content Include="Content\Levels\Level1\Room1.tmx" />
+    <Content Include="Content\Levels\Level1\Room2.tmx" />
   </ItemGroup>
 </Project>

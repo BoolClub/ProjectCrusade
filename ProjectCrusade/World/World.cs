@@ -80,7 +80,7 @@ namespace ProjectCrusade
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
 			generateWorld (objManager);
-			Player.Position = rooms [0].Center;
+			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
 
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
@@ -111,7 +111,7 @@ namespace ProjectCrusade
 			for (int i = 0; i < numRooms; i++) {
 				//Lock room positions
 				Point p = new Point (rand.Next (2, Width-2) / 2 * 2, rand.Next (2, Height-2) / 2 * 2);
-				Room room = new Room (p, "Content/Levels/RestRoom.tmx");
+				Room room = new Room (p, "Content/Levels/Level1/Room2.tmx");
 				bool intersectedOtherRoom = false;
 				foreach (Room r2 in rooms)
 					if (r2.Rect.Intersects (room.ExpandedRect)) {

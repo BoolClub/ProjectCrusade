@@ -25,8 +25,8 @@ namespace ProjectCrusade
 
 		public void PushListeners()
 		{
-			objectives ["TestObjective1"].ObjectiveReached += TestObjective1;
-			objectives ["TestObjective2"].ObjectiveReached += TestObjective2;
+//			objectives ["TestObjective1"].ObjectiveReached += TestObjective1;
+//			objectives ["TestObjective2"].ObjectiveReached += TestObjective2;
 		}
 
 		public void ClearObjectives()

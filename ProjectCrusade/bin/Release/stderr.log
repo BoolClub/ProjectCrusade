@@ -1,2 +1,58 @@
-2016-03-12 13:46:54.212 ProjectCrusade[3006:98108] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
-2016-03-12 13:46:54.212 ProjectCrusade[3006:98108] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-03-13 18:17:39.725 ProjectCrusade[987:10534] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-03-13 18:17:39.725 ProjectCrusade[987:10534] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+
+Unhandled Exception:
+System.IO.DirectoryNotFoundException: Could not find a part of the path "/Users/christian/Projects/ProjectCrusade/ProjectCrusade/bin/Release/ProjectCrusade.app/Contents/Resources/Content/Levels/Level1/RoomOne.tmx".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) <0x45eed88 + 0x0017f> in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize) <0xfd939c8 + 0x00043> in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream:.ctor (string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int)
+  at System.Xml.XmlDownloadManager.GetStream (System.Uri uri, ICredentials credentials, IWebProxy proxy, System.Net.Cache.RequestCachePolicy cachePolicy) <0xfd93858 + 0x0007f> in <filename unknown>:0 
+  at System.Xml.XmlUrlResolver.GetEntity (System.Uri absoluteUri, System.String role, System.Type ofObjectToReturn) <0xfd93710 + 0x0006f> in <filename unknown>:0 
+  at System.Xml.XmlTextReaderImpl.FinishInitUriString () <0xfd93378 + 0x0011e> in <filename unknown>:0 
+  at System.Xml.XmlTextReaderImpl..ctor (System.String uriStr, System.Xml.XmlReaderSettings settings, System.Xml.XmlParserContext context, System.Xml.XmlResolver uriResolver) <0xfd90d88 + 0x0012f> in <filename unknown>:0 
+  at System.Xml.XmlReaderSettings.CreateReader (System.String inputUri, System.Xml.XmlParserContext inputContext) <0xfd90c30 + 0x0006f> in <filename unknown>:0 
+  at System.Xml.XmlReader.Create (System.String inputUri, System.Xml.XmlReaderSettings settings, System.Xml.XmlParserContext inputContext) <0xfa7ade8 + 0x00047> in <filename unknown>:0 
+  at System.Xml.XmlReader.Create (System.String inputUri) <0xfa7ad80 + 0x00023> in <filename unknown>:0 
+  at ProjectCrusade.Room..ctor (Point position, System.String filename) <0xfa7ab08 + 0x0005f> in <filename unknown>:0 
+  at ProjectCrusade.World.generateWorld (ProjectCrusade.ObjectiveManager objManager) <0xfa79748 + 0x00583> in <filename unknown>:0 
+  at ProjectCrusade.World..ctor (ProjectCrusade.TextureManager textureManager, Int32 width, Int32 height, ProjectCrusade.ObjectiveManager objManager) <0xfa73fd0 + 0x004ff> in <filename unknown>:0 
+  at ProjectCrusade.MainGameScreen..ctor (ProjectCrusade.TextureManager textureManager) <0xfa722c0 + 0x00087> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.LoadContent () <0xa9f1ef8 + 0x001ab> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Initialize () <0xa9eed90 + 0x000f2> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.Initialize () <0xa9eecd8 + 0x00067> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.DoInitialize () <0x97e5b58 + 0x00026> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Run (GameRunBehavior runBehavior) <0x97e5900 + 0x0004b> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Run () <0x97e58b0 + 0x00023> in <filename unknown>:0 
+  at ProjectCrusade.AppDelegate.FinishedLaunching (MonoMac.Foundation.NSObject notification) <0x57f6fe0 + 0x0009f> in <filename unknown>:0 
+  at (wrapper dynamic-method) System.Object:[ProjectCrusade.AppDelegate:Void FinishedLaunching(MonoMac.Foundation.NSObject)] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector,MonoMac.Foundation.NSObject)
+  at (wrapper native-to-managed) System.Object:[ProjectCrusade.AppDelegate:Void FinishedLaunching(MonoMac.Foundation.NSObject)] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector,MonoMac.Foundation.NSObject)
+  at (wrapper managed-to-native) MonoMac.AppKit.NSApplication:NSApplicationMain (int,string[])
+  at MonoMac.AppKit.NSApplication.Main (System.String[] args) <0x57f6588 + 0x00073> in <filename unknown>:0 
+  at ProjectCrusade.Program.Main (System.String[] args) <0x622f30 + 0x00073> in <filename unknown>:0 
+[ERROR] FATAL UNHANDLED EXCEPTION: System.IO.DirectoryNotFoundException: Could not find a part of the path "/Users/christian/Projects/ProjectCrusade/ProjectCrusade/bin/Release/ProjectCrusade.app/Contents/Resources/Content/Levels/Level1/RoomOne.tmx".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) <0x45eed88 + 0x0017f> in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize) <0xfd939c8 + 0x00043> in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream:.ctor (string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int)
+  at System.Xml.XmlDownloadManager.GetStream (System.Uri uri, ICredentials credentials, IWebProxy proxy, System.Net.Cache.RequestCachePolicy cachePolicy) <0xfd93858 + 0x0007f> in <filename unknown>:0 
+  at System.Xml.XmlUrlResolver.GetEntity (System.Uri absoluteUri, System.String role, System.Type ofObjectToReturn) <0xfd93710 + 0x0006f> in <filename unknown>:0 
+  at System.Xml.XmlTextReaderImpl.FinishInitUriString () <0xfd93378 + 0x0011e> in <filename unknown>:0 
+  at System.Xml.XmlTextReaderImpl..ctor (System.String uriStr, System.Xml.XmlReaderSettings settings, System.Xml.XmlParserContext context, System.Xml.XmlResolver uriResolver) <0xfd90d88 + 0x0012f> in <filename unknown>:0 
+  at System.Xml.XmlReaderSettings.CreateReader (System.String inputUri, System.Xml.XmlParserContext inputContext) <0xfd90c30 + 0x0006f> in <filename unknown>:0 
+  at System.Xml.XmlReader.Create (System.String inputUri, System.Xml.XmlReaderSettings settings, System.Xml.XmlParserContext inputContext) <0xfa7ade8 + 0x00047> in <filename unknown>:0 
+  at System.Xml.XmlReader.Create (System.String inputUri) <0xfa7ad80 + 0x00023> in <filename unknown>:0 
+  at ProjectCrusade.Room..ctor (Point position, System.String filename) <0xfa7ab08 + 0x0005f> in <filename unknown>:0 
+  at ProjectCrusade.World.generateWorld (ProjectCrusade.ObjectiveManager objManager) <0xfa79748 + 0x00583> in <filename unknown>:0 
+  at ProjectCrusade.World..ctor (ProjectCrusade.TextureManager textureManager, Int32 width, Int32 height, ProjectCrusade.ObjectiveManager objManager) <0xfa73fd0 + 0x004ff> in <filename unknown>:0 
+  at ProjectCrusade.MainGameScreen..ctor (ProjectCrusade.TextureManager textureManager) <0xfa722c0 + 0x00087> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.LoadContent () <0xa9f1ef8 + 0x001ab> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Initialize () <0xa9eed90 + 0x000f2> in <filename unknown>:0 
+  at ProjectCrusade.MainGame.Initialize () <0xa9eecd8 + 0x00067> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.DoInitialize () <0x97e5b58 + 0x00026> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Run (GameRunBehavior runBehavior) <0x97e5900 + 0x0004b> in <filename unknown>:0 
+  at Microsoft.Xna.Framework.Game.Run () <0x97e58b0 + 0x00023> in <filename unknown>:0 
+  at ProjectCrusade.AppDelegate.FinishedLaunching (MonoMac.Foundation.NSObject notification) <0x57f6fe0 + 0x0009f> in <filename unknown>:0 
+  at (wrapper dynamic-method) System.Object:[ProjectCrusade.AppDelegate:Void FinishedLaunching(MonoMac.Foundation.NSObject)] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector,MonoMac.Foundation.NSObject)
+  at (wrapper native-to-managed) System.Object:[ProjectCrusade.AppDelegate:Void FinishedLaunching(MonoMac.Foundation.NSObject)] (MonoMac.Foundation.NSObject,MonoMac.ObjCRuntime.Selector,MonoMac.Foundation.NSObject)
+  at (wrapper managed-to-native) MonoMac.AppKit.NSApplication:NSApplicationMain (int,string[])
+  at MonoMac.AppKit.NSApplication.Main (System.String[] args) <0x57f6588 + 0x00073> in <filename unknown>:0 
+  at ProjectCrusade.Program.Main (System.String[] args) <0x622f30 + 0x00073> in <filename unknown>:0 
