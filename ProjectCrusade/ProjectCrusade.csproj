@@ -111,6 +111,7 @@
     <Compile Include="ContentManagers\SongManager.cs" />
     <Compile Include="ContentManagers\SoundEffectManager.cs" />
     <Compile Include="World\Room.cs" />
+    <Compile Include="World\WorldConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

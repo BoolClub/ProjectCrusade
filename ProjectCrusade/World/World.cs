@@ -35,6 +35,7 @@ namespace ProjectCrusade
 
 		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
+		WorldConfiguration configuration;
 
 		/// <summary>
 		/// How often to update lighting in ms. Updating lighting is expensive. 
@@ -49,13 +50,19 @@ namespace ProjectCrusade
 		int fluidUpdateTimeout = 5;
 
 		bool drawSmoke = false;
+		bool updateSmoke = false;
 
 		Random rand = new Random ();
 
-		TileFamily family;
 
 		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
 		{
+			configuration = new WorldConfiguration ();
+			configuration.TileFamily = new TileFamilies.Cave();
+			configuration.AddRooms ("Level1/Room1.tmx",1);
+			configuration.AddRooms ("Level1/Room2.tmx",2);
+
+
 			Player = new Player ("test", PlayerType.Wizard, this);
 			Width = width;
 			Height = height;
@@ -68,7 +75,6 @@ namespace ProjectCrusade
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
 			Console.WriteLine ("World size: {0}KB", tilesSize/1024);
 
-			family = new TileFamilies.Cave();
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -105,21 +111,28 @@ namespace ProjectCrusade
 			//Init rooms
 			rooms = new List<Room>();
 
-			const int numRooms = 1;
 
-
-			for (int i = 0; i < numRooms; i++) {
+			foreach (string name in configuration.RoomNames)
+			{
 				//Lock room positions
-				Point p = new Point (rand.Next (2, Width-2) / 2 * 2, rand.Next (2, Height-2) / 2 * 2);
-				Room room = new Room (p, "Content/Levels/Level1/Room2.tmx");
-				bool intersectedOtherRoom = false;
-				foreach (Room r2 in rooms)
-					if (r2.Rect.Intersects (room.ExpandedRect)) {
-						intersectedOtherRoom = true;
-						break;
-					}
-				if (room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom)
-					continue;
+
+				Room room = null;
+				bool foundRoom = false;
+
+				while (!foundRoom)
+				{
+					Point p = new Point (rand.Next (2, Width-2) / 2 * 2, rand.Next (2, Height-2) / 2 * 2);
+					bool intersectedOtherRoom = false;
+					room = new Room (p, "Content/Levels/" + name);
+					foreach (Room r2 in rooms)
+						if (r2.Rect.Intersects (room.ExpandedRect)) {
+							intersectedOtherRoom = true;
+							break;
+						}
+					
+					if (!(room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom))
+						foundRoom = true;
+				}
 				room.GenerateRoom (ref worldTiles);
 				rooms.Add (room);
 			}
@@ -142,19 +155,15 @@ namespace ProjectCrusade
 			//Attach event listeners to loaded objectives
 			objManager.PushListeners ();
 
-
 			MazeGenerator generator = new MazeGenerator (Width, Height);
 			foreach (Room room in rooms) generator.ShadeRoom(room);
 			generator.Generate ();
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					if (!generator.IsRoom (i, j))
-						worldTiles [i, j] = generator.GetMazeTile (family, i, j);
+						worldTiles [i, j] = generator.GetMazeTile (configuration.TileFamily, i, j);
 				}
 		}
-
-
-
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
@@ -178,9 +187,8 @@ namespace ProjectCrusade
 		}
 		void fluidUpdate()
 		{
-
 			while (true) {
-				fluid.Update ();
+				if (updateSmoke) fluid.Update ();
 				Thread.Sleep (fluidUpdateTimeout);
 			}
 		}
@@ -243,8 +251,9 @@ namespace ProjectCrusade
 					boundary.Add (new Point (Width - 1, j));
 				}
 
-				foreach (Point p in boundary)
+				for (int i = 0; i<boundary.Count;i++)
 				{
+					Point p = boundary [i];
 					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p);
 
 					for (int k = 0; k < line.Count; k++) {

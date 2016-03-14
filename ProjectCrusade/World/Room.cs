@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
-	public struct Room
+	public class Room
 	{
 		public Rectangle Rect;
 
