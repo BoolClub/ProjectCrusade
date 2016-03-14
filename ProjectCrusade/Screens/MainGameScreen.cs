@@ -59,14 +59,14 @@ namespace ProjectCrusade
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
 			//Render world (do transform)
-			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager, fontManager, camera);
 
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)
-			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
+			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 

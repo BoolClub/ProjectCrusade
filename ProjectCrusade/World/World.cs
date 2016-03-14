@@ -92,7 +92,7 @@ namespace ProjectCrusade
 
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.Orange, 10.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 5.0f));
 			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
 			generateWorld (objManager);
@@ -439,8 +439,12 @@ namespace ProjectCrusade
 							0);
 				}
 
+			foreach (Entity entity in entities)
+				entity.Draw (spriteBatch, textureManager, fontManager);
+			spriteBatch.End ();
+			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
 			//Draw smoke
-			if (drawSmoke) {
+			if (true) {
 				for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
 					for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
 						if (i < 0 || i >= Width || j < 0 || j >= Height)
@@ -453,7 +457,7 @@ namespace ProjectCrusade
 							null,
 							0,
 							null,
-							Color.White * fluid.GetDensity (i, j),
+							new Color(0.25f*(worldTiles[i,j].Color - Vector3.One)),
 							SpriteEffects.None,
 							0);
 					}
@@ -461,8 +465,6 @@ namespace ProjectCrusade
 					
 
 
-			foreach (Entity entity in entities)
-				entity.Draw (spriteBatch, textureManager, fontManager);
 		}
 		//TODO: Add procedural world generation
 
