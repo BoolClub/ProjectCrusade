@@ -1,2 +1,2 @@
-2016-03-13 19:17:29.273 ProjectCrusade[1406:47679] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
-2016-03-13 19:17:29.273 ProjectCrusade[1406:47679] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-03-14 18:22:42.855 ProjectCrusade[690:14611] Failed to connect (colorGridView) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable
+2016-03-14 18:22:42.855 ProjectCrusade[690:14611] Failed to connect (view) outlet from (NSApplication) to (NSColorPickerGridView): missing setter or instance variable

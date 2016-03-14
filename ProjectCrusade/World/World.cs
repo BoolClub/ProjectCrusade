@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
+		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
 
 		WorldConfiguration configuration;
 
@@ -42,6 +42,11 @@ namespace ProjectCrusade
 		/// </summary>
 		const float lightingUpdatePeriod = 32.0f;
 		float lastLightingUpdate = 0.0f;
+		/// <summary>
+		/// Through how many tiles a light ray can penetrate. Light is diminished each time.
+		/// </summary>
+		const int lightingPenetration = 5;
+
 
 		Tile[,] worldTiles;
 
@@ -53,6 +58,11 @@ namespace ProjectCrusade
 		bool updateSmoke = false;
 
 		Random rand = new Random ();
+
+		/// <summary>
+		/// A rectangle in tile space describing the view of the camera. Used for culling/optimization.
+		/// </summary>
+		Rectangle cameraRectangle;
 
 
 		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
@@ -195,7 +205,7 @@ namespace ProjectCrusade
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
-			return 1.0f / (distance2 + 1.0f);
+			return 1.0f / (distance2*0.1f + 1.0f);
 		}
 
 		//From http://stackoverflow.com/questions/18525214/efficient-2d-tile-based-lighting-system
@@ -203,8 +213,10 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Used to perform ray tracing for lighting.
 		/// </summary>
-		public List<Point> GetLine(Point start, Point target) {
-			List<Point> ret = new List<Point>();
+		public List<Tuple<Point,int>> GetLine(Point start, Point target) {
+			
+
+			List<Tuple<Point,int>> ret = new List<Tuple<Point,int>>();
 			int x0 =  start.X;
 			int y0 =  start.Y;
 
@@ -219,12 +231,16 @@ namespace ProjectCrusade
 			int dy = -1*Math.Abs(y1-y0);
 			sy = y0<y1 ? 1 : -1; 
 			int err = dx+dy, e2; /* error value e_xy */
-
+			int currInc = 0;
 			for(;;){  /* loop */
-				ret.Add( new Point(x0,y0) );
+				ret.Add( new Tuple<Point,int>(new Point(x0,y0), currInc) );
 				if (x0==x1 && y0==y1) break;
-				if (worldTiles[x0,y0].Solid)
+				if (!cameraRectangle.Contains(x0,y0))
 					break; // break if rays hit wall--no use of iterating if light won't pass a wall
+				if (worldTiles [x0, y0].Solid)
+					currInc++;
+				if (currInc >= lightingPenetration)
+					break;
 				e2 = 2*err;
 				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
 				if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
@@ -257,8 +273,12 @@ namespace ProjectCrusade
 					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p);
 
 					for (int k = 0; k < line.Count; k++) {
-						float dist2 = (light.Position - tileToWorldCoord (line [k].X, line [k].Y)).LengthSquared () / (TileWidth*TileWidth) ;
-						colorsTemp[line[k].X, line[k].Y] =light.Strength * light.Color.ToVector3 () * lightFalloffFunction (dist2);
+						float dist2 = (light.Position - tileToWorldCoord (line [k].Item1.X, line [k].Item1.Y)).LengthSquared () / (TileWidth*TileWidth) ;
+						colorsTemp[line[k].Item1.X, line[k].Item1.Y] =
+							light.Strength
+							* light.Color.ToVector3 ()
+							* lightFalloffFunction (dist2)
+							* (float)(lightingPenetration-line[k].Item2)/lightingPenetration;
 					}
 				}
 				for (int i = 0; i < Width; i++)
@@ -397,6 +417,8 @@ namespace ProjectCrusade
 			//View of camera in tile space
 			//Used for per-tile culling
 			Rectangle cameraRectTiles = new Rectangle (camera.ViewRectangle.X / TileWidth, camera.ViewRectangle.Y / TileWidth, camera.ViewRectangle.Width / TileWidth, camera.ViewRectangle.Height / TileWidth); 
+
+			cameraRectangle = cameraRectTiles;
 
 			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
 				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
