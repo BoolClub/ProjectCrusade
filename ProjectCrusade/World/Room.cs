@@ -43,7 +43,7 @@ namespace ProjectCrusade
 
 
 
-		public void GenerateRoom(ref Tile[,] world)
+		public void GenerateRoom(ref Tile[,] world, ref List<Light> lights)
 		{
 			XmlReader reader = XmlReader.Create (file);
 
@@ -87,7 +87,8 @@ namespace ProjectCrusade
 				}
 			}
 
-			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup/object")) {
+			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup[@name='Objectives']/object")) {
+				
 				Rectangle objRect = new Rectangle (
 					                    int.Parse (objective.GetAttribute ("x")),
 					                    int.Parse (objective.GetAttribute ("y")), 
@@ -95,6 +96,19 @@ namespace ProjectCrusade
 					                    int.Parse (objective.GetAttribute ("height")));
 				objRect.Offset (new Point(Rect.X * Item.SpriteWidth, Rect.Y * Item.SpriteWidth));
 				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));
+			}
+
+			foreach (XmlElement light in doc.SelectNodes("map/objectgroup[@name='Lights']/object")) {
+
+				Point lightPos = new Point (
+					int.Parse (light.GetAttribute ("x")),
+					int.Parse(light.GetAttribute ("y"))); 
+				lightPos += new Point(Rect.X * Item.SpriteWidth, Rect.Y * Item.SpriteWidth);
+				float brightness = float.Parse(light.SelectSingleNode ("properties/property[@name='brightness']").Attributes ["value"].Value);
+				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
+				float green = float.Parse(light.SelectSingleNode ("properties/property[@name='green']").Attributes ["value"].Value);
+				float blue = float.Parse(light.SelectSingleNode ("properties/property[@name='blue']").Attributes ["value"].Value);
+				lights.Add (new Light (lightPos.ToVector2(), new Color(red,green,blue), brightness));
 			}
 
 			//Get entrances

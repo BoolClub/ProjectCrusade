@@ -92,8 +92,9 @@ namespace ProjectCrusade
 
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.White, 5.0f));
-			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f));
+			lights [0].Position = Player.Position;
+//			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
 			generateWorld (objManager);
 			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
@@ -143,7 +144,7 @@ namespace ProjectCrusade
 					if (!(room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom))
 						foundRoom = true;
 				}
-				room.GenerateRoom (ref worldTiles);
+				room.GenerateRoom (ref worldTiles, ref lights);
 				rooms.Add (room);
 			}
 			//TODO: procedural generation.
@@ -187,7 +188,7 @@ namespace ProjectCrusade
 			}
 
 
-			lights [0].Position = Player.Position;
+			lights [0].Position += (Player.Position - lights [0].Position) * (float)gameTime.ElapsedGameTime.TotalSeconds;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
 				updateLighting ();
@@ -273,6 +274,8 @@ namespace ProjectCrusade
 					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p);
 
 					for (int k = 0; k < line.Count; k++) {
+						if (!(line [k].Item1.X >= 0 && line [k].Item1.X < Width && line [k].Item1.Y >= 0 && line [k].Item1.Y < Height))
+							break;
 						float dist2 = (light.Position - tileToWorldCoord (line [k].Item1.X, line [k].Item1.Y)).LengthSquared () / (TileWidth*TileWidth) ;
 						colorsTemp[line[k].Item1.X, line[k].Item1.Y] =
 							light.Strength
@@ -443,8 +446,7 @@ namespace ProjectCrusade
 				entity.Draw (spriteBatch, textureManager, fontManager);
 			spriteBatch.End ();
 			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
-			//Draw smoke
-			if (true) {
+			//Draw smoke/additive lighting
 				for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
 					for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
 						if (i < 0 || i >= Width || j < 0 || j >= Height)
@@ -461,9 +463,6 @@ namespace ProjectCrusade
 							SpriteEffects.None,
 							0);
 					}
-			}
-					
-
 
 		}
 		//TODO: Add procedural world generation
