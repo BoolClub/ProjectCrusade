@@ -33,7 +33,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
+		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
 		WorldConfiguration configuration;
 
@@ -71,6 +71,12 @@ namespace ProjectCrusade
 			configuration.TileFamily = new TileFamilies.Cave();
 			configuration.AddRooms ("Level1/Room1.tmx",1);
 			configuration.AddRooms ("Level1/Room2.tmx",2);
+			configuration.AddRooms ("Level1/Room3.tmx",1);
+			configuration.AddRooms ("Level1/Room4.tmx",1);
+			configuration.AddRooms ("Level1/Room5.tmx",1);
+			configuration.AddRooms ("Level1/Room6.tmx",1);
+			configuration.AddRooms ("Level1/Room7.tmx",1);
+			configuration.AddRooms ("Level1/Room8.tmx",1);
 
 
 			Player = new Player ("test", PlayerType.Wizard, this);

@@ -153,5 +153,7 @@
     <Content Include="Content\Levels\Level1\Room3.tmx" />
     <Content Include="Content\Levels\Level1\Room1.tmx" />
     <Content Include="Content\Levels\Level1\Room2.tmx" />
+    <Content Include="Content\Levels\Level1\Room9.tmx" />
+    <Content Include="Content\Levels\Level1\Room8.tmx" />
   </ItemGroup>
 </Project>
