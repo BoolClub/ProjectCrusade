@@ -215,6 +215,16 @@ namespace ProjectCrusade
 			return 1.0f / (distance2*0.1f + 1.0f);
 		}
 
+		Rectangle getLightCullingRect()
+		{
+			const int buffer = 30;
+			return new Rectangle (
+				cameraRectangle.X - buffer, 
+				cameraRectangle.Y - buffer, 
+				cameraRectangle.Width + 2 * buffer, 
+				cameraRectangle.Height + 2 * buffer);
+		}
+
 		//From http://stackoverflow.com/questions/18525214/efficient-2d-tile-based-lighting-system
 		//Implementation of Bresenham's algorithm
 		/// <summary>
@@ -246,10 +256,10 @@ namespace ProjectCrusade
 				ret.Add( new Tuple<Point,int>(new Point(x0,y0), currInc) );
 				if (x0==x1 && y0==y1) break;
 
-				if (!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle)
-					break; // break if rays hit wall--no use of iterating if light won't pass a wall
+				if ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRect().Contains(x0,y0))
+					break; //break if ray exits camera field of vision or is simply too far away
 				if (worldTiles [x0, y0].Solid)
-					currInc++;
+					currInc++;// break if rays hit wall--no use of iterating if light won't pass a wall
 				if (currInc >= lightingPenetration)
 					break;
 				e2 = 2*err;
