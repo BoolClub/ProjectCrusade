@@ -16,9 +16,13 @@ namespace ProjectCrusade
 			Height = 16;
 		}
 
-		public override void Update (GameTime gameTime, World world)
+		public override void Update (GameTime gameTime, World world) 
 		{
-			
+			const float interactionRadius = 1000;
+			if ((world.Player.Position - Position).LengthSquared () < interactionRadius * interactionRadius) {
+				Vector2 nvec = Vector2.Normalize (world.Player.Position - Position);
+				Position += nvec;
+			}
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)

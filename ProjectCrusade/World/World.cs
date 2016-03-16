@@ -335,14 +335,17 @@ namespace ProjectCrusade
 			Vector2 prevPosition = entity.Position;
 			entity.Update (gameTime, this);
 			Point p = worldToTileCoord (entity.Position);
-			if (entity is Player) {
-				Vector2 vel = 5*(entity.Position - prevPosition);
-				fluid.SetVel (p.X, p.Y, vel);
-				fluid.SetDensity (p.X, p.Y, 0.9f);
-			} else { 
-				entity.Position += fluid.GetVel (p.X, p.Y);
-			}
 
+			//Disable fluid influence.
+//
+//			if (entity is Player) {
+//				Vector2 vel = 5*(entity.Position - prevPosition);
+//				fluid.SetVel (p.X, p.Y, vel);
+//				fluid.SetDensity (p.X, p.Y, 0.9f);
+//			} else { 
+//				entity.Position += fluid.GetVel (p.X, p.Y);
+//			}
+//
 			Vector2 newPosition = entity.Position;
 			entity.Position = prevPosition;
 			//X collision
