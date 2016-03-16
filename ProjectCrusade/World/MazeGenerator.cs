@@ -13,6 +13,7 @@ namespace ProjectCrusade
 		/// Maze data. 
 		/// 0 represents unfilled region
 		/// -1 represents maze walls
+		/// -2 represents a rock
 		/// 1 and larger represents an individual room
 		/// </summary>
 		int[,] maze;
@@ -21,6 +22,8 @@ namespace ProjectCrusade
 		int roomCount = 0;
 		Random rand = new Random();
 
+
+		const double RockGenerationProbability = 0.03f;
 
 
 		public MazeGenerator (int width, int height)
@@ -141,6 +144,7 @@ namespace ProjectCrusade
 
 				return new Tile (ttype, true, Color.White.ToVector3 ());
 			} else {
+				if (maze[i,j]==-2) return new Tile (family.Rock, true, Color.White.ToVector3 ());
 				return new Tile (family.Floor, false, Color.White.ToVector3 ());
 			}
 		}
@@ -152,6 +156,7 @@ namespace ProjectCrusade
 			clearThinWalls ();
 			removeFloatingPillars ();
 			makeBorder ();
+			addRocks ();
 		}
 
 		/// <summary>
@@ -317,6 +322,17 @@ namespace ProjectCrusade
 						newMaze [i, j] = -1;
 				}
 			maze = newMaze;
+		}
+
+
+
+		void addRocks()
+		{
+			for (int i = 1; i < width - 1; i++)
+				for (int j = 1; j < height - 1; j++) {
+					if (mooreNeighborhoodEmpty (i, j) && rand.NextDouble() < RockGenerationProbability)
+						maze [i, j] = -2;//make tile rock
+				}
 		}
 
 		void makeBorder()

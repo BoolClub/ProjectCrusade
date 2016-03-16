@@ -18,7 +18,9 @@ namespace ProjectCrusade
 		public abstract TileType WallTop         	{ get; }
 		public abstract TileType WallBottom      	{ get; }
 		public abstract TileType WallLeft        	{ get; }
-		public abstract TileType WallRight			{ get; }                                
+		public abstract TileType WallRight			{ get; }  
+
+		public abstract TileType Rock 				{ get; }
 	}
 	namespace TileFamilies
 	{
@@ -39,6 +41,8 @@ namespace ProjectCrusade
 			public override TileType WallBottom      	{ get { return TileType.CaveWallBottom; }   }
 			public override TileType WallLeft        	{ get { return TileType.CaveWallLeft; }   }
 			public override TileType WallRight			{ get { return TileType.CaveWallRight; }   }   
+
+			public override TileType Rock				{ get { return TileType.CaveRock; }   }   
 		}
 	}
 }
