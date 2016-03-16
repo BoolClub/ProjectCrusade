@@ -239,10 +239,14 @@ namespace ProjectCrusade
 			sy = y0<y1 ? 1 : -1; 
 			int err = dx+dy, e2; /* error value e_xy */
 			int currInc = 0;
+			bool enteredCameraRectangle = false;
 			for(;;){  /* loop */
+				if (cameraRectangle.Contains (x0, y0))
+					enteredCameraRectangle = true;
 				ret.Add( new Tuple<Point,int>(new Point(x0,y0), currInc) );
 				if (x0==x1 && y0==y1) break;
-				if (!cameraRectangle.Contains(x0,y0))
+
+				if (!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle)
 					break; // break if rays hit wall--no use of iterating if light won't pass a wall
 				if (worldTiles [x0, y0].Solid)
 					currInc++;

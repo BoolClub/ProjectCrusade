@@ -1,27 +1,27 @@
 ﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="2/29/2016 3:09:46 PM" StartupItem="ProjectCrusade/ProjectCrusade.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/World/MazeGenerator.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectCrusade/World/World.cs">
     <Files>
       <File FileName="ProjectCrusade/MainGame.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Sprite.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/World.cs" Line="420" Column="58" />
-      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="51" Column="159" />
+      <File FileName="ProjectCrusade/Sprite.cs" Line="44" Column="3" />
+      <File FileName="ProjectCrusade/World/World.cs" Line="36" Column="52" />
+      <File FileName="ProjectCrusade/Screens/MainGameScreen.cs" Line="62" Column="18" />
       <File FileName="ProjectCrusade/Entity/PlayerInput.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/GUI/Menu.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Inventory/Inventory.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Screens/InventoryScreen.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/Screens/GameScreen.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/TextureManager.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/GUI/SanityBarGUI.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Managers/HUDManager.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Entity/Player.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Misc/Camera.cs" Line="47" Column="15" />
-      <File FileName="ProjectCrusade/World/Tile.cs" Line="36" Column="19" />
-      <File FileName="ProjectCrusade/World/Room.cs" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/Content/Levels/RestRoom.tmx" Line="1" Column="1" />
-      <File FileName="ProjectCrusade/World/Fluid.cs" Line="64" Column="1" />
+      <File FileName="ProjectCrusade/Entity/Player.cs" Line="89" Column="100" />
+      <File FileName="ProjectCrusade/Misc/Camera.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/World/Tile.cs" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/World/Room.cs" Line="31" Column="52" />
+      <File FileName="ProjectCrusade/World/Fluid.cs" Line="1" Column="1" />
       <File FileName="ProjectCrusade/World/MazeGenerator.cs" Line="257" Column="4" />
-      <File FileName="ProjectCrusade/World/TileFamily.cs" Line="25" Column="33" NotebookId="1" />
+      <File FileName="ProjectCrusade/Experimental Graphics/GraphicsExp.cs" Line="110" Column="4" />
+      <File FileName="ProjectCrusade/Content/Levels/Level1/Room1.tmx" Line="1" Column="1" />
+      <File FileName="ProjectCrusade/Objectives/Objective.cs" Line="70" Column="28" />
+      <File FileName="ProjectCrusade/World/TileFamily.cs" Line="24" Column="3" NotebookId="1" />
       <File FileName="ProjectCrusade/Items/Item.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
     <Pads>
@@ -29,12 +29,20 @@
         <State name="__root__">
           <Node name="ProjectCrusade" expanded="True">
             <Node name="ProjectCrusade" expanded="True">
+              <Node name="Content" expanded="True">
+                <Node name="Levels" expanded="True">
+                  <Node name="Level1" expanded="True" />
+                </Node>
+              </Node>
               <Node name="Entity" expanded="True" />
+              <Node name="Experimental Graphics" expanded="True" />
+              <Node name="GUI" expanded="True" />
               <Node name="Items" expanded="True" />
               <Node name="Misc" expanded="True" />
+              <Node name="Objectives" expanded="True" />
               <Node name="Screens" expanded="True" />
               <Node name="World" expanded="True">
-                <Node name="MazeGenerator.cs" selected="True" />
+                <Node name="World.cs" selected="True" />
               </Node>
             </Node>
           </Node>
