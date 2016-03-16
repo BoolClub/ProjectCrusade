@@ -112,6 +112,7 @@
     <Compile Include="ContentManagers\SoundEffectManager.cs" />
     <Compile Include="World\Room.cs" />
     <Compile Include="World\WorldConfiguration.cs" />
+    <Compile Include="Entity\Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

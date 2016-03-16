@@ -119,6 +119,20 @@ namespace ProjectCrusade
 
 		}
 
+		/// <summary>
+		/// With a certain probability, spawns an enemy at that point
+		/// </summary>
+		void trySpawnEnemy(Point p)
+		{
+			const double spawnProbability = 0.01;
+			if (rand.NextDouble () < spawnProbability) {
+				Enemy e = new Enemy ();
+				e.Position = tileToWorldCoord (p);
+				entities.Add (e);
+			}
+		}
+
+
 		void generateWorld(ObjectiveManager objManager)
 		{
 			for (int i = 0; i < Width; i++)
@@ -177,8 +191,12 @@ namespace ProjectCrusade
 			generator.Generate ();
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					if (!generator.IsRoom (i, j))
+					if (!generator.IsRoom (i, j)) {
 						worldTiles [i, j] = generator.GetMazeTile (configuration.TileFamily, i, j);
+						if (generator.IsHall (i, j)) {
+							trySpawnEnemy (new Point (i, j));
+						}
+					}
 				}
 		}
 
@@ -309,33 +327,6 @@ namespace ProjectCrusade
 						worldTiles[i,j].Color+=colorsTemp [i, j];
 					}
 			}
-
-
-//			foreach (WorldLayer layer in layers) {
-//
-//
-//
-//				for (int i = 0; i < Width; i++) {
-//					for (int j = 0; j < Height; j++) {
-//						Vector3 totalColor = ambientLighting.ToVector3();
-//						//TODO: optimize this. Bad complexity. 
-//						//TODO: update within a certain distance of each light
-//						//		This will become inefficient when the world becomes large.
-//						foreach (Light light in lights) {
-//							float distance = (tileToWorldCoord (i, j)
-//								- light.Position).LengthSquared();
-//							totalColor+=light.Strength * light.Color.ToVector3() * lightFalloffFunction (distance);
-//
-//						}
-//
-//						layer.Tiles [i, j].Color.R = (byte)(MathHelper.Clamp(totalColor.X * 255, 0, 255));
-//						layer.Tiles [i, j].Color.G = (byte)(MathHelper.Clamp(totalColor.Y * 255, 0, 255));
-//						layer.Tiles [i, j].Color.B = (byte)(MathHelper.Clamp(totalColor.Z * 255, 0, 255));
-//					}
-//				}
-//
-//
-//			}
 		}
 
 		void updateEntity(GameTime gameTime, Entity entity)
@@ -416,6 +407,10 @@ namespace ProjectCrusade
 		Vector2 tileToWorldCoord(int x, int y)
 		{
 			return new Vector2 (TileWidth * x, TileWidth * y);
+		}
+				Vector2 tileToWorldCoord(Point p)
+		{
+					return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
 		}
 
 

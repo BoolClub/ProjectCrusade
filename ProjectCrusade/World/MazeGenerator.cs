@@ -253,6 +253,44 @@ namespace ProjectCrusade
 			}
 		}
 
+
+		bool vonNeumannNeighborhoodEmpty(int i, int j)
+		{
+			if (i > 0)
+			if (maze [i - 1, j] != -1)
+				return false;
+			if (j > 0)
+			if (maze [i, j-1] != -1)
+				return false;
+
+			if (i < width-1)
+			if (maze [i + 1, j] != -1)
+				return false;
+			if (j <height-1)
+			if (maze [i, j+1] != -1)
+				return false;
+			return true;
+		}
+
+		bool mooreNeighborhoodEmpty(int i, int j)
+		{
+			if (!vonNeumannNeighborhoodEmpty (i, j))
+				return false;
+			if (i > 0 && j > 0)
+			if (maze [i - 1, j - 1] != -1)
+				return false;
+			if (i < width-1 && j > 0)
+			if (maze [i + 1, j - 1] != -1)
+				return false;
+			if (i < 0 && j <height-1)
+			if (maze [i - 1, j + 1] != -1)
+				return false;
+			if (i < width-1 && j <height-1)
+			if (maze [i + 1, j + 1] != -1)
+				return false;
+			return true;
+		}
+
 		void clearThinWalls()
 		{
 			var newMaze = maze;
@@ -275,7 +313,7 @@ namespace ProjectCrusade
 				for (int j = 1; j < height - 1; j++) {
 					if (maze [i, j] != 0)
 						continue;
-					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1 && maze [i, j-1] == -1)
+					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1)
 						newMaze [i, j] = -1;
 				}
 			maze = newMaze;
