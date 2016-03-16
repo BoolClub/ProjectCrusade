@@ -27,7 +27,10 @@ namespace ProjectCrusade
 
 		public Player Player;
 
+		//Only active entities (which necessarily includes the player and nearby enemies) 
+		//are drawn.
 		List<Entity> entities;
+		List<Entity> activeEntities;
 
 		List<Light> lights;
 
@@ -50,12 +53,15 @@ namespace ProjectCrusade
 
 		Tile[,] worldTiles;
 
+		#region Fluid variables
 		Fluid fluid;
 		Thread fluidThread;
 		int fluidUpdateTimeout = 5;
 
 		bool drawSmoke = false;
 		bool updateSmoke = false;
+
+		#endregion 
 
 		Random rand = new Random ();
 
@@ -202,9 +208,7 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
-			foreach (Entity entity in entities) {
-				updateEntity (gameTime, entity);
-			}
+			updateEntities (gameTime);
 
 			for (int i = entities.Count - 1; i >= 0; i--) {
 				if (entities [i].Delete)
@@ -233,9 +237,26 @@ namespace ProjectCrusade
 			return 1.0f / (distance2*0.1f + 1.0f);
 		}
 
-		Rectangle getLightCullingRect()
+		/// <summary>
+		/// Outside of this rectangle, no light rays are rendered, regardless of whether they passed through the camera 
+		/// viewport.
+		/// </summary>
+		Rectangle getLightCullingRegion()
 		{
-			const int buffer = 30;
+			const int buffer = 20;
+			return new Rectangle (
+				cameraRectangle.X - buffer, 
+				cameraRectangle.Y - buffer, 
+				cameraRectangle.Width + 2 * buffer, 
+				cameraRectangle.Height + 2 * buffer);
+		}
+
+		/// <summary>
+		/// Outside of this region, no the enemies or other entities are updated (for efficiency). 
+		/// </summary>
+		Rectangle getActiveEntityRegion()
+		{
+			const int buffer = 50;
 			return new Rectangle (
 				cameraRectangle.X - buffer, 
 				cameraRectangle.Y - buffer, 
@@ -274,7 +295,7 @@ namespace ProjectCrusade
 				ret.Add( new Tuple<Point,int>(new Point(x0,y0), currInc) );
 				if (x0==x1 && y0==y1) break;
 
-				if ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRect().Contains(x0,y0))
+				if ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRegion().Contains(x0,y0))
 					break; //break if ray exits camera field of vision or is simply too far away
 				if (worldTiles [x0, y0].Solid)
 					currInc++;// break if rays hit wall--no use of iterating if light won't pass a wall
@@ -327,6 +348,22 @@ namespace ProjectCrusade
 						worldTiles[i,j].Color+=colorsTemp [i, j];
 					}
 			}
+		}
+
+		void updateEntities(GameTime gameTime)
+		{
+			Rectangle activeEntityRegion = getActiveEntityRegion ();
+			//convert to world coordinates.
+			activeEntityRegion.X*=TileWidth;
+			activeEntityRegion.Y*=TileWidth;
+			activeEntityRegion.Width*=TileWidth;
+			activeEntityRegion.Height*=TileWidth;
+
+			//construct active entities 
+			activeEntities = entities.FindAll(e => activeEntityRegion.Intersects(e.CollisionBox));
+
+			foreach (Entity e in activeEntities)
+				updateEntity (gameTime, e);
 		}
 
 		void updateEntity(GameTime gameTime, Entity entity)
