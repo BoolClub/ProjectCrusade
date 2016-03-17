@@ -16,7 +16,13 @@ After opening Tiled, you must import the main world file (Content/Levels/world.t
 When editing the world, be sure to distinguish between the Floor and Wall layers. The player collides with all tiles on the Wall layer. 
 
 This creates two files: one for walls, and one for floors. 
+###Adding lights to rooms
+Assuming you have a room .TMX file open in Tiled, create a new object layer titled "Lights." Then, draw a rectangle at the desired location. The upper-left-hand corner of this rectangle becomes the location of the point light. To change the properties of the light, add the following properties using the plus button in the properties panel:
 
+1. `brightness` - light brightness value
+2. `red` - red value between 0 and 1
+3. `green` - green value between 0 and 1
+4. `blue` - blue value between 0 and 1
 
 ###Adding/changing fonts (sorry if a bit complicated)
 
