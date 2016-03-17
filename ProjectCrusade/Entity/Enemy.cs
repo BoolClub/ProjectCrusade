@@ -33,6 +33,13 @@ namespace ProjectCrusade
 			patrollingDirection = new Vector2 (1, 0);
 		}
 
+		/// <summary>
+		/// Returns a random normal vector
+		/// </summary>
+		Vector2 randomDirection(Random rand)
+		{
+			return Vector2.Normalize(new Vector2 ((float)rand.NextDouble () - .5f, (float)rand.NextDouble () - .5f));
+		}
 
 		public override void Update (GameTime gameTime, World world) 
 		{
@@ -45,26 +52,13 @@ namespace ProjectCrusade
 				CurrState = State.Patrolling;
 
 			//Change direction
-			if (world.rand.NextDouble() < 0.01)
+			if (world.rand.NextDouble() < 0.001 * gameTime.ElapsedGameTime.TotalMilliseconds)
 			{
 				if (CurrState == State.Patrolling)
 					CurrState = State.Stationary;
 				else if (CurrState == State.Stationary) {
 					CurrState = State.Patrolling;
-					switch (world.rand.Next (4)) {
-					case 0:
-						patrollingDirection = new Vector2 (1, 0);
-						break;
-					case 1:
-						patrollingDirection = new Vector2 (-1, 0);
-						break;
-					case 2:
-						patrollingDirection = new Vector2 (0, 1);
-						break;
-					case 3:
-						patrollingDirection = new Vector2 (0, -1);
-						break;
-					}
+					patrollingDirection = randomDirection (world.rand);
 				}
 				patrollingTime = 0.0f;
 			}
