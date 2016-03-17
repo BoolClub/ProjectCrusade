@@ -367,6 +367,11 @@ namespace ProjectCrusade
 			}
 		}
 
+		public List<Point> AStarPathFind (Point start, Point end)
+		{
+
+		}
+
 		void updateEntities(GameTime gameTime)
 		{
 			Rectangle activeEntityRegion = getActiveEntityRegion ();
