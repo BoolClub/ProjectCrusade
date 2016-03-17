@@ -108,7 +108,7 @@ namespace ProjectCrusade
 				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
 				float green = float.Parse(light.SelectSingleNode ("properties/property[@name='green']").Attributes ["value"].Value);
 				float blue = float.Parse(light.SelectSingleNode ("properties/property[@name='blue']").Attributes ["value"].Value);
-				lights.Add (new Light (lightPos.ToVector2(), new Color(red,green,blue), brightness));
+				lights.Add (new Light (lightPos.ToVector2(), new Color(red,green,blue), brightness, true));
 			}
 
 			//Get entrances

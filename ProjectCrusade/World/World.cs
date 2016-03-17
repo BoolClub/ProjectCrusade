@@ -34,6 +34,8 @@ namespace ProjectCrusade
 
 		List<Light> lights;
 
+		Vector3[,] precomputedLighting;
+
 		List<Room> rooms;
 
 		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
@@ -92,6 +94,7 @@ namespace ProjectCrusade
 			int tilesSize = 0;
 
 			worldTiles = new Tile[Width, Height];
+			precomputedLighting = new Vector3[Width, Height];
 
 			foreach (Tile t in worldTiles)
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
@@ -104,12 +107,15 @@ namespace ProjectCrusade
 
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f));
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f, false));
 			lights [0].Position = Player.Position;
 //			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 
 			generateWorld (objManager);
 			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
+
+			//precompute lighting
+			updateLighting (true);
 
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
@@ -208,18 +214,22 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime, Camera camera)
 		{
+
+
 			updateEntities (gameTime);
 
 			for (int i = entities.Count - 1; i >= 0; i--) {
 				if (entities [i].Delete)
 					entities.RemoveAt (i);
 			}
-
+			//View of camera in tile space
+			//Used for per-tile culling
+			cameraRectangle = new Rectangle (camera.ViewRectangle.X / TileWidth, camera.ViewRectangle.Y / TileWidth, camera.ViewRectangle.Width / TileWidth, camera.ViewRectangle.Height / TileWidth); 
 
 			lights [0].Position += (Player.Position - lights [0].Position) * (float)gameTime.ElapsedGameTime.TotalSeconds;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
-				updateLighting ();
+				updateLighting (false);
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -267,9 +277,9 @@ namespace ProjectCrusade
 		//From http://stackoverflow.com/questions/18525214/efficient-2d-tile-based-lighting-system
 		//Implementation of Bresenham's algorithm
 		/// <summary>
-		/// Used to perform ray tracing for lighting.
+		/// Used to perform ray tracing for lighting. CullOffScreen indicates whether the ray should be terminated if it goes off screen.
 		/// </summary>
-		public List<Tuple<Point,int>> GetLine(Point start, Point target) {
+		public List<Tuple<Point,int>> GetLine(Point start, Point target, bool cullOffscreen=true) {
 			
 
 			List<Tuple<Point,int>> ret = new List<Tuple<Point,int>>();
@@ -295,7 +305,7 @@ namespace ProjectCrusade
 				ret.Add( new Tuple<Point,int>(new Point(x0,y0), currInc) );
 				if (x0==x1 && y0==y1) break;
 
-				if ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRegion().Contains(x0,y0))
+				if (cullOffscreen && ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRegion().Contains(x0,y0)))
 					break; //break if ray exits camera field of vision or is simply too far away
 				if (worldTiles [x0, y0].Solid)
 					currInc++;// break if rays hit wall--no use of iterating if light won't pass a wall
@@ -308,14 +318,19 @@ namespace ProjectCrusade
 			return ret;
 		}
 
-		void updateLighting()
+		void updateLighting(bool precomputed)
 		{
+			//if precomputed, push lighting update to precomputedLighting only
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
-					worldTiles[i,j].Color = ambientLighting.ToVector3();
+					if (precomputed)
+						precomputedLighting [i, j] = ambientLighting.ToVector3();
+					else
+						worldTiles[i,j].Color = precomputedLighting[i,j];
 
 			foreach (Light light in lights) {
-
+				if ((precomputed && !light.Static) || (!precomputed && light.Static))
+					continue;
 				List<Point> boundary = new List<Point>(2 * Width + 2 * (Height - 2));
 				Vector3[,] colorsTemp = new Vector3[Width, Height];
 				for (int i = 0; i < Width; i++) {
@@ -330,7 +345,7 @@ namespace ProjectCrusade
 				for (int i = 0; i<boundary.Count;i++)
 				{
 					Point p = boundary [i];
-					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p);
+					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p, !precomputed);
 
 					for (int k = 0; k < line.Count; k++) {
 						if (!(line [k].Item1.X >= 0 && line [k].Item1.X < Width && line [k].Item1.Y >= 0 && line [k].Item1.Y < Height))
@@ -345,7 +360,9 @@ namespace ProjectCrusade
 				}
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
-						worldTiles[i,j].Color+=colorsTemp [i, j];
+						if (precomputed)
+							precomputedLighting[i,j] += colorsTemp [i, j];
+						else worldTiles[i,j].Color += colorsTemp [i, j];
 					}
 			}
 		}
@@ -472,14 +489,9 @@ namespace ProjectCrusade
 		/// <param name="camera">Camera needed for tile culling</param>
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Camera camera)
 		{
-			//View of camera in tile space
-			//Used for per-tile culling
-			Rectangle cameraRectTiles = new Rectangle (camera.ViewRectangle.X / TileWidth, camera.ViewRectangle.Y / TileWidth, camera.ViewRectangle.Width / TileWidth, camera.ViewRectangle.Height / TileWidth); 
 
-			cameraRectangle = cameraRectTiles;
-
-			for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
-				for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
+			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
+				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
 					if (i < 0 || i >= Width || j < 0 || j >= Height)
 						continue;
 
@@ -502,8 +514,8 @@ namespace ProjectCrusade
 			spriteBatch.End ();
 			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
 			//Draw smoke/additive lighting
-				for (int i = cameraRectTiles.Left; i < cameraRectTiles.Right + 1; i++)
-					for (int j = cameraRectTiles.Top; j < cameraRectTiles.Bottom + 1; j++) {
+			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
+				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
 						if (i < 0 || i >= Width || j < 0 || j >= Height)
 							continue;
 

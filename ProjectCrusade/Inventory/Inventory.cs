@@ -177,7 +177,7 @@ namespace ProjectCrusade
 			Rectangle r = new Rectangle (x, y, Item.SpriteWidth, Item.SpriteWidth);
 
 			//draw background of slot
-			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), rBox,  (slots [i, j] == ActiveSlot ? Color.Red : Color.White) * opacity);
+			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), null, rBox, null, null, 0, null,  (slots [i, j] == ActiveSlot ? Color.Red : Color.White) * opacity, SpriteEffects.None, 0);
 			//draw item itself
 			if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
 				spriteBatch.Draw (textureManager.GetTexture ("items"),

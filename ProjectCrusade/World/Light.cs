@@ -11,10 +11,13 @@ namespace ProjectCrusade
 		public Color Color;
 		public float Strength;
 
-		public Light (Vector2 pos, Color color, float strength) { 
+		public bool Static;
+
+		public Light (Vector2 pos, Color color, float strength, bool staticLight) { 
 			Position = pos;
 			Color = color;
 			Strength = strength;
+			Static = staticLight;
 		}
 	}
 }

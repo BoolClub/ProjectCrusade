@@ -318,8 +318,9 @@ namespace ProjectCrusade
 				for (int j = 1; j < height - 1; j++) {
 					if (maze [i, j] != 0)
 						continue;
-					if (maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1)
+					if ((maze [i + 1, j] == -1 && maze [i - 1, j] == -1 && maze [i, j+1] == -1) || (maze[i+1,j]==-1 && maze[i,j-1]==-1 && maze[i,j+1]==-1))
 						newMaze [i, j] = -1;
+					
 				}
 			maze = newMaze;
 		}
