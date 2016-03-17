@@ -77,7 +77,7 @@ namespace ProjectCrusade
 		{
 			configuration = new WorldConfiguration ();
 			configuration.TileFamily = new TileFamilies.Cave();
-			configuration.AddRooms ("Level1/Room1.tmx",1);
+			configuration.AddRooms ("Level1/RestRoom.tmx",1);
 			configuration.AddRooms ("Level1/Room2.tmx",2);
 			configuration.AddRooms ("Level1/Room3.tmx",1);
 			configuration.AddRooms ("Level1/Room4.tmx",1);
