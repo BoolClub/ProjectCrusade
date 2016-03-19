@@ -117,6 +117,13 @@ namespace ProjectCrusade
 			//precompute lighting
 			updateLighting (true);
 
+
+			AStarPathfinder finder = new AStarPathfinder ();
+			var path = finder.Compute (WorldToTileCoord (Player.Position), new Point (20, 20), ref worldTiles);
+			for (int i = 0; i < path.Length; i++) {
+				worldTiles [path [i].X, path [i].Y] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
+			}
+
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
 			fluid.DecayRate = 0.025f;
