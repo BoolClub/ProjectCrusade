@@ -113,6 +113,7 @@
     <Compile Include="World\Room.cs" />
     <Compile Include="World\WorldConfiguration.cs" />
     <Compile Include="Entity\Enemy.cs" />
+    <Compile Include="World\AStarPathfinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

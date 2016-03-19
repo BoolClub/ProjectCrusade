@@ -65,7 +65,7 @@ namespace ProjectCrusade
 
 		#endregion 
 
-		Random rand = new Random ();
+		public Random rand = new Random ();
 
 		/// <summary>
 		/// A rectangle in tile space describing the view of the camera. Used for culling/optimization.
@@ -117,6 +117,13 @@ namespace ProjectCrusade
 			//precompute lighting
 			updateLighting (true);
 
+
+			AStarPathfinder finder = new AStarPathfinder ();
+			var path = finder.Compute (WorldToTileCoord (Player.Position), new Point (20, 20), ref worldTiles);
+			for (int i = 0; i < path.Length; i++) {
+				worldTiles [path [i].X, path [i].Y] = new Tile (TileType.Grass, false, Color.White.ToVector3 ());
+			}
+
 			//Init fluid.
 			fluid = new Fluid (width, 0.01f);
 			fluid.DecayRate = 0.025f;
@@ -139,11 +146,17 @@ namespace ProjectCrusade
 			const double spawnProbability = 0.01;
 			if (rand.NextDouble () < spawnProbability) {
 				Enemy e = new Enemy ();
-				e.Position = tileToWorldCoord (p);
+				e.Position = TileToWorldCoord (p);
 				entities.Add (e);
 			}
 		}
 
+
+		public Point[] Pathfind(Point start, Point end)
+		{
+			AStarPathfinder finder = new AStarPathfinder ();
+			return finder.Compute (start, end, ref worldTiles, AStarPathfinder.HeuristicType.Euclidean);
+		}
 
 		void generateWorld(ObjectiveManager objManager)
 		{
@@ -318,6 +331,36 @@ namespace ProjectCrusade
 			return ret;
 		}
 
+		/// <summary>
+		/// Whether a ray is blocked. Used for basic pathfinding.
+		/// </summary>
+		public bool HasLineOfSight(Point start, Point target) {
+			int x0 =  start.X;
+			int y0 =  start.Y;
+
+			int x1 = target.X;
+			int y1 = target.Y;
+
+			int sx = 0;
+			int sy = 0;
+
+			int dx =  Math.Abs(x1-x0);
+			sx = x0<x1 ? 1 : -1;
+			int dy = -1*Math.Abs(y1-y0);
+			sy = y0<y1 ? 1 : -1; 
+			int err = dx+dy, e2; /* error value e_xy */
+			for(;;){  
+				if (x0==x1 && y0==y1) break;
+				if (worldTiles [x0, y0].Solid)
+					return false;
+				e2 = 2*err;
+				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+				if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+			}
+			return true;
+		}
+
+
 		void updateLighting(bool precomputed)
 		{
 			//if precomputed, push lighting update to precomputedLighting only
@@ -345,12 +388,12 @@ namespace ProjectCrusade
 				for (int i = 0; i<boundary.Count;i++)
 				{
 					Point p = boundary [i];
-					var line = GetLine (new Point (worldToTileCoordX ((int)light.Position.X), worldToTileCoordY ((int)light.Position.Y)), p, !precomputed);
+					var line = GetLine (new Point (WorldToTileCoordX ((int)light.Position.X), WorldToTileCoordY ((int)light.Position.Y)), p, !precomputed);
 
 					for (int k = 0; k < line.Count; k++) {
 						if (!(line [k].Item1.X >= 0 && line [k].Item1.X < Width && line [k].Item1.Y >= 0 && line [k].Item1.Y < Height))
 							break;
-						float dist2 = (light.Position - tileToWorldCoord (line [k].Item1.X, line [k].Item1.Y)).LengthSquared () / (TileWidth*TileWidth) ;
+						float dist2 = (light.Position - TileToWorldCoord (line [k].Item1.X, line [k].Item1.Y)).LengthSquared () / (TileWidth*TileWidth) ;
 						colorsTemp[line[k].Item1.X, line[k].Item1.Y] =
 							light.Strength
 							* light.Color.ToVector3 ()
@@ -366,6 +409,11 @@ namespace ProjectCrusade
 					}
 			}
 		}
+
+//		public List<Point> AStarPathFind (Point start, Point end)
+//		{
+//
+//		}
 
 		void updateEntities(GameTime gameTime)
 		{
@@ -388,7 +436,7 @@ namespace ProjectCrusade
 
 			Vector2 prevPosition = entity.Position;
 			entity.Update (gameTime, this);
-			Point p = worldToTileCoord (entity.Position);
+			Point p = WorldToTileCoord (entity.Position);
 
 			//Disable fluid influence.
 //
@@ -414,58 +462,61 @@ namespace ProjectCrusade
 
 		bool entityWallCollision(Entity entity) {
 
-			if (worldToTileCoordX (entity.CollisionBox.Left) < 0)
+			if (WorldToTileCoordX (entity.CollisionBox.Left) < 0)
 				return true;
-			if (worldToTileCoordX (entity.CollisionBox.Left) >= Width)
+			if (WorldToTileCoordX (entity.CollisionBox.Left) >= Width)
 				return true;
-			if (worldToTileCoordY (entity.CollisionBox.Top) < 0)
+			if (WorldToTileCoordY (entity.CollisionBox.Top) < 0)
 				return true;
-			if (worldToTileCoordY (entity.CollisionBox.Top) >= Height)
+			if (WorldToTileCoordY (entity.CollisionBox.Top) >= Height)
 				return true;
-			if (worldToTileCoordX (entity.CollisionBox.Right) < 0)
+			if (WorldToTileCoordX (entity.CollisionBox.Right) < 0)
 				return true;
-			if (worldToTileCoordX (entity.CollisionBox.Right) >= Width)
+			if (WorldToTileCoordX (entity.CollisionBox.Right) >= Width)
 				return true;
-			if (worldToTileCoordY (entity.CollisionBox.Bottom) < 0)
+			if (WorldToTileCoordY (entity.CollisionBox.Bottom) < 0)
 				return true;
-			if (worldToTileCoordY (entity.CollisionBox.Bottom) >= Height)
+			if (WorldToTileCoordY (entity.CollisionBox.Bottom) >= Height)
 				return true;
 			
 
-			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Left),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 
-			if (worldTiles[worldToTileCoordX (entity.CollisionBox.Right),worldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 			return false;
 
 		}
 
-		int worldToTileCoordX(int x) 
+		public int WorldToTileCoordX(int x) 
 		{
 			return x / TileWidth;
 		}
-		int worldToTileCoordY(int y) 
+		public int WorldToTileCoordY(int y) 
 		{
 			return y / TileWidth;
 		}
 
-		Point worldToTileCoord(Vector2 pos) {
+		public Point WorldToTileCoord(Vector2 pos) {
+			return new Point ((int)(pos.X / TileWidth), (int)(pos.Y / TileWidth));
+		}
+		public Point WorldToTileCoord(Point pos) {
 			return new Point ((int)(pos.X / TileWidth), (int)(pos.Y / TileWidth));
 		}
 
 		//get upper-right-hand corner of a tile
-		Vector2 tileToWorldCoord(int x, int y)
+		public Vector2 TileToWorldCoord(int x, int y)
 		{
 			return new Vector2 (TileWidth * x, TileWidth * y);
 		}
-				Vector2 tileToWorldCoord(Point p)
+		public Vector2 TileToWorldCoord(Point p)
 		{
 					return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
 		}
