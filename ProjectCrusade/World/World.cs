@@ -38,7 +38,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
+		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
 
 		WorldConfiguration configuration;
 
@@ -239,7 +239,7 @@ namespace ProjectCrusade
 			//Used for per-tile culling
 			cameraRectangle = new Rectangle (camera.ViewRectangle.X / TileWidth, camera.ViewRectangle.Y / TileWidth, camera.ViewRectangle.Width / TileWidth, camera.ViewRectangle.Height / TileWidth); 
 
-			lights [0].Position += (Player.Position - lights [0].Position) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			lights [0].Position = Player.Position;
 			//Updating lighting can be expensive, so only do it so often. 
 			if (lastLightingUpdate > lightingUpdatePeriod) {
 				updateLighting (false);
