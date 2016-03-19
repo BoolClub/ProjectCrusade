@@ -367,6 +367,7 @@ namespace ProjectCrusade
 			foreach (Light light in lights) {
 				if ((precomputed && !light.Static) || (!precomputed && light.Static))
 					continue;
+				
 				List<Point> boundary = new List<Point>(2 * Width + 2 * (Height - 2));
 				Vector3[,] colorsTemp = new Vector3[Width, Height];
 				for (int i = 0; i < Width; i++) {
@@ -514,6 +515,11 @@ namespace ProjectCrusade
 					return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
 		}
 
+		public bool PointInWorld(Point p)
+		{
+			return (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height);
+		}
+
 
 		Rectangle getTileSourceRect(Tile t)
 		{
@@ -553,10 +559,15 @@ namespace ProjectCrusade
 							0);
 				}
 
-			foreach (Entity entity in entities)
-				entity.Draw (spriteBatch, textureManager, fontManager);
+			foreach (Entity entity in entities) {
+				Point p = WorldToTileCoord (entity.Position);
+				Color col = Color.White;
+				if (PointInWorld (p))
+					col = new Color (worldTiles [p.X, p.Y].Color);
+				entity.Draw (spriteBatch, textureManager, fontManager, col);
+			}
 			spriteBatch.End ();
-			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
 			//Draw smoke/additive lighting
 			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
 				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {

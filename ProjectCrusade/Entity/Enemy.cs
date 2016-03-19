@@ -107,7 +107,7 @@ namespace ProjectCrusade
 					patrollingDirection = Vector2.Normalize (world.Player.Position - Position);
 				}
 				else {
-					if (lastPathUpdate > pathUpdatePeriod) {
+					if (lastPathUpdate > pathUpdatePeriod || pathToPlayer==null) {
 						pathToPlayer = world.Pathfind (world.WorldToTileCoord (CollisionBox.Center), world.WorldToTileCoord (world.Player.CollisionBox.Center));
 						lastPathUpdate = 0;
 					}
@@ -137,9 +137,9 @@ namespace ProjectCrusade
 			lastPathUpdate++;
 		}
 
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)
 		{
-			spriteBatch.Draw (textureManager.GetTexture ("circle"), null, CollisionBox, null, null, 0, null, null, SpriteEffects.None, 1);
+			spriteBatch.Draw (textureManager.GetTexture ("circle"), null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
 		}
 	}
 }

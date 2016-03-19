@@ -50,7 +50,7 @@ namespace ProjectCrusade
 			//In range (0,1]
 			//0: no movement
 			//1: perfect tracking
-			const float speed = 0.1f;
+			const float speed = 0.15f;
 
 			//Expontial following
 			camera.Position+= (world.Player.Position - new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2) / camera.Scale - camera.Position / camera.Scale) * speed;
@@ -59,14 +59,14 @@ namespace ProjectCrusade
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
 			//Render world (do transform)
-			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager, fontManager, camera);
 
 			spriteBatch.End ();
 
 			//Render inventory (do not transform)
-			spriteBatch.Begin (SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 

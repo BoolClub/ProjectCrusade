@@ -43,10 +43,10 @@ namespace ProjectCrusade
 		}
 
 	
-		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
+		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Draw a temporary box for the NPC
 
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Color.Pink);
+			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Util.TintColor(color, Color.Pink));
 
 
 

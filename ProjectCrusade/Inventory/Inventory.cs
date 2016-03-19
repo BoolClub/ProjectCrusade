@@ -70,8 +70,8 @@ namespace ProjectCrusade
 			screenPosition = new Vector2(MainGame.WindowWidth - BoundingRect.Width, MainGame.WindowHeight - BoundingRect.Height)*0.5f; 
 			slots = new InventorySlot[Columns, Rows];
 			SelectedSlot = null;
-			Opacity = 0.5f;
-			MainbarOpacity = 0.5f;
+			Opacity = 0.75f;
+			MainbarOpacity = 0.35f;
 			Initialize ();
 		}
 
@@ -96,7 +96,7 @@ namespace ProjectCrusade
 		public void Update(GameTime time, World world) {
 			checkInventoryFull ();
 
-			if (Open) checkInventoryItemSelected (); Opacity = 0.75f; MainbarOpacity = 0.75f;
+			if (Open) checkInventoryItemSelected (); 
 			if (!Open) SelectedSlot = null;
 
 
@@ -189,7 +189,7 @@ namespace ProjectCrusade
 					null,
 					Color.White,
 					SpriteEffects.None,
-					0);
+					1);
 				if (slots[i,j].Item.Stackable) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("Arial"),

@@ -81,12 +81,12 @@ namespace ProjectCrusade {
 			PlayerInput.CheckInput(time);
 
 		}
-		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
+		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Do all the drawing for the player here.
 
 			Texture2D t = textureManager.GetTexture ("circle");
 
-			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, Color.White, SpriteEffects.None, 1);
+			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 1);
 		}
 
 
