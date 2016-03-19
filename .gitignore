@@ -8,3 +8,7 @@
 *.mdb
 
 *.mdb
+
+ProjectCrusade/bin
+
+ProjectCrusade/obj
