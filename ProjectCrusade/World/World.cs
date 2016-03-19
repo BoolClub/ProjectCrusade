@@ -152,6 +152,12 @@ namespace ProjectCrusade
 		}
 
 
+		public Point[] Pathfind(Point start, Point end)
+		{
+			AStarPathfinder finder = new AStarPathfinder ();
+			return finder.Compute (start, end, ref worldTiles, AStarPathfinder.HeuristicType.Euclidean);
+		}
+
 		void generateWorld(ObjectiveManager objManager)
 		{
 			for (int i = 0; i < Width; i++)
@@ -501,13 +507,16 @@ namespace ProjectCrusade
 		public Point WorldToTileCoord(Vector2 pos) {
 			return new Point ((int)(pos.X / TileWidth), (int)(pos.Y / TileWidth));
 		}
+		public Point WorldToTileCoord(Point pos) {
+			return new Point ((int)(pos.X / TileWidth), (int)(pos.Y / TileWidth));
+		}
 
 		//get upper-right-hand corner of a tile
 		public Vector2 TileToWorldCoord(int x, int y)
 		{
 			return new Vector2 (TileWidth * x, TileWidth * y);
 		}
-		Vector2 TileToWorldCoord(Point p)
+		public Vector2 TileToWorldCoord(Point p)
 		{
 					return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
 		}

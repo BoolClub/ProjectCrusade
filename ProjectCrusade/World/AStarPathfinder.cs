@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace ProjectCrusade
@@ -32,10 +33,19 @@ namespace ProjectCrusade
 			open = new Dictionary<UInt64, Node> ();
 		}
 
-		float heuristic(Point p, Point target)
+
+		public enum HeuristicType { 
+			Manhattan,
+			Euclidean
+		}
+
+		float euclidean(Point p, Point target)
 		{
-//			return Math.Abs (p.X - target.X) + Math.Abs (p.Y - target.Y);
 			return (target - p).ToVector2 ().Length();
+		}
+		float manhattan(Point p, Point target)
+		{
+			return Math.Abs (p.X - target.X) + Math.Abs (p.Y - target.Y);
 		}
 
 
@@ -44,11 +54,13 @@ namespace ProjectCrusade
 			return (p.X >= 0 && p.Y >= 0 && p.X < width && p.Y < height);
 		}
 
-		public Point[] Compute(Point start, Point target, ref Tile[,] worldTiles)
+		public Point[] Compute(Point start, Point target, ref Tile[,] worldTiles, HeuristicType heuristicType = HeuristicType.Euclidean)
 		{
+			Stopwatch s = Stopwatch.StartNew ();
+
 			int width = worldTiles.GetLength (0), height = worldTiles.GetLength (1);
 
-			open [pRep(start)] = new Node{ gScore = 0, fScore = heuristic (start, target), cameFrom = start };
+			open [pRep(start)] = new Node{ gScore = 0, fScore = euclidean (start, target), cameFrom = start };
 
 			minOpenNode = start;
 
@@ -64,8 +76,10 @@ namespace ProjectCrusade
 					}
 				}
 				Node curData = open [pRep (current)];
-				if (current == target)
-					return getPath(target, start);
+				if (current == target) {
+					Debug.WriteLine ("Succeeded in finding path, {0} ms", s.ElapsedMilliseconds);
+					return getPath (target, start);
+				}
 
 
 				//moved
@@ -85,7 +99,7 @@ namespace ProjectCrusade
 						continue;
 
 					float gs = curData.gScore + 1;
-					float heur = heuristic (neighbors [i], target);
+					float heur = heuristicType==HeuristicType.Manhattan ? manhattan(neighbors [i], target) : euclidean (neighbors [i], target);
 
 					if (!open.ContainsKey (pRep (neighbors [i]))) {
 						open[pRep(neighbors[i])] = new Node{};
@@ -96,6 +110,7 @@ namespace ProjectCrusade
 				}
 
 			}
+			Debug.WriteLine ("Failure to find path, {0} ms", s.ElapsedMilliseconds);
 			//failed to find a path
 			return new Point[] { };
 		}
@@ -115,6 +130,7 @@ namespace ProjectCrusade
 				else
 					cur = closed [pRep (cur)].cameFrom;
 			}
+			pts.Reverse ();
 			return pts.ToArray ();
 		}
 		
