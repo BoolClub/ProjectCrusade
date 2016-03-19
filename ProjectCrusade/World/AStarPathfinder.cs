@@ -8,33 +8,36 @@ namespace ProjectCrusade
 	public class AStarPathfinder
 	{
 		/// <summary>
-		/// Converts a 
+		/// Converts a point to a more compact representation for use in a dictionary
 		/// </summary>
-		UInt64 PointRepresentation(Point p)
+		UInt64 pRep(Point p)
 		{
-			return (ulong)p.X | ((ulong)p.Y >> 32);
+			return ((ulong)p.X) << 32 | ((ulong)p.Y);
 		}
-		/// <summary>
-		/// Tile scores
-		/// </summary>
-		Dictionary<UInt64, float> tileValues;
-		/// <summary>
-		/// Closed
-		/// </summary>
-		Dictionary<UInt64, float> tileValues;
+
+		struct Node {
+			public float gScore;
+			public float fScore;
+			public Point cameFrom;
+		}
+
+		Dictionary<UInt64, Node> closed;
+		Dictionary<UInt64, Node> open;
+		Point minOpenNode;
+
+
 		public AStarPathfinder ()
 		{
-			tileValues = new Dictionary<ulong, float> ();
+			closed = new Dictionary<UInt64, Node> ();
+			open = new Dictionary<UInt64, Node> ();
 		}
 
 		float heuristic(Point p, Point target)
 		{
+//			return Math.Abs (p.X - target.X) + Math.Abs (p.Y - target.Y);
 			return (target - p).ToVector2 ().Length();
 		}
 
-		bool tileSet(Point p) { return tileValues.ContainsKey(PointRepresentation(p)); }
-		float getTileValue(Point p) { return tileValues[PointRepresentation(p)]; }
-		void setTileValue(Point p, float val) { tileValues [PointRepresentation (p)] = val; }
 
 		bool pointInWorld(Point p, int width, int height)
 		{
@@ -43,41 +46,76 @@ namespace ProjectCrusade
 
 		public Point[] Compute(Point start, Point target, ref Tile[,] worldTiles)
 		{
-			int worldWidth = worldTiles.GetLength (0), worldHeight = worldTiles.GetLength (1);
-			Stack<Point> currPath = new Stack<Point> ();
-			setTileValue (start, 0);
-			currPath.Push (start);
+			int width = worldTiles.GetLength (0), height = worldTiles.GetLength (1);
 
-			while (currPath.Peek () != target) {
-				Point p = currPath.Peek ();
-				float currScore = getTileValue (p);
-				Tuple<Point, float>[] neighbors = new Tuple<Point, float>[4];
-				neighbors [0] = new Tuple<Point, float> (new Point (p.X + 1, p.Y), currScore + 1 + heuristic (new Point (p.X + 1, p.Y), target));
-				neighbors [1] = new Tuple<Point, float> (new Point (p.X - 1, p.Y), currScore + 1 + heuristic (new Point (p.X - 1, p.Y), target));
-				neighbors [2] = new Tuple<Point, float> (new Point (p.X, p.Y + 1), currScore + 1 + heuristic (new Point (p.X, p.Y + 1), target));
-				neighbors [3] = new Tuple<Point, float> (new Point (p.X, p.Y - 1), currScore + 1 + heuristic (new Point (p.X, p.Y - 1), target));
+			open [pRep(start)] = new Node{ gScore = 0, fScore = heuristic (start, target), cameFrom = start };
 
-				float minScore = -1;
-				int minInd = -1;
-				for (int i=0;i<neighbors.Length;i++)
-				{
-					if (!pointInWorld (neighbors [i].Item1, worldWidth, worldHeight))
-						continue;
-					if ((neighbors [i].Item2 < minScore || minInd == -1) && !worldTiles[neighbors[i].Item1.X,neighbors[i].Item1.Y].Solid && !tileSet(neighbors[i].Item1)) {
-						minInd = i;
-						minScore = neighbors [i].Item2;
+			minOpenNode = start;
+
+			while (open.Count > 0) {
+				Point current = minOpenNode;
+				float lowScore = -1;
+				foreach (var n in open) {
+					if (n.Value.fScore < lowScore || lowScore == -1) {
+						current = new Point((int)(n.Key >> 32), (int)(n.Key));
+						if (pRep (current) != n.Key)
+							throw new Exception ();
+						lowScore = n.Value.fScore;
 					}
 				}
-				if (minInd == -1) {
-					setTileValue (p, currScore);
-					currPath.Pop ();
+				Node curData = open [pRep (current)];
+				if (current == target)
+					return getPath(target, start);
+
+
+				//moved
+				closed[pRep(current)] = open[pRep(current)];
+				open.Remove (pRep (current));
+
+				Point[] neighbors = new Point[4];
+				neighbors [0] = new Point (current.X + 1, current.Y);
+				neighbors [1] = new Point (current.X - 1, current.Y);
+				neighbors [2] = new Point (current.X, current.Y+1);
+				neighbors [3] = new Point (current.X, current.Y-1);
+
+				for (int i = 0; i < neighbors.Length; i++) {
+					if (closed.ContainsKey (pRep (neighbors [i])) || !pointInWorld(neighbors[i], width,height))
+						continue;
+					if (worldTiles [neighbors [i].X, neighbors [i].Y].Solid)
+						continue;
+
+					float gs = curData.gScore + 1;
+					float heur = heuristic (neighbors [i], target);
+
+					if (!open.ContainsKey (pRep (neighbors [i]))) {
+						open[pRep(neighbors[i])] = new Node{};
+					} else if (gs >= open [pRep (neighbors [i])].gScore)
+						continue;
+					
+					open [pRep (neighbors [i])] = new Node{gScore = gs, fScore = gs + heur, cameFrom = current };
 				}
-				else {
-					currPath.Push (neighbors [minInd].Item1);
-				}
-				
+
 			}
-			return currPath.ToArray ();
+			//failed to find a path
+			return new Point[] { };
+		}
+
+		/// <summary>
+		/// Traces backward the path
+		/// </summary>
+		Point[] getPath(Point target, Point start)
+		{
+			List<Point> pts = new List<Point> ();
+
+			Point cur = target; 
+			while (cur != start) {
+				pts.Add (cur);
+				if (open.ContainsKey (pRep (cur)))
+					cur = open [pRep (cur)].cameFrom;
+				else
+					cur = closed [pRep (cur)].cameFrom;
+			}
+			return pts.ToArray ();
 		}
 		
 	}
