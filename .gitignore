@@ -9,6 +9,6 @@
 
 *.mdb
 
-ProjectCrusade/bin
+ProjectCrusade/bin/
 
-ProjectCrusade/obj
+ProjectCrusade/obj/
