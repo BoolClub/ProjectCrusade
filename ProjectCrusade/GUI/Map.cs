@@ -88,16 +88,14 @@ namespace ProjectCrusade
 					Vector3 avg = Vector3.Zero;
 					for (int k = 0; k < data.Length; k++)
 					{
-						Vector3 v = data [k].ToVector3 ();
-						avg.X += 1.0f/v.X;
-						avg.Y += 1.0f/v.Y;
-						avg.Z += 1.0f/v.Z;
+						avg+=data [k].ToVector3 ();
 					}
-					avg.X = 1.0f / avg.X;
-					avg.Y = 1.0f / avg.Y;
-					avg.Z = 1.0f / avg.Z;
-					avg *= data.Length;
+					avg /= data.Length;
+					avg -= Vector3.One * 0.5f;
 
+					avg *= 1.7f;
+
+					avg += Vector3.One * 0.5f;
 
 					tileSummaryTexture.SetData<Color>(0, new Rectangle (i, j, 1, 1), new Color[] {new Color(avg) }, 0, 1);
 				}
