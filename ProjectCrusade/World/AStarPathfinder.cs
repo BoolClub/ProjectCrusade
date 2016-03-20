@@ -77,7 +77,7 @@ namespace ProjectCrusade
 				}
 				Node curData = open [pRep (current)];
 				if (current == target) {
-					Debug.WriteLine ("Succeeded in finding path, {0} ms", s.ElapsedMilliseconds);
+					//Debug.WriteLine ("Succeeded in finding path, {0} ms", s.ElapsedMilliseconds);
 					return getPath (target, start);
 				}
 
@@ -110,7 +110,7 @@ namespace ProjectCrusade
 				}
 
 			}
-			Debug.WriteLine ("Failure to find path, {0} ms", s.ElapsedMilliseconds);
+			//Debug.WriteLine ("Failure to find path, {0} ms", s.ElapsedMilliseconds);
 			//failed to find a path
 			return new Point[] { };
 		}

@@ -115,6 +115,7 @@
     <Compile Include="Entity\Enemy.cs" />
     <Compile Include="World\AStarPathfinder.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="GUI\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

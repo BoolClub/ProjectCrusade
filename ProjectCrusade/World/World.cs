@@ -26,6 +26,13 @@ namespace ProjectCrusade
 
 
 		public Player Player;
+		public Map Map;
+
+		/// <summary>
+		/// Determines how frequently to update the map in ms
+		/// </summary>
+		const float mapUpdatePeriod = 1e3f;
+		float lastMapUpdate = 0f;
 
 		//Only active entities (which necessarily includes the player and nearby enemies) 
 		//are drawn.
@@ -88,6 +95,7 @@ namespace ProjectCrusade
 
 
 			Player = new Player ("test", PlayerType.Wizard, this);
+			Map = new Map (textureManager);
 			Width = width;
 			Height = height;
 
@@ -231,7 +239,10 @@ namespace ProjectCrusade
 
 
 			updateEntities (gameTime);
-
+			if (lastMapUpdate > mapUpdatePeriod) {
+				updateMap ();
+				lastMapUpdate = 0f;
+			}
 			for (int i = entities.Count - 1; i >= 0; i--) {
 				if (entities [i].Delete)
 					entities.RemoveAt (i);
@@ -247,6 +258,8 @@ namespace ProjectCrusade
 				lastLightingUpdate = 0;
 			}
 			lastLightingUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+			lastMapUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
 		}
 		void fluidUpdate()
 		{
@@ -412,10 +425,17 @@ namespace ProjectCrusade
 			}
 		}
 
-//		public List<Point> AStarPathFind (Point start, Point end)
-//		{
-//
-//		}
+
+		void updateMap()
+		{
+			for (int i = 0; i < cameraRectangle.Width; i++)
+				for (int j = 0; j < cameraRectangle.Height; j++) {
+					Point p = new Point (i + cameraRectangle.Left, j + cameraRectangle.Top);
+					if (PointInWorld(p))
+					Map.AddTile (p, worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
+				}
+			Map.SetPlayerPosition (Player.Position);
+		}
 
 		void updateEntities(GameTime gameTime)
 		{
