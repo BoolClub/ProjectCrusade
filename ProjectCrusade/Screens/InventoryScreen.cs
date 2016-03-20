@@ -9,6 +9,7 @@ namespace ProjectCrusade
 	{
 		public const float Opacity = 0.5f;
 		World world;
+
 		public InventoryScreen (GameScreenManager screenManager, World _world)
 		{
 			world = _world;
@@ -27,7 +28,7 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float drawOpacity)
 		{
-			spriteBatch.Begin ();
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
 
 			spriteBatch.Draw (
 				textureManager.WhitePixel, 
@@ -35,6 +36,8 @@ namespace ProjectCrusade
 				Color.Black * Opacity);
 			
 			world.Player.Inventory.DrawComplete (spriteBatch, textureManager, fontManager);
+
+			world.Map.Draw (spriteBatch);
 
 			spriteBatch.End ();
 

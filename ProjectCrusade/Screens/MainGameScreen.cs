@@ -17,6 +17,7 @@ namespace ProjectCrusade
 		ObjectiveManager objManager;
 
 
+
 		public MainGameScreen (TextureManager textureManager)
 		{
 			camera = new Camera ();
