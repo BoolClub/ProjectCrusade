@@ -29,7 +29,8 @@ namespace ProjectCrusade
 			npc = new NPC ("",world);
 
 			//Test speech
-			String t = "sexdctfvyguhlijkn.uyjthregszdxfcgvhjkhgfxdzsxfbcgvhjbkn.lxgdcfvj,kn.lmkmhxgdhcfvgjbk.l/k,yjftrdhrfjyuhijok/;lhmgncfdxfhcvdsadhjdshdasbhjdasdialudaiudjasndlkajnsdjsafiudhalisufjdagildhishugdljkhgasdighdsiuagsnksdbghsdkfbj";
+			string t = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
+
 
 			npc.TextBox.AddText (t);
 		}

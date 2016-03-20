@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Text;
 
 
 namespace ProjectCrusade
@@ -26,10 +27,12 @@ namespace ProjectCrusade
 		/// <summary>
 		/// The width and height of the text box.
 		/// </summary>
-		const int Width = 1024;
-		const int Height = 128;
+		int Width = 512;
+		int Height = 256;
 
-		const int Padding = 8;
+		const int Padding = 16;
+		//TODO: remove this. Temporary for demonstration
+		int l = 0; 
 
 		public float Opacity { get; set; }
 
@@ -87,44 +90,55 @@ namespace ProjectCrusade
 
 		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
+
+			Width = 512 + (int)(256 * Math.Sin ((double)l / 128));
+			l++;
 			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Color.White * Opacity);
+
+			SpriteFont font = fontManager.GetFont ("Arial");
 
 			//Draw the first item of text.
 			if (spokenText.Count > speechIndex) {
-				//Less than 50 characters, just draw one line.
-				if (spokenText [speechIndex].Length < 50) {
 
-					spriteBatch.DrawString (fontManager.GetFont ("Arial"), spokenText [speechIndex], Position + new Vector2 (Padding, Padding), Color.Black * Opacity);
 
-				} else {
+				string text = spokenText [speechIndex];
+				int currChar = 0;
 
-					//The number of lines to draw
-					int numLines = spokenText [speechIndex].Length / 100;
+				//the main string builder for the entire text box
+				StringBuilder main = new StringBuilder ();
 
-					//The first charater on the line, up to the last character to display on one line
-					int firstChar = 0, lastChar = 40;
 
-					//The number of lines computes evenly
-					if (spokenText [speechIndex].Length % 100 == 0) {
-						//Draw one line of text, then add to tempY so you draw it on what looks like another line.
-						float tempY = Position.Y;
-						for (int i = 0; i < numLines; i++) {
-							spriteBatch.DrawString (fontManager.GetFont ("Arial"), spokenText [speechIndex].Substring(firstChar,spokenText[speechIndex].Length - lastChar), new Vector2 (Position.X, tempY) + new Vector2 (Padding, Padding), Color.Black * Opacity);
-							tempY += 30;
-							firstChar = lastChar + 1;
-							lastChar = lastChar + lastChar;
+				//loop through every character in string
+				while (currChar < text.Length) {
+					//current width of line
+					float currWidth = 0;
+					//string builder for line
+					StringBuilder builder = new StringBuilder ();
+
+					//only continue if line is smaller than box
+					while (currWidth + Padding < Width-Padding) {
+						
+						if (currChar >= text.Length)
+							break;
+						
+						if (text [currChar] == '\n') {
+							currChar++;
+							break;
 						}
-					} else {
-						//Draw one line of text, then add to tempY so you draw it on what looks like another line.
-						float tempY = Position.Y;
-						for (int i = 0; i < numLines + 1; i++) {
-							spriteBatch.DrawString (fontManager.GetFont ("Arial"), spokenText [speechIndex].Substring(firstChar,spokenText[speechIndex].Length - lastChar), new Vector2 (Position.X, tempY) + new Vector2 (Padding, Padding), Color.Black * Opacity);
-							tempY += 30;
-							firstChar = lastChar + 1;
-							lastChar = lastChar + lastChar;
-						}
+
+						builder.Append (text [currChar]);
+						currWidth = font.MeasureString (builder).X;
+						currChar++;
 					}
+
+					//append line to main string
+					builder.Append ('\n');
+					main.Append (builder);
 				}
+
+				//draw string
+				spriteBatch.DrawString (fontManager.GetFont ("Arial"), main, Position + new Vector2 (Padding, Padding), Color.Black);
+					
 			}
 		}
 
