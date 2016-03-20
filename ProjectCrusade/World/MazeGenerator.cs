@@ -22,6 +22,12 @@ namespace ProjectCrusade
 		int roomCount = 0;
 		Random rand = new Random();
 
+		public bool PruneDeadEnds { get; set; }
+		public bool ClearThinWalls { get; set; }
+		public bool RemoveFloatingPillars { get; set; }
+		public bool AddRocks { get; set; }
+		public bool MakeBorder { get; set; }
+
 
 		const double RockGenerationProbability = 0.03f;
 
@@ -31,6 +37,14 @@ namespace ProjectCrusade
 			this.width = width;
 			this.height = height;
 			maze = new int[width, height];
+
+			//Set default configuration.
+
+			PruneDeadEnds = true;
+			ClearThinWalls = true;
+			RemoveFloatingPillars = true;
+			AddRocks = true;
+			MakeBorder = true;
 		}
 
 		public void ShadeRoom(Room room)
@@ -152,11 +166,11 @@ namespace ProjectCrusade
 		public void Generate()
 		{
 			makeMaze ();
-			pruneDeadEnds ();
-			clearThinWalls ();
-			removeFloatingPillars ();
-			makeBorder ();
-			addRocks ();
+			if (PruneDeadEnds) pruneDeadEnds ();
+			if (ClearThinWalls) clearThinWalls ();
+			if (RemoveFloatingPillars) removeFloatingPillars ();
+			if (MakeBorder) makeBorder ();
+			if (AddRocks) addRocks ();
 		}
 
 		/// <summary>

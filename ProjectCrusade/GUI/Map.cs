@@ -84,11 +84,21 @@ namespace ProjectCrusade
 
 					tiles.GetData<Color> (0, new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth), data, 0, World.TileWidth * World.TileWidth);
 
-					//average data
+					//average data using harmonic mean
 					Vector3 avg = Vector3.Zero;
 					for (int k = 0; k < data.Length; k++)
-						avg += data [i].ToVector3 ();
-					avg /= data.Length;
+					{
+						Vector3 v = data [k].ToVector3 ();
+						avg.X += 1.0f/v.X;
+						avg.Y += 1.0f/v.Y;
+						avg.Z += 1.0f/v.Z;
+					}
+					avg.X = 1.0f / avg.X;
+					avg.Y = 1.0f / avg.Y;
+					avg.Z = 1.0f / avg.Z;
+					avg *= data.Length;
+
+
 					tileSummaryTexture.SetData<Color>(0, new Rectangle (i, j, 1, 1), new Color[] {new Color(avg) }, 0, 1);
 				}
 			}

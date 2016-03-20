@@ -45,7 +45,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
+		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
 
 		WorldConfiguration configuration;
 
@@ -221,6 +221,7 @@ namespace ProjectCrusade
 			objManager.PushListeners ();
 
 			MazeGenerator generator = new MazeGenerator (Width, Height);
+			generator.ClearThinWalls = false;
 			foreach (Room room in rooms) generator.ShadeRoom(room);
 			generator.Generate ();
 			for (int i = 0; i < Width; i++)
@@ -432,7 +433,8 @@ namespace ProjectCrusade
 				for (int j = 0; j < cameraRectangle.Height; j++) {
 					Point p = new Point (i + cameraRectangle.Left, j + cameraRectangle.Top);
 					if (PointInWorld(p))
-					Map.AddTile (p, worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
+					if (worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top].Color.LengthSquared() > 0.9f) 
+						Map.AddTile (p, worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
 				}
 			Map.SetPlayerPosition (Player.Position);
 		}
