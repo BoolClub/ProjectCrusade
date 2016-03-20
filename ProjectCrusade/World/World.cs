@@ -38,7 +38,7 @@ namespace ProjectCrusade
 
 		List<Room> rooms;
 
-		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
+		Color ambientLighting = new Color(0.9f, 0.9f, 0.9f);
 
 		WorldConfiguration configuration;
 
