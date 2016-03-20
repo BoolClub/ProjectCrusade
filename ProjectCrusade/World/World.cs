@@ -567,7 +567,7 @@ namespace ProjectCrusade
 				entity.Draw (spriteBatch, textureManager, fontManager, col);
 			}
 			spriteBatch.End ();
-			spriteBatch.Begin (SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
 			//Draw smoke/additive lighting
 			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
 				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
