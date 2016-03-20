@@ -14,9 +14,6 @@ namespace ProjectCrusade
 
 		const int height = 48;
 
-		//TESTING OUT THE NPC. IN THE REAL GAME THE NPC WILL NOT BE IN THE HUDMANAGER CLASS.
-		NPC npc;
-
 
 		public HUDManager (World w) {
 			world = w;
@@ -25,14 +22,6 @@ namespace ProjectCrusade
 
 
 
-			//Testing out NPCs and the TextBox.
-			npc = new NPC ("",world);
-
-			//Test speech
-			string t = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
-
-
-			npc.TextBox.AddText (t);
 		}
 
 
@@ -40,7 +29,6 @@ namespace ProjectCrusade
 			sanitybar.Update (time, world.Player.Sanity, world.Player.MaxSanity);
 
 
-			npc.Update (time, world);
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fM) {
@@ -48,8 +36,6 @@ namespace ProjectCrusade
 
 			sanitybar.Draw (spriteBatch, textureManager, fM);
 
-
-			npc.Draw (spriteBatch, textureManager, fM, Color.Green);
 		}
 
 
@@ -58,8 +44,8 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <param name="spriteBatch">Sprite batch.</param>
 		private void drawHUDBackground(SpriteBatch spriteBatch, TextureManager textureManager) {
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle(
-				0, MainGame.WindowHeight - height,MainGame.WindowWidth,height), new Color(0,0,150,0.5f));
+			spriteBatch.Draw (textureManager.WhitePixel, null, new Rectangle(
+				0, MainGame.WindowHeight - height,MainGame.WindowWidth,height), null, null, 0, null, new Color(0,0,150,0.5f), SpriteEffects.None, 0.0f);
 		}
 
 	} //END OF HUDMANAGER CLASS

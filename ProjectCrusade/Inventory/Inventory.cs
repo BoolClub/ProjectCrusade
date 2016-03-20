@@ -192,7 +192,7 @@ namespace ProjectCrusade
 					1);
 				if (slots[i,j].Item.Stackable) 
 					spriteBatch.DrawString (
-						fontManager.GetFont ("Arial"),
+						fontManager.GetFont ("MainFontLarge"),
 						String.Format ("{0}", slots [i, j].Item.Count),
 						new Vector2 (x,y),
 						Color.Black);
@@ -246,14 +246,15 @@ namespace ProjectCrusade
 
 		void drawTooltip(SpriteBatch spriteBatch, FontManager fontManager)
 		{
+			SpriteFont font = fontManager.GetFont ("MainFontLarge");
 			// TODO: Draw a background for the tooltip so that it's easier to read.
 			if (tooltipText != "" && Open) {
-				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
+				spriteBatch.DrawString (font, tooltipText, 
 					tooltipPosition
-					+ new Vector2 (1, 1 - fontManager.GetFont ("Arial").MeasureString (tooltipText).Y), Color.Black);
-				spriteBatch.DrawString (fontManager.GetFont ("Arial"), tooltipText, 
+					+ new Vector2 (1, 1 - font.MeasureString (tooltipText).Y), Color.Black);
+				spriteBatch.DrawString (font, tooltipText, 
 					tooltipPosition
-					+ new Vector2 (0, 0 - fontManager.GetFont ("Arial").MeasureString (tooltipText).Y), Color.White);
+					+ new Vector2 (0, 0 - font.MeasureString (tooltipText).Y), Color.White);
 			
 			}
 		}

@@ -105,6 +105,7 @@ namespace ProjectCrusade
 			entities = new List<Entity> ();
 			entities.Add (Player);
 
+
 			//Init lights.
 			lights = new List<Light> ();
 			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f, false));
@@ -114,6 +115,13 @@ namespace ProjectCrusade
 			generateWorld (objManager);
 			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
 
+			NPC npc = new NPC ("Man", this);
+			npc.Position = Player.Position;
+			//Test speech
+			string text = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
+
+			npc.TextBox.AddText(text);
+			entities.Add (npc);
 			//precompute lighting
 			updateLighting (true);
 

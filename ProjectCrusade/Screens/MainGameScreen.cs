@@ -58,15 +58,17 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
+			
 			//Render world (do transform)
-			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
+			spriteBatch.Begin (SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
 			world.Draw (spriteBatch, textureManager, fontManager, camera);
 
 			spriteBatch.End ();
 
+
 			//Render inventory (do not transform)
-			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, null);
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
 
 			world.Player.Inventory.DrawPartial (spriteBatch, textureManager, fontManager);
 
@@ -75,7 +77,9 @@ namespace ProjectCrusade
 
 			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
 
-			spriteBatch.DrawString (fontManager.GetFont ("Arial"), text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - fontManager.GetFont ("Arial").MeasureString (text), Color.White);
+			SpriteFont font = fontManager.GetFont ("MainFontLarge");
+
+			spriteBatch.DrawString (font, text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - font.MeasureString (text), Color.White);
 
 			spriteBatch.End ();
 		}

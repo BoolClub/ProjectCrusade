@@ -20,7 +20,7 @@ namespace ProjectCrusade
 		{
 			screenManager = _screenManager;
 			prevKeyboardState = Keyboard.GetState ();
-			menu = new Menu ((new Vector2(MainGame.WindowWidth*0.5f, MainGame.WindowHeight*0.5f)), "Arial", 20);
+			menu = new Menu ((new Vector2(MainGame.WindowWidth*0.5f, MainGame.WindowHeight*0.5f)), "MainFontLarge", 20);
 			MenuItem menuItem1 = new MenuItem ("Resume");
 			menuItem1.Activated += new MenuItem.ActivatedHandler (Option1);
 			MenuItem menuItem2 = new MenuItem ("Quit");

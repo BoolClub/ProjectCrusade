@@ -39,18 +39,20 @@ namespace ProjectCrusade
 			Width = 32; 
 			Height = 32;
 			Position = new Vector2 (0,0);
-			TextBox = new TextBox (Position);
+			TextBox = new TextBox (Position, Color.Red, Color.White);
+			TextBox.Opacity = 0.25f;
 		}
 
 	
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Draw a temporary box for the NPC
 
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Util.TintColor(color, Color.Pink));
+			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Util.TintColor(color, Color.Magenta));
 
 
 
 			//If interacting with the player...
+			TextBox.Position = Position;
 			TextBox.Draw (spriteBatch, textureManager, fontManager);
 		}
 

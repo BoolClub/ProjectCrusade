@@ -146,8 +146,6 @@
     <BundleResource Include="Content\Textures\healthBarFill.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Fonts\Arial.spritefont" />
-    <Content Include="Content\Fonts\Arial.xnb" />
     <Content Include="Content\Levels\Level1\RestRoom.tmx" />
     <Content Include="Content\Levels\Level1\Room7.tmx" />
     <Content Include="Content\Levels\Level1\Room5.tmx" />
@@ -158,5 +156,17 @@
     <Content Include="Content\Levels\Level1\Room2.tmx" />
     <Content Include="Content\Levels\Level1\Room9.tmx" />
     <Content Include="Content\Levels\Level1\Room8.tmx" />
+    <Content Include="Content\Fonts\MainFontSmall.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\MainFontLarge.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\MainFontSmall.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\MainFontLarge.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

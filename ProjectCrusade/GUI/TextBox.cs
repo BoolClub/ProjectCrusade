@@ -22,7 +22,7 @@ namespace ProjectCrusade
 		/// THe position of the text box.
 		/// </summary>
 		/// <value>The position.</value>
-		Vector2 Position { get; set; }
+		public Vector2 Position { get; set; }
 
 		/// <summary>
 		/// The width and height of the text box.
@@ -35,6 +35,9 @@ namespace ProjectCrusade
 		int l = 0; 
 
 		public float Opacity { get; set; }
+
+		public Color TextColor { get; set; }
+		public Color BackgroundColor { get; set; }
 
 		/// <summary>
 		/// The speech that the text box will display.
@@ -49,9 +52,11 @@ namespace ProjectCrusade
 
 
 
-		public TextBox (Vector2 position, float opacity = 1.0f) {
+		public TextBox (Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
 			Position = position;
 			Opacity = opacity;
+			TextColor = textColor;
+			BackgroundColor = backgroundColor;
 		}
 
 		/// <summary>
@@ -93,9 +98,9 @@ namespace ProjectCrusade
 
 			Width = 512 + (int)(256 * Math.Sin ((double)l / 128));
 			l++;
-			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), Color.White * Opacity);
+			spriteBatch.Draw (textureManager.WhitePixel, null, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), null, null, 0, null, BackgroundColor * Opacity, SpriteEffects.None, 1.0f);
 
-			SpriteFont font = fontManager.GetFont ("Arial");
+			SpriteFont font = fontManager.GetFont ("MainFontSmall");
 
 			//Draw the first item of text.
 			if (spokenText.Count > speechIndex) {
@@ -137,7 +142,7 @@ namespace ProjectCrusade
 				}
 
 				//draw string
-				spriteBatch.DrawString (fontManager.GetFont ("Arial"), main, Position + new Vector2 (Padding, Padding), Color.Black);
+				spriteBatch.DrawString (font, main, Position + new Vector2 (Padding, Padding), TextColor, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 1.1f);
 					
 			}
 		}

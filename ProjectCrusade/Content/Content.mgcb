@@ -13,9 +13,15 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Arial.spritefont
+#begin Fonts/MainFontLarge.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:Arial.spritefont
+/build:Fonts/MainFontLarge.spritefont
+
+#begin Fonts/MainFontSmall.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/MainFontSmall.spritefont
 
