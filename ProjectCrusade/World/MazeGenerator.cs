@@ -28,9 +28,8 @@ namespace ProjectCrusade
 		public bool AddRocks { get; set; }
 		public bool MakeBorder { get; set; }
 
-
-		const double RockGenerationProbability = 0.03f;
-
+		public double RockGenerationProbability { get; set; }
+		public double PruningProbability { get; set; }
 
 		public MazeGenerator (int width, int height)
 		{
@@ -45,6 +44,8 @@ namespace ProjectCrusade
 			RemoveFloatingPillars = true;
 			AddRocks = true;
 			MakeBorder = true;
+			RockGenerationProbability = 0.03;
+			PruningProbability = 1.0;
 		}
 
 		public void ShadeRoom(Room room)
@@ -233,7 +234,6 @@ namespace ProjectCrusade
 
 		void pruneDeadEnds()
 		{
-			const float pruningProbability = 1.0f;
 			List<Point> deadEnds = new List<Point>();
 			for (int i = 1; i < width-1; i++) {
 				for (int j = 1; j < height-1; j++) {
@@ -244,7 +244,7 @@ namespace ProjectCrusade
 			}
 
 			foreach (Point deadEnd in deadEnds) {
-				if (rand.NextDouble () > pruningProbability)
+				if (rand.NextDouble () > PruningProbability)
 					continue;
 				Point currTile = deadEnd;
 				int neighbors;

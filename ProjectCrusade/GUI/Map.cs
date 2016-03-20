@@ -93,6 +93,7 @@ namespace ProjectCrusade
 					avg /= data.Length;
 					avg -= Vector3.One * 0.5f;
 
+					//effective contrast level
 					avg *= 1.7f;
 
 					avg += Vector3.One * 0.5f;

@@ -31,8 +31,6 @@ namespace ProjectCrusade
 		int Height = 256;
 
 		const int Padding = 16;
-		//TODO: remove this. Temporary for demonstration
-		int l = 0; 
 
 		public float Opacity { get; set; }
 
@@ -96,8 +94,6 @@ namespace ProjectCrusade
 		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
 
 
-			Width = 512 + (int)(256 * Math.Sin ((double)l / 128));
-			l++;
 			spriteBatch.Draw (textureManager.WhitePixel, null, new Rectangle((int)Position.X, (int)Position.Y, Width, Height), null, null, 0, null, BackgroundColor * Opacity, SpriteEffects.None, 1.0f);
 
 			SpriteFont font = fontManager.GetFont ("MainFontSmall");
