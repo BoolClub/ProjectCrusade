@@ -15,7 +15,7 @@ namespace ProjectCrusade
 		const int height = 48;
 
 		//TESTING OUT THE NPC. IN THE REAL GAME THE NPC WILL NOT BE IN THE HUDMANAGER CLASS.
-		//NPC npc;
+		NPC npc;
 
 
 		public HUDManager (World w) {
@@ -26,15 +26,12 @@ namespace ProjectCrusade
 
 
 			//Testing out NPCs and the TextBox.
-			//npc = new NPC (world);
+			npc = new NPC ("",world);
 
 			//Test speech
-			List<String> testSpeech = new List<String> ();
-			testSpeech.Add ("Hello, player! This is a piece of testing text!");
-			testSpeech.Add ("Once again, this is a test of the text box feature.");
-			//Right now, in the text box class, it is displaying testSpeech[1], or the second string that is above.
+			String t = "sexdctfvyguhlijkn.uyjthregszdxfcgvhjkhgfxdzsxfbcgvhjbkn.lxgdcfvj,kn.lmkmhxgdhcfvgjbk.l/k,yjftrdhrfjyuhijok/;lhmgncfdxfhcvdsadhjdshdasbhjdasdialudaiudjasndlkajnsdjsafiudhalisufjdagildhishugdljkhgasdighdsiuagsnksdbghsdkfbj";
 
-			//npc.TextBox.addSpokenText (testSpeech);
+			npc.TextBox.AddText (t);
 		}
 
 
@@ -42,7 +39,7 @@ namespace ProjectCrusade
 			sanitybar.Update (time, world.Player.Sanity, world.Player.MaxSanity);
 
 
-			//npc.Update (time, world);
+			npc.Update (time, world);
 		}
 
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fM) {
@@ -51,7 +48,7 @@ namespace ProjectCrusade
 			sanitybar.Draw (spriteBatch, textureManager, fM);
 
 
-			//npc.Draw (spriteBatch, textureManager, fM);
+			npc.Draw (spriteBatch, textureManager, fM, Color.Green);
 		}
 
 
