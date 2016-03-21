@@ -70,7 +70,7 @@ namespace ProjectCrusade {
 			PlayerType = type;
 			Width = 16;
 			Height = 16;
-			Speed = 300;
+			Speed = 160;
 
 			Sanity = 20;
 			MaxSanity = 100;
@@ -134,7 +134,6 @@ namespace ProjectCrusade {
 
 			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
 
-			spriteBatch.Draw (ib, null, InteractionBox,null,null,0,null,Color.Black,SpriteEffects.None,0);
 		}
 
 

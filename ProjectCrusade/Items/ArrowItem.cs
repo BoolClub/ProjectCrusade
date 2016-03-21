@@ -23,7 +23,10 @@ namespace ProjectCrusade
 		//All arrows have same behavior
 		public override void PrimaryUse (World world)
 		{
-			Projectile proj = new Projectile (world.Player.Position, 1000f * world.Player.OrientationVector);
+			Projectile proj = new Projectile (
+				world.Player.CollisionBox.Center.ToVector2(), 
+				500f * world.Player.OrientationVector, 
+				Damage);
 			world.AddEntity (proj);
 		}
 		public override void SecondaryUse (World world)
@@ -38,7 +41,7 @@ namespace ProjectCrusade
 	{
 		public override ItemType Type 			{ get { return ItemType.StarterArrow; } }
 		public override string Tooltip 		{ get { return "A basic arrow. I could shoot this using a bow."; } }
-		protected override int Damage 			{ get { return 10; } }
+		protected override int Damage 			{ get { return 50; } }
 	}
 
 }
