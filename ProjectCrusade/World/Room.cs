@@ -118,10 +118,11 @@ namespace ProjectCrusade
 			}
 
 			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='NPCs']/object")) {
+				string s = npc.GetAttribute ("x");
 
 				Point npcPos = new Point (
-					int.Parse (npc.GetAttribute ("x")),
-					int.Parse(npc.GetAttribute ("y"))); 
+					(int)float.Parse (npc.GetAttribute ("x")),
+					(int)float.Parse(npc.GetAttribute ("y"))); 
 				npcPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
 				string name = npc.SelectSingleNode ("properties/property[@name='name']").Attributes["value"].Value;
 				NPCs.Add (new Tuple<string, Point>(name, npcPos));

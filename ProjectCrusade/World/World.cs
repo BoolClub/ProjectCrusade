@@ -123,13 +123,6 @@ namespace ProjectCrusade
 			generateWorld (objManager);
 			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
 
-			NPC npc = new NPC ("Man", this);
-			npc.Position = Player.Position;
-			//Test speech
-			string text = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
-
-			npc.TextBox.AddText(text);
-			entities.Add (npc);
 			//precompute lighting
 			updateLighting (true);
 
@@ -219,6 +212,21 @@ namespace ProjectCrusade
 			}
 			//Attach event listeners to loaded objectives
 			objManager.PushListeners ();
+
+			foreach (Room room in rooms) {
+				foreach (var pair in room.NPCs) {
+					switch (pair.Item1) {
+					case "npc":
+						NPC testnpc = new NPC ("Test", this);
+						testnpc.Position = pair.Item2.ToVector2 ();
+						//Test speech
+						string text = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
+						testnpc.TextBox.AddText (text);
+						entities.Add (testnpc);
+						break;
+					}
+				}
+			}
 
 			MazeGenerator generator = new MazeGenerator (Width, Height);
 			generator.ClearThinWalls = true;
