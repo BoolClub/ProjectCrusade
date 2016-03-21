@@ -16,13 +16,25 @@ After opening Tiled, you must import the main world file (Content/Levels/world.t
 When editing the world, be sure to distinguish between the Floor and Wall layers. The player collides with all tiles on the Wall layer. 
 
 This creates two files: one for walls, and one for floors. 
+
+
+##Tutorials
+Several of these tutorials assume you have a room's .TMX file opened in the Tiled map editor.
 ###Adding lights to rooms
-Assuming you have a room .TMX file open in Tiled, create a new object layer titled "Lights." Then, draw a rectangle at the desired location. The upper-left-hand corner of this rectangle becomes the location of the point light. To change the properties of the light, add the following properties using the plus button in the properties panel:
+Assuming you have a room .TMX file open in Tiled, create a new object layer titled `Lights` (case sensitive). Then, draw a rectangle at the desired location. The upper-left-hand corner of this rectangle becomes the location of the point light. To change the properties of the light, add the following properties using the plus button in the properties panel:
 
 1. `brightness` - light brightness value
 2. `red` - red value between 0 and 1
 3. `green` - green value between 0 and 1
 4. `blue` - blue value between 0 and 1
+
+###Adding NPCs to rooms
+Create a new object layer titled `NPCs` (again, case sensitive). Then, draw a rectangle at the desired location for the new NPC. The upper-left-hand corner of this rectangle becomes the initial position of the NPC. To change the properties of the NPC, add the following properties using the plus button in the properties panel:
+
+1. `name` - a required string property. Used by the game to determine which type of NPC to place. So far, there is one possible value for this property (more to come): 
+    - `npc` - a friendly NPC with whom the player can interact
+2. `message` - a string property. Used in the NPC's text box. To delineate multiple messages, use the '\' character. Example:
+    - `This is a message.\This is another message.\This is yet another message.`
 
 ###Adding/changing fonts (sorry if a bit complicated)
 
