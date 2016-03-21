@@ -92,50 +92,9 @@ namespace ProjectCrusade
 					}
 				}
 			}
-
-			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup[@name='Objectives']/object")) {
-				
-				Rectangle objRect = new Rectangle (
-					                    int.Parse (objective.GetAttribute ("x")),
-					                    int.Parse (objective.GetAttribute ("y")), 
-					                    int.Parse (objective.GetAttribute ("width")),
-					                    int.Parse (objective.GetAttribute ("height")));
-				objRect.Offset (new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth));
-				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));
-			}
-
-			foreach (XmlElement light in doc.SelectNodes("map/objectgroup[@name='Lights']/object")) {
-
-				Point lightPos = new Point (
-					(int)float.Parse (light.GetAttribute ("x")),
-					(int)float.Parse(light.GetAttribute ("y"))); 
-				lightPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
-				float brightness = float.Parse(light.SelectSingleNode ("properties/property[@name='brightness']").Attributes ["value"].Value);
-				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
-				float green = float.Parse(light.SelectSingleNode ("properties/property[@name='green']").Attributes ["value"].Value);
-				float blue = float.Parse(light.SelectSingleNode ("properties/property[@name='blue']").Attributes ["value"].Value);
-				lights.Add (new Light (lightPos.ToVector2(), new Color(red,green,blue), brightness, true));
-			}
-
-			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='NPCs']/object")) {
-				string s = npc.GetAttribute ("x");
-
-				Point npcPos = new Point (
-					(int)float.Parse (npc.GetAttribute ("x")),
-					(int)float.Parse(npc.GetAttribute ("y"))); 
-				npcPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
-				string name = npc.SelectSingleNode ("properties/property[@name='name']").Attributes["value"].Value;
-				switch (name) {
-				case "npc":
-					NPC np = new NPC ("Test");
-					np.Position = npcPos.ToVector2 ();
-
-					string msg = npc.SelectSingleNode ("properties/property[@name='message']").Attributes ["value"].Value;
-					np.TextBox.AddText (msg);
-					NPCs.Add(np);
-					break;
-				}
-			}
+			makeObjectives (doc);
+			makeLights (doc, ref lights);
+			makeNPCs (doc);
 
 			//Get entrances
 			//An entrance is defined as any non-solid tile on the border of the room.
@@ -157,6 +116,61 @@ namespace ProjectCrusade
 					world[i+Rect.Left,j+Rect.Top] = roomTiles[i,j];
 				}
 		}
+
+		void makeObjectives(XmlDocument doc)
+		{
+			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup[@name='Objectives']/object")) {
+
+				Rectangle objRect = new Rectangle (
+					int.Parse (objective.GetAttribute ("x")),
+					int.Parse (objective.GetAttribute ("y")), 
+					int.Parse (objective.GetAttribute ("width")),
+					int.Parse (objective.GetAttribute ("height")));
+				objRect.Offset (new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth));
+				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));
+			}
+		}
+
+		void makeLights(XmlDocument doc, ref List<Light> lights)
+		{
+			foreach (XmlElement light in doc.SelectNodes("map/objectgroup[@name='Lights']/object")) {
+
+				Point lightPos = new Point (
+					(int)float.Parse (light.GetAttribute ("x")),
+					(int)float.Parse(light.GetAttribute ("y"))); 
+				lightPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
+				float brightness = float.Parse(light.SelectSingleNode ("properties/property[@name='brightness']").Attributes ["value"].Value);
+				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
+				float green = float.Parse(light.SelectSingleNode ("properties/property[@name='green']").Attributes ["value"].Value);
+				float blue = float.Parse(light.SelectSingleNode ("properties/property[@name='blue']").Attributes ["value"].Value);
+				lights.Add (new Light (lightPos.ToVector2(), new Color(red,green,blue), brightness, true));
+			}
+		}
+
+		void makeNPCs(XmlDocument doc)
+		{
+			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='NPCs']/object")) {
+				Point npcPos = new Point (
+					(int)float.Parse (npc.GetAttribute ("x")),
+					(int)float.Parse(npc.GetAttribute ("y"))); 
+				npcPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
+				string name = npc.SelectSingleNode ("properties/property[@name='name']").Attributes["value"].Value;
+				switch (name) {
+				case "npc":
+					NPC np = new NPC ("Test");
+					np.Position = npcPos.ToVector2 ();
+
+					string msg = npc.SelectSingleNode ("properties/property[@name='message']").Attributes ["value"].Value;
+
+					var msgs = msg.Split ('\\');
+
+					foreach (string m in msgs) np.TextBox.AddText (m);
+					NPCs.Add(np);
+					break;
+				}
+			}
+		}
+
 	}
 }
 

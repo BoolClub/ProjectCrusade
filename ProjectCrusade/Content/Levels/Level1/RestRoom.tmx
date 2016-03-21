@@ -53,9 +53,9 @@
   </object>
  </objectgroup>
  <objectgroup name="NPCs">
-  <object id="5" x="340.615" y="342.052" width="80.4829" height="83.3573">
+  <object id="5" x="358.615" y="291.052" width="80.4829" height="83.3573">
    <properties>
-    <property name="message" value="This is a test message. This was generated in Tiled."/>
+    <property name="message" value="This is a test message. This was generated in Tiled.\Here's another message from this NPC.\And yet another."/>
     <property name="name" value="npc"/>
    </properties>
   </object>

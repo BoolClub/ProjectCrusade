@@ -49,7 +49,7 @@ namespace ProjectCrusade
 		public int speechIndex = 0;
 
 		int currLen = 0;
-		const float charAnimTime = 0.05e3f;
+		const float charAnimTime = 0.025e3f;
 		float lastCharAnim = 0f;
 
 		public TextBox (Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
