@@ -165,6 +165,9 @@ namespace ProjectCrusade
 			lastSeenPlayer += et;
 			lastAttack += et;
 			lastPathUpdate++;
+
+			if (Health <= 0)
+				Delete = true;
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)

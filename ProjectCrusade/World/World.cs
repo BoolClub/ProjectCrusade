@@ -480,12 +480,10 @@ namespace ProjectCrusade
 				updateEntity (gameTime, e);
 
 
-			//Kill dead enemies
+			//Remove dead entities
 			for (int i = entities.Count-1; i >= 0; i--) {
-				if (entities [i] is Enemy) {
-					Enemy e = entities [i] as Enemy;
-					if (e.Health <= 0)
-						entities.RemoveAt (i);
+				if (entities [i].Delete) {
+					entities.RemoveAt (i);
 				}
 			}
 		}
