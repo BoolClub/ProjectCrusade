@@ -57,7 +57,7 @@ namespace ProjectCrusade
 		}
 
 		public override void Update(GameTime gameTime, World world) {
-			
+			TextBox.Update (gameTime);
 		}
 
 

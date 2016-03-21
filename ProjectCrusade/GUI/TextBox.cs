@@ -48,7 +48,9 @@ namespace ProjectCrusade
 		/// </summary>
 		public int speechIndex = 0;
 
-
+		int currLen = 0;
+		const float charAnimTime = 0.1e3f;
+		float lastCharAnim = 0f;
 
 		public TextBox (Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
 			Position = position;
@@ -89,6 +91,17 @@ namespace ProjectCrusade
 			speechIndex++;
 			if (speechIndex >= spokenText.Count)
 				speechIndex = 0;
+			//restart animation
+			currLen = 0;
+		}
+
+		public void Update(GameTime gameTime)
+		{
+			if (lastCharAnim > charAnimTime && currLen < spokenText[speechIndex].Length) {
+				currLen++;
+				lastCharAnim = 0f;
+			}
+			lastCharAnim += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 
 		public void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager) {
@@ -138,7 +151,7 @@ namespace ProjectCrusade
 				}
 
 				//draw string
-				spriteBatch.DrawString (font, main, Position + new Vector2 (Padding, Padding), TextColor, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 1.1f);
+				spriteBatch.DrawString (font, main.ToString().Substring(0,currLen), Position + new Vector2 (Padding, Padding), TextColor, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 1.1f);
 					
 			}
 		}
