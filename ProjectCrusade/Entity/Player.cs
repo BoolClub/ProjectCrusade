@@ -122,10 +122,17 @@ namespace ProjectCrusade {
 
 
 		//SETTERS
-		public void Damage(int amount) { Sanity -= amount; }
-		public void Heal(int amount) { 
+		public void Damage(float amount) { 
 
-			if (Sanity + amount <= MaxSanity)
+			if (Sanity - amount >= 0) {
+				Sanity -= amount;
+			} else
+				Sanity = 0;
+
+		}
+		public void Heal(float amount) { 
+
+			if (Sanity + amount < MaxSanity)
 				Sanity += amount;
 			else
 				Sanity = MaxSanity;

@@ -117,6 +117,9 @@ namespace ProjectCrusade
 				}
 		}
 
+		/// <summary>
+		/// Looks for and places any objectives indicated in the TMX file
+		/// </summary>
 		void makeObjectives(XmlDocument doc)
 		{
 			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup[@name='Objectives']/object")) {
@@ -126,11 +129,15 @@ namespace ProjectCrusade
 					int.Parse (objective.GetAttribute ("y")), 
 					int.Parse (objective.GetAttribute ("width")),
 					int.Parse (objective.GetAttribute ("height")));
+				//shift objective position relative to room's world coordinates
 				objRect.Offset (new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth));
 				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));
 			}
 		}
 
+		/// <summary>
+		/// Looks for and places any lights indicated in the TMX file
+		/// </summary>
 		void makeLights(XmlDocument doc, ref List<Light> lights)
 		{
 			foreach (XmlElement light in doc.SelectNodes("map/objectgroup[@name='Lights']/object")) {
@@ -138,6 +145,7 @@ namespace ProjectCrusade
 				Point lightPos = new Point (
 					(int)float.Parse (light.GetAttribute ("x")),
 					(int)float.Parse(light.GetAttribute ("y"))); 
+				//shift light position relative to room's world coordinates
 				lightPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
 				float brightness = float.Parse(light.SelectSingleNode ("properties/property[@name='brightness']").Attributes ["value"].Value);
 				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
@@ -147,12 +155,16 @@ namespace ProjectCrusade
 			}
 		}
 
+		/// <summary>
+		/// Looks for and places any entities indicated in the TMX file
+		/// </summary>
 		void makeNPCs(XmlDocument doc)
 		{
 			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='NPCs']/object")) {
 				Point npcPos = new Point (
 					(int)float.Parse (npc.GetAttribute ("x")),
 					(int)float.Parse(npc.GetAttribute ("y"))); 
+				//shift npc position relative to room's world coordinates
 				npcPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
 				string name = npc.SelectSingleNode ("properties/property[@name='name']").Attributes["value"].Value;
 				switch (name) {
@@ -162,8 +174,8 @@ namespace ProjectCrusade
 
 					string msg = npc.SelectSingleNode ("properties/property[@name='message']").Attributes ["value"].Value;
 
+					//Split message by backslash character, which should be relatively uncommon and is therefore a safe "new message" delimiter
 					var msgs = msg.Split ('\\');
-
 					foreach (string m in msgs) np.TextBox.AddText (m);
 					NPCs.Add(np);
 					break;

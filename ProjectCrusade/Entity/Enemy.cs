@@ -13,6 +13,8 @@ namespace ProjectCrusade
 		/// </summary>
 		public float Speed { get; protected set; }
 
+		public float Damage { get; protected set; }
+
 		public enum State { 
 			Chasing, 
 			Patrolling,
@@ -58,13 +60,18 @@ namespace ProjectCrusade
 		/// </summary>
 		const int pathUpdatePeriod = 24;
 
-
+		/// <summary>
+		/// Cooldown for enemy attacks, in ms
+		/// </summary>
+		const float attackCooldown = 1e3f;
+		float lastAttack = 0f;
 
 		public Enemy ()
 		{
 			Width = 16;
 			Height = 16;
 			Speed = 120;
+			Damage = 1f;
 			patrollingDirection = new Vector2 (1, 0);
 
 			lastSeenPlayer = playerMemoryTime;
@@ -78,6 +85,11 @@ namespace ProjectCrusade
 			return Vector2.Normalize(new Vector2 ((float)rand.NextDouble () - .5f, (float)rand.NextDouble () - .5f));
 		}
 
+
+		void attackPlayer(Player player)
+		{
+			player.Damage (Damage);
+		}
 
 		public override void Update (GameTime gameTime, World world) 
 		{
@@ -106,9 +118,8 @@ namespace ProjectCrusade
 			case State.Chasing:
 				if (line_sight) {
 					patrollingDirection = Vector2.Normalize (world.Player.Position - Position);
-				}
-				else {
-					if (lastPathUpdate > pathUpdatePeriod || pathToPlayer==null) {
+				} else {
+					if (lastPathUpdate > pathUpdatePeriod || pathToPlayer == null) {
 						pathToPlayer = world.Pathfind (world.WorldToTileCoord (CollisionBox.Center), world.WorldToTileCoord (world.Player.CollisionBox.Center));
 						lastPathUpdate = 0;
 					}
@@ -125,6 +136,12 @@ namespace ProjectCrusade
 				}
 
 				Position += displacement * (patrollingDirection);
+
+				//if player close, attack
+				if (CollisionBox.Intersects (world.Player.CollisionBox) && lastAttack > attackCooldown) {
+					attackPlayer (world.Player);
+					lastAttack = 0f;
+				}
 				break;
 			case State.Patrolling:
 				Position += patrollingDirection * displacement*patrollingSpeedMult;
@@ -133,8 +150,10 @@ namespace ProjectCrusade
 
 				break;
 			}
-			patrollingTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-			lastSeenPlayer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+			float et = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+			patrollingTime += et;
+			lastSeenPlayer += et;
+			lastAttack += et;
 			lastPathUpdate++;
 		}
 
