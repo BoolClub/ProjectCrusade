@@ -96,6 +96,8 @@ namespace ProjectCrusade {
 
 			Inventory.Update (time, world);
 
+
+			checkInput (time, world);
 			//Set the interaction box based on the player's direction.
 			if (Facing == 0) {
 				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y, Width, Height+Padding);
@@ -106,8 +108,6 @@ namespace ProjectCrusade {
 			} else if(Facing == 3) {
 				InteractionBox = new Rectangle((int)Position.X-Padding, (int)Position.Y, Width+Padding, Height);
 			}
-
-			checkInput (time, world);
 		}
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Do all the drawing for the player here.

@@ -7,7 +7,7 @@ namespace ProjectCrusade
 	public class Enemy : Entity
 	{
 		public float Health { get; set; }
-
+		public float MaxHealth { get; protected set; }
 		/// <summary>
 		/// How many pixels/sec the enemy moves.
 		/// </summary>
@@ -72,9 +72,15 @@ namespace ProjectCrusade
 			Height = 16;
 			Speed = 120;
 			Damage = 1f;
+			MaxHealth = 100;
+			Health = MaxHealth;
 			patrollingDirection = new Vector2 (1, 0);
 
 			lastSeenPlayer = playerMemoryTime;
+		}
+
+		public void RemoveHealth(float damage) {
+			Health -= damage;
 		}
 
 		/// <summary>

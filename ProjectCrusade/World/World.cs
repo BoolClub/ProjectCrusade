@@ -478,6 +478,16 @@ namespace ProjectCrusade
 
 			foreach (Entity e in activeEntities)
 				updateEntity (gameTime, e);
+
+
+			//Kill dead enemies
+			for (int i = entities.Count-1; i >= 0; i--) {
+				if (entities [i] is Enemy) {
+					Enemy e = entities [i] as Enemy;
+					if (e.Health <= 0)
+						entities.RemoveAt (i);
+				}
+			}
 		}
 
 		void updateEntity(GameTime gameTime, Entity entity)

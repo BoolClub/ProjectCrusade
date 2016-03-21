@@ -21,7 +21,10 @@ namespace ProjectCrusade
 		//All swords have same behavior
 		public override void PrimaryUse (World world)
 		{
-			throw new NotImplementedException ();
+			foreach (Entity e in world.activeEntities) {
+				if (e is Enemy && e.CollisionBox.Intersects(world.Player.InteractionBox))
+					(e as Enemy).RemoveHealth (Damage);
+			}
 		}
 		public override void SecondaryUse (World world)
 		{
