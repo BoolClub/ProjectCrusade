@@ -31,7 +31,9 @@ namespace ProjectCrusade
 		/// <value>The name of the NPC.</value>
 		public string Name { get; set; }
 
-
+		bool textBoxVisible = false;
+		float lastInteracted = 0f;
+		const float idleTime = 8e3f; //if no interaction for this time in ms, hide text box
 
 		public NPC (string name) {
 			Name = name;
@@ -52,16 +54,26 @@ namespace ProjectCrusade
 
 			//If interacting with the player...
 			TextBox.Position = Position;
-			TextBox.Draw (spriteBatch, textureManager, fontManager);
+			if (textBoxVisible) TextBox.Draw (spriteBatch, textureManager, fontManager);
+
 		}
 
 		public override void Update(GameTime gameTime, World world) {
 			TextBox.Update (gameTime);
+
+			if (lastInteracted > idleTime) { 
+				textBoxVisible = false;
+				TextBox.SpeechIndex = 0;
+			}
+			lastInteracted += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 
 		public override void InteractWithPlayer (Player player)
 		{
-			TextBox.Advance ();
+			if (!textBoxVisible)
+				textBoxVisible = true;
+			else TextBox.Advance ();
+			lastInteracted = 0f;
 		}
 
 

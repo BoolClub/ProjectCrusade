@@ -37,16 +37,17 @@ namespace ProjectCrusade
 		public Color TextColor { get; set; }
 		public Color BackgroundColor { get; set; }
 
-		/// <summary>
-		/// The speech that the text box will display.
-		/// </summary>
-		List<string> spokenText = new List<string> ();
 
 		/// <summary>
 		/// The index in the spokenText list to display. When the player clicks a button, increment this
 		/// value so that the player can see the next thing that the text box has to say.
 		/// </summary>
-		public int speechIndex = 0;
+		public int SpeechIndex = 0;
+
+		/// <summary>
+		/// The speech that the text box will display.
+		/// </summary>
+		List<string> spokenText = new List<string> ();
 
 		int currLen = 0;
 		const float charAnimTime = 0.025e3f;
@@ -88,16 +89,16 @@ namespace ProjectCrusade
 		/// </summary>
 		public void Advance()
 		{
-			speechIndex++;
-			if (speechIndex >= spokenText.Count)
-				speechIndex = 0;
+			SpeechIndex++;
+			if (SpeechIndex >= spokenText.Count)
+				SpeechIndex = 0;
 			//restart animation
 			currLen = 0;
 		}
 
 		public void Update(GameTime gameTime)
 		{
-			if (lastCharAnim > charAnimTime && currLen < spokenText[speechIndex].Length) {
+			if (lastCharAnim > charAnimTime && currLen < spokenText[SpeechIndex].Length) {
 				currLen++;
 				lastCharAnim = 0f;
 			}
@@ -112,10 +113,10 @@ namespace ProjectCrusade
 			SpriteFont font = fontManager.GetFont ("MainFontSmall");
 
 			//Draw the first item of text.
-			if (spokenText.Count > speechIndex) {
+			if (spokenText.Count > SpeechIndex) {
 
 
-				string text = spokenText [speechIndex];
+				string text = spokenText [SpeechIndex];
 				int currChar = 0;
 
 				//the main string builder for the entire text box
