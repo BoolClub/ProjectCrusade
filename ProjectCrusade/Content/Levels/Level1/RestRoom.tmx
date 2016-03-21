@@ -43,7 +43,7 @@
  </layer>
  <objectgroup name="Objectives"/>
  <objectgroup name="Lights">
-  <object id="4" x="75" y="175" width="26" height="23">
+  <object id="4" x="73.5628" y="157.754" width="26" height="23">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="1"/>
@@ -53,8 +53,9 @@
   </object>
  </objectgroup>
  <objectgroup name="NPCs">
-  <object id="5" x="251.509" y="175.338" width="38.8043" height="57.4878">
+  <object id="5" x="340.615" y="342.052" width="80.4829" height="83.3573">
    <properties>
+    <property name="message" value="This is a test message. This was generated in Tiled."/>
     <property name="name" value="npc"/>
    </properties>
   </object>

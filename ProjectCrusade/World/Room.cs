@@ -23,7 +23,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Key value pairs of NPC locations, where positions are in absolute world coordinates.
 		/// </summary>
-		public List<Tuple<string, Point> > NPCs;
+		public List<Entity> NPCs;
 
 		/// <summary>
 		/// Key value pairs of objective locations, where rectangle locations are absolute (world coordinates)
@@ -34,7 +34,7 @@ namespace ProjectCrusade
 		{
 			Entrances = new List<Point> ();
 			Objectives = new List<Tuple<string, Rectangle>> ();
-			NPCs = new List<Tuple<string, Point>> ();
+			NPCs = new List<Entity> ();
 			file = filename;
 			XmlReader reader = XmlReader.Create (file);
 
@@ -107,8 +107,8 @@ namespace ProjectCrusade
 			foreach (XmlElement light in doc.SelectNodes("map/objectgroup[@name='Lights']/object")) {
 
 				Point lightPos = new Point (
-					int.Parse (light.GetAttribute ("x")),
-					int.Parse(light.GetAttribute ("y"))); 
+					(int)float.Parse (light.GetAttribute ("x")),
+					(int)float.Parse(light.GetAttribute ("y"))); 
 				lightPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
 				float brightness = float.Parse(light.SelectSingleNode ("properties/property[@name='brightness']").Attributes ["value"].Value);
 				float red = float.Parse(light.SelectSingleNode ("properties/property[@name='red']").Attributes ["value"].Value);
@@ -125,7 +125,16 @@ namespace ProjectCrusade
 					(int)float.Parse(npc.GetAttribute ("y"))); 
 				npcPos += new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth);
 				string name = npc.SelectSingleNode ("properties/property[@name='name']").Attributes["value"].Value;
-				NPCs.Add (new Tuple<string, Point>(name, npcPos));
+				switch (name) {
+				case "npc":
+					NPC np = new NPC ("Test");
+					np.Position = npcPos.ToVector2 ();
+
+					string msg = npc.SelectSingleNode ("properties/property[@name='message']").Attributes ["value"].Value;
+					np.TextBox.AddText (msg);
+					NPCs.Add(np);
+					break;
+				}
 			}
 
 			//Get entrances

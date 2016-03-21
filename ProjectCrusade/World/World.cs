@@ -213,20 +213,7 @@ namespace ProjectCrusade
 			//Attach event listeners to loaded objectives
 			objManager.PushListeners ();
 
-			foreach (Room room in rooms) {
-				foreach (var pair in room.NPCs) {
-					switch (pair.Item1) {
-					case "npc":
-						NPC testnpc = new NPC ("Test", this);
-						testnpc.Position = pair.Item2.ToVector2 ();
-						//Test speech
-						string text = "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. \n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog";
-						testnpc.TextBox.AddText (text);
-						entities.Add (testnpc);
-						break;
-					}
-				}
-			}
+			placeNPCs ();
 
 			MazeGenerator generator = new MazeGenerator (Width, Height);
 			generator.ClearThinWalls = true;
@@ -241,6 +228,16 @@ namespace ProjectCrusade
 						}
 					}
 				}
+		}
+
+		void placeNPCs()
+		{
+			foreach (Room room in rooms) {
+				foreach (var ent in room.NPCs)
+				{
+					entities.Add (ent);
+				}
+			}
 		}
 
 		public void Update(GameTime gameTime, Camera camera)
