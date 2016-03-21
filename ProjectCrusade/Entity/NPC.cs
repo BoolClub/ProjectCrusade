@@ -33,9 +33,8 @@ namespace ProjectCrusade
 
 
 
-		public NPC (string name, World w) {
+		public NPC (string name) {
 			Name = name;
-			world = w;
 			Width = 32; 
 			Height = 32;
 			Position = new Vector2 (0,0);
@@ -57,7 +56,7 @@ namespace ProjectCrusade
 		}
 
 		public override void Update(GameTime gameTime, World world) {
-			
+			TextBox.Update (gameTime);
 		}
 
 
