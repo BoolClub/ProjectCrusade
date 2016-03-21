@@ -619,9 +619,6 @@ namespace ProjectCrusade
 
 		}
 		//TODO: Add procedural world generation
-
-
-
 	}
 }
 
