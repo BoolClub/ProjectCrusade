@@ -16,7 +16,6 @@ namespace ProjectCrusade {
 		/// </summary>
 		public float Sanity { get; set; }
 
-
 		//Different classes might have different max sanities
 		public float MaxSanity { get; set; }
 
@@ -30,9 +29,32 @@ namespace ProjectCrusade {
 		/// </summary>
 		public static PlayerType PlayerType { get; private set; }
 
+
+		/// <summary>
+		/// The interaction box (rectangle). When something is within this interaction box and the player clicks
+		/// a certain button, perform a particular action.
+		/// </summary>
+		public Rectangle InteractionBox { get; set; }
+
+		/// <summary>
+		/// Amount to add to the interaction box on all four sides.
+		/// </summary>
+		public int Padding = 10;
+
+
+		/// <summary>
+		/// The direction that the player is facing as an integer.
+		/// </summary>
+		/// <value> 0 -- DOWN </value>
+		/// <value> 1 -- RIGHT </value>
+		/// <value> 2 -- UP </value>
+		/// <value> 3 -- LEFT </value>
+		public int Facing { get; set; }
+
+
 		public Inventory Inventory { get; }
 
-		public World world;
+		public World world { get; set; }
 
 
 
@@ -46,6 +68,10 @@ namespace ProjectCrusade {
 			Sanity = 20;
 			MaxSanity = 100;
 
+			Facing = 0;
+			InteractionBox = new Rectangle ((int)Position.X, (int)Position.Y, Width, Height+Padding);
+
+			this.IsPlayer = true;
 
 			Position = new Vector2(0,0);
 			PlayerInput.player = this;
@@ -74,8 +100,16 @@ namespace ProjectCrusade {
 
 			Inventory.Update (time, world);
 
-
-
+			//Set the interaction box based on the player's direction.
+			if (Facing == 0) {
+				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y, Width, Height+Padding);
+			} else if(Facing == 1) {
+				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y, Width+Padding, Height);
+			} else if(Facing == 2) {
+				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y-Padding, Width, Height+Padding);
+			} else if(Facing == 3) {
+				InteractionBox = new Rectangle((int)Position.X-Padding, (int)Position.Y, Width+Padding, Height);
+			}
 
 			//Checking for player input.
 			PlayerInput.CheckInput(time);
@@ -85,8 +119,11 @@ namespace ProjectCrusade {
 			//Do all the drawing for the player here.
 
 			Texture2D t = textureManager.GetTexture ("circle");
+			Texture2D ib = textureManager.WhitePixel;
 
 			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
+
+			spriteBatch.Draw (ib, null, InteractionBox,null,null,0,null,Color.Black,SpriteEffects.None,0);
 		}
 
 

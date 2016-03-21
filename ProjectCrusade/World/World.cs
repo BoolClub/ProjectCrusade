@@ -37,7 +37,7 @@ namespace ProjectCrusade
 		//Only active entities (which necessarily includes the player and nearby enemies) 
 		//are drawn.
 		List<Entity> entities;
-		List<Entity> activeEntities;
+		public List<Entity> activeEntities;
 
 		List<Light> lights;
 
@@ -474,6 +474,7 @@ namespace ProjectCrusade
 //			}
 //
 			Vector2 newPosition = entity.Position;
+			entity.world = this;
 			entity.Position = prevPosition;
 			//X collision
 			entity.Position = new Vector2(newPosition.X, entity.Position.Y);

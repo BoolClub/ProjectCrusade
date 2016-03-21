@@ -78,6 +78,7 @@ namespace ProjectCrusade
 			return Vector2.Normalize(new Vector2 ((float)rand.NextDouble () - .5f, (float)rand.NextDouble () - .5f));
 		}
 
+
 		public override void Update (GameTime gameTime, World world) 
 		{
 			bool line_sight = world.HasLineOfSight (world.WorldToTileCoord (Position), world.WorldToTileCoord (world.Player.Position));

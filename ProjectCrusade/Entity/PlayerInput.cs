@@ -36,19 +36,23 @@ namespace ProjectCrusade
 			//Move player.
 			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
 				disp += new Vector2 (calcDisp, 0);
-				Moving = true;	
+				Moving = true;
+				player.Facing = 1;
 			}
 			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown (Keys.Left)) {
 				disp += new Vector2 (-calcDisp, 0);
 				Moving = true;
+				player.Facing = 3;
 			}
 			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown (Keys.Down)) {
 				disp += new Vector2 (0, calcDisp);
 				Moving = true;
+				player.Facing = 0;
 			}
 			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown (Keys.Up)) {
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
+				player.Facing = 2;
 			}
 
 
@@ -68,6 +72,20 @@ namespace ProjectCrusade
 
 				}
 			}
+
+			/*This can be the "interact" button for now. It just checks if the entity is next to the player 
+			and if the entity is not the player, then it will interact. */
+			if (keyState.IsKeyDown (Keys.C) && PrevKeyState.IsKeyUp (Keys.C)) {
+				
+				foreach(Entity e in player.world.activeEntities) {
+					
+					if (e.IsPlayer == false && e.IsNextToPlayer ()) {
+						Console.WriteLine ("Working");
+					}
+
+				}
+			}
+
 
 			//Quickly add an item -- (just for testing purposes)
 			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
