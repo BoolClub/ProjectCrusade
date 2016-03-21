@@ -118,7 +118,7 @@ namespace ProjectCrusade
 			configuration.AddRooms ("Level1/Room5.tmx",1);
 			configuration.AddRooms ("Level1/Room6.tmx",1);
 			configuration.AddRooms ("Level1/Room7.tmx",1);
-			configuration.AddRooms ("Level1/Room8.tmx",1);
+			configuration.AddRooms ("Level1/Room9.tmx",1);
 		}
 
 		void initTiles()

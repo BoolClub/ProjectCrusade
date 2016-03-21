@@ -16,6 +16,8 @@ namespace ProjectCrusade
 			Height = 8;
 			Position = pos;
 			Velocity = vel;
+			if (Velocity == Vector2.Zero)
+				Delete = true;
 			Damage = damage;
 		}
 
