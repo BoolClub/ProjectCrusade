@@ -63,7 +63,7 @@ namespace ProjectCrusade
 		public abstract bool Stackable { get; }
 
 		//The current stack size of a stackable item.
-		public int Count { get; protected set; }
+		public int Count { get; set; }
 
 		//The maximum stack that a stackable item can hold.
 		public const int MaxStackSize = 64;

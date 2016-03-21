@@ -135,13 +135,17 @@ namespace ProjectCrusade
 					patrollingDirection = Vector2.Normalize (pathFollowingSmoothness * patrollingDirection + (1 - pathFollowingSmoothness) * nvec);
 				}
 
-				Position += displacement * (patrollingDirection);
 
 				//if player close, attack
-				if (CollisionBox.Intersects (world.Player.CollisionBox) && lastAttack > attackCooldown) {
-					attackPlayer (world.Player);
-					lastAttack = 0f;
+				if (CollisionBox.Intersects (world.Player.CollisionBox)) {
+					if (lastAttack > attackCooldown)
+					{
+						attackPlayer (world.Player);
+						lastAttack = 0f;
+					}
 				}
+				else 
+					Position += displacement * (patrollingDirection);
 				break;
 			case State.Patrolling:
 				Position += patrollingDirection * displacement*patrollingSpeedMult;

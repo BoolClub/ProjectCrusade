@@ -73,8 +73,9 @@ namespace ProjectCrusade {
 			Position = new Vector2(0,0);
 
 			Inventory = new Inventory (4, 10);
-			for (int i = 0; i < 15; i++)
-				Inventory.AddItem (new Apple ());
+			Apple a = new Apple ();
+			a.Count = Item.MaxStackSize-1;
+			Inventory.AddItem (a);
 			Inventory.AddItem (new Coin(5));
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
