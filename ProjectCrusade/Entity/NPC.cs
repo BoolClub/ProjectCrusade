@@ -59,7 +59,10 @@ namespace ProjectCrusade
 			TextBox.Update (gameTime);
 		}
 
-
+		public override void InteractWithPlayer (Player player)
+		{
+			TextBox.Advance ();
+		}
 
 
 	} //END OF NPC CLASS

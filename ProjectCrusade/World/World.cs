@@ -154,7 +154,7 @@ namespace ProjectCrusade
 		{
 			//Init lights.
 			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f, false));
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 2.0f, false));
 			lights [0].Position = Player.Position;
 			//			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 		}

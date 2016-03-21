@@ -26,6 +26,8 @@ namespace ProjectCrusade
 				return false;
 			}
 		}
+
+		public virtual void InteractWithPlayer (Player player) {}
 	}
 }
 

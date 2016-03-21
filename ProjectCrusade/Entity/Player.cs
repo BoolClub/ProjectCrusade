@@ -193,11 +193,8 @@ namespace ProjectCrusade {
 			if (keyState.IsKeyDown (Keys.C) && PrevKeyState.IsKeyUp (Keys.C)) {
 
 				foreach(Entity e in world.activeEntities) {
-
-					if (!(e is Player) && e.IsNextToPlayer (world)) {
-						Console.WriteLine ("Working");
-					}
-
+					if (!(e is Player) && e.IsNextToPlayer (world))
+						e.InteractWithPlayer (this);
 				}
 			}
 
