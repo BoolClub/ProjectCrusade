@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace ProjectCrusade {
 	/// <summary>
@@ -54,11 +55,8 @@ namespace ProjectCrusade {
 
 		public Inventory Inventory { get; }
 
-		public World world { get; set; }
 
-
-
-		public Player (string name, PlayerType type, World w) {
+		public Player (string name, PlayerType type) {
 			PlayerName = name;
 			PlayerType = type;
 			Width = 16;
@@ -71,12 +69,9 @@ namespace ProjectCrusade {
 			Facing = 0;
 			InteractionBox = new Rectangle ((int)Position.X, (int)Position.Y, Width, Height+Padding);
 
-			this.IsPlayer = true;
 
 			Position = new Vector2(0,0);
-			PlayerInput.player = this;
 
-			world = w;
 			Inventory = new Inventory (4, 10);
 			for (int i = 0; i < 15; i++)
 				Inventory.AddItem (new Apple ());
@@ -111,9 +106,7 @@ namespace ProjectCrusade {
 				InteractionBox = new Rectangle((int)Position.X-Padding, (int)Position.Y, Width+Padding, Height);
 			}
 
-			//Checking for player input.
-			PlayerInput.CheckInput(time);
-
+			checkInput (time, world);
 		}
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Do all the drawing for the player here.
@@ -138,6 +131,105 @@ namespace ProjectCrusade {
 				Sanity = MaxSanity;
 		}
 
+
+
+		public bool Moving { get; private set; }
+
+		public static MouseState PrevMouseState { get; set; }
+		public static KeyboardState PrevKeyState { get; set; }
+
+
+		//PLAYER INPUT
+		void checkInput(GameTime time, World world) {
+			KeyboardState keyState = Keyboard.GetState ();
+
+			float calcDisp = (float)time.ElapsedGameTime.TotalSeconds * Speed;
+
+			Vector2 disp = Vector2.Zero;
+
+
+			//Move player.
+			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
+				disp += new Vector2 (calcDisp, 0);
+				Moving = true;
+				Facing = 1;
+			}
+			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown (Keys.Left)) {
+				disp += new Vector2 (-calcDisp, 0);
+				Moving = true;
+				Facing = 3;
+			}
+			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown (Keys.Down)) {
+				disp += new Vector2 (0, calcDisp);
+				Moving = true;
+				Facing = 0;
+			}
+			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown (Keys.Up)) {
+				disp += new Vector2 (0, -calcDisp);
+				Moving = true;
+				Facing = 2;
+			}
+
+
+			//Primary Use Items
+			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
+				if (Inventory.ActiveSlot != null) {
+
+					if (Inventory.ActiveSlot.HasItem) {
+
+						Inventory.ActiveSlot.Item.PrimaryUse (world);
+
+						//If the item is depletable, it is removed when used.
+						if (Inventory.ActiveSlot.Item.Depletable) {
+							Inventory.ActiveSlot.RemoveItem ();
+						}
+					}
+
+				}
+			}
+
+			/*This can be the "interact" button for now. It just checks if the entity is next to the player 
+			and if the entity is not the player, then it will interact. */
+			if (keyState.IsKeyDown (Keys.C) && PrevKeyState.IsKeyUp (Keys.C)) {
+
+				foreach(Entity e in world.activeEntities) {
+
+					if (!(e is Player) && e.IsNextToPlayer (world)) {
+						Console.WriteLine ("Working");
+					}
+
+				}
+			}
+
+
+			//Quickly add an item -- (just for testing purposes)
+			if (keyState.IsKeyDown (Keys.N) && PrevKeyState.IsKeyUp (Keys.N)) {
+				List<Item> t = new List<Item> ();
+				t.Add (new Apple());
+				t.Add (new Water ());
+				t.Add (new Bread ());
+				t.Add (new Coin ());
+				t.Add (new WoodenSword ());
+				t.Add (new IronSword ());
+				t.Add (new StoneSword ());
+				t.Add (new StarterArrow ());
+				t.Add (new MagicWand ());
+
+				Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
+			}
+
+
+			//Normalize displacement so that you travel the same speed diagonally. 
+			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
+				disp /= (float)Math.Sqrt (2.0);
+			}
+			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Down)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
+				disp /= (float)Math.Sqrt (2.0);
+			}
+
+			Position+=disp;
+
+		}
 
 	} //END OF 'PLAYER' CLASS
 

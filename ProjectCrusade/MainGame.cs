@@ -111,9 +111,9 @@ namespace ProjectCrusade
 
 
 			//update previous mouse state
-			PlayerInput.PrevMouseState = Mouse.GetState ();
+			Player.PrevMouseState = Mouse.GetState ();
 			//update previous keyboard state
-			PlayerInput.PrevKeyState = Keyboard.GetState ();
+			Player.PrevKeyState = Keyboard.GetState ();
 
 			base.Update (gameTime);
 		}

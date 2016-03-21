@@ -100,10 +100,10 @@ namespace ProjectCrusade
 			if (!Open) SelectedSlot = null;
 
 
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue > 0 ||
+			if (Mouse.GetState ().ScrollWheelValue - Player.PrevMouseState.ScrollWheelValue > 0 ||
 				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex++;
-			if (Mouse.GetState ().ScrollWheelValue - PlayerInput.PrevMouseState.ScrollWheelValue < 0 ||
+			if (Mouse.GetState ().ScrollWheelValue - Player.PrevMouseState.ScrollWheelValue < 0 ||
 				(Keyboard.GetState().IsKeyDown(Keys.Right) && Open == true))
 				activeSlotIndex--;
 
@@ -120,11 +120,11 @@ namespace ProjectCrusade
 					throw new Exception ("Cannot have a mainbar larger than 10!");
 				if (i != 9 && 
 					Keyboard.GetState ().IsKeyDown (Keys.D1 + i) &&
-				    PlayerInput.PrevKeyState.IsKeyUp (Keys.D1 + i))
+				    Player.PrevKeyState.IsKeyUp (Keys.D1 + i))
 					activeSlotIndex = i;
 				else if (i==9 && 
 					Keyboard.GetState ().IsKeyDown (Keys.D0) &&
-					PlayerInput.PrevKeyState.IsKeyUp (Keys.D0))
+					Player.PrevKeyState.IsKeyUp (Keys.D0))
 					activeSlotIndex = i;
 			}
 			updateTooltip ();
@@ -301,7 +301,7 @@ namespace ProjectCrusade
 			for (int j = 0; j < Rows; j++) {
 				for (int i = 0; i < Columns; i++) {
 					if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState().Position.Y) && 
-						(Mouse.GetState().LeftButton == ButtonState.Pressed && PlayerInput.PrevMouseState.LeftButton==ButtonState.Released)) {
+						(Mouse.GetState().LeftButton == ButtonState.Pressed && Player.PrevMouseState.LeftButton==ButtonState.Released)) {
 
 						if (slots [i, j] == SelectedSlot && SelectedSlot != null) {
 							SelectedSlot = null;

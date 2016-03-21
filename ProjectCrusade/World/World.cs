@@ -82,6 +82,33 @@ namespace ProjectCrusade
 
 		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
 		{
+			configureRooms ();
+
+
+			Player = new Player ("test", PlayerType.Wizard);
+			Map = new Map (textureManager);
+			Width = width;
+			Height = height;
+
+			initTiles ();
+
+			//Init entities.
+			entities = new List<Entity> ();
+			entities.Add (Player);
+
+			initLights ();
+
+			generateWorld (objManager);
+			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
+
+			//precompute lighting
+			updateLighting (true);
+
+			initFluid ();
+		}
+
+		void configureRooms()
+		{
 			configuration = new WorldConfiguration ();
 			configuration.TileFamily = new TileFamilies.Cave();
 			configuration.AddRooms ("Level1/RestRoom.tmx",1);
@@ -92,13 +119,10 @@ namespace ProjectCrusade
 			configuration.AddRooms ("Level1/Room6.tmx",1);
 			configuration.AddRooms ("Level1/Room7.tmx",1);
 			configuration.AddRooms ("Level1/Room8.tmx",1);
+		}
 
-
-			Player = new Player ("test", PlayerType.Wizard, this);
-			Map = new Map (textureManager);
-			Width = width;
-			Height = height;
-
+		void initTiles()
+		{
 			int tilesSize = 0;
 
 			worldTiles = new Tile[Width, Height];
@@ -107,27 +131,13 @@ namespace ProjectCrusade
 			foreach (Tile t in worldTiles)
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
 			Console.WriteLine ("World size: {0}KB", tilesSize/1024);
+		}
 
-
-			//Init entities.
-			entities = new List<Entity> ();
-			entities.Add (Player);
-
-
-			//Init lights.
-			lights = new List<Light> ();
-			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f, false));
-			lights [0].Position = Player.Position;
-//			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
-
-			generateWorld (objManager);
-			Player.Position = rooms [0].Center;//prevent player from getting stuck in tile
-
-			//precompute lighting
-			updateLighting (true);
+		void initFluid()
+		{
 
 			//Init fluid.
-			fluid = new Fluid (width, 0.01f);
+			fluid = new Fluid (Width, 0.01f);
 			fluid.DecayRate = 0.025f;
 			fluid.SmokeDiffusionConstant = 0.000001f;
 			fluid.Viscosity = 0.001f;
@@ -138,6 +148,15 @@ namespace ProjectCrusade
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
 
+		}
+
+		void initLights()
+		{
+			//Init lights.
+			lights = new List<Light> ();
+			lights.Add (new Light (new Vector2 (10, 10), Color.White, 3.0f, false));
+			lights [0].Position = Player.Position;
+			//			lights.Add (new Light (new Vector2 (32, 256), Color.Green, 10.0f));
 		}
 
 		/// <summary>
@@ -479,7 +498,7 @@ namespace ProjectCrusade
 //			}
 //
 			Vector2 newPosition = entity.Position;
-			entity.world = this;
+
 			entity.Position = prevPosition;
 			//X collision
 			entity.Position = new Vector2(newPosition.X, entity.Position.Y);

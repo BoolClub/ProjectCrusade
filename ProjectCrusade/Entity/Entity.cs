@@ -6,8 +6,6 @@ namespace ProjectCrusade
 	public abstract class Entity : Sprite
 	{
 		public bool Delete { get; set; }
-		public bool IsPlayer = false;
-		public World world { get; set; }
 
 		public Entity ()
 		{
@@ -21,7 +19,7 @@ namespace ProjectCrusade
 		/// Determines whether this instance is next to player.
 		/// </summary>
 		/// <returns><c>true</c> if this instance is next to player; otherwise, <c>false</c>.</returns>
-		public bool IsNextToPlayer() {
+		public bool IsNextToPlayer(World world) {
 			if (this.CollisionBox.Intersects (world.Player.InteractionBox)) {
 				return true;
 			} else {
