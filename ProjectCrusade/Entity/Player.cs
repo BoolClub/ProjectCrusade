@@ -42,15 +42,24 @@ namespace ProjectCrusade {
 		/// </summary>
 		public int Padding = 10;
 
+		public enum PlayerOrientation
+		{
+			Down 	= 0,
+			Right 	= 1,
+			Up 		= 2,
+			Left 	= 3
+		}
 
 		/// <summary>
-		/// The direction that the player is facing as an integer.
+		/// The direction that the player is facing
 		/// </summary>
-		/// <value> 0 -- DOWN </value>
-		/// <value> 1 -- RIGHT </value>
-		/// <value> 2 -- UP </value>
-		/// <value> 3 -- LEFT </value>
-		public int Facing { get; set; }
+		public PlayerOrientation Facing { get; private set; }
+
+
+		/// <summary>
+		/// A normal vector describing which direction the player is moving
+		/// </summary>
+		public Vector2 OrientationVector { get; private set; }
 
 
 		public Inventory Inventory { get; }
@@ -80,7 +89,9 @@ namespace ProjectCrusade {
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new WoodenSword ());
-			Inventory.AddItem (new StarterArrow ());
+			StarterArrow arr = new StarterArrow ();
+			arr.Count = 63;
+			Inventory.AddItem (arr);
 			Inventory.AddItem (new MagicWand ());
 
 		}
@@ -99,14 +110,20 @@ namespace ProjectCrusade {
 
 			checkInput (time, world);
 			//Set the interaction box based on the player's direction.
-			if (Facing == 0) {
-				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y, Width, Height+Padding);
-			} else if(Facing == 1) {
+			switch (Facing)
+			{
+			case PlayerOrientation.Down:
+				InteractionBox = new Rectangle ((int)Position.X, (int)Position.Y, Width, Height + Padding);
+				break;
+			case PlayerOrientation.Right:
 				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y, Width+Padding, Height);
-			} else if(Facing == 2) {
+				break;
+			case PlayerOrientation.Up:
 				InteractionBox = new Rectangle((int)Position.X, (int)Position.Y-Padding, Width, Height+Padding);
-			} else if(Facing == 3) {
+				break;
+			case PlayerOrientation.Left:
 				InteractionBox = new Rectangle((int)Position.X-Padding, (int)Position.Y, Width+Padding, Height);
+				break;
 			}
 		}
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
@@ -160,22 +177,35 @@ namespace ProjectCrusade {
 			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
 				disp += new Vector2 (calcDisp, 0);
 				Moving = true;
-				Facing = 1;
+				Facing = PlayerOrientation.Right;
+				OrientationVector = new Vector2 (1, 0);
 			}
 			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown (Keys.Left)) {
 				disp += new Vector2 (-calcDisp, 0);
 				Moving = true;
-				Facing = 3;
+				Facing = PlayerOrientation.Left;
+				OrientationVector = new Vector2 (-1, 0);
 			}
 			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown (Keys.Down)) {
 				disp += new Vector2 (0, calcDisp);
 				Moving = true;
-				Facing = 0;
+				Facing = PlayerOrientation.Down;
+				OrientationVector = new Vector2 (0, 1);
 			}
 			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown (Keys.Up)) {
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
-				Facing = 2;
+				Facing = PlayerOrientation.Up;
+				OrientationVector = new Vector2 (0, -1);
+			}
+
+
+			//Normalize displacement so that you travel the same speed diagonally. 
+			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
+				disp /= (float)Math.Sqrt (2.0);
+			}
+			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Down)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
+				disp /= (float)Math.Sqrt (2.0);
 			}
 
 
@@ -223,14 +253,6 @@ namespace ProjectCrusade {
 				Inventory.AddItem (t [new Random ().Next (t.AsReadOnly().Count)]);
 			}
 
-
-			//Normalize displacement so that you travel the same speed diagonally. 
-			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
-				disp /= (float)Math.Sqrt (2.0);
-			}
-			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Down)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
-				disp /= (float)Math.Sqrt (2.0);
-			}
 
 			Position+=disp;
 

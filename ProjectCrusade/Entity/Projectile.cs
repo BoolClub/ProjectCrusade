@@ -6,18 +6,25 @@ namespace ProjectCrusade
 {
 	public class Projectile : Entity
 	{
-		public Projectile ()
+		//in pix/s
+		public Vector2 Velocity { get; set; }
+
+		public Projectile (Vector2 pos, Vector2 vel)
 		{
+			Position = pos;
+			Velocity = vel;
 		}
 
 		public override void Update (GameTime gameTime, World world)
 		{
-			throw new NotImplementedException ();
+			Vector2 disp = Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			Position += disp;
 		}
 
+		//TODO: implement multiple sprites
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)
 		{
-			throw new NotImplementedException ();
+			spriteBatch.Draw (textureManager.GetTexture ("circle"), Position, null, null, null, 0, null, Color.Red, SpriteEffects.None, 1);
 		}
 	}
 }

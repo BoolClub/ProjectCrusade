@@ -464,6 +464,8 @@ namespace ProjectCrusade
 			Map.SetPlayerPosition (Player.Position);
 		}
 
+		public void AddEntity(Entity entity) { entities.Add(entity); }
+
 		void updateEntities(GameTime gameTime)
 		{
 			Rectangle activeEntityRegion = getActiveEntityRegion ();
@@ -510,12 +512,19 @@ namespace ProjectCrusade
 			entity.Position = prevPosition;
 			//X collision
 			entity.Position = new Vector2(newPosition.X, entity.Position.Y);
-			if (entityWallCollision (entity))
-				entity.Position = new Vector2(prevPosition.X, entity.Position.Y);
+			if (entityWallCollision (entity)) {
+				entity.Position = new Vector2 (prevPosition.X, entity.Position.Y);
+
+				if (entity is Projectile)
+					entity.Delete = true;
+			}
 			//Y collision
 			entity.Position = new Vector2(entity.Position.X, newPosition.Y);
-			if (entityWallCollision (entity))
-				entity.Position = new Vector2(entity.Position.X, prevPosition.Y);
+			if (entityWallCollision (entity)) {
+				entity.Position = new Vector2 (entity.Position.X, prevPosition.Y);
+				if (entity is Projectile)
+					entity.Delete = true;
+			}
 		}
 
 		bool entityWallCollision(Entity entity) {

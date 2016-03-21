@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace ProjectCrusade
 {
@@ -22,7 +23,8 @@ namespace ProjectCrusade
 		//All arrows have same behavior
 		public override void PrimaryUse (World world)
 		{
-			throw new NotImplementedException ();
+			Projectile proj = new Projectile (world.Player.Position, 1000f * world.Player.OrientationVector);
+			world.AddEntity (proj);
 		}
 		public override void SecondaryUse (World world)
 		{
