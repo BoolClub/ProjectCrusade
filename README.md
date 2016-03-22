@@ -29,7 +29,7 @@ Assuming you have a room .TMX file open in Tiled, create a new object layer titl
 4. `blue` - blue value between 0 and 1
 
 ###Adding entities to rooms
-Create a new object layer titled `NPCs` (again, case sensitive). Then, draw a rectangle at the desired location for the new NPC/entity. The upper-left-hand corner of this rectangle becomes the initial position of the entity. To change the properties of the entity, add the following properties using the plus button in the properties panel:
+Create a new object layer titled `Entities` (again, case sensitive). Then, draw a rectangle at the desired location for the new NPC/entity. The upper-left-hand corner of this rectangle becomes the initial position of the entity. To change the properties of the entity, add the following properties using the plus button in the properties panel:
 
 1. `name` - a required string property. Used by the game to determine which type of entity to place. So far, there is one possible value for this property (more to come): 
     - `npc` - a friendly NPC with whom the player can interact
