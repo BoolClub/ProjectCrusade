@@ -15,6 +15,7 @@ namespace ProjectCrusade
 		}
 
 
+
 	} //END OF COIN CLASS
 
 }
