@@ -52,14 +52,14 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="NPCs">
+ <objectgroup name="Entities">
   <object id="5" x="358.615" y="291.052" width="80.4829" height="83.3573">
    <properties>
     <property name="message" value="This is a test message. This was generated in Tiled.\Here's another message from this NPC.\And yet another."/>
     <property name="name" value="npc"/>
    </properties>
   </object>
-  <object id="10" x="137.759" y="56.3213" width="80.4829" height="83.3573">
+  <object id="10" x="137.759" y="56.3213" width="32" height="32">
    <properties>
     <property name="count" value="10"/>
     <property name="name" value="chest"/>
