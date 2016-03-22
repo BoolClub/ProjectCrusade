@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProjectCrusade
 {
@@ -51,6 +52,32 @@ namespace ProjectCrusade
 			Down,
 			Right
 		}
+
+		static bool[] transparentValues;
+		public static void CheckTileTransparency(TextureManager textureManager)
+		{
+			Texture2D texture = textureManager.GetTexture ("tiles");
+			int swidth = World.SpriteSheetWidth / World.TileWidth;
+			transparentValues = new bool[swidth * swidth];
+
+			for (int i = 0; i < swidth; i++)
+				for (int j = 0; j < swidth; j++) {
+					Color[] subdata = new Color[World.TileWidth * World.TileWidth];
+					texture.GetData<Color>(0, new Rectangle(i*World.TileWidth,j*World.TileWidth,World.TileWidth,World.TileWidth), subdata, 0, World.TileWidth*World.TileWidth);
+					bool anyTransparent = false;
+
+					foreach (Color c in subdata) {
+						if (c.A < byte.MaxValue) {
+							anyTransparent = true;
+							break;
+						}
+					}
+					transparentValues [i + j * swidth] = anyTransparent;
+				}
+		}
+
+
+		public bool IsTransparent { get { return transparentValues [(int)Type]; } }
 
 		Orientation TileOrientation;
 

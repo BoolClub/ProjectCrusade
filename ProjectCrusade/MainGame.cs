@@ -28,7 +28,7 @@ namespace ProjectCrusade
 		FrameRateCounter frameCounter;
 		FrameRateCounter frameCounterDraw;
 
-		const int targetFrameRate = 60;
+		const int targetFrameRate = 100;
 
 		public MainGame ()
 		{
@@ -38,7 +38,7 @@ namespace ProjectCrusade
 			graphics.PreferredBackBufferWidth = WindowWidth;
 			graphics.PreferredBackBufferHeight = WindowHeight;
 			graphics.SynchronizeWithVerticalRetrace = true;
-//			this.TargetElapsedTime = TimeSpan.FromMilliseconds (1e3f / targetFrameRate);
+			this.TargetElapsedTime = TimeSpan.FromMilliseconds (1e3f / targetFrameRate);
 			IsFixedTimeStep = true;
 			IsMouseVisible = true;
 		}
@@ -83,7 +83,7 @@ namespace ProjectCrusade
 
 			screenManager = new GameScreenManager (new MainGameScreen(textureManager));
 
-
+			Tile.CheckTileTransparency (textureManager);
 
 		}
 
