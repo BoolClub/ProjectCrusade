@@ -162,7 +162,7 @@ namespace ProjectCrusade
 		/// </summary>
 		void makeNPCs(XmlDocument doc)
 		{
-			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='NPCs']/object")) {
+			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='Entities']/object")) {
 				Point npcPos = new Point (
 					(int)float.Parse (npc.GetAttribute ("x")),
 					(int)float.Parse(npc.GetAttribute ("y"))); 
