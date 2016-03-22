@@ -83,7 +83,7 @@ namespace ProjectCrusade {
 
 			Inventory = new Inventory (4, 10);
 			Apple a = new Apple ();
-			a.Count = Item.MaxStackSize-1;
+			a.Count = Item.MaxStackSize-20;
 			Inventory.AddItem (a);
 			Inventory.AddItem (new Coin(5));
 			Inventory.AddItem (new Coin());

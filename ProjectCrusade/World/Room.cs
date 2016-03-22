@@ -179,6 +179,22 @@ namespace ProjectCrusade
 					foreach (string m in msgs) np.TextBox.AddText (m);
 					NPCs.Add(np);
 					break;
+				case "chest":
+					string typename = npc.SelectSingleNode ("properties/property[@name='type']").Attributes ["value"].Value;
+
+					Type T = Type.GetType ("ProjectCrusade." + typename);
+					Item i = (Item)Activator.CreateInstance (T);
+
+					Chest c = new Chest (i);
+
+					var cNode = npc.SelectSingleNode ("properties/property[@name='count']");
+					if (cNode != null) {
+						i.Count = int.Parse(cNode.Attributes ["value"].Value);
+					}
+					c.Position = npcPos.ToVector2 ();
+
+					NPCs.Add (c);
+					break;
 				}
 			}
 		}

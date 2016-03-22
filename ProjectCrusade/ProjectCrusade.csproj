@@ -116,6 +116,7 @@
     <Compile Include="Util.cs" />
     <Compile Include="GUI\Map.cs" />
     <Compile Include="Entity\Projectile.cs" />
+    <Compile Include="Entity\Chest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
