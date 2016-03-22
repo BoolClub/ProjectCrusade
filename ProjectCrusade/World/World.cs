@@ -8,6 +8,17 @@ using System.Threading;
 
 namespace ProjectCrusade
 {
+	public class WorldLayer {
+		public int Width,Height;
+		public Tile[,] Tiles;
+
+		public WorldLayer(int width, int height) {
+			Width = width;
+			Height = height;
+			Tiles = new Tile[Width, Height];
+		}
+	}
+
 	public class World
 	{
 		public int Width { get; private set; }
@@ -59,8 +70,7 @@ namespace ProjectCrusade
 		/// </summary>
 		const int lightingPenetration = 5;
 
-
-		Tile[,] worldTiles;
+		List<WorldLayer> layers;
 
 		#region Fluid variables
 		Fluid fluid;
@@ -90,7 +100,7 @@ namespace ProjectCrusade
 			Width = width;
 			Height = height;
 
-			initTiles ();
+			initLayers ();
 
 			//Init entities.
 			entities = new List<Entity> ();
@@ -121,14 +131,19 @@ namespace ProjectCrusade
 			configuration.AddRooms ("Level1/Room9.tmx",1);
 		}
 
-		void initTiles()
+		/// <summary>
+		/// Initializes all layers. Note that layer 0 is the floor layer, 1 is the wall layer
+		/// </summary>
+		void initLayers()
 		{
 			int tilesSize = 0;
 
-			worldTiles = new Tile[Width, Height];
+			layers = new List<WorldLayer> ();
+			layers.Add (new WorldLayer (Width, Height));
+			layers.Add (new WorldLayer (Width, Height));
 			precomputedLighting = new Vector3[Width, Height];
 
-			foreach (Tile t in worldTiles)
+			foreach (Tile t in layers[0].Tiles)
 				tilesSize += System.Runtime.InteropServices.Marshal.SizeOf(t);
 			Console.WriteLine ("World size: {0}KB", tilesSize/1024);
 		}
@@ -143,7 +158,7 @@ namespace ProjectCrusade
 			fluid.Viscosity = 0.001f;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
-					if (worldTiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
+					if (layers[1].Tiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
 
 			fluidThread = new Thread (new ThreadStart (fluidUpdate));
 			fluidThread.Start ();
@@ -176,14 +191,14 @@ namespace ProjectCrusade
 		public Point[] Pathfind(Point start, Point end)
 		{
 			AStarPathfinder finder = new AStarPathfinder ();
-			return finder.Compute (start, end, ref worldTiles, AStarPathfinder.HeuristicType.Euclidean);
+			return finder.Compute (start, end, ref layers[1].Tiles, AStarPathfinder.HeuristicType.Euclidean);
 		}
 
 		void generateWorld(ObjectiveManager objManager)
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					worldTiles [i, j] = new Tile (TileType.CaveWall, true, Color.White.ToVector3 ());
+					layers[0].Tiles [i, j] = new Tile (TileType.CaveWall, true, Color.White.ToVector3 ());
 				}
 			//Init rooms
 			rooms = new List<Room>();
@@ -210,7 +225,7 @@ namespace ProjectCrusade
 					if (!(room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom))
 						foundRoom = true;
 				}
-				room.GenerateRoom (ref worldTiles, ref lights);
+				room.GenerateRoom (layers, ref lights);
 				rooms.Add (room);
 			}
 			//TODO: procedural generation.
@@ -241,7 +256,11 @@ namespace ProjectCrusade
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					if (!generator.IsRoom (i, j)) {
-						worldTiles [i, j] = generator.GetMazeTile (configuration.TileFamily, i, j);
+						var t = generator.GetMazeTile (configuration.TileFamily, i, j);
+						if (t.Solid)
+							layers [1].Tiles [i, j] = t;
+						else 
+							layers [0].Tiles [i, j] = t;
 						if (generator.IsHall (i, j)) {
 							trySpawnEnemy (new Point (i, j));
 						}
@@ -296,7 +315,7 @@ namespace ProjectCrusade
 
 		//where distance2 is the squared distance (in tile lengths)
 		float lightFalloffFunction(float distance2) {
-			return 1.0f / (distance2*0.1f + 1.0f);
+			return 1.0f / (distance2 * 0.1f + 1.0f);
 		}
 
 		/// <summary>
@@ -359,7 +378,7 @@ namespace ProjectCrusade
 
 				if (cullOffscreen && ((!cameraRectangle.Contains(x0,y0) && enteredCameraRectangle) || !getLightCullingRegion().Contains(x0,y0)))
 					break; //break if ray exits camera field of vision or is simply too far away
-				if (worldTiles [x0, y0].Solid)
+				if (layers[1].Tiles [x0, y0].Solid)
 					currInc++;// break if rays hit wall--no use of iterating if light won't pass a wall
 				if (currInc >= lightingPenetration)
 					break;
@@ -390,7 +409,7 @@ namespace ProjectCrusade
 			int err = dx+dy, e2; /* error value e_xy */
 			for(;;){  
 				if (x0==x1 && y0==y1) break;
-				if (worldTiles [x0, y0].Solid)
+				if (layers[1].Tiles [x0, y0].Solid)
 					return false;
 				e2 = 2*err;
 				if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -403,12 +422,13 @@ namespace ProjectCrusade
 		void updateLighting(bool precomputed)
 		{
 			//if precomputed, push lighting update to precomputedLighting only
+			for (int l = 0; l<layers.Count;l++)
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++)
 					if (precomputed)
 						precomputedLighting [i, j] = ambientLighting.ToVector3();
 					else
-						worldTiles[i,j].Color = precomputedLighting[i,j];
+						layers[l].Tiles[i,j].Color = precomputedLighting[i,j];
 
 			foreach (Light light in lights) {
 				if ((precomputed && !light.Static) || (!precomputed && light.Static))
@@ -441,15 +461,15 @@ namespace ProjectCrusade
 							* (float)(lightingPenetration-line[k].Item2)/lightingPenetration;
 					}
 				}
+				for (int l = 0; l<layers.Count;l++)
 				for (int i = 0; i < Width; i++)
 					for (int j = 0; j < Height; j++) {
 						if (precomputed)
 							precomputedLighting[i,j] += colorsTemp [i, j];
-						else worldTiles[i,j].Color += colorsTemp [i, j];
+						else layers[0].Tiles[i,j].Color += colorsTemp [i, j];
 					}
 			}
 		}
-
 
 		void updateMap()
 		{
@@ -458,8 +478,8 @@ namespace ProjectCrusade
 					Point p = new Point (i + cameraRectangle.Left, j + cameraRectangle.Top);
 					if (PointInWorld(p))
 					//only add to map if sufficiently bright
-					if ((worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top].Color-ambientLighting.ToVector3()).LengthSquared() > 0.9f) 
-						Map.AddTile (p, worldTiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
+					if ((layers[0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top].Color-ambientLighting.ToVector3()).LengthSquared() > 0.9f) 
+						Map.AddTile (p, layers[0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
 				}
 			Map.SetPlayerPosition (Player.Position);
 		}
@@ -472,8 +492,8 @@ namespace ProjectCrusade
 			//convert to world coordinates.
 			activeEntityRegion.X*=TileWidth;
 			activeEntityRegion.Y*=TileWidth;
-			activeEntityRegion.Width*=TileWidth;
-			activeEntityRegion.Height*=TileWidth;
+			activeEntityRegion.Width	*=TileWidth;
+			activeEntityRegion.Height	*=TileWidth;
 
 			//construct active entities 
 			activeEntities = entities.FindAll(e => activeEntityRegion.Intersects(e.CollisionBox));
@@ -547,16 +567,16 @@ namespace ProjectCrusade
 				return true;
 			
 
-			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (layers[1].Tiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
+			if (layers[1].Tiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Top)].Solid)
 				return true;
 
-			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (layers[1].Tiles[WorldToTileCoordX (entity.CollisionBox.Left),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 
-			if (worldTiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
+			if (layers[1].Tiles[WorldToTileCoordX (entity.CollisionBox.Right),WorldToTileCoordY (entity.CollisionBox.Bottom)].Solid)
 				return true;
 			return false;
 
@@ -585,7 +605,7 @@ namespace ProjectCrusade
 		}
 		public Vector2 TileToWorldCoord(Point p)
 		{
-					return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
+			return new Vector2 (TileWidth * p.X, TileWidth * p.Y);
 		}
 
 		public bool PointInWorld(Point p)
@@ -612,52 +632,52 @@ namespace ProjectCrusade
 		/// <param name="camera">Camera needed for tile culling</param>
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Camera camera)
 		{
+			for (int l = 0; l<layers.Count;l++)
+				for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
+					for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
+						if (i < 0 || i >= Width || j < 0 || j >= Height)
+							continue;
 
-			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
-				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
-					if (i < 0 || i >= Width || j < 0 || j >= Height)
-						continue;
-
-					if (worldTiles [i, j].Type != TileType.Air)
-						spriteBatch.Draw (textureManager.GetTexture ("tiles"),
-							null,
-							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-							getTileSourceRect (worldTiles [i, j]),
-							null,
-							worldTiles [i, j].Rotation,
-							null,
-							new Color (worldTiles [i, j].Color),
-//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
-							SpriteEffects.None,
-							0);
-				}
+						if (layers[l].Tiles [i, j].Type != TileType.Air)
+							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
+								null,
+								new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+								getTileSourceRect (layers[l].Tiles [i, j]),
+								null,
+								layers[l].Tiles [i, j].Rotation,
+								null,
+								Color.White,
+	//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
+								SpriteEffects.None,
+								0.2f*l);
+					}
 
 			foreach (Entity entity in entities) {
 				Point p = WorldToTileCoord (entity.Position);
 				Color col = Color.White;
 				if (PointInWorld (p))
-					col = new Color (worldTiles [p.X, p.Y].Color);
+					col = new Color (layers[0].Tiles [p.X, p.Y].Color);
 				entity.Draw (spriteBatch, textureManager, fontManager, col);
 			}
 			spriteBatch.End ();
-			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
-			//Draw smoke/additive lighting
-			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
-				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
-						if (i < 0 || i >= Width || j < 0 || j >= Height)
-							continue;
-
-						spriteBatch.Draw (textureManager.WhitePixel,
-							null,
-							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-							null,
-							null,
-							0,
-							null,
-							new Color(0.25f*(worldTiles[i,j].Color - Vector3.One)),
-							SpriteEffects.None,
-							0);
-					}
+//			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
+//			//Draw smoke/additive lighting
+//			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
+//				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
+//						if (i < 0 || i >= Width || j < 0 || j >= Height)
+//							continue;
+//
+//						spriteBatch.Draw (textureManager.WhitePixel,
+//							null,
+//							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+//							null,
+//							null,
+//							0,
+//							null,
+//							new Color(0.25f*(layers[0].Tiles[i,j].Color - Vector3.One)),
+//							SpriteEffects.None,
+//							0);
+//					}
 
 		}
 		//TODO: Add procedural world generation

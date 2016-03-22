@@ -49,8 +49,9 @@ namespace ProjectCrusade
 
 
 
-		public void GenerateRoom(ref Tile[,] world, ref List<Light> lights)
+		public void GenerateRoom(List<WorldLayer> layers, ref List<Light> lights)
 		{
+			int layerCount = layers.Count;
 			XmlReader reader = XmlReader.Create (file);
 
 			XmlDocument doc = new XmlDocument ();
@@ -62,7 +63,7 @@ namespace ProjectCrusade
 			if (width != Rect.Width || height != Rect.Height)
 				throw new Exception ("Dimensions of rectangle do not match dimensions of file!");
 
-			Tile[,] roomTiles = new Tile[width, height];
+			Tile[,,] roomTiles = new Tile[width, height, layerCount];
 
 			foreach (XmlElement layer in doc.SelectNodes("map/layer"))
 			{
@@ -84,10 +85,10 @@ namespace ProjectCrusade
 						
 						//Only include a wall file if not air
 						//Overwrites floor tiles
-						if (v!= 0) 
-							roomTiles [i, j] = new Tile((TileType)(v-1), layerName!="Floor", new Vector3(1,1,1));
-						else if (layerName=="Floor")
-							roomTiles [i, j] = new Tile(TileType.Air, false, new Vector3(1,1,1));
+						if (v != 0) 
+							roomTiles [i, j, layerName=="Floor" ? 0 : 1] = new Tile((TileType)(v-1), layerName!="Floor", new Vector3(1,1,1));
+						else
+							roomTiles [i, j, layerName=="Floor" ? 0 : 1] = new Tile(TileType.Air, false, new Vector3(1,1,1));
 						
 					}
 				}
@@ -99,22 +100,23 @@ namespace ProjectCrusade
 			//Get entrances
 			//An entrance is defined as any non-solid tile on the border of the room.
 			for (int i = 0; i < width; i++) {
-				if (!roomTiles [i, 0].Solid)
+				if (!roomTiles [i, 0, 1].Solid)
 					Entrances.Add (new Point (i, 0));
-				if (!roomTiles [i, height-1].Solid)
+				if (!roomTiles [i, height-1, 1].Solid)
 					Entrances.Add (new Point (i, height-1));
 			}
 			for (int j = 1; j < height - 1; j++) {
-				if (!roomTiles [0, j].Solid)
+				if (!roomTiles [0, j, 1].Solid)
 					Entrances.Add (new Point (0, j));
-				if (!roomTiles [width-1, j].Solid)
+				if (!roomTiles [width-1, j, 1].Solid)
 					Entrances.Add (new Point (width-1, j));
 			}
 			//TODO: Add error handling
-			for (int i = 0; i < Rect.Width; i++)
-				for (int j = 0; j < Rect.Height; j++) {
-					world[i+Rect.Left,j+Rect.Top] = roomTiles[i,j];
-				}
+			for (int l = 0; l<layerCount;l++)
+				for (int i = 0; i < Rect.Width; i++)
+					for (int j = 0; j < Rect.Height; j++) {
+						layers[l].Tiles[i+Rect.Left,j+Rect.Top] = roomTiles[i,j,l];
+					}
 		}
 
 		/// <summary>
