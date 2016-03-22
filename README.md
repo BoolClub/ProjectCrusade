@@ -28,13 +28,20 @@ Assuming you have a room .TMX file open in Tiled, create a new object layer titl
 3. `green` - green value between 0 and 1
 4. `blue` - blue value between 0 and 1
 
-###Adding NPCs to rooms
-Create a new object layer titled `NPCs` (again, case sensitive). Then, draw a rectangle at the desired location for the new NPC. The upper-left-hand corner of this rectangle becomes the initial position of the NPC. To change the properties of the NPC, add the following properties using the plus button in the properties panel:
+###Adding entities to rooms
+Create a new object layer titled `NPCs` (again, case sensitive). Then, draw a rectangle at the desired location for the new NPC/entity. The upper-left-hand corner of this rectangle becomes the initial position of the entity. To change the properties of the entity, add the following properties using the plus button in the properties panel:
 
-1. `name` - a required string property. Used by the game to determine which type of NPC to place. So far, there is one possible value for this property (more to come): 
+1. `name` - a required string property. Used by the game to determine which type of entity to place. So far, there is one possible value for this property (more to come): 
     - `npc` - a friendly NPC with whom the player can interact
-2. `message` - a string property. Used in the NPC's text box. To delineate multiple messages, use the '\' character. Example:
+    - `chest` - a repository for an item
+2. `message` - a string property for use with `name = npc` identifier. Used in the NPC's text box. To delineate multiple messages, use the '\' character. Example:
     - `This is a message.\This is another message.\This is yet another message.`
+3. `type` - for use with `name = chest` identifier; indicates what item the chest will contain. This corresponds directly with the item's class name. For instance, 
+    - `Apple`
+    - `StarterArrow`
+    - etc.
+4. `count` - optional, for use with `name = chest` identifier; indicates how many items the chest will contain. When adjusting this property, ensure that the item is stackable. 
+
 
 ###Adding/changing fonts (sorry if a bit complicated)
 
