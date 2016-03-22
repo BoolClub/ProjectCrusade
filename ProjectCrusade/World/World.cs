@@ -160,8 +160,8 @@ namespace ProjectCrusade
 				for (int j = 0; j < Height; j++)
 					if (layers[1].Tiles[i,j].Solid) fluid.SetBoundaryValue (i, j, true);
 
-			fluidThread = new Thread (new ThreadStart (fluidUpdate));
-			fluidThread.Start ();
+//			fluidThread = new Thread (new ThreadStart (fluidUpdate));
+//			fluidThread.Start ();
 
 		}
 
@@ -466,7 +466,7 @@ namespace ProjectCrusade
 					for (int j = 0; j < Height; j++) {
 						if (precomputed)
 							precomputedLighting[i,j] += colorsTemp [i, j];
-						else layers[0].Tiles[i,j].Color += colorsTemp [i, j];
+						else layers[l].Tiles[i,j].Color += colorsTemp [i, j];
 					}
 			}
 		}
@@ -638,7 +638,7 @@ namespace ProjectCrusade
 						if (i < 0 || i >= Width || j < 0 || j >= Height)
 							continue;
 
-						if (layers[l].Tiles [i, j].Type != TileType.Air)
+						if (layers[l].Tiles [i, j].Type != TileType.Air && ((l==0 && (layers[1].Tiles[i,j].IsTransparent || layers[1].Tiles[i,j].Solid)) || l==1))
 							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
 								null,
 								new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
@@ -646,7 +646,7 @@ namespace ProjectCrusade
 								null,
 								layers[l].Tiles [i, j].Rotation,
 								null,
-								Color.White,
+								new Color(layers[l].Tiles[i,j].Color),
 	//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
 								SpriteEffects.None,
 								0.2f*l);
@@ -660,24 +660,24 @@ namespace ProjectCrusade
 				entity.Draw (spriteBatch, textureManager, fontManager, col);
 			}
 			spriteBatch.End ();
-//			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
-//			//Draw smoke/additive lighting
-//			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
-//				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
-//						if (i < 0 || i >= Width || j < 0 || j >= Height)
-//							continue;
-//
-//						spriteBatch.Draw (textureManager.WhitePixel,
-//							null,
-//							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-//							null,
-//							null,
-//							0,
-//							null,
-//							new Color(0.25f*(layers[0].Tiles[i,j].Color - Vector3.One)),
-//							SpriteEffects.None,
-//							0);
-//					}
+			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
+			//Draw smoke/additive lighting
+			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
+				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
+						if (i < 0 || i >= Width || j < 0 || j >= Height)
+							continue;
+
+						spriteBatch.Draw (textureManager.WhitePixel,
+							null,
+							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+							null,
+							null,
+							0,
+							null,
+							new Color(0.25f*(layers[0].Tiles[i,j].Color - Vector3.One)),
+							SpriteEffects.None,
+							0);
+					}
 
 		}
 		//TODO: Add procedural world generation
