@@ -647,7 +647,6 @@ namespace ProjectCrusade
 								layers[l].Tiles [i, j].Rotation,
 								null,
 								new Color(layers[l].Tiles[i,j].Color),
-	//							new Color(new Vector3(fluid.GetVel(i,j), 0)), 
 								SpriteEffects.None,
 								0.2f*l);
 					}
@@ -664,19 +663,19 @@ namespace ProjectCrusade
 			//Draw smoke/additive lighting
 			for (int i = cameraRectangle.Left; i < cameraRectangle.Right + 1; i++)
 				for (int j = cameraRectangle.Top; j < cameraRectangle.Bottom + 1; j++) {
-						if (i < 0 || i >= Width || j < 0 || j >= Height)
-							continue;
-
-						spriteBatch.Draw (textureManager.WhitePixel,
-							null,
-							new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-							null,
-							null,
-							0,
-							null,
-							new Color(0.25f*(layers[0].Tiles[i,j].Color - Vector3.One)),
-							SpriteEffects.None,
-							0);
+					if (i < 0 || i >= Width || j < 0 || j >= Height)
+						continue;
+					int l = layers [1].Tiles [i, j].Solid ? 1 : 0;
+					spriteBatch.Draw (textureManager.WhitePixel,
+						null,
+						new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
+						null,
+						null,
+						0,
+						null,
+						new Color(0.25f*(layers[l].Tiles[i,j].Color - Vector3.One)),
+						SpriteEffects.None,
+						0);
 					}
 
 		}
