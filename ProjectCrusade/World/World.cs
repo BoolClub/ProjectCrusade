@@ -115,6 +115,8 @@ namespace ProjectCrusade
 			updateLighting (true);
 
 			initFluid ();
+			//TODO: remove this; temporary way to display the entire map for simple navigation
+			revealMap ();
 		}
 
 		void configureRooms()
@@ -484,6 +486,24 @@ namespace ProjectCrusade
 						Tile t = layers [1].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top];
 						if (!t.Solid) 
 							t = layers [0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top];
+
+						if ((t.Color - ambientLighting.ToVector3 ()).LengthSquared () > 0.8f)
+							Map.AddTile (p, t);
+					}
+				}
+			Map.SetPlayerPosition (Player.Position);
+		}
+
+		void revealMap()
+		{
+			for (int i = 0; i < Width; i++)
+				for (int j = 0; j < Height; j++) {
+					Point p = new Point (i, j);
+					if (PointInWorld (p)) {
+						//only add to map if sufficiently bright
+						Tile t = layers [1].Tiles [i,j];
+						if (!t.Solid) 
+							t = layers [0].Tiles [i,j];
 
 						if ((t.Color - ambientLighting.ToVector3 ()).LengthSquared () > 0.8f)
 							Map.AddTile (p, t);
