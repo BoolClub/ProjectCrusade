@@ -27,8 +27,8 @@ namespace ProjectCrusade
 		/// <summary>
 		/// The width and height of the text box.
 		/// </summary>
-		int Width = 512;
-		int Height = 256;
+		public int Width { get; set; }
+		public int Height { get; set; }
 
 		const int Padding = 16;
 
@@ -37,7 +37,7 @@ namespace ProjectCrusade
 		public Color TextColor { get; set; }
 		public Color BackgroundColor { get; set; }
 
-
+		public int NumItems { get { return spokenText.Count; } }
 		/// <summary>
 		/// The index in the spokenText list to display. When the player clicks a button, increment this
 		/// value so that the player can see the next thing that the text box has to say.
@@ -53,8 +53,10 @@ namespace ProjectCrusade
 		const float charAnimTime = 0.025e3f;
 		float lastCharAnim = 0f;
 
-		public TextBox (Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
+		public TextBox (int width, int height, Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
 			Position = position;
+			Width = width;
+			Height = height;
 			Opacity = opacity;
 			TextColor = textColor;
 			BackgroundColor = backgroundColor;

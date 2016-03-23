@@ -40,7 +40,7 @@ namespace ProjectCrusade
 			Width = 32; 
 			Height = 32;
 			Position = new Vector2 (0,0);
-			TextBox = new TextBox (Position, Color.Black, Color.White);
+			TextBox = new TextBox (256, 128, Position, Color.Black, Color.White);
 			TextBox.Opacity = 0.5f;
 		}
 
@@ -59,7 +59,7 @@ namespace ProjectCrusade
 		}
 
 		public override void Update(GameTime gameTime, World world) {
-			TextBox.Update (gameTime);
+			if (textBoxVisible) TextBox.Update (gameTime);
 
 			if (lastInteracted > idleTime) { 
 				textBoxVisible = false;
@@ -72,7 +72,11 @@ namespace ProjectCrusade
 		{
 			if (!textBoxVisible)
 				textBoxVisible = true;
-			else TextBox.Advance ();
+			else {
+				if (TextBox.SpeechIndex >= TextBox.NumItems - 1)
+					textBoxVisible = false;
+				TextBox.Advance ();
+			}
 			lastInteracted = 0f;
 		}
 
