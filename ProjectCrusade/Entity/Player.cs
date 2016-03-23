@@ -130,7 +130,6 @@ namespace ProjectCrusade {
 			//Do all the drawing for the player here.
 
 			Texture2D t = textureManager.GetTexture ("circle");
-			Texture2D ib = textureManager.WhitePixel;
 
 			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
 
@@ -206,6 +205,7 @@ namespace ProjectCrusade {
 			if ((keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Right) && keyState.IsKeyDown (Keys.Down)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Up)) || (keyState.IsKeyDown (Keys.Left) && keyState.IsKeyDown (Keys.Down))) {
 				disp /= (float)Math.Sqrt (2.0);
 			}
+			Position+=disp;
 
 
 			//Primary Use Items
@@ -253,7 +253,6 @@ namespace ProjectCrusade {
 			}
 
 
-			Position+=disp;
 
 		}
 

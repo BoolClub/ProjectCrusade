@@ -198,7 +198,7 @@ namespace ProjectCrusade
 			maze [currTile.X, currTile.Y] = -1;
 			List<int> options = new List<int> ();
 			//TODO: change loop condition
-			for (int i = 0; i<10000;i++)
+			for (int i = 0; i<width*height;i++)
 			{
 				options = getTraversalOptions (currTile);
 				if (options.Count > 0) {

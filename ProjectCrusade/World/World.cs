@@ -200,7 +200,7 @@ namespace ProjectCrusade
 		{
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
-					layers[0].Tiles [i, j] = new Tile (TileType.CaveWall, true, Color.White.ToVector3 ());
+					layers[0].Tiles [i, j] = new Tile (configuration.TileFamily.Floor, true, Color.White.ToVector3 ());
 					layers[1].Tiles [i, j] = new Tile (TileType.Air, false, Color.White.ToVector3 ());
 				}
 			//Init rooms
