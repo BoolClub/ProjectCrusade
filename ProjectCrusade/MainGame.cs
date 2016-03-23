@@ -129,9 +129,9 @@ namespace ProjectCrusade
 			spriteBatch.Begin ();
 			spriteBatch.DrawString (
 				fontManager.GetFont ("MainFontLarge"), 
-				String.Format("ProjectCrusade {2}\n{0} update, {1} draw", 
-					(int)frameCounter.AverageFrameRate, 
-					(int)frameCounterDraw.AverageFrameRate,
+				String.Format("ProjectCrusade {2}\n{0:#.#} ms update, {1:#.#} ms draw", 
+					frameCounter.AverageElapsedMilliseconds, 
+					frameCounterDraw.AverageElapsedMilliseconds,
 					System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()),
 					new Vector2 (10, WindowHeight - 50), Color.White);
 			spriteBatch.End ();
