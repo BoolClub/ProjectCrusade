@@ -84,17 +84,24 @@ namespace ProjectCrusade
 
 					tiles.GetData<Color> (0, new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth), data, 0, World.TileWidth * World.TileWidth);
 
-					//average data using harmonic mean
+					//average data using arithmetic mean
 					Vector3 avg = Vector3.Zero;
+					int numSamples = 0;
 					for (int k = 0; k < data.Length; k++)
 					{
-						avg+=data [k].ToVector3 ();
+						//only add pixel value if opaque
+						if (data [k].A >= byte.MaxValue) {
+							avg += data [k].ToVector3 ();
+							numSamples++;
+						}
 					}
-					avg /= data.Length;
+					avg /= numSamples;
 					avg -= Vector3.One * 0.5f;
+					if (i == 5 && j == 0)
+						Console.WriteLine ("Rock!");
 
 					//effective contrast level
-					avg *= 1.7f;
+					avg *= 1.25f;
 
 					avg += Vector3.One * 0.5f;
 

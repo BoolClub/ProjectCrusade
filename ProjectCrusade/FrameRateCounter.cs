@@ -26,7 +26,7 @@ namespace ProjectCrusade
 		/// Initializes a frame rate counter.
 		/// </summary>
 		/// <param name="bufferSize">Over how many frames to average.</param>
-		public FrameRateCounter (int bufferSize = 16)
+		public FrameRateCounter (int bufferSize = 64)
 		{
 			this.bufferSize = bufferSize;
 			avgBuffer = new float[bufferSize];

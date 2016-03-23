@@ -199,6 +199,7 @@ namespace ProjectCrusade
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					layers[0].Tiles [i, j] = new Tile (TileType.CaveWall, true, Color.White.ToVector3 ());
+					layers[1].Tiles [i, j] = new Tile (TileType.Air, false, Color.White.ToVector3 ());
 				}
 			//Init rooms
 			rooms = new List<Room>();
@@ -257,8 +258,10 @@ namespace ProjectCrusade
 				for (int j = 0; j < Height; j++) {
 					if (!generator.IsRoom (i, j)) {
 						var t = generator.GetMazeTile (configuration.TileFamily, i, j);
-						if (t.Solid)
+						if (t.Solid) {
 							layers [1].Tiles [i, j] = t;
+							layers [0].Tiles [i, j] = new Tile (configuration.TileFamily.Floor, false, Color.White.ToVector3 ());
+						}
 						else 
 							layers [0].Tiles [i, j] = t;
 						if (generator.IsHall (i, j)) {
@@ -476,10 +479,15 @@ namespace ProjectCrusade
 			for (int i = 0; i < cameraRectangle.Width; i++)
 				for (int j = 0; j < cameraRectangle.Height; j++) {
 					Point p = new Point (i + cameraRectangle.Left, j + cameraRectangle.Top);
-					if (PointInWorld(p))
-					//only add to map if sufficiently bright
-					if ((layers[0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top].Color-ambientLighting.ToVector3()).LengthSquared() > 0.9f) 
-						Map.AddTile (p, layers[0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top]);
+					if (PointInWorld (p)) {
+						//only add to map if sufficiently bright
+						Tile t = layers [1].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top];
+						if (!t.Solid) 
+							t = layers [0].Tiles [i + cameraRectangle.Left, j + cameraRectangle.Top];
+
+						if ((t.Color - ambientLighting.ToVector3 ()).LengthSquared () > 0.8f)
+							Map.AddTile (p, t);
+					}
 				}
 			Map.SetPlayerPosition (Player.Position);
 		}
