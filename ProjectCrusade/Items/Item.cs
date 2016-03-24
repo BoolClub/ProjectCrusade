@@ -78,6 +78,12 @@ namespace ProjectCrusade
 		public abstract string Tooltip { get; }
 
 		/// <summary>
+		/// Gets or sets the name of the item.
+		/// </summary>
+		/// <value>The name of the item.</value>
+		public abstract string ItemName { get; }
+
+		/// <summary>
 		/// Increment size of stack. 
 		/// </summary>
 		/// <param name="amount">Number of items to add to stack. Default=1</param>

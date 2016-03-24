@@ -9,7 +9,7 @@ namespace ProjectCrusade
 		public override bool Stackable 			{ get { return true; 	} }
 		public override bool Depletable 		{ get { return false; 	} }
 		public override string Tooltip 		{ get { return Count + " coin(s)."; 		} }
-
+		public override string ItemName		{ get { return "coin";			}}
 
 		public Coin (int stackSize = 1) : base(stackSize) {
 		}
