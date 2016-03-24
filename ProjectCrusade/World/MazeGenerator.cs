@@ -249,6 +249,7 @@ namespace ProjectCrusade
 				Point currTile = deadEnd;
 
 				int i = 0; 
+				int neighbors = 0;
 				while ((neighbors = numNeighborsSolid (currTile)) ==3 && i < 1000) {
 					maze [currTile.X, currTile.Y] = 0;
 					if (currTile.X + 1 < width) if (maze [currTile.X + 1, currTile.Y] == -1) {
