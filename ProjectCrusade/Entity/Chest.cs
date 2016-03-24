@@ -26,7 +26,7 @@ namespace ProjectCrusade
 		public override void InteractWithPlayer (Player player)
 		{
 			if (item!=null) player.Inventory.AddItem (item);
-			//item = null;
+
 
 			if (item != null) {
 				textbox.AddText ("You received a " + item.ItemName);
@@ -35,6 +35,7 @@ namespace ProjectCrusade
 				} else {
 					textBoxVisible = false;
 					textbox.RemoveAllText ();
+					item = null;		
 				}
 				lastInteracted = 0f;
 			}
