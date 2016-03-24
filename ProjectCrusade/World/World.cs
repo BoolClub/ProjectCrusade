@@ -543,7 +543,7 @@ namespace ProjectCrusade
 
 			Vector2 prevPosition = entity.Position;
 			entity.Update (gameTime, this);
-			Point p = WorldToTileCoord (entity.Position);
+			//Point p = WorldToTileCoord (entity.Position);
 
 			//Disable fluid influence.
 //

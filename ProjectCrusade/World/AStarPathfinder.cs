@@ -56,8 +56,6 @@ namespace ProjectCrusade
 
 		public Point[] Compute(Point start, Point target, ref Tile[,] worldTiles, HeuristicType heuristicType = HeuristicType.Euclidean)
 		{
-			Stopwatch s = Stopwatch.StartNew ();
-
 			int width = worldTiles.GetLength (0), height = worldTiles.GetLength (1);
 
 			open [pRep(start)] = new Node{ gScore = 0, fScore = euclidean (start, target), cameFrom = start };

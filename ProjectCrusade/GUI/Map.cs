@@ -97,8 +97,6 @@ namespace ProjectCrusade
 					}
 					avg /= numSamples;
 					avg -= Vector3.One * 0.5f;
-					if (i == 5 && j == 0)
-						Console.WriteLine ("Rock!");
 
 					//effective contrast level
 					avg *= 1.25f;

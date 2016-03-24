@@ -247,7 +247,7 @@ namespace ProjectCrusade
 				if (rand.NextDouble () > PruningProbability)
 					continue;
 				Point currTile = deadEnd;
-				int neighbors;
+
 				int i = 0; 
 				while ((neighbors = numNeighborsSolid (currTile)) ==3 && i < 1000) {
 					maze [currTile.X, currTile.Y] = 0;
