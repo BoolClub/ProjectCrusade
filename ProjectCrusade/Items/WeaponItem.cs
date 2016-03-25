@@ -26,7 +26,7 @@ namespace ProjectCrusade
 
 				one = TierOne.ToString() + ' ';
 				two = TierTwo.ToString() + ' ';
-				three = TierThree.ToString ();
+				three = " of " + TierThree.ToString ();
 
 				if (TierOne == TierOneProperty.None)
 					one = "";
@@ -40,7 +40,7 @@ namespace ProjectCrusade
 				two = two.Replace ('_', ' ');
 				three = three.Replace ('_', ' ');
 
-				return String.Format ("{0}{1}{2} of {3}", one, two, BaseName, three);
+				return String.Format ("{0}{1}{2}{3}", one, two, BaseName, three);
 			}
 		}
 

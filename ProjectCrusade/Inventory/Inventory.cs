@@ -130,11 +130,16 @@ namespace ProjectCrusade
 			updateTooltip ();
 		}
 
+		string getTooltipText(InventorySlot slot)
+		{
+			return String.Format("{0}\n{1}", slot.Item.Name, slot.Item.Tooltip);
+		}
+
 		void updateTooltip()
 		{
 			bool foundCursor = false;
 			if (SelectedSlot != null) {
-				tooltipText = SelectedSlot.Item.Tooltip;
+				tooltipText = getTooltipText (SelectedSlot);
 				tooltipPosition = Mouse.GetState ().Position.ToVector2();
 				foundCursor = true;
 			}
@@ -147,7 +152,7 @@ namespace ProjectCrusade
 							break;
 						if (slots [i, j].CollisionBox.Contains (Mouse.GetState ().Position.X, Mouse.GetState ().Position.Y)) {
 							if (slots [i, j].HasItem && slots[i,j]!=SelectedSlot) {
-								tooltipText = slots [i, j].Item.Tooltip;
+								tooltipText = getTooltipText (slots[i,j]);
 								tooltipPosition = Mouse.GetState ().Position.ToVector2();
 							}
 							foundCursor = true;
@@ -254,7 +259,7 @@ namespace ProjectCrusade
 					+ new Vector2 (1, 1 - font.MeasureString (tooltipText).Y), Color.Black);
 				spriteBatch.DrawString (font, tooltipText, 
 					tooltipPosition
-					+ new Vector2 (0, 0 - font.MeasureString (tooltipText).Y), Color.White);
+					+ new Vector2 (0, 0 - font.MeasureString (tooltipText).Y), Color.Yellow);
 			
 			}
 		}

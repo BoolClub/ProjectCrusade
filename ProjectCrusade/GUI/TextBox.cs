@@ -100,7 +100,7 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime)
 		{
-			if (lastCharAnim > charAnimTime && currLen < spokenText[SpeechIndex].Length) {
+			if (lastCharAnim > charAnimTime && currLen <= spokenText[SpeechIndex].Length) {
 				currLen++;
 				lastCharAnim = 0f;
 			}

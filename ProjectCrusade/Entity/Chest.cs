@@ -30,7 +30,7 @@ namespace ProjectCrusade
 				item = new Sword ();
 				Sword s = item as Sword;
 				s.TierOne = WeaponItem.TierOneProperty.Beguiling;
-				s.TierTwo = WeaponItem.TierTwoProperty.None;
+				s.TierTwo = WeaponItem.TierTwoProperty.Heavy;
 				s.TierThree = WeaponItem.TierThreeProperty.the_Ages;
 				player.Inventory.AddItem (item);
 				string name = item.Name;

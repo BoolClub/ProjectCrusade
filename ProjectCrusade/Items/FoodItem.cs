@@ -23,7 +23,7 @@ namespace ProjectCrusade
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 10; 		} }
 		public override string Tooltip 		{ get { return "An apple. Restores health."; 		} }
-		public override string Name 	{ get { return "apple"; } }
+		public override string Name 	{ get { return "Apple"; } }
 	}
 
 
@@ -35,7 +35,7 @@ namespace ProjectCrusade
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }
 		public override string Tooltip 		{ get { return "Nice, refreshing water."; 		} }
-		public override string Name 	{ get { return "water"; } }
+		public override string Name 	{ get { return "Water"; } }
 	}
 
 
@@ -47,7 +47,7 @@ namespace ProjectCrusade
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }
 		public override string Tooltip 		{ get { return "A big loaf of bread."; 	} }
-		public override string Name 	{ get { return "bread"; } }
+		public override string Name 	{ get { return "Bread"; } }
 	} 
 
 
