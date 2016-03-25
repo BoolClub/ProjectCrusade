@@ -147,6 +147,8 @@ namespace ProjectCrusade
 						currWidth = font.MeasureString (builder).X;
 						currChar++;
 					}
+					if (text [currChar-1] != '\n' && text [currChar-1] != ' ' && currChar!=text.Length)
+					builder.Append ('-');
 
 					//append line to main string
 					builder.Append ('\n');
