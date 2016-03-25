@@ -42,7 +42,7 @@ namespace ProjectCrusade
 		public override ItemType Type 			{ get { return ItemType.StarterArrow; } }
 		public override string Tooltip 		{ get { return "A basic arrow. I could shoot this using a bow."; } }
 		protected override int Damage 			{ get { return 50; } }
-		public override string ItemName			{ get { return "an arrow"; }}
+		public override string Name			{ get { return "arrow"; }}
 	}
 
 }

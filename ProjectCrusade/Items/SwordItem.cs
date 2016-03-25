@@ -38,7 +38,7 @@ namespace ProjectCrusade
 		public override ItemType Type 			{ get { return ItemType.WoodenSword; } }
 		public override string Tooltip 		{ get { return "A wooden sword. This could be used to fight..."; } }
 		protected override int Damage 			{ get { return 80; } }
-		public override string ItemName 	{ get { return "a wooden sword"; } }
+		public override string Name 	{ get { return "wooden sword"; } }
 	} 
 
 	public class StoneSword : SwordItem
@@ -47,7 +47,7 @@ namespace ProjectCrusade
 		public override ItemType Type 			{ get { return ItemType.StoneSword; } }
 		public override string Tooltip 		{ get { return "A stone sword. This could be used to fight..."; } }
 		protected override int Damage 			{ get { return 100; } }
-		public override string ItemName 	{ get { return "a stone sword"; } }
+		public override string Name 	{ get { return "stone sword"; } }
 	} 
 
 	public class IronSword : SwordItem
@@ -56,7 +56,7 @@ namespace ProjectCrusade
 		public override ItemType Type 			{ get { return ItemType.IronSword; } }
 		public override string Tooltip 		{ get { return "An iron sword. This could be used to fight..."; } }
 		protected override int Damage 			{ get { return 120; } }
-		public override string ItemName 	{ get { return "an iron sword"; } }
+		public override string Name 	{ get { return "iron sword"; } }
 	} 
 
 

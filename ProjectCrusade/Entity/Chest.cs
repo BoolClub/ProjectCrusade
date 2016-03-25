@@ -14,51 +14,46 @@ namespace ProjectCrusade
 		TextBox textbox;
 		bool textBoxVisible = false;
 		float lastInteracted = 0f;
-		const float idleTime = 8e3f; //if no interaction for this time in ms, hide text box
+		const float idleTime = 2.5e3f; //if no interaction for this time in ms, hide text box
 
 		public Chest (Item _item)
 		{
 			Width = 32;
 			Height = 32;
 			item = _item;
-			textbox = new TextBox (256,150,Position,Color.Black, Color.White);
+			textbox = new TextBox (256,150,Position,Color.Black, Color.White, 0.5f);
+
 		}
 		public override void InteractWithPlayer (Player player)
 		{
-			if (item!=null) player.Inventory.AddItem (item);
-
-
 			if (item != null) {
-				textbox.AddText ("You received a " + item.ItemName);
-				if (!textBoxVisible) {
-					textBoxVisible = true;
-				} else {
-					textBoxVisible = false;
-					textbox.RemoveAllText ();
-					item = null;		
-				}
+				player.Inventory.AddItem (item);
+				string name = item.Name;
+
+				//check if first letter is a vowel 
+				bool isVowel = "aeiouAEIOU".IndexOf(name[0]) >= 0;
+
+				textbox.AddText (String.Format("You received {0} {1}{2}.", item.Count==1 ? (isVowel ? "an" : "a") : item.Count.ToString(), name, item.Count == 1 ? "" : "s"));
+				textBoxVisible = true;
+				item = null;		
 				lastInteracted = 0f;
 			}
 		}
 		public override void Update (GameTime gameTime, World world)
 		{
-			if(item != null)
-				if (textBoxVisible) textbox.Update (gameTime);
+			if (textBoxVisible) textbox.Update (gameTime);
 
 			if (lastInteracted > idleTime) {
 				textBoxVisible = false;
-				item = null;
 			}
+			textbox.Position = Position;
 			lastInteracted += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)
 		{
 			spriteBatch.Draw (textureManager.WhitePixel, null, CollisionBox, null, null, 0, null, Color.Orange, SpriteEffects.None, 0.1f);
 		
-			//If interacting with the player...
-			if(item != null)
-				textbox.Position = Position;
-				if (textBoxVisible) textbox.Draw (spriteBatch, textureManager, fontManager);
+			if (textBoxVisible) textbox.Draw (spriteBatch, textureManager, fontManager);
 		}
 	}
 }

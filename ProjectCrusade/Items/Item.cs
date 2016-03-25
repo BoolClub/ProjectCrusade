@@ -22,6 +22,7 @@
  *
  *  *** SEE Apple CLASS FOR A SIMPLE EXAMPLE ***
  */
+using System;
 
 
 namespace ProjectCrusade
@@ -56,40 +57,58 @@ namespace ProjectCrusade
 		public const int SpriteWidth = 32;
 
 
-		//An enum for the type of item. Each item has a different type.
+		/// <summary>
+		/// An enum for the type of item. Each item has a different type.
+		/// </summary>
 		public abstract ItemType Type { get; } 
 
-		//This boolean determines whether or not the item can be stacked.
+		/// <summary>
+		/// This boolean determines whether or not the item can be stacked.
+		/// </summary>
 		public abstract bool Stackable { get; }
 
-		//The current stack size of a stackable item.
-		public int Count { get; set; }
+		int count;
+		/// <summary>
+		/// The current stack size of a stackable item.
+		/// </summary>
+		public int Count { get { return count;} set { 
+			
+				if (!Stackable && value > 1)
+					throw new Exception ("A non-stackable item cannot have a count of more than 1.");
+				else
+					count = value;
+			}}
 
-		//The maximum stack that a stackable item can hold.
-		public const int MaxStackSize = 64;
+		/// <summary>
+		/// The maximum stack that a stackable item can hold.
+		/// </summary>
+		public const int MaxCount = 64;
 
-		//Whether an item is removed from the stack when used.
+		/// <summary>
+		/// Whether an item is removed from the stack when used.
+		/// </summary>
 		public abstract bool Depletable { get; }
 
 
-		public Item(int stackSize = 1) { Count = stackSize;}
+		public Item(int stackSize = 1) { count = stackSize;}
 
-		//Returns information about the item. This can be displayed on the screen so the player knows what each item does.
+		/// <summary>
+		/// Returns information about the item. This can be displayed on the screen so the player knows what each item does.
+		/// </summary>
 		public abstract string Tooltip { get; }
 
 		/// <summary>
-		/// Gets or sets the name of the item.
+		/// Gets the name of the item.
 		/// </summary>
-		/// <value>The name of the item.</value>
-		public abstract string ItemName { get; }
+		public abstract string Name { get; }
 
 		/// <summary>
 		/// Increment size of stack. 
 		/// </summary>
 		/// <param name="amount">Number of items to add to stack. Default=1</param>
 		public void AddToStack(int amount = 1) {
-			if (Count < MaxStackSize) {
-				Count += amount;
+			if (count < MaxCount) {
+				count += amount;
 			}
 		}
 
