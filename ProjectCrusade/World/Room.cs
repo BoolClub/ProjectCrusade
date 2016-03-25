@@ -49,7 +49,7 @@ namespace ProjectCrusade
 
 
 
-		public void GenerateRoom(List<WorldLayer> layers, ref List<Light> lights)
+		public void GenerateRoom(List<WorldLayer> layers, ref List<Light> lights, TieredPropertySelector propertySelector, Random rand)
 		{
 			int layerCount = layers.Count;
 			XmlReader reader = XmlReader.Create (file);
@@ -95,7 +95,7 @@ namespace ProjectCrusade
 			}
 			makeObjectives (doc);
 			makeLights (doc, ref lights);
-			makeNPCs (doc);
+			makeNPCs (doc, propertySelector, rand);
 
 			//Get entrances
 			//An entrance is defined as any non-solid tile on the border of the room.
@@ -160,7 +160,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Looks for and places any entities indicated in the TMX file
 		/// </summary>
-		void makeNPCs(XmlDocument doc)
+		void makeNPCs(XmlDocument doc, TieredPropertySelector propertySelector, Random rand)
 		{
 			foreach (XmlElement npc in doc.SelectNodes("map/objectgroup[@name='Entities']/object")) {
 				Point npcPos = new Point (
@@ -186,6 +186,15 @@ namespace ProjectCrusade
 
 					Type T = Type.GetType ("ProjectCrusade." + typename);
 					Item i = (Item)Activator.CreateInstance (T);
+
+					//If i is a weapon, add random weapon properties based on the level's respective probabilities (encoded in the TieredPropertySelector object)
+					if (i is WeaponItem) {
+						WeaponItem w = i as WeaponItem;
+
+						w.TierOne = propertySelector.RandomPropertyOne (rand);
+						w.TierTwo = propertySelector.RandomPropertyTwo (rand);
+						w.TierThree = propertySelector.RandomPropertyThree (rand);
+					}
 
 					Chest c = new Chest (i);
 

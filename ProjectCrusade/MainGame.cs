@@ -56,6 +56,7 @@ namespace ProjectCrusade
 			frameCounter = new FrameRateCounter ();
 			frameCounterDraw = new FrameRateCounter ();
 
+
 			base.Initialize ();
 
 		}

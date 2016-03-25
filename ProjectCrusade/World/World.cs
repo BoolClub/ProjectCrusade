@@ -59,6 +59,10 @@ namespace ProjectCrusade
 		Color ambientLighting = new Color(0.0f, 0.0f, 0.0f);
 
 		WorldConfiguration configuration;
+		/// <summary>
+		/// Used to randomly assign properties to items. Loaded in generateWorld().
+		/// </summary>
+		TieredPropertySelector tieredPropertySelector;
 
 		/// <summary>
 		/// How often to update lighting in ms. Updating lighting is expensive. 
@@ -131,6 +135,7 @@ namespace ProjectCrusade
 			configuration.AddRooms ("Level1/Room6.tmx",1);
 			configuration.AddRooms ("Level1/Room7.tmx",1);
 			configuration.AddRooms ("Level1/Room9.tmx",1);
+			configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
 		}
 
 		/// <summary>
@@ -196,8 +201,11 @@ namespace ProjectCrusade
 			return finder.Compute (start, end, ref layers[1].Tiles, AStarPathfinder.HeuristicType.Euclidean);
 		}
 
+
 		void generateWorld(ObjectiveManager objManager)
 		{
+			//load tiered property selector
+			tieredPropertySelector = new TieredPropertySelector("Content/Levels/" + configuration.TieredPropertyFileName);
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					layers[0].Tiles [i, j] = new Tile (configuration.TileFamily.Floor, true, Color.White.ToVector3 ());
@@ -228,7 +236,7 @@ namespace ProjectCrusade
 					if (!(room.Rect.Right >= Width || room.Rect.Bottom >= Height || intersectedOtherRoom))
 						foundRoom = true;
 				}
-				room.GenerateRoom (layers, ref lights);
+				room.GenerateRoom (layers, ref lights, tieredPropertySelector, rand);
 				rooms.Add (room);
 			}
 			//TODO: procedural generation.
@@ -681,7 +689,7 @@ namespace ProjectCrusade
 								0.2f*l);
 					}
 
-			foreach (Entity entity in entities) {
+			foreach (Entity entity in activeEntities) {
 				Point p = WorldToTileCoord (entity.Position);
 				Color col = Color.White;
 				if (PointInWorld (p))
