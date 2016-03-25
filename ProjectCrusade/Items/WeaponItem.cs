@@ -18,8 +18,84 @@ namespace ProjectCrusade
 
 		protected abstract int Damage { get; }
 
+		protected abstract string BaseName { get; }
 
-		public WeaponItem () {}
+		public override string Name {
+			get {
+				string one, two, three;
+
+				one = TierOne.ToString() + ' ';
+				two = TierTwo.ToString() + ' ';
+				three = TierThree.ToString ();
+
+				if (TierOne == TierOneProperty.None)
+					one = "";
+				if (TierTwo == TierTwoProperty.None)
+					two = "";
+				if (TierThree == TierThreeProperty.None)
+					three = "";
+
+
+				one = one.Replace ('_', ' ');
+				two = two.Replace ('_', ' ');
+				three = three.Replace ('_', ' ');
+
+				return String.Format ("{0}{1}{2} of {3}", one, two, BaseName, three);
+			}
+		}
+
+		public TierOneProperty TierOne;
+		public TierTwoProperty TierTwo;
+		public TierThreeProperty TierThree;
+
+
+		public enum TierOneProperty { 
+			None = 0,
+			Flaming, 
+			Healing, 
+			Destroying, 
+			Daring, 
+			Crying, 
+			Stealing, 
+			Beguiling, 
+			Stunning, 
+			Swarming
+		}
+
+		public enum TierTwoProperty
+		{
+			None = 0,
+			Youthful,
+			Wild,
+			Lucky,
+			Weird,
+			Poisoned,
+			Icy,
+			Brigands,
+			Heavy,
+			Old,
+			Unlucky,
+			Light,
+		}
+
+		public enum TierThreeProperty {
+			None = 0,
+			Uthman,
+			the_Fortunate,
+			the_Ages,
+			the_Griffon,
+			Mages,
+			Knights,
+			Kingdoms,
+			Mogar,
+			the_Night,
+		}
+
+		public WeaponItem () {
+			TierOne = TierOneProperty.None;
+			TierTwo = TierTwoProperty.None;
+			TierThree = TierThreeProperty.None;
+		}
 
 
 		//Degrade the item every time it is used.

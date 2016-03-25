@@ -88,7 +88,7 @@ namespace ProjectCrusade {
 			Inventory.AddItem (new Coin(5));
 			Inventory.AddItem (new Coin());
 			Inventory.AddItem (new Coin());
-			Inventory.AddItem (new WoodenSword ());
+			Inventory.AddItem (new Sword());
 			StarterArrow arr = new StarterArrow ();
 			arr.Count = 63;
 			Inventory.AddItem (arr);
@@ -243,9 +243,7 @@ namespace ProjectCrusade {
 				t.Add (new Water ());
 				t.Add (new Bread ());
 				t.Add (new Coin ());
-				t.Add (new WoodenSword ());
-				t.Add (new IronSword ());
-				t.Add (new StoneSword ());
+				t.Add (new Sword ());
 				t.Add (new StarterArrow ());
 				t.Add (new MagicWand ());
 

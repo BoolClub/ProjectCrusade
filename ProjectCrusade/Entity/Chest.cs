@@ -14,7 +14,7 @@ namespace ProjectCrusade
 		TextBox textbox;
 		bool textBoxVisible = false;
 		float lastInteracted = 0f;
-		const float idleTime = 2.5e3f; //if no interaction for this time in ms, hide text box
+		const float idleTime = 4e3f; //if no interaction for this time in ms, hide text box
 
 		public Chest (Item _item)
 		{
@@ -27,6 +27,11 @@ namespace ProjectCrusade
 		public override void InteractWithPlayer (Player player)
 		{
 			if (item != null) {
+				item = new Sword ();
+				Sword s = item as Sword;
+				s.TierOne = WeaponItem.TierOneProperty.Beguiling;
+				s.TierTwo = WeaponItem.TierTwoProperty.None;
+				s.TierThree = WeaponItem.TierThreeProperty.the_Ages;
 				player.Inventory.AddItem (item);
 				string name = item.Name;
 
