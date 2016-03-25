@@ -225,7 +225,7 @@ namespace ProjectCrusade
 					drawSlot (spriteBatch, textureManager, fontManager, i, j, Opacity);
 				}
 			drawDraggingItem (spriteBatch, textureManager, fontManager);
-			drawTooltip (spriteBatch, fontManager);
+			drawTooltip (spriteBatch, textureManager, fontManager);
 		}
 
 		void drawDraggingItem(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
@@ -249,17 +249,23 @@ namespace ProjectCrusade
 			}
 		}
 
-		void drawTooltip(SpriteBatch spriteBatch, FontManager fontManager)
+		void drawTooltip(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager)
 		{
 			SpriteFont font = fontManager.GetFont ("MainFontLarge");
 			// TODO: Draw a background for the tooltip so that it's easier to read.
 			if (tooltipText != "" && Open) {
+
+				const float toolTipPadding = 10;
+				const float toolTipOpacity = 0.8f;
+				Vector2 dims = font.MeasureString (tooltipText);
+
+				spriteBatch.Draw (textureManager.WhitePixel, null, new Rectangle ((int)tooltipPosition.X, (int)(tooltipPosition.Y + 2*toolTipPadding), (int)(dims.X + 2*toolTipPadding), (int)(dims.Y + 2*toolTipPadding)), null,new Vector2(0,1), 0, null, Color.Black*toolTipOpacity, SpriteEffects.None, 0);
 				spriteBatch.DrawString (font, tooltipText, 
 					tooltipPosition
-					+ new Vector2 (1, 1 - font.MeasureString (tooltipText).Y), Color.Black);
+					+ new Vector2 (toolTipPadding + 1, toolTipPadding + 1 - dims.Y), Color.Black);
 				spriteBatch.DrawString (font, tooltipText, 
 					tooltipPosition
-					+ new Vector2 (0, 0 - font.MeasureString (tooltipText).Y), Color.Yellow);
+					+ new Vector2 (toolTipPadding, toolTipPadding - dims.Y), Color.Yellow);
 			
 			}
 		}
