@@ -256,6 +256,7 @@ namespace ProjectCrusade
 			generator.ClearThinWalls = true;
 			foreach (Room room in rooms) generator.ShadeRoom(room);
 			generator.Generate ();
+			int currNumEntities = entities.Count;
 			for (int i = 0; i < Width; i++)
 				for (int j = 0; j < Height; j++) {
 					if (!generator.IsRoom (i, j)) {
@@ -271,6 +272,7 @@ namespace ProjectCrusade
 						}
 					}
 				}
+			Console.WriteLine ("{0} enemies spawned.", entities.Count  - currNumEntities);
 		}
 
 		void placeNPCs()

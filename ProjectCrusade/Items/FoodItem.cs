@@ -9,8 +9,7 @@ namespace ProjectCrusade
 		//All food items heal.
 		public override void PrimaryUse (World world)
 		{
-				world.Player.Heal (HealValue);
-				Console.WriteLine ("Sanity: " + world.Player.Sanity);
+			world.Player.Heal (HealValue);
 		}
 		
 	
