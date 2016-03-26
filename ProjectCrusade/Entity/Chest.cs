@@ -33,7 +33,7 @@ namespace ProjectCrusade
 				//check if first letter is a vowel 
 				bool isVowel = "aeiouAEIOU".IndexOf(name[0]) >= 0;
 
-				textbox.AddText (String.Format("You received {0}\n\n{1}{2}.", item.Count==1 ? (isVowel ? "an" : "a") : item.Count.ToString(), name, item.Count == 1 ? "" : "s"));
+				textbox.AddText (String.Format("You received {0} {1}{2}.", item.Count==1 ? (isVowel ? "an" : "a") : item.Count.ToString(), name, item.Count == 1 ? "" : "s"));
 				textBoxVisible = true;
 				item = null;		
 				lastInteracted = 0f;
