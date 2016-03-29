@@ -36,12 +36,10 @@ namespace ProjectCrusade
 		Apple		 	= 0,
 		Water		 	= 1,
 		Coin		 	= 2,
-		WoodenSword 	= 3,
+		Sword 	= 3,
 		StarterArrow	= 4,
 		MagicWand		= 5,
 		Bread			= 6,
-		StoneSword		= 7,
-		IronSword		= 8,
 
 	}
 

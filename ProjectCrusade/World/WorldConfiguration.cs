@@ -7,6 +7,7 @@ namespace ProjectCrusade
 	{
 		public List<string> RoomNames;
 		public TileFamily TileFamily;
+		public string TieredPropertyFileName;
 
 		public WorldConfiguration ()
 		{

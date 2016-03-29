@@ -61,9 +61,9 @@
   </object>
   <object id="10" x="137.759" y="56.3213" width="32" height="32">
    <properties>
-    <property name="count" value="10"/>
+    <property name="count" value="1"/>
     <property name="name" value="chest"/>
-    <property name="type" value="Apple"/>
+    <property name="type" value="Sword"/>
    </properties>
   </object>
  </objectgroup>

@@ -14,7 +14,7 @@ namespace ProjectCrusade
 		TextBox textbox;
 		bool textBoxVisible = false;
 		float lastInteracted = 0f;
-		const float idleTime = 2.5e3f; //if no interaction for this time in ms, hide text box
+		const float idleTime = 4e3f; //if no interaction for this time in ms, hide text box
 
 		public Chest (Item _item)
 		{

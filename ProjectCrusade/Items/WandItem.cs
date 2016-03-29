@@ -35,8 +35,8 @@ namespace ProjectCrusade
 		public override ItemType Type 			{ get { return ItemType.MagicWand; } }
 		public override bool Depletable 		{ get { return false; } }
 		protected override int Damage 			{ get { return 10; } }
-		public override string Tooltip 		{ get { return "A magical wand!"; } }
-		public override string Name 	{ get { return "magic wand"; } }
+		public override string Tooltip 		{ get { return base.Tooltip + "A magical wand!"; } }
+		protected override string BaseName 	{ get { return "Wand"; } }
 
 		public MagicWand () {
 

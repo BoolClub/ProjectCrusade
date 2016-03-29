@@ -47,7 +47,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// A factor in the range [0,1) that determines how smoothly the enemy follows the new path. Uses a kind of exponential interpolation.
 		/// </summary>
-		const float pathFollowingSmoothness = 0.9f;
+		const float pathFollowingSmoothness = 0.8f;
 
 		Point[] pathToPlayer;
 		int currPointOnPath = 0;
@@ -65,6 +65,7 @@ namespace ProjectCrusade
 		/// </summary>
 		const float attackCooldown = 1e3f;
 		float lastAttack = 0f;
+
 
 		public Enemy ()
 		{
@@ -99,7 +100,17 @@ namespace ProjectCrusade
 
 		public override void Update (GameTime gameTime, World world) 
 		{
-			bool line_sight = world.HasLineOfSight (world.WorldToTileCoord (Position), world.WorldToTileCoord (world.Player.Position));
+			bool line_sight = false;
+			bool full_line_sight = true;
+			bool a, b, c, d; 
+			a=world.HasLineOfSight (world.WorldToTileCoord (Position), world.WorldToTileCoord (world.Player.Position));
+			b=world.HasLineOfSight (world.WorldToTileCoord (Position) + new Point(0,1), world.WorldToTileCoord (world.Player.Position));
+			c=world.HasLineOfSight (world.WorldToTileCoord (Position) + new Point(1,0), world.WorldToTileCoord (world.Player.Position));
+			d=world.HasLineOfSight (world.WorldToTileCoord (Position) + new Point(1,1), world.WorldToTileCoord (world.Player.Position));
+
+			line_sight = a || b || c || d;
+			full_line_sight = a && b && c && d;
+
 			if (line_sight)
 				lastSeenPlayer = 0;
 			const float interactionRadius = 1000;
@@ -122,22 +133,24 @@ namespace ProjectCrusade
 			float displacement = (float)gameTime.ElapsedGameTime.TotalSeconds * Speed;
 			switch (CurrState) {
 			case State.Chasing:
-				if (line_sight) {
+				if (full_line_sight) {
 					patrollingDirection = Vector2.Normalize (world.Player.Position - Position);
 				} else {
 					if (lastPathUpdate > pathUpdatePeriod || pathToPlayer == null) {
 						pathToPlayer = world.Pathfind (world.WorldToTileCoord (CollisionBox.Center), world.WorldToTileCoord (world.Player.CollisionBox.Center));
 						lastPathUpdate = 0;
 					}
+
+					Vector2 dispVec = new Vector2 (World.TileWidth / 2-Width/2, World.TileWidth / 2-Height/2);
 					for (int i = 0; i < pathToPlayer.Length; i++)
-						if (world.WorldToTileCoord (Position) == pathToPlayer [i]) {
+						if (world.WorldToTileCoord (Position - dispVec) == pathToPlayer [i]) {
 							currPointOnPath = i;
 							break;
 						}
 					//if the enemy is basically at the player's location, break
-					if (currPointOnPath >= pathToPlayer.Length - 1)
+					if (currPointOnPath >= pathToPlayer.Length)
 						break;
-					Vector2 nvec = Vector2.Normalize (world.TileToWorldCoord (pathToPlayer [currPointOnPath + 1]) - Position);
+					Vector2 nvec = Vector2.Normalize (world.TileToWorldCoord (pathToPlayer [currPointOnPath]) + dispVec - Position);
 					patrollingDirection = Vector2.Normalize (pathFollowingSmoothness * patrollingDirection + (1 - pathFollowingSmoothness) * nvec);
 				}
 

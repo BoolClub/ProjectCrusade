@@ -100,7 +100,7 @@ namespace ProjectCrusade
 
 		public void Update(GameTime gameTime)
 		{
-			if (lastCharAnim > charAnimTime && currLen < spokenText[SpeechIndex].Length) {
+			if (lastCharAnim > charAnimTime && currLen <= spokenText[SpeechIndex].Length) {
 				currLen++;
 				lastCharAnim = 0f;
 			}
@@ -147,6 +147,8 @@ namespace ProjectCrusade
 						currWidth = font.MeasureString (builder).X;
 						currChar++;
 					}
+					if (text [currChar-1] != '\n' && text [currChar-1] != ' ' && currChar!=text.Length)
+					builder.Append ('-');
 
 					//append line to main string
 					builder.Append ('\n');

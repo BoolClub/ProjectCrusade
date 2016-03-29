@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<tiers>
+	<tier num="1">
+		<Flaming>		0.1		</Flaming> 
+		<Healing>		0.1		</Healing> 
+		<Destroying>	0.1		</Destroying> 
+		<Daring>		0.1		</Daring> 
+		<Crying>		0.1		</Crying> 
+		<Stealing>		0.1		</Stealing> 
+		<Beguiling>		0.1		</Beguiling> 
+		<Stunning>		0.1		</Stunning> 
+		<Swarming>		0.1		</Swarming>
+	</tier>
+	<tier num="2">
+		<Youthful>		0.1		</Youthful>
+		<Wild>			0.1		</Wild>
+		<Lucky>			0.1		</Lucky>
+		<Weird>			0.1		</Weird>
+		<Poisoned>		0.1		</Poisoned>
+		<Icy>			0.1		</Icy>
+		<Brigands>		0.1		</Brigands>
+		<Heavy>			0.1		</Heavy>
+		<Old>			0.05	</Old>
+		<Unlucky>		0.05	</Unlucky>
+		<Light>			0.05	</Light>
+	</tier>
+	<tier num="3">
+		<Uthman>		0.1		</Uthman>
+		<the_Fortunate>	0.1		</the_Fortunate>
+		<the_Ages>		0.1		</the_Ages>
+		<the_Griffon>	0.1		</the_Griffon>
+		<Mages>			0.1		</Mages>
+		<Knights>		0.1		</Knights>
+		<Kingdoms>		0.1		</Kingdoms>
+		<Mogar>			0.1		</Mogar>
+		<the_Night>		0.1		</the_Night>
+	</tier>
+</tiers>
