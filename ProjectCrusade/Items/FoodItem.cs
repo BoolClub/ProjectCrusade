@@ -17,7 +17,7 @@ namespace ProjectCrusade
 
 	public class Apple : FoodItem
 	{
-		public override ItemType Type 			{ get { return ItemType.Apple; } }
+		public override ItemSprite Type 			{ get { return ItemSprite.Apple; } }
 		public override bool Stackable 			{ get { return true; 	} }
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 10; 		} }
@@ -29,7 +29,7 @@ namespace ProjectCrusade
 	public class Water : FoodItem
 	{
 
-		public override ItemType Type 			{ get { return ItemType.Water; } }
+		public override ItemSprite Type 			{ get { return ItemSprite.Water; } }
 		public override bool Stackable 			{ get { return true; 	} }
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }
@@ -41,7 +41,7 @@ namespace ProjectCrusade
 	public class Bread : FoodItem
 	{
 
-		public override ItemType Type 			{ get { return ItemType.Bread; } }
+		public override ItemSprite Type 			{ get { return ItemSprite.Bread; } }
 		public override bool Stackable 			{ get { return true; 	} }
 		public override bool Depletable 		{ get { return true; 	} }
 		public override int HealValue 			{ get { return 1; 		} }

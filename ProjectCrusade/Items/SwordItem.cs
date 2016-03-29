@@ -35,7 +35,7 @@ namespace ProjectCrusade
 	public class Sword : SwordItem
 	{
 
-		public override ItemType Type 			{ get { return ItemType.Sword; } }
+		public override ItemSprite Type 			{ get { return ItemSprite.WoodenSword; } }
 		public override string Tooltip 		{ get { return base.Tooltip + "A wooden sword. This could be used to fight..."; } }
 		protected override int Damage 			{ get { return 80; } }
 		protected override string BaseName 	{ get { return "Sword"; } }

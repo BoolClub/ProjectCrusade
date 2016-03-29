@@ -39,7 +39,7 @@ namespace ProjectCrusade
 	//An arrow class for when the player chooses to be use ranged combat.
 	public class StarterArrow : ArrowItem
 	{
-		public override ItemType Type 			{ get { return ItemType.StarterArrow; } }
+		public override ItemSprite Type 			{ get { return ItemSprite.BowArrow; } 	}
 		public override string Tooltip 		{ get { return base.Tooltip + "Can be shot."; } }
 		protected override int Damage 			{ get { return 50; } }
 		protected override string BaseName			{ get { return "Bow"; }}

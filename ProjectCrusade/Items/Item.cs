@@ -32,15 +32,25 @@ namespace ProjectCrusade
 	/// <summary>
 	/// Used as an ID for each item. 
 	/// </summary>
-	public enum ItemType {
+	public enum ItemSprite {
 		Apple		 	= 0,
-		Water		 	= 32,
 		Coin		 	= 1,
-		Sword 	= 2,
-		StarterArrow	= 3,
+		WoodenSword		= 2,
+		StoneSword		= 18,
+		FireySword		= 34,
+		GreenSword		= 50,
+		GoldSword		= 66,
+		StoneSword2		= 82,
+		IronSword		= 98,
+		BowArrow		= 3,
 		MagicWand		= 4,
+		Mace			= 5,
+		Dagger			= 6,
+		Arrow			= 7,
+		BlueFireball	= 8,
+		RedFireball		= 9,
 		Bread			= 16,
-
+		Water		 	= 32,
 	}
 
 
@@ -58,7 +68,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// An enum for the type of item. Each item has a different type.
 		/// </summary>
-		public abstract ItemType Type { get; } 
+		public abstract ItemSprite Type { get; } 
 
 		/// <summary>
 		/// This boolean determines whether or not the item can be stacked.
