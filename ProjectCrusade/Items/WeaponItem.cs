@@ -24,103 +24,109 @@ namespace ProjectCrusade
 		//TODO: make this cleaner
 		public override string Tooltip {
 			get {
-				StringBuilder build = new StringBuilder ();
-
-				switch (TierOne) {
-				case TierOneProperty.Flaming:
-					build.AppendLine ("Flaming: ");
-					break;
-				case TierOneProperty.Healing:
-					build.AppendLine ("Healing: ");
-					break;
-				case TierOneProperty.Destroying:
-					build.AppendLine ("Destroying: ");
-					break;
-				case TierOneProperty.Daring:
-					build.AppendLine ("Daring: ");
-					break;
-				case TierOneProperty.Crying:
-					build.AppendLine ("Crying: ");
-					break;
-				case TierOneProperty.Stealing:
-					build.AppendLine ("Stealing: ");
-					break;
-				case TierOneProperty.Beguiling:
-					build.AppendLine ("Beguiling: ");
-					break;
-				case TierOneProperty.Stunning:
-					build.AppendLine ("Stunning: ");
-					break;
-				case TierOneProperty.Swarming:
-					build.AppendLine ("Swarming: ");
-					break;
-				}
-				switch (TierTwo) {
-				case TierTwoProperty.Youthful:
-					build.AppendLine ("Youthful: ");
-					break;
-				case TierTwoProperty.Wild:
-					build.AppendLine ("Wild: ");
-					break;
-				case TierTwoProperty.Lucky:
-					build.AppendLine ("Lucky: ");
-					break;
-				case TierTwoProperty.Weird:
-					build.AppendLine ("Weird: ");
-					break;
-				case TierTwoProperty.Poisoned:
-					build.AppendLine ("Poisoned: ");
-					break;
-				case TierTwoProperty.Icy:
-					build.AppendLine ("Icy: ");
-					break;
-				case TierTwoProperty.Brigands:
-					build.AppendLine ("Brigands: ");
-					break;
-				case TierTwoProperty.Heavy:
-					build.AppendLine ("Heavy: ");
-					break;
-				case TierTwoProperty.Old:
-					build.AppendLine ("Old: ");
-					break;
-				case TierTwoProperty.Unlucky:
-					build.AppendLine ("Unlucky: ");
-					break;
-				case TierTwoProperty.Light:
-					build.AppendLine ("Light: ");
-					break;
-				}
-				switch (TierThree) {
-				case TierThreeProperty.Uthman:
-					build.AppendLine ("Uthman: ");
-					break;
-				case TierThreeProperty.the_Fortunate:
-					build.AppendLine ("the Fortunate: ");
-					break;
-				case TierThreeProperty.the_Ages:
-					build.AppendLine ("the Ages: ");
-					break;
-				case TierThreeProperty.the_Griffon:
-					build.AppendLine ("the Griffon: ");
-					break;
-				case TierThreeProperty.Mages:
-					build.AppendLine ("Mages: ");
-					break;
-				case TierThreeProperty.Knights:
-					build.AppendLine ("Knights: ");
-					break;
-				case TierThreeProperty.Kingdoms:
-					build.AppendLine ("Kingdoms: ");
-					break;
-				case TierThreeProperty.Mogar:
-					build.AppendLine ("Mogar: ");
-					break;
-				case TierThreeProperty.the_Night:
-					build.AppendLine ("the Night: ");
-					break;
-				}
-				return build.ToString ();
+				return getDescriptions ();
 			}
+		}
+
+
+		string getDescriptions()
+		{
+			StringBuilder build = new StringBuilder ();
+
+			switch (TierOne) {
+			case TierOneProperty.Flaming:
+				build.AppendLine ("Flaming: ");
+				break;
+			case TierOneProperty.Healing:
+				build.AppendLine ("Healing: ");
+				break;
+			case TierOneProperty.Destroying:
+				build.AppendLine ("Destroying: ");
+				break;
+			case TierOneProperty.Daring:
+				build.AppendLine ("Daring: ");
+				break;
+			case TierOneProperty.Crying:
+				build.AppendLine ("Crying: ");
+				break;
+			case TierOneProperty.Stealing:
+				build.AppendLine ("Stealing: ");
+				break;
+			case TierOneProperty.Beguiling:
+				build.AppendLine ("Beguiling: ");
+				break;
+			case TierOneProperty.Stunning:
+				build.AppendLine ("Stunning: ");
+				break;
+			case TierOneProperty.Swarming:
+				build.AppendLine ("Swarming: ");
+				break;
+			}
+			switch (TierTwo) {
+			case TierTwoProperty.Youthful:
+				build.AppendLine ("Youthful: ");
+				break;
+			case TierTwoProperty.Wild:
+				build.AppendLine ("Wild: ");
+				break;
+			case TierTwoProperty.Lucky:
+				build.AppendLine ("Lucky: ");
+				break;
+			case TierTwoProperty.Weird:
+				build.AppendLine ("Weird: ");
+				break;
+			case TierTwoProperty.Poisoned:
+				build.AppendLine ("Poisoned: ");
+				break;
+			case TierTwoProperty.Icy:
+				build.AppendLine ("Icy: ");
+				break;
+			case TierTwoProperty.Brigands:
+				build.AppendLine ("Brigands: ");
+				break;
+			case TierTwoProperty.Heavy:
+				build.AppendLine ("Heavy: ");
+				break;
+			case TierTwoProperty.Old:
+				build.AppendLine ("Old: ");
+				break;
+			case TierTwoProperty.Unlucky:
+				build.AppendLine ("Unlucky: ");
+				break;
+			case TierTwoProperty.Light:
+				build.AppendLine ("Light: ");
+				break;
+			}
+			switch (TierThree) {
+			case TierThreeProperty.Uthman:
+				build.AppendLine ("Uthman: ");
+				break;
+			case TierThreeProperty.the_Fortunate:
+				build.AppendLine ("the Fortunate: ");
+				break;
+			case TierThreeProperty.the_Ages:
+				build.AppendLine ("the Ages: ");
+				break;
+			case TierThreeProperty.the_Griffon:
+				build.AppendLine ("the Griffon: ");
+				break;
+			case TierThreeProperty.Mages:
+				build.AppendLine ("Mages: ");
+				break;
+			case TierThreeProperty.Knights:
+				build.AppendLine ("Knights: ");
+				break;
+			case TierThreeProperty.Kingdoms:
+				build.AppendLine ("Kingdoms: ");
+				break;
+			case TierThreeProperty.Mogar:
+				build.AppendLine ("Mogar: ");
+				break;
+			case TierThreeProperty.the_Night:
+				build.AppendLine ("the Night: ");
+				break;
+			}
+			return build.ToString ();
 		}
 
 		public override string Name {
