@@ -12,8 +12,8 @@ namespace ProjectCrusade
 
 		public Projectile (Vector2 pos, Vector2 vel, float damage)
 		{
-			Width = 8;
-			Height = 8;
+			Width = 32;
+			Height = 32;
 			Position = pos;
 			Velocity = vel;
 			if (Velocity == Vector2.Zero)
@@ -45,7 +45,8 @@ namespace ProjectCrusade
 		{
 			//render at center
 			Vector2 origin = new Vector2(Width/2,Height/2);
-			spriteBatch.Draw (textureManager.GetTexture ("circle"), null, CollisionBox, null, origin, 0, null, Color.Red, SpriteEffects.None, 1);
+			float rotation = (float)(Math.Atan2 (Velocity.Y, Velocity.X));
+			spriteBatch.Draw (textureManager.GetTexture("items"), null, CollisionBox, Item.GetTextureSourceRect(7), origin, rotation, null, color, SpriteEffects.None, 1);
 		}
 	}
 }

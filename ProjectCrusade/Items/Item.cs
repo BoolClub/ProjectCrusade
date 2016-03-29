@@ -51,7 +51,7 @@ namespace ProjectCrusade
 	public abstract class Item {
 
 		//We are assuming square sprite sheets and square sprites.
-		public const int SpriteSheetWidth = 256;
+		public const int SpriteSheetWidth = 512;
 		public const int SpriteWidth = 32;
 
 
@@ -110,12 +110,16 @@ namespace ProjectCrusade
 			}
 		}
 
-		public Rectangle getTextureSourceRect()
+		public Rectangle GetTextureSourceRect()
 		{
+			return Item.GetTextureSourceRect ((int)Type);
+		}
+
+		public static Rectangle GetTextureSourceRect(int id) {
 			int sheetWidthSprites = SpriteSheetWidth / SpriteWidth;
 
-			int x = (int)Type % sheetWidthSprites;
-			int y = (int)Type / sheetWidthSprites;
+			int x = id % sheetWidthSprites;
+			int y = id / sheetWidthSprites;
 
 			return new Rectangle (x * SpriteWidth, y * SpriteWidth, SpriteWidth, SpriteWidth);
 		}
