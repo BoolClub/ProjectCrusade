@@ -34,12 +34,12 @@ namespace ProjectCrusade
 	/// </summary>
 	public enum ItemType {
 		Apple		 	= 0,
-		Water		 	= 1,
-		Coin		 	= 2,
-		Sword 	= 3,
-		StarterArrow	= 4,
-		MagicWand		= 5,
-		Bread			= 6,
+		Water		 	= 32,
+		Coin		 	= 1,
+		Sword 	= 2,
+		StarterArrow	= 3,
+		MagicWand		= 4,
+		Bread			= 16,
 
 	}
 

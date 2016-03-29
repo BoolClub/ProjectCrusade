@@ -651,10 +651,8 @@ namespace ProjectCrusade
 			return (p.X >= 0 && p.X < Width && p.Y >= 0 && p.Y < Height);
 		}
 
-
-		Rectangle getTileSourceRect(Tile t)
-		{
-			int id = (int)t.Type;
+		public static Rectangle GetTileSourceRect(int id) { 
+			
 
 			int spriteSheetTileWidth = World.SpriteSheetWidth / World.TileWidth;
 
@@ -662,6 +660,10 @@ namespace ProjectCrusade
 			int x = id % spriteSheetTileWidth;
 
 			return new Rectangle (x * World.TileWidth, y * World.TileWidth, World.TileWidth, World.TileWidth);
+		}
+		public static Rectangle GetTileSourceRect(Tile t)
+		{
+			return GetTileSourceRect ((int)t.Type);
 		}
 
 		/// <summary>
@@ -680,7 +682,7 @@ namespace ProjectCrusade
 							spriteBatch.Draw (textureManager.GetTexture ("tiles"),
 								null,
 								new Rectangle (i * World.TileWidth, j * World.TileWidth, World.TileWidth, World.TileWidth),
-								getTileSourceRect (layers[l].Tiles [i, j]),
+								GetTileSourceRect (layers[l].Tiles [i, j]),
 								null,
 								layers[l].Tiles [i, j].Rotation,
 								null,

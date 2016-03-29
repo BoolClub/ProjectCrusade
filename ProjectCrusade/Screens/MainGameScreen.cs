@@ -37,9 +37,9 @@ namespace ProjectCrusade
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
 				screenManager.PushGameScreen (new PauseMenuScreen (screenManager, game), 100);
-			if (Keyboard.GetState ().IsKeyDown (Keys.I) && prevKeyboardState.IsKeyUp(Keys.I))
+			if (Keyboard.GetState ().IsKeyDown (Keys.I) && prevKeyboardState.IsKeyUp (Keys.I)) {
 				screenManager.PushGameScreen (new InventoryScreen (screenManager, world));
-
+			}
 			prevKeyboardState = Keyboard.GetState ();
 		}
 

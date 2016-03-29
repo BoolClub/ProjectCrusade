@@ -51,7 +51,8 @@ namespace ProjectCrusade
 		}
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)
 		{
-			spriteBatch.Draw (textureManager.WhitePixel, null, CollisionBox, null, null, 0, null, Color.Orange, SpriteEffects.None, 0.1f);
+			Rectangle sourceRect = World.GetTileSourceRect (item==null ? 20 : 4);
+			spriteBatch.Draw (textureManager.GetTexture("tiles"), null, CollisionBox, sourceRect, null, 0, null, color, SpriteEffects.None, 0.05f);
 		
 			if (textBoxVisible) textbox.Draw (spriteBatch, textureManager, fontManager);
 		}
