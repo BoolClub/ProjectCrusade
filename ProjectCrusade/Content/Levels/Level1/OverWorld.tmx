@@ -46,12 +46,12 @@
 3,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3,
 19,0,19,0,0,0,0,0,0,0,19,0,0,0,0,3,0,0,0,0,0,19,0,0,0,0,0,3,0,0,0,19,
 3,0,0,0,99,100,100,100,101,0,0,0,0,0,0,19,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,3,
-19,3,0,0,131,132,84,132,133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,
-3,19,0,0,131,84,84,84,133,0,0,3,0,0,0,0,0,0,115,116,116,116,116,116,116,116,116,117,0,3,0,3,
-19,0,0,0,131,84,85,84,133,0,0,19,0,0,0,0,0,0,131,132,84,132,84,84,132,84,132,133,0,19,0,19,
-3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,84,84,84,84,84,84,84,84,133,0,0,0,3,
-19,0,0,0,0,0,0,0,0,0,34,0,0,0,0,3,0,0,131,132,84,132,84,84,132,84,132,133,0,0,0,19,
-3,0,0,0,3,0,0,0,0,0,50,0,0,0,0,19,0,0,131,84,84,84,85,85,84,84,84,133,0,0,0,3,
+19,3,0,0,115,116,116,116,117,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,
+3,19,0,0,131,85,84,85,133,0,0,3,0,0,0,0,0,0,147,148,148,148,148,148,148,148,148,149,0,3,0,3,
+19,0,0,0,131,85,211,85,133,0,0,19,0,0,0,0,0,0,163,164,164,164,164,164,164,164,164,165,0,19,0,19,
+3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,179,85,84,85,84,84,85,84,85,181,0,0,0,3,
+19,0,0,0,0,0,0,0,0,0,34,0,0,0,0,3,0,0,179,85,84,85,84,84,85,84,85,181,0,0,0,19,
+3,0,0,0,3,0,0,0,0,0,50,0,0,0,0,19,0,0,179,85,84,85,195,196,85,84,85,181,0,0,0,3,
 19,0,0,0,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,34,0,0,0,0,34,0,0,0,3,0,19,
 3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,0,0,0,0,50,0,0,0,19,0,3,
 19,0,0,0,0,34,0,0,0,0,0,0,0,0,0,3,0,3,0,0,34,0,0,0,0,34,0,0,0,0,0,19,
@@ -61,10 +61,10 @@
 19,0,0,0,19,0,0,0,19,0,0,3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,19,
 3,0,0,0,0,0,0,0,0,0,0,19,0,0,34,0,0,0,34,0,0,0,19,0,0,0,0,0,3,0,0,3,
 19,0,0,0,0,0,99,100,100,100,101,0,0,0,50,0,0,0,50,3,0,0,0,0,0,0,0,0,19,0,0,19,
-3,0,0,0,0,0,131,132,84,132,133,0,0,0,3,0,0,0,0,19,0,0,0,0,115,116,116,116,117,0,0,3,
-19,0,0,3,0,0,131,84,85,84,133,0,0,0,19,0,0,0,0,0,0,0,0,0,131,132,84,132,133,0,0,19,
-3,0,0,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,34,3,0,0,131,84,85,84,133,0,0,3,
-19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,19,0,0,0,0,0,0,0,0,0,19,
+3,0,0,0,0,0,115,116,116,116,117,0,0,0,3,0,0,0,0,19,0,0,0,0,147,148,148,148,149,0,0,3,
+19,0,0,3,0,0,131,85,132,85,133,0,0,0,19,0,0,0,0,0,0,0,0,0,163,164,164,164,165,0,0,19,
+3,0,0,19,0,0,131,85,211,85,133,0,0,0,0,0,0,0,0,0,34,3,0,0,179,85,132,85,181,0,0,3,
+19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,19,0,0,179,85,195,85,181,0,0,19,
 3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,34,0,0,3,
 19,0,0,0,0,0,0,0,0,34,0,0,0,0,0,34,0,19,0,0,0,0,0,0,0,0,0,0,50,0,0,19,
 3,0,0,0,3,0,3,0,0,50,0,3,0,0,0,50,3,0,0,0,3,3,0,0,0,34,3,0,0,0,0,3,
@@ -76,7 +76,7 @@
 </data>
  </layer>
  <objectgroup name="Lights">
-  <object id="2" name="streetlamplight" x="332.184" y="296.476" width="11.6305" height="9.99816">
+  <object id="2" name="streetlamplight" x="328.251" y="274.45" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -84,7 +84,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="4" name="streetlamplight" x="170.621" y="423.646" width="11.6305" height="9.99816">
+  <object id="4" name="streetlamplight" x="145.448" y="422.073" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -92,7 +92,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="5" name="streetlamplight" x="298.402" y="807.198" width="11.6305" height="9.99816">
+  <object id="5" name="streetlamplight" x="296.042" y="785.172" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -100,7 +100,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="6" name="streetlamplight" x="489.696" y="807.198" width="11.6305" height="9.99816">
+  <object id="6" name="streetlamplight" x="487.336" y="786.745" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -108,7 +108,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="7" name="streetlamplight" x="458.705" y="582.775" width="11.6305" height="9.99816">
+  <object id="7" name="streetlamplight" x="479.945" y="582.775" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -116,7 +116,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="8" name="streetlamplight" x="649.998" y="361.202" width="11.6305" height="9.99816">
+  <object id="8" name="streetlamplight" x="673.05" y="360.695" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -124,7 +124,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="9" name="streetlamplight" x="652.136" y="422.829" width="11.6305" height="9.99816">
+  <object id="9" name="streetlamplight" x="673.574" y="425.828" width="3.54646" height="20.2655">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -132,7 +132,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="10" name="streetlamplight" x="811.369" y="358.709" width="11.6305" height="9.99816">
+  <object id="10" name="streetlamplight" x="784.623" y="359.496" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -140,7 +140,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="11" name="streetlamplight" x="811.369" y="423.898" width="11.6305" height="9.99816">
+  <object id="11" name="streetlamplight" x="782.263" y="423.111" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -148,7 +148,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="12" name="streetlamplight" x="906.482" y="774.425" width="11.6305" height="9.99816">
+  <object id="12" name="streetlamplight" x="930.868" y="773.638" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -156,7 +156,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="13" name="streetlamplight" x="811.013" y="840.327" width="11.6305" height="9.99816">
+  <object id="13" name="streetlamplight" x="807.866" y="817.514" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -164,7 +164,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="14" name="streetlamplight" x="651.067" y="710.661" width="11.6305" height="9.99816">
+  <object id="14" name="streetlamplight" x="623.534" y="711.448" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
@@ -172,7 +172,7 @@
     <property name="red" value="1"/>
    </properties>
   </object>
-  <object id="15" name="streetlamplight" x="586.946" y="582.775" width="11.6305" height="9.99816">
+  <object id="15" name="streetlamplight" x="608.972" y="582.775" width="11.6305" height="9.99816">
    <properties>
     <property name="blue" value="1"/>
     <property name="brightness" value="5"/>
