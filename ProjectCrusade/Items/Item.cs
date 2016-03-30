@@ -142,6 +142,8 @@ namespace ProjectCrusade
 		/// Optional use for when the player, e.g., right clicks
 		/// </summary>
 		public virtual void SecondaryUse(World world) { }
+
+		public virtual void Update(GameTime gameTime) { } 
 	}
 
 }

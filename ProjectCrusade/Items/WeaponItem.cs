@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace ProjectCrusade
 {
@@ -21,6 +22,10 @@ namespace ProjectCrusade
 
 		protected abstract string BaseName { get; }
 
+		protected abstract float CoolDownTime { get; }
+		private float coolDownRemaining = 0f;
+		protected bool IsCooledDown { get { return coolDownRemaining >= CoolDownTime; } }
+
 		//TODO: make this cleaner
 		public override string Tooltip {
 			get {
@@ -31,102 +36,50 @@ namespace ProjectCrusade
 
 		string getDescriptions()
 		{
-			StringBuilder build = new StringBuilder ();
+			string[] desc1 = {
+				"",
+				"Flaming: \n",
+				"Healing: \n",
+				"Destroying: \n",
+				"Daring: \n",
+				"Crying: \n",
+				"Stealing: \n",
+				"Beguiling: \n",
+				"Stunning: \n",
+				"Swarming: \n"
+			};
 
-			switch (TierOne) {
-			case TierOneProperty.Flaming:
-				build.AppendLine ("Flaming: ");
-				break;
-			case TierOneProperty.Healing:
-				build.AppendLine ("Healing: ");
-				break;
-			case TierOneProperty.Destroying:
-				build.AppendLine ("Destroying: ");
-				break;
-			case TierOneProperty.Daring:
-				build.AppendLine ("Daring: ");
-				break;
-			case TierOneProperty.Crying:
-				build.AppendLine ("Crying: ");
-				break;
-			case TierOneProperty.Stealing:
-				build.AppendLine ("Stealing: ");
-				break;
-			case TierOneProperty.Beguiling:
-				build.AppendLine ("Beguiling: ");
-				break;
-			case TierOneProperty.Stunning:
-				build.AppendLine ("Stunning: ");
-				break;
-			case TierOneProperty.Swarming:
-				build.AppendLine ("Swarming: ");
-				break;
-			}
-			switch (TierTwo) {
-			case TierTwoProperty.Youthful:
-				build.AppendLine ("Youthful: ");
-				break;
-			case TierTwoProperty.Wild:
-				build.AppendLine ("Wild: ");
-				break;
-			case TierTwoProperty.Lucky:
-				build.AppendLine ("Lucky: ");
-				break;
-			case TierTwoProperty.Weird:
-				build.AppendLine ("Weird: ");
-				break;
-			case TierTwoProperty.Poisoned:
-				build.AppendLine ("Poisoned: ");
-				break;
-			case TierTwoProperty.Icy:
-				build.AppendLine ("Icy: ");
-				break;
-			case TierTwoProperty.Brigands:
-				build.AppendLine ("Brigands: ");
-				break;
-			case TierTwoProperty.Heavy:
-				build.AppendLine ("Heavy: ");
-				break;
-			case TierTwoProperty.Old:
-				build.AppendLine ("Old: ");
-				break;
-			case TierTwoProperty.Unlucky:
-				build.AppendLine ("Unlucky: ");
-				break;
-			case TierTwoProperty.Light:
-				build.AppendLine ("Light: ");
-				break;
-			}
-			switch (TierThree) {
-			case TierThreeProperty.Uthman:
-				build.AppendLine ("Uthman: ");
-				break;
-			case TierThreeProperty.the_Fortunate:
-				build.AppendLine ("the Fortunate: ");
-				break;
-			case TierThreeProperty.the_Ages:
-				build.AppendLine ("the Ages: ");
-				break;
-			case TierThreeProperty.the_Griffon:
-				build.AppendLine ("the Griffon: ");
-				break;
-			case TierThreeProperty.Mages:
-				build.AppendLine ("Mages: ");
-				break;
-			case TierThreeProperty.Knights:
-				build.AppendLine ("Knights: ");
-				break;
-			case TierThreeProperty.Kingdoms:
-				build.AppendLine ("Kingdoms: ");
-				break;
-			case TierThreeProperty.Mogar:
-				build.AppendLine ("Mogar: ");
-				break;
-			case TierThreeProperty.the_Night:
-				build.AppendLine ("the Night: ");
-				break;
-			}
-			return build.ToString ();
+			string[] desc2 = {
+				"",
+				"Youthful: \n",
+				"Wild: \n",
+				"Lucky: \n",
+				"Weird: \n",
+				"Poisoned: \n",
+				"Icy: \n",
+				"Brigands: \n",
+				"Heavy: \n",
+				"Old: \n",
+				"Unlucky: \n",
+				"Light: \n",
+			};
+
+			string[] desc3 = {
+				"",
+				"Uthman: \n",
+				"the Fortunate: \n",
+				"the Ages: \n",
+				"the Griffon: \n",
+				"Mages: \n",
+				"Knights: \n",
+				"Kingdoms: \n",
+				"Mogar: \n",
+				"the Night: \n"
+			};
+			return 
+				desc1 [(int)TierOne] +
+			desc2 [(int)TierTwo] +
+			desc3 [(int)TierThree];
 		}
 
 		public override string Name {
@@ -216,8 +169,15 @@ namespace ProjectCrusade
 			}
 		}
 
+		public override void PrimaryUse (World world)
+		{
+			coolDownRemaining = 0f;
+		}
 
-
+		public override void Update(GameTime gameTime)
+		{
+			coolDownRemaining += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+		}
 
 	} //END OF WEAPONITEM CLASS
 

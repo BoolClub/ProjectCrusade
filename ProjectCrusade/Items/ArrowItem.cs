@@ -23,11 +23,15 @@ namespace ProjectCrusade
 		//All arrows have same behavior
 		public override void PrimaryUse (World world)
 		{
+			if (!IsCooledDown)
+				return;
 			Projectile proj = new Projectile (
 				world.Player.CollisionBox.Center.ToVector2(), 
 				500f * world.Player.OrientationVector, 
 				Damage);
 			world.AddEntity (proj);
+
+			base.PrimaryUse (world);
 		}
 		public override void SecondaryUse (World world)
 		{
@@ -43,6 +47,7 @@ namespace ProjectCrusade
 		public override string Tooltip 		{ get { return base.Tooltip + "Can be shot."; } }
 		protected override int Damage 			{ get { return 50; } }
 		protected override string BaseName			{ get { return "Bow"; }}
+		protected override float CoolDownTime { get { return 100f; } }
 	}
 
 }

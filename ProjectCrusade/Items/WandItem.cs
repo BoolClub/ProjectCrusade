@@ -37,7 +37,7 @@ namespace ProjectCrusade
 		protected override int Damage 			{ get { return 10; } }
 		public override string Tooltip 		{ get { return base.Tooltip + "A magical wand!"; } }
 		protected override string BaseName 	{ get { return "Wand"; } }
-
+		protected override float CoolDownTime { get { return 1000f; } }
 		public MagicWand () {
 
 		}

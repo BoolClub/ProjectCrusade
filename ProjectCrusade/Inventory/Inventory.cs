@@ -128,11 +128,19 @@ namespace ProjectCrusade
 					activeSlotIndex = i;
 			}
 			updateTooltip ();
+			updateItems (time);
 		}
 
 		string getTooltipText(InventorySlot slot)
 		{
 			return String.Format("{0}\n{1}", slot.Item.Name, slot.Item.Tooltip);
+		}
+
+		void updateItems(GameTime gameTime)
+		{
+			foreach (var slot in slots)
+				if (slot.HasItem)
+					slot.Item.Update (gameTime);
 		}
 
 		void updateTooltip()
