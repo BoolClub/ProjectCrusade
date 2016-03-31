@@ -1,6 +1,6 @@
 # ProjectCrusade
 
-##First project of RHS Software Development Club
+###First project of RHS Software Development Club
 
 A tile-based game, the storyline of which we have not yet finalized. 
 
@@ -18,8 +18,10 @@ When editing the world, be sure to distinguish between the Floor and Wall layers
 This creates two files: one for walls, and one for floors. 
 
 
-##Tutorials
-Several of these tutorials assume you have a room's .TMX file opened in the Tiled map editor.
+#Tutorials
+
+##Room design
+Several of these tutorials assume you have a room's .TMX file opened in the Tiled map editor. **When designing a room to be randomly placed in a level, please note that the dimensions must be odd.**
 ###Adding lights to rooms
 Assuming you have a room .TMX file open in Tiled, create a new object layer titled `Lights` (case sensitive). Then, draw a rectangle at the desired location. The upper-left-hand corner of this rectangle becomes the location of the point light. To change the properties of the light, add the following properties using the plus button in the properties panel:
 
@@ -43,7 +45,9 @@ Create a new object layer titled `Entities` (again, case sensitive). Then, draw 
 4. `count` - optional, for use with `name = chest` identifier; indicates how many items the chest will contain. When adjusting this property, ensure that the item is stackable. 
 
 
-###Adding/changing fonts (sorry if a bit complicated)
+##Adding/changing fonts 
+
+*(sorry if a bit complicated)*
 
 In MonoGame (XNA) it is necessary to include a .spritefont and .xnb file for each font. In the Content/Fonts folder, you can find all 
 fonts in the game. 
@@ -53,9 +57,9 @@ To add a new font, just make a copy of any existing .spritefont file in this dir
 so that the .spritefont file is part of the project. Next, you must compile the .xnb files: this can be done by running the following in Terminal 
 command (ensuring the project is in the right place):
 
-cd ~/Projects/ProjectCrusade/ProjectCrusade/Content/Fonts
+`cd ~/Projects/ProjectCrusade/ProjectCrusade/Content/Fonts`
 
-mono /Applications/Pipeline.app/Contents/MonoBundle/MGCB.exe /@:~/Projects/ProjectCrusade/ProjectCrusade/Content/Content.mgcb
+`mono /Applications/Pipeline.app/Contents/MonoBundle/MGCB.exe /@:~/Projects/ProjectCrusade/ProjectCrusade/Content/Content.mgcb`
 
 
 Drag the .xnb file from the generated bin directory into the same directory as the .spritefont (Content/Fonts)
