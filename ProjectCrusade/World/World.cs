@@ -100,6 +100,7 @@ namespace ProjectCrusade
 
 
 			Player = new Player ("test", PlayerType.Wizard);
+			TextBox.PlayerName = Player.Name;
 			Map = new Map (textureManager);
 			Width = width;
 			Height = height;

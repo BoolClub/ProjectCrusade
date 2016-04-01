@@ -23,7 +23,7 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// Gets the name of the player.
 		/// </summary>
-		public string PlayerName { get; private set; }
+		public string Name { get; private set; }
 
 		/// <summary>
 		/// Gets the type of the player.
@@ -66,7 +66,7 @@ namespace ProjectCrusade {
 
 
 		public Player (string name, PlayerType type) {
-			PlayerName = name;
+			Name = name;
 			PlayerType = type;
 			Width = 16;
 			Height = 16;

@@ -53,6 +53,9 @@ namespace ProjectCrusade
 		const float charAnimTime = 0.025e3f;
 		float lastCharAnim = 0f;
 
+		public static string PlayerName;
+		const string PlayerNameDelimiter="$player";
+
 		public TextBox (int width, int height, Vector2 position, Color textColor, Color backgroundColor, float opacity = 1.0f) {
 			Position = position;
 			Width = width;
@@ -67,7 +70,7 @@ namespace ProjectCrusade
 		/// </summary>
 		/// <param name="speech">Speech.</param>
 		public void AddText(string text) {
-			spokenText.Add (text);
+			spokenText.Add (text.Replace(PlayerNameDelimiter, PlayerName));
 		}
 
 		/// <summary>
