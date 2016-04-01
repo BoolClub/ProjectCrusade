@@ -193,16 +193,8 @@ namespace ProjectCrusade
 			spriteBatch.Draw (textureManager.GetTexture("inventory_box"), null, rBox, null, null, 0, null,  (slots [i, j] == ActiveSlot ? Color.Red : Color.White) * opacity, SpriteEffects.None, 0);
 			//draw item itself
 			if (slots [i, j].HasItem && slots [i, j] != SelectedSlot) {
-				spriteBatch.Draw (textureManager.GetTexture ("items"),
-					null,
-					r,
-					slots [i, j].Item.GetTextureSourceRect (),
-					null,
-					0,
-					null,
-					Color.White,
-					SpriteEffects.None,
-					1);
+				slots [i, j].Item.Draw (r, spriteBatch, textureManager);
+
 				if (slots[i,j].Item.Stackable) 
 					spriteBatch.DrawString (
 						fontManager.GetFont ("MainFontLarge"),

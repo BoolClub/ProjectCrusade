@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProjectCrusade
 {
@@ -179,8 +180,94 @@ namespace ProjectCrusade
 			coolDownRemaining += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 		}
 
-	} //END OF WEAPONITEM CLASS
+		const int TieredPropertySpriteSheetWidth = 320;
+		const int TieredPropertySpriteSheetHeight = 10;
 
+		private Rectangle getTierOneSourceRect(TierOneProperty prop)
+		{
+			int i = (int)prop - 1;
 
-} //END OF NAMESPACE
+			if (i * TieredPropertySpriteSheetHeight > TieredPropertySpriteSheetWidth)
+				throw new Exception ("Property not found on sprite sheet!");
+
+			return new Rectangle (i * TieredPropertySpriteSheetHeight, 0, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+		}
+
+		private Rectangle getTierTwoSourceRect(TierTwoProperty prop)
+		{
+			
+			int i = (int)prop
+				+ Enum.GetNames(typeof(TierOneProperty)).Length
+				- 1;
+
+			if (i * TieredPropertySpriteSheetHeight > TieredPropertySpriteSheetWidth)
+				throw new Exception ("Property not found on sprite sheet!");
+
+			return new Rectangle (i * TieredPropertySpriteSheetHeight, 0, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+		}
+
+		private Rectangle getTierThreeSourceRect(TierThreeProperty prop)
+		{
+			int i = (int)prop
+				+ Enum.GetNames(typeof(TierOneProperty)).Length
+				+ Enum.GetNames(typeof(TierTwoProperty)).Length
+				- 1;
+
+			if (i * TieredPropertySpriteSheetHeight > TieredPropertySpriteSheetWidth)
+				throw new Exception ("Property not found on sprite sheet!");
+
+			return new Rectangle (i * TieredPropertySpriteSheetHeight, 0, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+		}
+
+		public override void Draw (Rectangle rect, SpriteBatch spriteBatch, TextureManager textureManager)
+		{
+			base.Draw (rect, spriteBatch, textureManager);
+
+			Rectangle prop1Rect = new Rectangle (
+				rect.X, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+			Rectangle prop2Rect = new Rectangle (
+				rect.X + TieredPropertySpriteSheetHeight + 1, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+			Rectangle prop3Rect = new Rectangle (
+				rect.X + 2*TieredPropertySpriteSheetHeight + 2, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+
+			if (TierOne!=TierOneProperty.None)
+				spriteBatch.Draw (
+					textureManager.GetTexture ("tiered-properties"),
+					null, 
+					prop1Rect, 
+					getTierOneSourceRect(TierOne), 
+					null, 
+					0, 
+					null, 
+					null, 
+					SpriteEffects.None, 
+					0);
+
+			if (TierTwo!=TierTwoProperty.None)
+				spriteBatch.Draw (
+					textureManager.GetTexture ("tiered-properties"),
+					null, 
+					prop2Rect, 
+					getTierTwoSourceRect(TierTwo), 
+					null, 
+					0, 
+					null, 
+					null, 
+					SpriteEffects.None, 
+					0);
+			if (TierThree!=TierThreeProperty.None)
+				spriteBatch.Draw (
+					textureManager.GetTexture ("tiered-properties"),
+					null, 
+					prop3Rect, 
+					getTierThreeSourceRect(TierThree), 
+					null, 
+					0, 
+					null, 
+					null, 
+					SpriteEffects.None, 
+					0);
+		}
+	}
+}
 

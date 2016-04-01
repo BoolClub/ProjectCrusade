@@ -23,6 +23,7 @@
  *  *** SEE Apple CLASS FOR A SIMPLE EXAMPLE ***
  */
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace ProjectCrusade
@@ -144,6 +145,20 @@ namespace ProjectCrusade
 		public virtual void SecondaryUse(World world) { }
 
 		public virtual void Update(GameTime gameTime) { } 
+
+		public virtual void Draw (Rectangle rect, SpriteBatch spriteBatch, TextureManager textureManager)
+		{
+			spriteBatch.Draw (textureManager.GetTexture ("items"),
+				null,
+				rect,
+				GetTextureSourceRect (),
+				null,
+				0,
+				null,
+				Color.White,
+				SpriteEffects.None,
+				1);
+		}
 	}
 
 }
