@@ -226,9 +226,9 @@ namespace ProjectCrusade
 			Rectangle prop1Rect = new Rectangle (
 				rect.X, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
 			Rectangle prop2Rect = new Rectangle (
-				rect.X + TieredPropertySpriteSheetHeight + 1, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+				rect.X, rect.Y + TieredPropertySpriteSheetHeight + 1, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
 			Rectangle prop3Rect = new Rectangle (
-				rect.X + 2*TieredPropertySpriteSheetHeight + 2, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
+				rect.X, rect.Y + 2*TieredPropertySpriteSheetHeight + 2, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
 
 			if (TierOne!=TierOneProperty.None)
 				spriteBatch.Draw (

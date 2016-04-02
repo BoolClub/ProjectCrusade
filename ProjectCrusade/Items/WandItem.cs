@@ -32,11 +32,11 @@ namespace ProjectCrusade
 
 	public class MagicWand : WandItem {
 
-		public override ItemSprite Type 			{ get { return ItemSprite.MagicWand; } }
-		public override bool Depletable 		{ get { return false; } }
-		protected override int Damage 			{ get { return 10; } }
-		public override string Tooltip 		{ get { return base.Tooltip + "A magical wand!"; } }
-		protected override string BaseName 	{ get { return "Wand"; } }
+		public override ItemSprite Type 	  { get { return ItemSprite.MagicWand; } }
+		public override bool Depletable 	  { get { return false; } }
+		protected override int Damage 		  { get { return 10; } }
+		public override string Tooltip 		  { get { return base.Tooltip + "A magical wand!"; } }
+		protected override string BaseName 	  { get { return "Wand"; } }
 		protected override float CoolDownTime { get { return 1000f; } }
 		public MagicWand () {
 

@@ -124,6 +124,7 @@ namespace ProjectCrusade
 			initFluid ();
 			//TODO: remove this; temporary way to display the entire map for simple navigation
 			revealMap ();
+
 		}
 
 		void configureRooms()
