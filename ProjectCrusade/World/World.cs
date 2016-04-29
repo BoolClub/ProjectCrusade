@@ -717,7 +717,7 @@ namespace ProjectCrusade
 						null,
 						0,
 						null,
-						new Color(0.25f*(layers[l].Tiles[i,j].Color - Vector3.One)),
+						new Color(0.2f*(layers[l].Tiles[i,j].Color - Vector3.One)),
 						SpriteEffects.None,
 						0);
 					}

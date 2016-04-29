@@ -18,7 +18,7 @@ namespace ProjectCrusade
 
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
-			if (Keyboard.GetState ().IsKeyDown (Keys.I) && Player.PrevKeyState.IsKeyUp (Keys.I)) {
+			if (Keyboard.GetState ().IsKeyDown (Keys.Escape) && Player.PrevKeyState.IsKeyUp (Keys.Escape)) {
 				screenManager.PopGameScreen ();
 				world.Player.Inventory.Open = false;
 			}
