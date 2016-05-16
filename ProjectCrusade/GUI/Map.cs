@@ -30,7 +30,7 @@ namespace ProjectCrusade
 			playerPos = new Point (0, 0);
 			constructTileSummaryTexture (textureManager);
 			Opacity = 0.9f;
-			playerTexture = textureManager.GetTexture ("circle");
+			playerTexture = textureManager.GetTexture ("PlayerTexture");
 		}
 
 

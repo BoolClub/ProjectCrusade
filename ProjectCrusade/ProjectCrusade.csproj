@@ -148,6 +148,8 @@
     <BundleResource Include="Content\Textures\healthBar.png" />
     <BundleResource Include="Content\Textures\healthBarFill.png" />
     <BundleResource Include="Content\Textures\tiered-properties.png" />
+    <BundleResource Include="Content\Textures\PlayerTexture.png" />
+    <BundleResource Include="Content\Textures\PriestNPC.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Levels\Level1\RestRoom.tmx" />

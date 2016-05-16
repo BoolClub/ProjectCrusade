@@ -129,9 +129,9 @@ namespace ProjectCrusade {
 		public override void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color) {
 			//Do all the drawing for the player here.
 
-			Texture2D t = textureManager.GetTexture ("circle");
-
-			spriteBatch.Draw (t, null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
+			Texture2D t = textureManager.GetTexture ("PlayerTexture");
+			float angle = (float)Math.Atan2 (OrientationVector.Y, OrientationVector.X);
+			spriteBatch.Draw (t, null, CollisionBox, null, new Vector2(t.Width/2,t.Height/2), angle-(float)Math.PI/2, null, color, SpriteEffects.None, 0.1f);
 
 		}
 
@@ -170,34 +170,41 @@ namespace ProjectCrusade {
 
 			Vector2 disp = Vector2.Zero;
 
-
+			bool changed = false;
+			Vector2 prevOrientation = OrientationVector;
+			OrientationVector = Vector2.Zero;
 			//Move player.
 			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
 				disp += new Vector2 (calcDisp, 0);
 				Moving = true;
 				Facing = PlayerOrientation.Right;
-				OrientationVector = new Vector2 (1, 0);
+				OrientationVector+= new Vector2 (1, 0);
+				changed = true;
 			}
 			if (keyState.IsKeyDown (Keys.A) || keyState.IsKeyDown (Keys.Left)) {
 				disp += new Vector2 (-calcDisp, 0);
 				Moving = true;
 				Facing = PlayerOrientation.Left;
-				OrientationVector = new Vector2 (-1, 0);
+				OrientationVector+= new Vector2 (-1, 0);
+				changed = true;
 			}
 			if (keyState.IsKeyDown (Keys.S) || keyState.IsKeyDown (Keys.Down)) {
 				disp += new Vector2 (0, calcDisp);
 				Moving = true;
 				Facing = PlayerOrientation.Down;
-				OrientationVector = new Vector2 (0, 1);
+				OrientationVector+= new Vector2 (0, 1);
+				changed = true;
 			}
 			if (keyState.IsKeyDown (Keys.W) || keyState.IsKeyDown (Keys.Up)) {
 				disp += new Vector2 (0, -calcDisp);
 				Moving = true;
 				Facing = PlayerOrientation.Up;
-				OrientationVector = new Vector2 (0, -1);
+				OrientationVector+= new Vector2 (0, -1);
+				changed = true;
 			}
-
-
+			OrientationVector.Normalize ();
+			if (!changed)
+				OrientationVector = prevOrientation;
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
 				disp /= (float)Math.Sqrt (2.0);
