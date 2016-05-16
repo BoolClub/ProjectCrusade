@@ -16,6 +16,7 @@ namespace ProjectCrusade
 		Texture2D tileSummaryTexture;
 
 		Point playerPos;
+		Texture2D playerTexture;
 
 		Dictionary<UInt64, int> tiles;
 
@@ -29,6 +30,7 @@ namespace ProjectCrusade
 			playerPos = new Point (0, 0);
 			constructTileSummaryTexture (textureManager);
 			Opacity = 0.9f;
+			playerTexture = textureManager.GetTexture ("circle");
 		}
 
 
@@ -115,7 +117,7 @@ namespace ProjectCrusade
 				spriteBatch.Draw (tileSummaryTexture, null, new Rectangle(Scale * pos.X, Scale * pos.Y, Scale,Scale), getSourceRect (pair.Value), null, 0, null, Color.White * Opacity, SpriteEffects.None, 0.0f);
 			}
 			//TODO: make this more general; currently, uses the grass texture (ID 1) for the player.
-			spriteBatch.Draw (tileSummaryTexture, null, new Rectangle(Scale * playerPos.X, Scale * playerPos.Y, Scale,Scale), getSourceRect (1), null, 0, null, Color.White * Opacity, SpriteEffects.None, 0.0f);
+			spriteBatch.Draw (playerTexture, null, new Rectangle(Scale * playerPos.X, Scale * playerPos.Y, playerTexture.Width/2,playerTexture.Height/2), null, null, 0, null, Color.White * Opacity, SpriteEffects.None, 0.0f);
 		}
 	}
 }
