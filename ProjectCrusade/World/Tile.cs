@@ -36,7 +36,26 @@ namespace ProjectCrusade
 		CaveWallLeft = 53,
 		CaveWallRight=55,
 
-		CaveRock = 5
+		CaveRock = 5,
+
+
+		IceCaveFloor = 27,
+		IceCaveFloorBottomRight = 12,
+		IceCaveFloorBottomLeft = 13,
+		IceCaveFloorTopLeft=28,
+		IceCaveFloorTopRight=29,
+
+		IceCaveWall=60,
+		IceCaveWallTopLeft=43,
+		IceCaveWallTopRight = 45,
+		IceCaveWallBottomLeft = 75,
+		IceCaveWallBottomRight = 77,
+		IceCaveWallTop = 44,
+		IceCaveWallBottom = 76,
+		IceCaveWallLeft = 59,
+		IceCaveWallRight=61,
+
+		IceCaveRock = 5
 	}
 	public struct Tile
 	{
