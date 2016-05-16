@@ -66,11 +66,12 @@ namespace ProjectCrusade
 		const float attackCooldown = 1e3f;
 		float lastAttack = 0f;
 
+		Vector2 orientationVector;
 
 		public Enemy ()
 		{
-			Width = 16;
-			Height = 16;
+			Width = 24;
+			Height = 24;
 			Speed = 120;
 			Damage = 1f;
 			MaxHealth = 100;
@@ -141,7 +142,7 @@ namespace ProjectCrusade
 						lastPathUpdate = 0;
 					}
 
-					Vector2 dispVec = new Vector2 (World.TileWidth / 2-Width/2, World.TileWidth / 2-Height/2);
+					Vector2 dispVec = new Vector2 (World.TileWidth / 2 - Width / 2, World.TileWidth / 2 - Height / 2);
 					for (int i = 0; i < pathToPlayer.Length; i++)
 						if (world.WorldToTileCoord (Position - dispVec) == pathToPlayer [i]) {
 							currPointOnPath = i;
@@ -153,7 +154,6 @@ namespace ProjectCrusade
 					Vector2 nvec = Vector2.Normalize (world.TileToWorldCoord (pathToPlayer [currPointOnPath]) + dispVec - Position);
 					patrollingDirection = Vector2.Normalize (pathFollowingSmoothness * patrollingDirection + (1 - pathFollowingSmoothness) * nvec);
 				}
-
 
 				//if player close, attack
 				if (CollisionBox.Intersects (world.Player.CollisionBox)) {
@@ -173,6 +173,8 @@ namespace ProjectCrusade
 
 				break;
 			}
+			orientationVector = patrollingDirection;
+			orientationVector.Normalize ();
 			float et = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 			patrollingTime += et;
 			lastSeenPlayer += et;
@@ -185,7 +187,11 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, Color color)
 		{
-			spriteBatch.Draw (textureManager.GetTexture ("circle"), null, CollisionBox, null, null, 0, null, color, SpriteEffects.None, 0.1f);
+			float angle = (float)Math.Atan2 (orientationVector.Y, orientationVector.X);
+			Texture2D t = textureManager.GetTexture ("PriestNPC");
+			var shifted = CollisionBox;
+			shifted.Offset (Width / 2, Height / 2);
+			spriteBatch.Draw (t, null, shifted , null, new Vector2(Width/2,Height/2), angle-(float)Math.PI/2, null, color, SpriteEffects.None, 0.1f);
 		}
 	}
 }

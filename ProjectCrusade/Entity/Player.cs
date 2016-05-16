@@ -68,8 +68,8 @@ namespace ProjectCrusade {
 		public Player (string name, PlayerType type) {
 			Name = name;
 			PlayerType = type;
-			Width = 16;
-			Height = 16;
+			Width = 24;
+			Height = 24;
 			Speed = 450;
 
 			Sanity = 20;
@@ -131,7 +131,10 @@ namespace ProjectCrusade {
 
 			Texture2D t = textureManager.GetTexture ("PlayerTexture");
 			float angle = (float)Math.Atan2 (OrientationVector.Y, OrientationVector.X);
-			spriteBatch.Draw (t, null, CollisionBox, null, new Vector2(t.Width/2,t.Height/2), angle-(float)Math.PI/2, null, color, SpriteEffects.None, 0.1f);
+
+			var shifted = CollisionBox;
+			shifted.Offset (Width / 2, Height / 2);
+			spriteBatch.Draw (t, null, shifted, null, new Vector2(t.Width/2,t.Height/2), angle-(float)Math.PI/2, null, color, SpriteEffects.None, 0.1f);
 
 		}
 
