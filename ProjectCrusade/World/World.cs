@@ -34,7 +34,11 @@ namespace ProjectCrusade
 		/// </summary>
 		public const int TileWidth = 32;
 
-
+		/// <summary>
+		/// Whether the level is ready to advance to next
+		/// </summary>
+		/// <value><c>true</c> if ready to advance; otherwise, <c>false</c>.</value>
+		public bool ReadyToAdvance { get; private set; }
 
 		public Player Player;
 		public Map Map;
@@ -97,7 +101,7 @@ namespace ProjectCrusade
 		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
 		{
 			configureRooms ();
-
+			ReadyToAdvance = false;
 
 			Player = new Player ("test", PlayerType.Wizard);
 			TextBox.PlayerName = Player.Name;
@@ -540,8 +544,9 @@ namespace ProjectCrusade
 			//construct active entities 
 			activeEntities = entities.FindAll(e => activeEntityRegion.Intersects(e.CollisionBox));
 
-			foreach (Entity e in activeEntities)
-				updateEntity (gameTime, e);
+			if (activeEntities!=null)
+				foreach (Entity e in activeEntities)
+					updateEntity (gameTime, e);
 
 
 			//Remove dead entities
@@ -694,14 +699,14 @@ namespace ProjectCrusade
 								SpriteEffects.None,
 								0.2f*l);
 					}
-
-			foreach (Entity entity in activeEntities) {
-				Point p = WorldToTileCoord (entity.Position);
-				Color col = Color.White;
-				if (PointInWorld (p))
-					col = new Color (layers[0].Tiles [p.X, p.Y].Color);
-				entity.Draw (spriteBatch, textureManager, fontManager, col);
-			}
+			if (activeEntities!=null)
+				foreach (Entity entity in activeEntities) {
+					Point p = WorldToTileCoord (entity.Position);
+					Color col = Color.White;
+					if (PointInWorld (p))
+						col = new Color (layers[0].Tiles [p.X, p.Y].Color);
+					entity.Draw (spriteBatch, textureManager, fontManager, col);
+				}
 			spriteBatch.End ();
 			spriteBatch.Begin (SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, camera.TransformMatrix);
 			//Draw smoke/additive lighting
@@ -723,7 +728,12 @@ namespace ProjectCrusade
 					}
 
 		}
-		//TODO: Add procedural world generation
+
+		public void AdvanceWorld()
+		{
+			ReadyToAdvance = true;
+		}
+
 	}
 }
 

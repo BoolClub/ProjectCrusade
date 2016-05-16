@@ -127,10 +127,10 @@ namespace ProjectCrusade
 			foreach (XmlElement objective in doc.SelectNodes("map/objectgroup[@name='Objectives']/object")) {
 
 				Rectangle objRect = new Rectangle (
-					int.Parse (objective.GetAttribute ("x")),
-					int.Parse (objective.GetAttribute ("y")), 
-					int.Parse (objective.GetAttribute ("width")),
-					int.Parse (objective.GetAttribute ("height")));
+					(int)double.Parse (objective.GetAttribute ("x")),
+					(int)double.Parse (objective.GetAttribute ("y")), 
+					(int)double.Parse (objective.GetAttribute ("width")),
+					(int)double.Parse (objective.GetAttribute ("height")));
 				//shift objective position relative to room's world coordinates
 				objRect.Offset (new Point(Rect.X * World.TileWidth, Rect.Y * World.TileWidth));
 				Objectives.Add (new Tuple<string, Rectangle> (objective.GetAttribute ("name"), objRect));

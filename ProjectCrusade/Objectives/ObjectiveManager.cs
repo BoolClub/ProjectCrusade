@@ -25,8 +25,7 @@ namespace ProjectCrusade
 
 		public void PushListeners()
 		{
-//			objectives ["TestObjective1"].ObjectiveReached += TestObjective1;
-//			objectives ["TestObjective2"].ObjectiveReached += TestObjective2;
+			objectives ["NextLevel"].ObjectiveReached += NextLevelObjective;
 		}
 
 		public void ClearObjectives()
@@ -46,17 +45,10 @@ namespace ProjectCrusade
 
 
 		#region
-		public static void TestObjective1(Objective obj, ObjectiveManager manager, Player player, World world)
+		public static void NextLevelObjective(Objective obj, ObjectiveManager manager, Player player, World world)
 		{
-			Console.WriteLine ("Objective 1 met!");
+			world.AdvanceWorld ();
 		}
-		public static void TestObjective2(Objective obj, ObjectiveManager manager, Player player, World world)
-		{
-			player.Heal (50);
-
-			Console.WriteLine ("Objective 2 met!");
-		}
-
 		#endregion
 
 

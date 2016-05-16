@@ -59,7 +59,8 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
-			
+			if (world.ReadyToAdvance)
+				world = new World (textureManager, 128, 128, objManager);
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
