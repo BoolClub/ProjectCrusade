@@ -39,21 +39,21 @@ namespace ProjectCrusade
 		CaveRock = 5,
 
 
-		IceCaveFloor = 27,
-		IceCaveFloorBottomRight = 12,
-		IceCaveFloorBottomLeft = 13,
-		IceCaveFloorTopLeft=28,
-		IceCaveFloorTopRight=29,
+		IceCaveFloor = 24,
+		IceCaveFloorBottomRight = 9,
+		IceCaveFloorBottomLeft = 10,
+		IceCaveFloorTopLeft=25,
+		IceCaveFloorTopRight=26,
 
-		IceCaveWall=60,
-		IceCaveWallTopLeft=43,
-		IceCaveWallTopRight = 45,
-		IceCaveWallBottomLeft = 75,
-		IceCaveWallBottomRight = 77,
-		IceCaveWallTop = 44,
-		IceCaveWallBottom = 76,
-		IceCaveWallLeft = 59,
-		IceCaveWallRight=61,
+		IceCaveWall=57,
+		IceCaveWallTopLeft=40,
+		IceCaveWallTopRight = 42,
+		IceCaveWallBottomLeft = 72,
+		IceCaveWallBottomRight = 74,
+		IceCaveWallTop = 41,
+		IceCaveWallBottom = 73,
+		IceCaveWallLeft = 56,
+		IceCaveWallRight=58,
 
 		IceCaveRock = 5
 	}
