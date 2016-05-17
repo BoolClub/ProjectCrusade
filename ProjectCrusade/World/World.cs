@@ -98,9 +98,9 @@ namespace ProjectCrusade
 		Rectangle cameraRectangle;
 
 
-		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
+		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager, WorldConfiguration config)
 		{
-			configureRooms ();
+			configuration = config;
 			ReadyToAdvance = false;
 
 			Player = new Player ("test", PlayerType.Wizard);
