@@ -64,6 +64,30 @@ namespace ProjectCrusade
 
 			public override TileType Rock				{ get { return TileType.IceCaveRock; }   }   
 		}
+
+
+
+
+		public class SandCave : TileFamily
+		{
+			public override TileType Floor				{ get { return TileType.SandCaveFloor; } }
+			public override TileType FloorTopLeft		{ get { return TileType.SandCaveFloorTopLeft; }   }
+			public override TileType FloorTopRight		{ get { return TileType.SandCaveFloorTopRight; }   }
+			public override TileType FloorBottomLeft 	{ get { return TileType.SandCaveFloorBottomLeft; }   }
+			public override TileType FloorBottomRight	{ get { return TileType.SandCaveFloorBottomRight; }   }
+
+			public override TileType Wall				{ get { return TileType.SandCaveWall; }   }
+			public override TileType WallTopLeft     	{ get { return TileType.SandCaveWallTopLeft; }   }
+			public override TileType WallTopRight    	{ get { return TileType.SandCaveWallTopRight; }   }
+			public override TileType WallBottomLeft  	{ get { return TileType.SandCaveWallBottomLeft; }   }
+			public override TileType WallBottomRight	{ get { return TileType.SandCaveWallBottomRight; }   }
+			public override TileType WallTop         	{ get { return TileType.SandCaveWallTop; }   }
+			public override TileType WallBottom      	{ get { return TileType.SandCaveWallBottom; }   }
+			public override TileType WallLeft        	{ get { return TileType.SandCaveWallLeft; }   }
+			public override TileType WallRight			{ get { return TileType.SandCaveWallRight; }   }   
+
+			public override TileType Rock				{ get { return TileType.SandCaveRock; }   }   
+		}
 	}
 }
 
