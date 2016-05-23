@@ -118,6 +118,7 @@
     <Compile Include="Entity\Projectile.cs" />
     <Compile Include="Entity\Chest.cs" />
     <Compile Include="World\TieredPropertySelector.cs" />
+    <Compile Include="Screens\WorldTransitionScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
