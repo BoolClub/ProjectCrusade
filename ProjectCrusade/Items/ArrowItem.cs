@@ -29,6 +29,7 @@ namespace ProjectCrusade
 				world.Player.CollisionBox.Center.ToVector2(), 
 				500f * world.Player.OrientationVector, 
 				Damage);
+			proj.projectileType = 7;
 			world.AddEntity (proj);
 
 			base.PrimaryUse (world);

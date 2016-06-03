@@ -10,6 +10,9 @@ namespace ProjectCrusade
 		public Vector2 Velocity { get; set; }
 		public float Damage { get; set; }
 
+		//The type of projectile to draw based on where it is on the spritesheet.
+		public int projectileType { get; set; }
+
 		public Projectile (Vector2 pos, Vector2 vel, float damage)
 		{
 			Width = 32;
@@ -46,7 +49,7 @@ namespace ProjectCrusade
 			//render at center
 			Vector2 origin = new Vector2(Width/2,Height/2);
 			float rotation = (float)(Math.Atan2 (Velocity.Y, Velocity.X));
-			spriteBatch.Draw (textureManager.GetTexture("items"), null, CollisionBox, Item.GetTextureSourceRect(7), origin, rotation, null, color, SpriteEffects.None, 1);
+			spriteBatch.Draw (textureManager.GetTexture("items"), null, CollisionBox, Item.GetTextureSourceRect(projectileType), origin, rotation, null, color, SpriteEffects.None, 1);
 		}
 	}
 }

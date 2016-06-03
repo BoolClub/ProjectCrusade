@@ -20,7 +20,14 @@ namespace ProjectCrusade
 		//All arrows have same behavior
 		public override void PrimaryUse (World world)
 		{
-			throw new NotImplementedException ();
+			if (!IsCooledDown)
+				return;
+			Projectile proj = new Projectile (
+				world.Player.CollisionBox.Center.ToVector2(), 
+				500f * world.Player.OrientationVector, 
+				Damage);
+			proj.projectileType = 8;
+			world.AddEntity (proj);
 		}
 		public override void SecondaryUse (World world)
 		{
