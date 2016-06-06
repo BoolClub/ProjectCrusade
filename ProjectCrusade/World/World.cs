@@ -28,7 +28,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		public const int SpriteSheetWidth = 512;
+		public const int SpriteSheetWidth = 1024;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
