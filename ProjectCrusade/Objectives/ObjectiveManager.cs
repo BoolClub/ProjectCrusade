@@ -17,11 +17,6 @@ namespace ProjectCrusade
 		/// </summary>
 		Dictionary<string, Objective> objectives;
 
-		/// <summary>
-		/// True/False for whether or not the player can enter the cave for the first time to actually start the game.
-		/// The player can only enter after talking to the priest, which is what this boolean checks for.
-		/// </summary>
-		public static bool canEnterCave { get; set; }
 
 
 
@@ -35,7 +30,7 @@ namespace ProjectCrusade
 
 			/* Once we are ready to add these features in, we can comment out the objectives below. */
 
-//			objectives ["EnterCathedral"].ObjectiveReached += TalkToPriestObjective;
+//			objectives ["TalkToPriest"].ObjectiveReached += TalkToPriestObjective;
 //			objectives ["EnterHouseOne"].ObjectiveReached += EnterHouseOneObjective;
 //			objectives ["EnterHouseTwo"].ObjectiveReached += EnterHouseTwoObjective;
 //			objectives ["EnterHouseThree"].ObjectiveReached += EnterHouseThreeObjective;
@@ -60,13 +55,14 @@ namespace ProjectCrusade
 		#region
 		public static void NextLevelObjective(Objective obj, ObjectiveManager manager, Player player, World world)
 		{
-			world.AdvanceWorld ();
+			if(objectives["TalkToPriest"].Completed)
+				world.AdvanceWorld ();
 		}
 
 		//For when the player speaks to the priest for the first time in the game.
 		public static void TalkToPriestObjective(Objective obj, ObjectiveManager manager, Player player, World world)
 		{
-			canEnterCave = true;
+
 		}
 
 		//For entering the first house in the overworld.
