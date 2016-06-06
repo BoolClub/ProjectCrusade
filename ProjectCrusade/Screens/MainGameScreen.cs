@@ -16,20 +16,24 @@ namespace ProjectCrusade
 		KeyboardState prevKeyboardState;
 		HUDManager hud;
 		ObjectiveManager objManager;
+		MainGame game;
+
+		GameScreenManager screenManager;
 
 		List<WorldConfiguration> levelConfigurations;
 
 		int currWorld=0;
 
-		public MainGameScreen (TextureManager textureManager)
+		TextureManager textureManager;
+
+		public MainGameScreen (TextureManager _textureManager)
 		{
 			setUpLevelConfigurations ();
 			camera = new Camera ();
 			objManager = new ObjectiveManager ();
-			world = new World (textureManager, 128, 128, objManager, levelConfigurations[currWorld]);
+			world = new World (_textureManager, 128, 128, objManager, levelConfigurations[currWorld]);
 			prevKeyboardState = Keyboard.GetState ();
-
-
+			textureManager = _textureManager;
 			hud = new HUDManager (world);
 		}
 
@@ -82,11 +86,18 @@ namespace ProjectCrusade
 
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
+			this.game = game;
+			this.screenManager = screenManager;
 			world.Update (gameTime, camera);
 			cameraFollow ();
 			camera.Update ();
 			hud.Update (gameTime);
 			objManager.Update (gameTime, world.Player, world);
+
+
+			if (world.ReadyToAdvance) {
+				NextWorld (textureManager);
+			}
 
 
 			if (Keyboard.GetState ().IsKeyDown (Keys.P) && prevKeyboardState.IsKeyUp(Keys.P))
@@ -113,12 +124,6 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
-			if (world.ReadyToAdvance) {
-				currWorld++;
-				if (currWorld >= levelConfigurations.Count)
-					currWorld -= levelConfigurations.Count;	
-				world = new World (textureManager, 128, 128, objManager, levelConfigurations[currWorld]);
-			}
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
@@ -142,6 +147,15 @@ namespace ProjectCrusade
 			spriteBatch.DrawString (font, text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - font.MeasureString (text), Color.White);
 
 			spriteBatch.End ();
+		}
+
+		public void NextWorld(TextureManager textureManager)
+		{
+			currWorld++;
+			if (currWorld >= levelConfigurations.Count)
+				currWorld -= levelConfigurations.Count;	
+			world = new World (textureManager, 128, 128, objManager, levelConfigurations[currWorld]);
+			screenManager.PushGameScreen (new WorldTransitionScreen(screenManager, game), 100);
 		}
 
 

@@ -14,7 +14,7 @@ namespace ProjectCrusade
 		GameScreenManager screenManager;
 
 		MainGame game; //reference to game so that we can quit
-
+		TextureManager textureManager;
 
 		public PauseMenuScreen (GameScreenManager _screenManager, MainGame game)
 		{
@@ -51,6 +51,7 @@ namespace ProjectCrusade
 			}
 		}
 
+
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
 			//unpause
@@ -62,6 +63,7 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
+					
 			spriteBatch.Begin ();
 
 			spriteBatch.Draw (textureManager.WhitePixel, new Rectangle (0, 0, MainGame.WindowWidth, MainGame.WindowHeight), Color.Black * 0.5f*opacity);
