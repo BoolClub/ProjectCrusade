@@ -66,7 +66,21 @@ namespace ProjectCrusade
 			}
 			{
 				WorldConfiguration configuration = new WorldConfiguration ();
-				configuration.TileFamily = new TileFamilies.IceCave ();
+				configuration.TileFamily = new TileFamilies.SandCave ();
+				configuration.AddRooms ("Level1/RestRoom.tmx", 1);
+				configuration.AddRooms ("Level1/Room2.tmx", 2);
+				configuration.AddRooms ("Level1/Room3.tmx", 1);
+				configuration.AddRooms ("Level1/Room4.tmx", 1);
+				configuration.AddRooms ("Level1/Room5.tmx", 1);
+				configuration.AddRooms ("Level1/Room6.tmx", 1);
+				configuration.AddRooms ("Level1/Room7.tmx", 1);
+				configuration.AddRooms ("Level1/Room9.tmx", 1);
+				configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
+				levelConfigurations.Add (configuration);
+			}
+			{
+				WorldConfiguration configuration = new WorldConfiguration ();
+				configuration.TileFamily = new TileFamilies.GreenCave ();
 				configuration.AddRooms ("Level1/RestRoom.tmx", 1);
 				configuration.AddRooms ("Level1/Room2.tmx", 2);
 				configuration.AddRooms ("Level1/Room3.tmx", 1);
