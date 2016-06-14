@@ -64,7 +64,7 @@ namespace Shadows2D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            shadowmapResolver = new ShadowmapResolver(GraphicsDevice, quadRender, ShadowmapSize.Size256, ShadowmapSize.Size1024);
+			shadowmapResolver = new ShadowmapResolver(GraphicsDevice, quadRender, ShadowmapSize.Size256, ShadowmapSize.Size1024);
             shadowmapResolver.LoadContent(Content);
             lightArea1 = new LightArea(GraphicsDevice, ShadowmapSize.Size512);
             lightArea2 = new LightArea(GraphicsDevice, ShadowmapSize.Size512);

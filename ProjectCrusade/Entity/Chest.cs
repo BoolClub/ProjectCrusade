@@ -21,7 +21,7 @@ namespace ProjectCrusade
 			Width = 32;
 			Height = 32;
 			item = _item;
-			textbox = new TextBox (256,150,Position,Color.Black, Color.White, 0.5f);
+			textbox = new TextBox (255,150,Position,Color.Black, Color.White, 0.5f);
 
 		}
 		public override void InteractWithPlayer (Player player)

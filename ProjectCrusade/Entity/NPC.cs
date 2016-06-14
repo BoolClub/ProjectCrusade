@@ -40,7 +40,7 @@ namespace ProjectCrusade
 			Width = 32; 
 			Height = 32;
 			Position = new Vector2 (0,0);
-			TextBox = new TextBox (256, 128, Position, Color.Black, Color.White);
+			TextBox = new TextBox (255, 128, Position, Color.Black, Color.White);
 			TextBox.Opacity = 0.5f;
 		}
 
