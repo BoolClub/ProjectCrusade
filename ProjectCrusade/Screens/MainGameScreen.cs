@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
@@ -20,70 +19,24 @@ namespace ProjectCrusade
 
 		GameScreenManager screenManager;
 
-		List<WorldConfiguration> levelConfigurations;
 
-		int currWorld=0;
 
 		TextureManager textureManager;
 
 		public MainGameScreen (TextureManager _textureManager)
 		{
-			setUpLevelConfigurations ();
 			camera = new Camera ();
 			objManager = new ObjectiveManager ();
+<<<<<<< HEAD
 			world = new World (_textureManager, 128, 128, objManager, levelConfigurations[currWorld]);
 			prevKeyboardState = Keyboard.GetState ();
 			textureManager = _textureManager;
+=======
+			world = new World (textureManager, 128, 128, objManager);
+			prevKeyboardState = Keyboard.GetState ();
+>>>>>>> parent of b42776f... World progressions, fixed tile mismatch
 			hud = new HUDManager (world);
 		}
-
-		void setUpLevelConfigurations()
-		{
-			levelConfigurations = new List<WorldConfiguration> ();
-			{
-				WorldConfiguration configuration = new WorldConfiguration ();
-				configuration.TileFamily = new TileFamilies.Cave ();
-				configuration.AddRooms ("Level1/RestRoom.tmx", 1);
-				configuration.AddRooms ("Level1/Room2.tmx", 2);
-				configuration.AddRooms ("Level1/Room3.tmx", 1);
-				configuration.AddRooms ("Level1/Room4.tmx", 1);
-				configuration.AddRooms ("Level1/Room5.tmx", 1);
-				configuration.AddRooms ("Level1/Room6.tmx", 1);
-				configuration.AddRooms ("Level1/Room7.tmx", 1);
-				configuration.AddRooms ("Level1/Room9.tmx", 1);
-				configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
-				levelConfigurations.Add (configuration);
-			}
-			{
-				WorldConfiguration configuration = new WorldConfiguration ();
-				configuration.TileFamily = new TileFamilies.IceCave ();
-				configuration.AddRooms ("Level1/RestRoom.tmx", 1);
-				configuration.AddRooms ("Level1/Room2.tmx", 2);
-				configuration.AddRooms ("Level1/Room3.tmx", 1);
-				configuration.AddRooms ("Level1/Room4.tmx", 1);
-				configuration.AddRooms ("Level1/Room5.tmx", 1);
-				configuration.AddRooms ("Level1/Room6.tmx", 1);
-				configuration.AddRooms ("Level1/Room7.tmx", 1);
-				configuration.AddRooms ("Level1/Room9.tmx", 1);
-				configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
-				levelConfigurations.Add (configuration);
-			}
-			{
-				WorldConfiguration configuration = new WorldConfiguration ();
-				configuration.TileFamily = new TileFamilies.IceCave ();
-				configuration.AddRooms ("Level1/RestRoom.tmx", 1);
-				configuration.AddRooms ("Level1/Room2.tmx", 2);
-				configuration.AddRooms ("Level1/Room3.tmx", 1);
-				configuration.AddRooms ("Level1/Room4.tmx", 1);
-				configuration.AddRooms ("Level1/Room5.tmx", 1);
-				configuration.AddRooms ("Level1/Room6.tmx", 1);
-				configuration.AddRooms ("Level1/Room7.tmx", 1);
-				configuration.AddRooms ("Level1/Room9.tmx", 1);
-				configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
-				levelConfigurations.Add (configuration);
-			}
-		}
-
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
 			this.game = game;
@@ -124,6 +77,11 @@ namespace ProjectCrusade
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
+<<<<<<< HEAD
+=======
+			if (world.ReadyToAdvance)
+				world = new World (textureManager, 128, 128, objManager);
+>>>>>>> parent of b42776f... World progressions, fixed tile mismatch
 			//Render world (do transform)
 			spriteBatch.Begin (SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, camera.TransformMatrix);
 
