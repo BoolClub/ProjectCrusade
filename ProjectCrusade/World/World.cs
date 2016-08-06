@@ -131,20 +131,20 @@ namespace ProjectCrusade
 
 		}
 
-		void configureRooms()
-		{
-			configuration = new WorldConfiguration ();
-			configuration.TileFamily = new TileFamilies.IceCave();
-			configuration.AddRooms ("Level1/RestRoom.tmx",1);
-			configuration.AddRooms ("Level1/Room2.tmx",2);
-			configuration.AddRooms ("Level1/Room3.tmx",1);
-			configuration.AddRooms ("Level1/Room4.tmx",1);
-			configuration.AddRooms ("Level1/Room5.tmx",1);
-			configuration.AddRooms ("Level1/Room6.tmx",1);
-			configuration.AddRooms ("Level1/Room7.tmx",1);
-			configuration.AddRooms ("Level1/Room9.tmx",1);
-			configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
-		}
+		//void configureRooms()
+		//{
+		//	//configuration = new WorldConfiguration ();
+		//	//configuration.TileFamily = new TileFamilies.IceCave();
+		//	//configuration.AddRooms ("Level1/RestRoom.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room2.tmx",2);
+		//	//configuration.AddRooms ("Level1/Room3.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room4.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room5.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room6.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room7.tmx",1);
+		//	//configuration.AddRooms ("Level1/Room9.tmx",1);
+		//	//configuration.TieredPropertyFileName = "Level1/TieredProperties.xml";
+		//}
 
 		/// <summary>
 		/// Initializes all layers. Note that layer 0 is the floor layer, 1 is the wall layer

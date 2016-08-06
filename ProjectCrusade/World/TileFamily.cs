@@ -44,6 +44,7 @@ namespace ProjectCrusade
 
 			public override TileType Rock				{ get { return TileType.CaveRock; }   }   
 		}
+
 		public class IceCave : TileFamily
 		{
 			public override TileType Floor				{ get { return TileType.IceCaveFloor; } }
@@ -64,9 +65,6 @@ namespace ProjectCrusade
 
 			public override TileType Rock				{ get { return TileType.IceCaveRock; }   }   
 		}
-
-
-
 
 		public class SandCave : TileFamily
 		{
@@ -91,23 +89,23 @@ namespace ProjectCrusade
 
 		public class GreenCave : TileFamily
 		{
-			public override TileType Floor { get { return TileType.GreenCaveFloor; } }
-			public override TileType FloorTopLeft { get { return TileType.GreenCaveFloorTopLeft; } }
-			public override TileType FloorTopRight { get { return TileType.GreenCaveFloorTopRight; } }
-			public override TileType FloorBottomLeft { get { return TileType.GreenCaveFloorBottomLeft; } }
-			public override TileType FloorBottomRight { get { return TileType.GreenCaveFloorBottomRight; } }
+			public override TileType Floor 				{ get { return TileType.GreenCaveFloor; } }
+			public override TileType FloorTopLeft 		{ get { return TileType.GreenCaveFloorTopLeft; } }
+			public override TileType FloorTopRight 		{ get { return TileType.GreenCaveFloorTopRight; } }
+			public override TileType FloorBottomLeft 	{ get { return TileType.GreenCaveFloorBottomLeft; } }
+			public override TileType FloorBottomRight 	{ get { return TileType.GreenCaveFloorBottomRight; } }
 
-			public override TileType Wall { get { return TileType.GreenCaveWall; } }
-			public override TileType WallTopLeft { get { return TileType.GreenCaveWallTopLeft; } }
-			public override TileType WallTopRight { get { return TileType.GreenCaveWallTopRight; } }
-			public override TileType WallBottomLeft { get { return TileType.GreenCaveWallBottomLeft; } }
-			public override TileType WallBottomRight { get { return TileType.GreenCaveWallBottomRight; } }
-			public override TileType WallTop { get { return TileType.GreenCaveWallTop; } }
-			public override TileType WallBottom { get { return TileType.GreenCaveWallBottom; } }
-			public override TileType WallLeft { get { return TileType.GreenCaveWallLeft; } }
-			public override TileType WallRight { get { return TileType.GreenCaveWallRight; } }   
+			public override TileType Wall 				{ get { return TileType.GreenCaveWall; } }
+			public override TileType WallTopLeft 		{ get { return TileType.GreenCaveWallTopLeft; } }
+			public override TileType WallTopRight 		{ get { return TileType.GreenCaveWallTopRight; } }
+			public override TileType WallBottomLeft		{ get { return TileType.GreenCaveWallBottomLeft; } }
+			public override TileType WallBottomRight 	{ get { return TileType.GreenCaveWallBottomRight; } }
+			public override TileType WallTop 			{ get { return TileType.GreenCaveWallTop; } }
+			public override TileType WallBottom 		{ get { return TileType.GreenCaveWallBottom; } }
+			public override TileType WallLeft 			{ get { return TileType.GreenCaveWallLeft; } }
+			public override TileType WallRight 			{ get { return TileType.GreenCaveWallRight; } }   
 
-			public override TileType Rock { get { return TileType.GreenCaveRock; } }   
+			public override TileType Rock 				{ get { return TileType.GreenCaveRock; } }   
 		}
 	}
 }

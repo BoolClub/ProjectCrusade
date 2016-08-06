@@ -15,10 +15,10 @@ namespace ProjectCrusade {
 		/// <summary>
 		/// This is the player's "health." The variable is called "sanity" since this is what we decided we are doing for our game. 
 		/// </summary>
-		public float Sanity { get; set; }
+		public float Health { get; set; }
 
 		//Different classes might have different max sanities
-		public float MaxSanity { get; set; }
+		public float MaxHealth { get; set; }
 
 		/// <summary>
 		/// Gets the name of the player.
@@ -66,8 +66,8 @@ namespace ProjectCrusade {
 			Height = 24;
 			Speed = 450;
 
-			Sanity = 20;
-			MaxSanity = 100;
+			Health = 100;
+			MaxHealth = 100;
 
 			Facing = 0;
 			InteractionBox = new Rectangle ((int)Position.X, (int)Position.Y, Width, Height+Padding);
@@ -76,6 +76,8 @@ namespace ProjectCrusade {
 			Position = new Vector2(0,0);
 
 			Inventory = new Inventory (4, 10);
+
+			//Add a bunch of test items to the inventory
 			Apple a = new Apple ();
 			a.Count = Item.MaxCount-20;
 			Inventory.AddItem (a);
@@ -137,18 +139,18 @@ namespace ProjectCrusade {
 		//SETTERS
 		public void Damage(float amount) { 
 
-			if (Sanity - amount >= 0) {
-				Sanity -= amount;
+			if (Health - amount >= 0) {
+				Health -= amount;
 			} else
-				Sanity = 0;
+				Health = 0;
 
 		}
 		public void Heal(float amount) { 
 
-			if (Sanity + amount < MaxSanity)
-				Sanity += amount;
+			if (Health + amount < MaxHealth)
+				Health += amount;
 			else
-				Sanity = MaxSanity;
+				Health = MaxHealth;
 		}
 
 

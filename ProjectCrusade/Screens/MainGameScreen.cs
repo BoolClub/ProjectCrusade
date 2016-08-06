@@ -149,11 +149,11 @@ namespace ProjectCrusade
 			//Draw the hud
 			hud.Draw (spriteBatch, textureManager, fontManager);
 
-			string text = String.Format ("Sanity: {0}", world.Player.Sanity);
+			string text = String.Format ("Health: {0}", world.Player.Health);
 
 			SpriteFont font = fontManager.GetFont ("MainFontLarge");
 
-			spriteBatch.DrawString (font, text, new Vector2 (MainGame.WindowWidth - 10, MainGame.WindowHeight - 50) - font.MeasureString (text), Color.White);
+			spriteBatch.DrawString (font, text, new Vector2 (MainGame.WindowWidth - 15, MainGame.WindowHeight - 15) - font.MeasureString (text), Color.White);
 
 			spriteBatch.End ();
 		}

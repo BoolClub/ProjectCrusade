@@ -10,7 +10,7 @@ namespace ProjectCrusade
 	public class HUDManager
 	{
 		World world;
-		SanityBarGUI sanitybar;
+		HealthBarGUI healthbar;
 
 		const int height = 48;
 
@@ -18,7 +18,7 @@ namespace ProjectCrusade
 		public HUDManager (World w) {
 			world = w;
 			//Create object with the player's sanity.
-			sanitybar = new SanityBarGUI (world.Player.Sanity);
+			healthbar = new HealthBarGUI (world.Player.Health);
 
 
 
@@ -26,7 +26,7 @@ namespace ProjectCrusade
 
 
 		public void Update(GameTime time) {
-			sanitybar.Update (time, world.Player.Sanity, world.Player.MaxSanity);
+			healthbar.Update (time, world.Player.Health, world.Player.MaxHealth);
 
 
 		}
@@ -34,7 +34,7 @@ namespace ProjectCrusade
 		public void Draw(SpriteBatch spriteBatch, TextureManager textureManager, FontManager fM) {
 			drawHUDBackground (spriteBatch, textureManager);
 
-			sanitybar.Draw (spriteBatch, textureManager, fM);
+			healthbar.Draw (spriteBatch, textureManager, fM);
 
 		}
 

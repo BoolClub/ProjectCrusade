@@ -28,6 +28,7 @@
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
     <Profiling>false</Profiling>
+    <LinkMode>None</LinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -89,7 +90,7 @@
     <Compile Include="Items\WandItem.cs" />
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="World\Light.cs" />
-    <Compile Include="GUI\SanityBarGUI.cs" />
+    <Compile Include="GUI\HealthBarGUI.cs" />
     <Compile Include="World\Fluid.cs" />
     <Compile Include="Entity\Particle.cs" />
     <Compile Include="Experimental Graphics\Animation.cs" />

@@ -61,6 +61,7 @@ namespace ProjectCrusade
 			KeyboardState keyState = Keyboard.GetState();
 
 			#region menu options
+			//You can only change options after both keys are up
 			if (keyState.IsKeyUp(Keys.Up) && keyState.IsKeyUp(Keys.Down)) {
 				canMove = true;
 			}
