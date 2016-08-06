@@ -10,11 +10,7 @@ namespace ProjectCrusade
 
 		public WandItem ()
 		{
-			if (Player.PlayerType == PlayerType.Wizard) {
-				Useable = true;
-			} else {
-				Useable = false;
-			}
+			Useable = true;
 		}
 
 		//All arrows have same behavior

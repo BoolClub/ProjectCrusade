@@ -28,7 +28,7 @@ namespace ProjectCrusade
 		/// <summary>
 		/// Width of sprite sheet in pixels
 		/// </summary>
-		public const int SpriteSheetWidth = 1024;
+		public const int SpriteSheetWidth = 512;
 		/// <summary>
 		/// Width of a tile in pixels. Also the height (for square tiles)
 		/// </summary>
@@ -38,7 +38,7 @@ namespace ProjectCrusade
 		/// Whether the level is ready to advance to next
 		/// </summary>
 		/// <value><c>true</c> if ready to advance; otherwise, <c>false</c>.</value>
-		public bool ReadyToAdvance { get; private set; }
+		public bool ReadyToAdvance { get; set; }
 
 		public Player Player;
 		public Map Map;
@@ -98,12 +98,12 @@ namespace ProjectCrusade
 		Rectangle cameraRectangle;
 
 
-		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager)
+		public World (TextureManager textureManager, int width, int height, ObjectiveManager objManager, WorldConfiguration config)
 		{
-			configureRooms ();
+			configuration = config;
 			ReadyToAdvance = false;
 
-			Player = new Player ("test", PlayerType.Wizard);
+			Player = new Player ("test");
 			TextBox.PlayerName = Player.Name;
 			Map = new Map (textureManager);
 			Width = width;
@@ -134,7 +134,7 @@ namespace ProjectCrusade
 		void configureRooms()
 		{
 			configuration = new WorldConfiguration ();
-			configuration.TileFamily = new TileFamilies.SandCave();
+			configuration.TileFamily = new TileFamilies.IceCave();
 			configuration.AddRooms ("Level1/RestRoom.tmx",1);
 			configuration.AddRooms ("Level1/Room2.tmx",2);
 			configuration.AddRooms ("Level1/Room3.tmx",1);

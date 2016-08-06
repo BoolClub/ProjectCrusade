@@ -25,11 +25,6 @@ namespace ProjectCrusade {
 		/// </summary>
 		public string Name { get; private set; }
 
-		/// <summary>
-		/// Gets the type of the player.
-		/// </summary>
-		public static PlayerType PlayerType { get; private set; }
-
 
 		/// <summary>
 		/// The interaction box (rectangle). When something is within this interaction box and the player clicks
@@ -65,9 +60,8 @@ namespace ProjectCrusade {
 		public Inventory Inventory { get; }
 
 
-		public Player (string name, PlayerType type) {
+		public Player (string name) {
 			Name = name;
-			PlayerType = type;
 			Width = 24;
 			Height = 24;
 			Speed = 450;
@@ -168,6 +162,13 @@ namespace ProjectCrusade {
 		//PLAYER INPUT
 		void checkInput(GameTime time, World world) {
 			KeyboardState keyState = Keyboard.GetState ();
+			Microsoft.Xna.Framework.Input.Keys primaryUse = Keys.Z;
+			Microsoft.Xna.Framework.Input.Keys secondaryUse = Keys.X;
+			Microsoft.Xna.Framework.Input.Keys interactionKey = Keys.C;
+
+
+
+			#region player movement
 
 			float calcDisp = (float)time.ElapsedGameTime.TotalSeconds * Speed;
 
@@ -176,6 +177,7 @@ namespace ProjectCrusade {
 			bool changed = false;
 			Vector2 prevOrientation = OrientationVector;
 			OrientationVector = Vector2.Zero;
+
 			//Move player.
 			if (keyState.IsKeyDown (Keys.D) || keyState.IsKeyDown (Keys.Right)) {
 				disp += new Vector2 (calcDisp, 0);
@@ -206,8 +208,10 @@ namespace ProjectCrusade {
 				changed = true;
 			}
 			OrientationVector.Normalize ();
+
 			if (!changed)
 				OrientationVector = prevOrientation;
+			
 			//Normalize displacement so that you travel the same speed diagonally. 
 			if ((keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.D) && keyState.IsKeyDown (Keys.S)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.W)) || (keyState.IsKeyDown (Keys.A) && keyState.IsKeyDown (Keys.S))) {
 				disp /= (float)Math.Sqrt (2.0);
@@ -218,8 +222,14 @@ namespace ProjectCrusade {
 			Position+=disp;
 
 
+			#endregion
+
+
+
+			#region player interaction
+
 			//Primary Use Items
-			if (keyState.IsKeyDown (Keys.Q) && PrevKeyState.IsKeyUp(Keys.Q)) {
+			if (keyState.IsKeyDown (primaryUse) && PrevKeyState.IsKeyUp(primaryUse)) {
 				if (Inventory.ActiveSlot != null) {
 
 					if (Inventory.ActiveSlot.HasItem) {
@@ -235,9 +245,30 @@ namespace ProjectCrusade {
 				}
 			}
 
+			//Secondary Use Items
+			if (keyState.IsKeyDown(secondaryUse) && PrevKeyState.IsKeyUp(secondaryUse))
+			{
+				if (Inventory.ActiveSlot != null)
+				{
+
+					if (Inventory.ActiveSlot.HasItem)
+					{
+
+						Inventory.ActiveSlot.Item.SecondaryUse(world);
+
+						//If the item is depletable, it is removed when used.
+						if (Inventory.ActiveSlot.Item.Depletable)
+						{
+							Inventory.ActiveSlot.RemoveItem();
+						}
+					}
+
+				}
+			}
+
 			/*This can be the "interact" button for now. It just checks if the entity is next to the player 
 			and if the entity is not the player, then it will interact. */
-			if (keyState.IsKeyDown (Keys.C) && PrevKeyState.IsKeyUp (Keys.C)) {
+			if (keyState.IsKeyDown (interactionKey) && PrevKeyState.IsKeyUp (interactionKey)) {
 
 				foreach(Entity e in world.activeEntities) {
 					if (!(e is Player) && e.IsNextToPlayer (world))
@@ -261,24 +292,15 @@ namespace ProjectCrusade {
 			}
 
 
+			//Move to the next world -- Just for testing purposes
+			if (keyState.IsKeyDown(Keys.H) && PrevKeyState.IsKeyUp(Keys.H)) {
+				world.ReadyToAdvance = true;
+			}
 
+			#endregion
 		}
 
 	} //END OF 'PLAYER' CLASS
-
-
-
-
-	/// <summary>
-	/// This enum will be used to determine what type (class) of player the player is. Since we decided on having different player types and different items that you can pick up depending on your type, we can use this to do all of that. 
-	/// </summary>
-	public enum PlayerType {
-		Rogue,
-		Knight,
-		Wizard,
-		Archer,
-	} //END OF PLAYERTYPE ENUM
-
 
 
 

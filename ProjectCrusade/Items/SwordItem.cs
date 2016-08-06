@@ -10,12 +10,7 @@ namespace ProjectCrusade
 
 		public SwordItem ()
 		{
-			//It is useable as long as the player is of a specific class.
-			if (Player.PlayerType == PlayerType.Knight || Player.PlayerType == PlayerType.Rogue) {
-				Useable = true;
-			} else {
-				Useable = false;
-			}
+			Useable = true;
 		}
 
 		//All swords have same behavior

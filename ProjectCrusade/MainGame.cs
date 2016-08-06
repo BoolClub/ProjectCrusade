@@ -30,6 +30,9 @@ namespace ProjectCrusade
 
 		const int targetFrameRate = 100;
 
+		public static bool ShouldQuit { get; set; }
+
+
 		public MainGame ()
 		{
 			graphics = new GraphicsDeviceManager (this);
@@ -42,6 +45,7 @@ namespace ProjectCrusade
 			IsFixedTimeStep = true;
 			IsMouseVisible = true;
 		}
+
 
 		/// <summary>
 		/// Allows the game to perform any initialization it needs to before starting to run.
@@ -82,7 +86,7 @@ namespace ProjectCrusade
 			//Load all fonts
 			fontManager = new FontManager (Content);
 
-			screenManager = new GameScreenManager (new MainGameScreen(textureManager));
+			screenManager = new GameScreenManager (new MainMenuScreen(textureManager));
 
 			Tile.CheckTileTransparency (textureManager);
 
@@ -96,14 +100,18 @@ namespace ProjectCrusade
 		protected override void Update (GameTime gameTime)
 		{
 			// For Mobile devices, this logic will close the Game when the Back button is pressed
-			// Exit() is obsolete on iOS
-//			#if !__IOS__
-//			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-//				Keyboard.GetState ().IsKeyDown (Keys.Escape) || (Keyboard.GetState().IsKeyDown(Keys.Q) &&
-//					Keyboard.GetState().IsKeyDown(Keys.LeftWindows))) {
-//				Exit ();
-//			}
-//			#endif
+			// Exit() is  obsolete on iOS
+			#if !__IOS__
+			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+				Keyboard.GetState ().IsKeyDown (Keys.Escape) || (Keyboard.GetState().IsKeyDown(Keys.Q) &&
+					Keyboard.GetState().IsKeyDown(Keys.LeftWindows))) {
+				Exit ();
+			}
+			#endif
+
+			//Check whether it should quit the game.
+			if (ShouldQuit) { Exit(); }
+
 
 			screenManager.Update (gameTime, this);
 

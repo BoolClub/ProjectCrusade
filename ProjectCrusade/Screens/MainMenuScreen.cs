@@ -1,26 +1,166 @@
 ﻿using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace ProjectCrusade
 {
 	/// <summary>
-	/// First game screen.
+	/// Main Menu. Determines where to go.
 	/// </summary>
 	public class MainMenuScreen : GameScreen
 	{
-		public MainMenuScreen ()
+		/// <summary>
+		/// Gets or sets the state of the previous key.
+		/// </summary>
+		/// <value>The state of the previous key.</value>
+		public static KeyboardState PrevKeyState { get; set; }
+
+		/// <summary>
+		/// The options for the menu.
+		/// </summary>
+		string[] options = {"Start","How To Play","Quit"};
+
+		/// <summary>
+		/// The option that is currently selected
+		/// </summary>
+		int currentOption = 0;
+
+		/// <summary>
+		/// A mini timer for moving through the options.
+		/// </summary>
+		double timer = 1.0;
+
+		/// <summary>
+		/// The texture manager.
+		/// </summary>
+		TextureManager textureManager;
+
+
+
+
+
+		/// <summary>
+		/// CONSTRUCTOR.
+		/// </summary>
+		public MainMenuScreen(TextureManager tm)
 		{
+			textureManager = tm;
 		}
+
+
+
+		/// <summary>
+		/// Changes the timer so that the keyboard clicks don't happen too quickly.
+		/// </summary>
+		/// <returns>The timer.</returns>
+		public void ChangeTimer()
+		{
+			while (timer > 0)
+			{
+				timer -= 0.05;
+				Console.WriteLine(timer);
+			}
+
+			timer = 1.0;
+		}
+
+
+		/// <summary>
+		/// Handles the input for moving about the main menu.
+		/// </summary>
+		/// <returns>The menu input.</returns>
+		/// <param name="time">Time.</param>
+		public void CheckMenuInput(GameTime time, GameScreenManager screenManager) {
+			KeyboardState keyState = Keyboard.GetState();
+
+			#region menu options
+			//Move between the different options
+			if (keyState.IsKeyDown(Keys.Up) && PrevKeyState.IsKeyUp(Keys.Up))
+			{
+				if (currentOption > 0 && timer == 1.0)
+				{
+					currentOption--;
+				}
+
+				ChangeTimer();
+			}
+			if (keyState.IsKeyDown(Keys.Down) && PrevKeyState.IsKeyUp(Keys.Down))
+			{
+				if (currentOption < 2 && timer == 1.0)
+				{
+					currentOption++;
+				}
+
+				ChangeTimer();
+			}
+			#endregion
+
+
+			#region option selection
+
+			//Select an option
+			if (keyState.IsKeyDown(Keys.C) && PrevKeyState.IsKeyUp(Keys.C)) {
+
+				if (currentOption == 0) {
+					//start the game
+					screenManager.PushGameScreen(new MainGameScreen(textureManager));
+				}
+
+				if (currentOption == 1) {
+					//go to the controls screen
+					//Eventually make another game screen that just displays the controls
+				}
+
+				if (currentOption == 2) {
+					//quit the game
+					MainGame.ShouldQuit = true;
+				}
+
+			}
+
+			#endregion
+		}
+
+
+		/* ABSTRACT METHODS */
 
 		public override void Update (GameTime gameTime, GameScreenManager screenManager, MainGame game)
 		{
-			throw new NotImplementedException ();
+			CheckMenuInput(gameTime, screenManager);
 		}
 
 		public override void Draw (SpriteBatch spriteBatch, TextureManager textureManager, FontManager fontManager, float opacity)
 		{
-			throw new NotImplementedException ();
+			spriteBatch.Begin();
+
+			//Draw the text for each option on the screen
+			foreach (string s in options)
+			{
+				if (s.Equals(options[0])) {
+					spriteBatch.DrawString(fontManager.GetFont("MainFontLarge"), s, new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2 - 50), Color.White);
+				}
+			    if (s.Equals(options[1])) {
+					spriteBatch.DrawString(fontManager.GetFont("MainFontLarge"), s, new Vector2(MainGame.WindowWidth / 2 - 35, MainGame.WindowHeight / 2 - 20), Color.White);
+				}
+				if (s.Equals(options[2])) {
+					spriteBatch.DrawString(fontManager.GetFont("MainFontLarge"), s, new Vector2(MainGame.WindowWidth / 2, MainGame.WindowHeight / 2 + 10), Color.White);
+				}
+			}
+
+			//Draw a little dot next to the currently selected option
+			if (currentOption == 0)
+				spriteBatch.Draw(textureManager.WhitePixel, new Rectangle(MainGame.WindowWidth / 2 - 20, MainGame.WindowHeight / 2 - 40, 10, 10), Color.White);
+			else if(currentOption == 1)
+				spriteBatch.Draw(textureManager.WhitePixel, new Rectangle(MainGame.WindowWidth / 2 - 55, MainGame.WindowHeight / 2 - 10, 10, 10), Color.White);
+			else if(currentOption == 2)
+				spriteBatch.Draw(textureManager.WhitePixel, new Rectangle(MainGame.WindowWidth / 2 - 20, MainGame.WindowHeight / 2 + 15, 10, 10), Color.White);
+
+
+			spriteBatch.End();
 		}
 			
 	}

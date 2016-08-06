@@ -44,8 +44,6 @@ Create a new object layer titled `Entities` (again, case sensitive). Then, draw 
     - etc.
 4. `count` - optional, for use with `name = chest` identifier; indicates how many items the chest will contain. When adjusting this property, ensure that the item is stackable. 
 
-###Objectives
-Create a layer called `Objectives`. To make an objective, create a rectangle with the `name` tag set to a unique identifier for the objective.
 
 ##Adding/changing fonts 
 

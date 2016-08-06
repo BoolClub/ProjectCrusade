@@ -13,11 +13,7 @@ namespace ProjectCrusade
 
 		public ArrowItem ()
 		{
-			if (Player.PlayerType == PlayerType.Archer) {
-				Useable = true;
-			} else {
-				Useable = false;
-			}
+			Useable = true;
 		}
 
 		//All arrows have same behavior
