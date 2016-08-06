@@ -9,8 +9,6 @@ namespace ProjectCrusade
 		double[] probabilitiesOneAccumulated;
 		double[] probabilitiesTwo;
 		double[] probabilitiesTwoAccumulated;
-		double[] probabilitiesThree;
-		double[] probabilitiesThreeAccumulated;
 
 
 
@@ -18,11 +16,9 @@ namespace ProjectCrusade
 		{
 			int numOne = Enum.GetNames (typeof(WeaponItem.TierOneProperty)).Length-1;//discount None
 			int numTwo = Enum.GetNames (typeof(WeaponItem.TierTwoProperty)).Length-1;//discount None
-			int numThree = Enum.GetNames (typeof(WeaponItem.TierThreeProperty)).Length-1;//discount None
 
 			probabilitiesOne = new double[numOne];
 			probabilitiesTwo = new double[numTwo];
-			probabilitiesThree = new double[numThree];
 
 
 			XmlReader reader = XmlReader.Create (filename);
@@ -45,10 +41,6 @@ namespace ProjectCrusade
 					t = typeof(WeaponItem.TierTwoProperty);
 					currProb = probabilitiesTwo;
 					break;
-				case 3:
-					t = typeof(WeaponItem.TierThreeProperty);
-					currProb = probabilitiesThree;
-					break;
 				default: 
 					throw new Exception ("This tier value is not covered.");
 				}
@@ -63,7 +55,6 @@ namespace ProjectCrusade
 			}
 			accumulateProbabilities (probabilitiesOne, ref probabilitiesOneAccumulated);
 			accumulateProbabilities (probabilitiesTwo, ref probabilitiesTwoAccumulated);
-			accumulateProbabilities (probabilitiesThree, ref probabilitiesThreeAccumulated);
 		}
 
 
@@ -107,15 +98,6 @@ namespace ProjectCrusade
 				return (WeaponItem.TierTwoProperty)p;
 			else
 				return WeaponItem.TierTwoProperty.None;
-		}
-
-		public WeaponItem.TierThreeProperty RandomPropertyThree(Random rand)
-		{
-			int p = randomProperty (rand, probabilitiesThreeAccumulated);
-			if (p > 0)
-				return (WeaponItem.TierThreeProperty)p;
-			else
-				return WeaponItem.TierThreeProperty.None;
 		}
 	}
 }

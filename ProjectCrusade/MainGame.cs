@@ -101,13 +101,13 @@ namespace ProjectCrusade
 		{
 			// For Mobile devices, this logic will close the Game when the Back button is pressed
 			// Exit() is  obsolete on iOS
-			#if !__IOS__
-			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-				Keyboard.GetState ().IsKeyDown (Keys.Escape) || (Keyboard.GetState().IsKeyDown(Keys.Q) &&
-					Keyboard.GetState().IsKeyDown(Keys.LeftWindows))) {
-				Exit ();
-			}
-			#endif
+			//#if !__IOS__
+			//if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+			//	Keyboard.GetState ().IsKeyDown (Keys.Escape) || (Keyboard.GetState().IsKeyDown(Keys.Q) &&
+			//		Keyboard.GetState().IsKeyDown(Keys.LeftWindows))) {
+			//	Exit ();
+			//}
+			//#endif
 
 			//Check whether it should quit the game.
 			if (ShouldQuit) { Exit(); }

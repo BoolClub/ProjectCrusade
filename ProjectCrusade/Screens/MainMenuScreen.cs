@@ -30,9 +30,9 @@ namespace ProjectCrusade
 		int currentOption = 0;
 
 		/// <summary>
-		/// A mini timer for moving through the options.
+		/// Whether or not the usr can move up or down the menu.
 		/// </summary>
-		double timer = 1.0;
+		bool canMove = true;
 
 		/// <summary>
 		/// The texture manager.
@@ -52,23 +52,6 @@ namespace ProjectCrusade
 		}
 
 
-
-		/// <summary>
-		/// Changes the timer so that the keyboard clicks don't happen too quickly.
-		/// </summary>
-		/// <returns>The timer.</returns>
-		public void ChangeTimer()
-		{
-			while (timer > 0)
-			{
-				timer -= 0.05;
-				Console.WriteLine(timer);
-			}
-
-			timer = 1.0;
-		}
-
-
 		/// <summary>
 		/// Handles the input for moving about the main menu.
 		/// </summary>
@@ -78,32 +61,35 @@ namespace ProjectCrusade
 			KeyboardState keyState = Keyboard.GetState();
 
 			#region menu options
+			if (keyState.IsKeyUp(Keys.Up) && keyState.IsKeyUp(Keys.Down)) {
+				canMove = true;
+			}
+
 			//Move between the different options
 			if (keyState.IsKeyDown(Keys.Up) && PrevKeyState.IsKeyUp(Keys.Up))
 			{
-				if (currentOption > 0 && timer == 1.0)
+				if (currentOption > 0 && canMove == true)
 				{
 					currentOption--;
+					canMove = false;
 				}
-
-				ChangeTimer();
 			}
 			if (keyState.IsKeyDown(Keys.Down) && PrevKeyState.IsKeyUp(Keys.Down))
 			{
-				if (currentOption < 2 && timer == 1.0)
+				if (currentOption < 2 && canMove == true)
 				{
 					currentOption++;
+					canMove = false;
 				}
-
-				ChangeTimer();
 			}
 			#endregion
+
 
 
 			#region option selection
 
 			//Select an option
-			if (keyState.IsKeyDown(Keys.C) && PrevKeyState.IsKeyUp(Keys.C)) {
+			if ((keyState.IsKeyDown(Keys.C) && PrevKeyState.IsKeyUp(Keys.C)) || (keyState.IsKeyDown(Keys.Enter) && PrevKeyState.IsKeyUp(Keys.Enter))) {
 
 				if (currentOption == 0) {
 					//start the game

@@ -193,7 +193,6 @@ namespace ProjectCrusade
 
 						w.TierOne = propertySelector.RandomPropertyOne (rand);
 						w.TierTwo = propertySelector.RandomPropertyTwo (rand);
-						w.TierThree = propertySelector.RandomPropertyThree (rand);
 					}
 
 					Chest c = new Chest (i);

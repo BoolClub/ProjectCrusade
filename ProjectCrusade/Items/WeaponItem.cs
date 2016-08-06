@@ -64,52 +64,33 @@ namespace ProjectCrusade
 				"Unlucky: \n",
 				"Light: \n",
 			};
-
-			string[] desc3 = {
-				"",
-				"Uthman: \n",
-				"the Fortunate: \n",
-				"the Ages: \n",
-				"the Griffon: \n",
-				"Mages: \n",
-				"Knights: \n",
-				"Kingdoms: \n",
-				"Mogar: \n",
-				"the Night: \n"
-			};
 			return 
 				desc1 [(int)TierOne] +
-			desc2 [(int)TierTwo] +
-			desc3 [(int)TierThree];
+			desc2 [(int)TierTwo];
 		}
 
 		public override string Name {
 			get {
-				string one, two, three;
+				string one, two;
 
 				one = TierOne.ToString() + ' ';
 				two = TierTwo.ToString() + ' ';
-				three = " of " + TierThree.ToString ();
 
 				if (TierOne == TierOneProperty.None)
 					one = "";
 				if (TierTwo == TierTwoProperty.None)
 					two = "";
-				if (TierThree == TierThreeProperty.None)
-					three = "";
 
 
 				one = one.Replace ('_', ' ');
 				two = two.Replace ('_', ' ');
-				three = three.Replace ('_', ' ');
 
-				return String.Format ("{0}{1}{2}{3}", one, two, BaseName, three);
+				return String.Format ("{0}{1}{2}", one, two, BaseName);
 			}
 		}
 
 		public TierOneProperty TierOne;
 		public TierTwoProperty TierTwo;
-		public TierThreeProperty TierThree;
 
 
 		public enum TierOneProperty { 
@@ -141,23 +122,9 @@ namespace ProjectCrusade
 			Light,
 		}
 
-		public enum TierThreeProperty {
-			None = 0,
-			Uthman,
-			the_Fortunate,
-			the_Ages,
-			the_Griffon,
-			Mages,
-			Knights,
-			Kingdoms,
-			Mogar,
-			the_Night,
-		}
-
 		public WeaponItem () {
 			TierOne = TierOneProperty.None;
 			TierTwo = TierTwoProperty.None;
-			TierThree = TierThreeProperty.None;
 		}
 
 
@@ -206,19 +173,6 @@ namespace ProjectCrusade
 			return new Rectangle (i * TieredPropertySpriteSheetHeight, 0, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
 		}
 
-		private Rectangle getTierThreeSourceRect(TierThreeProperty prop)
-		{
-			int i = (int)prop
-				+ Enum.GetNames(typeof(TierOneProperty)).Length
-				+ Enum.GetNames(typeof(TierTwoProperty)).Length
-				- 1;
-
-			if (i * TieredPropertySpriteSheetHeight > TieredPropertySpriteSheetWidth)
-				throw new Exception ("Property not found on sprite sheet!");
-
-			return new Rectangle (i * TieredPropertySpriteSheetHeight, 0, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
-		}
-
 		public override void Draw (Rectangle rect, SpriteBatch spriteBatch, TextureManager textureManager)
 		{
 			base.Draw (rect, spriteBatch, textureManager);
@@ -227,9 +181,7 @@ namespace ProjectCrusade
 				rect.X, rect.Y, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
 			Rectangle prop2Rect = new Rectangle (
 				rect.X, rect.Y + TieredPropertySpriteSheetHeight + 1, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
-			Rectangle prop3Rect = new Rectangle (
-				rect.X, rect.Y + 2*TieredPropertySpriteSheetHeight + 2, TieredPropertySpriteSheetHeight, TieredPropertySpriteSheetHeight);
-
+			
 			if (TierOne!=TierOneProperty.None)
 				spriteBatch.Draw (
 					textureManager.GetTexture ("tiered-properties"),
@@ -249,18 +201,6 @@ namespace ProjectCrusade
 					null, 
 					prop2Rect, 
 					getTierTwoSourceRect(TierTwo), 
-					null, 
-					0, 
-					null, 
-					null, 
-					SpriteEffects.None, 
-					0);
-			if (TierThree!=TierThreeProperty.None)
-				spriteBatch.Draw (
-					textureManager.GetTexture ("tiered-properties"),
-					null, 
-					prop3Rect, 
-					getTierThreeSourceRect(TierThree), 
 					null, 
 					0, 
 					null, 
