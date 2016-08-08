@@ -27,7 +27,7 @@ namespace ProjectCrusade
 		}
 		public override void SecondaryUse (World world)
 		{
-			throw new NotImplementedException ();
+			
 		}
 	}
 
