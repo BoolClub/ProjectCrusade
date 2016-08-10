@@ -12,3 +12,4 @@
 ProjectCrusade/bin/
 
 ProjectCrusade/obj/
+*.csproj
