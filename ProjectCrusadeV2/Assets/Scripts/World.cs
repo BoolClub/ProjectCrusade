@@ -48,6 +48,11 @@ public class World : MonoBehaviour
 	/// </summary>
 	public Sprite[] Tile_Sprites;
 
+	/// <summary>
+	/// All of the NPCs in the game world.
+	/// </summary>
+	public GameObject[] Npcs;
+
 
 
 	// Use this for initialization
@@ -62,6 +67,74 @@ public class World : MonoBehaviour
 		//Create the game world.
 		InstantiateWorld();
 	}
+
+
+	/// <summary>
+	/// Creates the tile gameobject.
+	/// </summary>
+	/// <returns>The tile.</returns>
+	/// <param name="name">Name.</param>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	public void CreateTile(string name, int x, int y, int sprite_index)
+	{
+		GameObject obj = new GameObject(name);
+		obj.transform.position = new Vector3(x + TILE_SIZE, y + TILE_SIZE, 0);
+		obj.transform.localScale = new Vector3(TILE_SCALE, TILE_SCALE, 1);
+		obj.isStatic = true;
+		obj.AddComponent(typeof(SpriteRenderer));
+		(obj.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Tile_Sprites[sprite_index];
+		if (name.Equals("Wall"))
+		{
+			obj.AddComponent(typeof(BoxCollider2D));
+			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).size = new Vector2(0.46f, 0.46f);
+			obj.transform.SetParent(BackgroundHolder[2].transform);
+		}
+		else {
+			obj.transform.SetParent(BackgroundHolder[1].transform);
+		}
+
+		//Trigger Box Collider for doors
+		if (sprite_index == (int)UnitySpriteIndices.RED_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.RED_DOOR_RIGHT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_RIGHT)
+		{
+			obj.AddComponent(typeof(BoxCollider2D));
+			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).isTrigger = true;
+			obj.AddComponent(typeof(Door));
+			(obj.GetComponent("Door") as Door).Position = new Vector2(x, y);
+
+			if (x == 15 && y == Dimension_Y - 17) (obj.GetComponent("Door") as Door).Destination = "House_1";
+			if (x == 31 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
+			if (x == 32 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
+			if (x == 17 && y == Dimension_Y - 32) (obj.GetComponent("Door") as Door).Destination = "House_1";
+			if (x == 35 && y == Dimension_Y - 33) (obj.GetComponent("Door") as Door).Destination = "House_1";
+			if (x == 19 && y == Dimension_Y - 1) (obj.GetComponent("Door") as Door).Destination = "Underground_1";
+			if (x == 20 && y == Dimension_Y - 1) (obj.GetComponent("Door") as Door).Destination = "Underground_1";
+		}
+
+		Tiles[x, y] = obj;
+	}
+
+
+	/// <summary>
+	/// Loads the map data from Tiled.
+	/// </summary>
+	/// <returns>The map data.</returns>
+	int[,] LoadMapData()
+	{
+		StreamReader reader = new StreamReader("/Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Assets/GameMaps/" + FileName);
+		string content = reader.ReadToEnd();
+		string[] array = content.Split(',');
+		int[] g = new int[array.Length];
+		for (int i = 0; i < array.Length; i++)
+		{
+			g[i] = int.Parse(array[i]);
+		}
+
+		int[,] array2D = ArrayConversion.Make2DArray(g, Dimension_Y, Dimension_Y);
+
+		return array2D;
+	}
+
 
 	/// <summary>
 	/// Creates the entire game world.
@@ -414,83 +487,43 @@ public class World : MonoBehaviour
 				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_BOTTOM_RIGHT)
 					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_BOTTOM_RIGHT);
 
-				if (GameMap[i, j] == (int)TiledSpriteIndices.SAND_WALL_CENTER)
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_WALL_CENTER)
 					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_WALL_CENTER);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_TOP_LEFT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_TOP_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_TOP)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_TOP);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_TOP_RIGHT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_TOP_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_LEFT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_CENTER)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_CENTER);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_RIGHT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_BOTTOM_LEFT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_BOTTOM_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_BOTTOM)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_BOTTOM);
+				
+				if (GameMap[i, j] == (int)TiledSpriteIndices.RED_CARPET_BOTTOM_RIGHT)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.RED_CARPET_BOTTOM_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.BOUNDARY_TILE)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.BOUNDARY_TILE);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.WOOD_FLOOR)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.WOOD_FLOOR);
 			}
 		}
 	}
-
-
-	/// <summary>
-	/// Creates the tile gameobject.
-	/// </summary>
-	/// <returns>The tile.</returns>
-	/// <param name="name">Name.</param>
-	/// <param name="x">The x coordinate.</param>
-	/// <param name="y">The y coordinate.</param>
-	public void CreateTile(string name, int x, int y, int sprite_index)
-	{
-		GameObject obj = new GameObject(name);
-		obj.transform.position = new Vector3(x + TILE_SIZE, y + TILE_SIZE, 0);
-		obj.transform.localScale = new Vector3(TILE_SCALE, TILE_SCALE, 1);
-		obj.isStatic = true;
-		obj.AddComponent(typeof(SpriteRenderer));
-		(obj.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Tile_Sprites[sprite_index];
-		if (name.Equals("Wall"))
-		{
-			obj.AddComponent(typeof(BoxCollider2D));
-			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).size = new Vector2(0.46f, 0.46f);
-			obj.transform.SetParent(BackgroundHolder[2].transform);
-		} else {
-			obj.transform.SetParent(BackgroundHolder[1].transform);
-		}
-
-		//Trigger Box Collider for doors
-		if(sprite_index == (int)UnitySpriteIndices.RED_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.RED_DOOR_RIGHT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_RIGHT) {
-			obj.AddComponent(typeof(BoxCollider2D));
-			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).isTrigger = true;
-			obj.AddComponent(typeof(Door));
-			(obj.GetComponent("Door") as Door).Position = new Vector2(x, y);
-
-			if (x == 15 && y == Dimension_Y - 17) (obj.GetComponent("Door") as Door).Destination = "House 1";
-			if (x == 31 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
-			if (x == 32 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
-			if (x == 17 && y == Dimension_Y - 32) (obj.GetComponent("Door") as Door).Destination = "House 2";
-			if (x == 35 && y == Dimension_Y - 33) (obj.GetComponent("Door") as Door).Destination = "House 3";
-		}
-
-		Tiles[x, y] = obj;
-	}
-
-
-	/// <summary>
-	/// Loads the map data from Tiled.
-	/// </summary>
-	/// <returns>The map data.</returns>
-	int[,] LoadMapData()
-	{
-		StreamReader reader = new StreamReader("/Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Assets/GameMaps/" + FileName);
-		string content = reader.ReadToEnd();
-		string[] array = content.Split(',');
-		int[] g = new int[array.Length];
-		for (int i = 0; i < array.Length; i++)
-		{
-			g[i] = int.Parse(array[i]);
-		}
-
-		int[,] array2D = ArrayConversion.Make2DArray(g, Dimension_Y, Dimension_Y);
-
-		return array2D;
-	}
-
-
-	/// <summary>
-	/// Returns whether or not the first two numbers are equal to the last two.
-	/// </summary>
-	/// <param name="one">One.</param>
-	/// <param name="two">Two.</param>
-	/// <param name="three">Three.</param>
-	/// <param name="four">Four.</param>
-	bool equals(int one, int two, int three, int four) { return one == three && two == four; }
 
 }
