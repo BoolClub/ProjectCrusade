@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Holds all of the sprite indices as they appear in unity.
 /// </summary>
-public enum UnitySpriteIndices 
+public enum UnitySpriteIndices
 {
 	//These are the tile's sprite indexes as they appear in the array in the Unity inspector.
 	//Over world
@@ -131,4 +131,23 @@ public enum UnitySpriteIndices
 	GREEN_WALL_BOTTOM_LEFT = 75,
 	GREEN_WALL_BOTTOM = 76,
 	GREEN_WALL_BOTTOM_RIGHT = 77,
+
+
+	//Stone building
+	STONE_LEFT = 154,
+	STONE_CENTER = 155,
+	STONE_RIGHT = 156,
+	STONE_CORNER_TOP_LEFT = 146,
+	STONE_TOP = 147,
+	STONE_CORNER_TOP_RIGHT = 148,
+	STONE_CORNER_BOTTOM_LEFT = 162,
+	STONE_BOTTOM = 163,
+	STONE_CORNER_BOTTOM_RIGHT = 164,
+
+	STONE_TOP_LEFT = 168,
+	STONE_TOP_RIGHT = 169,
+	STONE_BOTTOM_LEFT = 170,
+	STONE_BOTTOM_RIGHT = 171,
+	STONE_WALL_CENTER = 135,
+
 }

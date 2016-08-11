@@ -22,6 +22,11 @@ public class World : MonoBehaviour
 	public int Dimension_Y;
 
 	/// <summary>
+	/// The name of the file that contains the data for the world.
+	/// </summary>
+	public string FileName;
+
+	/// <summary>
 	/// The game map.
 	/// </summary>
 	int[,] GameMap;
@@ -29,7 +34,8 @@ public class World : MonoBehaviour
 	/// <summary>
 	/// The tiles as game objects that will appear on screen.
 	/// </summary>
-	GameObject[,] Tiles;
+	[HideInInspector]
+	public GameObject[,] Tiles { get; set; }
 
 	/// <summary>
 	/// The background holder. Holds the floor holder and the wall holder.
@@ -41,6 +47,7 @@ public class World : MonoBehaviour
 	/// The tile sprites.
 	/// </summary>
 	public Sprite[] Tile_Sprites;
+
 
 
 	// Use this for initialization
@@ -55,8 +62,6 @@ public class World : MonoBehaviour
 		//Create the game world.
 		InstantiateWorld();
 	}
-
-
 
 	/// <summary>
 	/// Creates the entire game world.
@@ -369,6 +374,48 @@ public class World : MonoBehaviour
 
 				if (GameMap[i, j] == (int)TiledSpriteIndices.GREEN_WALL_BOTTOM_RIGHT)
 					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.GREEN_WALL_BOTTOM_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_LEFT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_CENTER)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_CENTER);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_RIGHT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_CORNER_TOP_LEFT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_CORNER_TOP_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_TOP)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_TOP);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_CORNER_TOP_RIGHT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_CORNER_TOP_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_CORNER_BOTTOM_LEFT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_CORNER_BOTTOM_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_BOTTOM)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_BOTTOM);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_CORNER_BOTTOM_RIGHT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_CORNER_BOTTOM_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_TOP_LEFT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_TOP_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_TOP_RIGHT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_TOP_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_BOTTOM_LEFT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_BOTTOM_LEFT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STONE_BOTTOM_RIGHT)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_BOTTOM_RIGHT);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.SAND_WALL_CENTER)
+					CreateTile("Wall", i, Dimension_Y - j, (int)UnitySpriteIndices.STONE_WALL_CENTER);
 			}
 		}
 	}
@@ -397,6 +444,21 @@ public class World : MonoBehaviour
 		} else {
 			obj.transform.SetParent(BackgroundHolder[1].transform);
 		}
+
+		//Trigger Box Collider for doors
+		if(sprite_index == (int)UnitySpriteIndices.RED_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.RED_DOOR_RIGHT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_RIGHT) {
+			obj.AddComponent(typeof(BoxCollider2D));
+			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).isTrigger = true;
+			obj.AddComponent(typeof(Door));
+			(obj.GetComponent("Door") as Door).Position = new Vector2(x, y);
+
+			if (x == 15 && y == Dimension_Y - 17) (obj.GetComponent("Door") as Door).Destination = "House 1";
+			if (x == 31 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
+			if (x == 32 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
+			if (x == 17 && y == Dimension_Y - 32) (obj.GetComponent("Door") as Door).Destination = "House 2";
+			if (x == 35 && y == Dimension_Y - 33) (obj.GetComponent("Door") as Door).Destination = "House 3";
+		}
+
 		Tiles[x, y] = obj;
 	}
 
@@ -407,7 +469,7 @@ public class World : MonoBehaviour
 	/// <returns>The map data.</returns>
 	int[,] LoadMapData()
 	{
-		StreamReader reader = new StreamReader("/Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Assets/GameMaps/OverWorld2.txt");
+		StreamReader reader = new StreamReader("/Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Assets/GameMaps/" + FileName);
 		string content = reader.ReadToEnd();
 		string[] array = content.Split(',');
 		int[] g = new int[array.Length];

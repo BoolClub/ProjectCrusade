@@ -8,9 +8,14 @@ public class PlayerControls : MonoBehaviour {
 	/// </summary>
 	public float speed;
 
+	/// <summary>
+	/// The player's position
+	/// </summary>
+	public Vector3 Position;
+
 
 	void Start () {
-		
+		transform.position = Position;
 	}
 
 	void Update () {
