@@ -23,8 +23,8 @@ public class InventorySlot : MonoBehaviour {
 
 	public void Update()
 	{
-
-		if (Type != ItemType.EMPTY)
+		//Some random number that would never be an item index.
+		if (!Type.Equals(ItemType.EMPTY))
 		{
 			GetComponentInParent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Type];
 		}

@@ -20,11 +20,6 @@ public class Inventory : MonoBehaviour {
 	public bool Open;
 
 	/// <summary>
-	/// The inventory slot sprite.
-	/// </summary>
-	public Sprite InventorySlot_Sprite;
-
-	/// <summary>
 	/// The size of the slot.
 	/// </summary>
 	int SlotSize = 30;
@@ -46,7 +41,7 @@ public class Inventory : MonoBehaviour {
 				//Create the inventory slot
 				GameObject slot = new GameObject("Inventory Slot");
 				slot.AddComponent<InventorySlot>().IndexInInventory = new Vector2(j,i);
-				slot.AddComponent<InventorySlot>().Type = ItemType.EMPTY;
+				slot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
 				slot.AddComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1f);
 				slot.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1f);
 				slot.GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
