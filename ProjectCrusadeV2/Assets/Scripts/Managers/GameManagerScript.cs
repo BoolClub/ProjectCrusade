@@ -6,9 +6,9 @@ using System.IO;
 public class GameManagerScript : MonoBehaviour {
 
 	/// <summary>
-	/// The player.
+	/// An array of sprites for each item.
 	/// </summary>
-	public GameObject Player;
+	public Sprite[] ItemSprites;
 
 
 

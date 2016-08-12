@@ -6,7 +6,7 @@ public class Chest : MonoBehaviour {
 	/// <summary>
 	/// This is the item that this chest will give the player.
 	/// </summary>
-	public ItemType Item;
+	public ItemType Type;
 
 	/// <summary>
 	/// The sprites for when the chest is opened and closed.
@@ -15,13 +15,18 @@ public class Chest : MonoBehaviour {
 
 
 
+	void Start()
+	{
+		
+	}
+
 	/// <summary>
 	/// Update this instance.
 	/// </summary>
 	void Update()
 	{
 		//Change the sprite when the chest has been opened
-		if (Item == ItemType.EMPTY)
+		if (Type == ItemType.EMPTY)
 		{
 			GetComponent<SpriteRenderer>().sprite = Opened;
 		} else {
@@ -34,7 +39,7 @@ public class Chest : MonoBehaviour {
 	/// Takes the item from the chest.
 	/// </summary>
 	/// <returns>The item.</returns>
-	public void TakeItem() { Item = ItemType.EMPTY; }
+	public void TakeItem() { Type = ItemType.EMPTY; }
 
 
 	/// <summary>

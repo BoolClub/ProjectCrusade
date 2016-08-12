@@ -21,6 +21,10 @@ public class SmartText : MonoBehaviour {
 
 
 
+	void Start()
+	{
+		GetComponentInParent<Transform>().position.Set(GetComponentInParent<Transform>().position.x, GetComponentInParent<Transform>().position.y, -2);
+	}
 
 	/// <summary>
 	/// Wraps the text to it's container whenever it has been changed.

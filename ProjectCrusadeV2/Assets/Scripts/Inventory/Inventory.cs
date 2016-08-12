@@ -29,6 +29,10 @@ public class Inventory : MonoBehaviour {
 	/// </summary>
 	int SlotSize = 30;
 
+	///This is the first empty spot found in the inventory
+	public Vector2 firstEmpty = new Vector2(0, 0);
+
+
 
 	void Start()
 	{
@@ -39,8 +43,10 @@ public class Inventory : MonoBehaviour {
 		{
 			for (int j = 0; j < Width; j++)
 			{
+				//Create the inventory slot
 				GameObject slot = new GameObject("Inventory Slot");
 				slot.AddComponent<InventorySlot>().IndexInInventory = new Vector2(j,i);
+				slot.AddComponent<InventorySlot>().Type = ItemType.EMPTY;
 				slot.AddComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1f);
 				slot.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1f);
 				slot.GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
@@ -50,21 +56,50 @@ public class Inventory : MonoBehaviour {
 				slot.GetComponent<RectTransform>().anchoredPosition = new Vector3(-140f + j * (SlotSize + 2), -140f + i * (-SlotSize - 2), -4000);
 
 				slot.AddComponent<CanvasRenderer>();
-				slot.AddComponent<Image>().sprite = InventorySlot_Sprite;
+				slot.AddComponent<Image>();
 				slot.GetComponent<RectTransform>().SetParent(this.transform, false);
 				Slots[j, i] = slot;
 			}
 		}
-
-
-
 	}
 
 	void Update()
 	{
 		CheckInventoryOpen();
+		for (int i = 0; i < Height; i++)
+		{
+			for (int j = 0; j < Width; j++)
+			{
+				Slots[j, i].GetComponent<InventorySlot>().Update();
+			}
+		}
 	}
 
+
+	/// <summary>
+	/// Adds an item to the inventory.
+	/// </summary>
+	/// <returns>The to inventory.</returns>
+	/// <param name="item">Item.</param>
+	public void AddToInventory(ItemType item)
+	{
+		//Find the first empty spot
+		for (int i = 0; i < Height; i++)
+		{
+			for (int j = 0; j < Width; j++)
+			{
+				//If there is an empty spot or a spot with the same item and the item is stackable
+				if (Slots[Width - j - 1, Height - i - 1].GetComponent<InventorySlot>().Type == ItemType.EMPTY)
+				{
+					//The first empty slot is the slot's index in the inventory.
+					firstEmpty = new Vector2(Slots[j, i].GetComponent<InventorySlot>().IndexInInventory.x, Slots[j, i].GetComponent<InventorySlot>().IndexInInventory.y);
+				}
+			}
+		}
+
+		Slots[Width - (int)firstEmpty.x - 1, Height - (int)firstEmpty.y - 1].GetComponent<InventorySlot>().Type = item;
+
+	}
 
 	/// <summary>
 	/// Shows the full inventory when it is open and only shows the first ten items when it is closed.

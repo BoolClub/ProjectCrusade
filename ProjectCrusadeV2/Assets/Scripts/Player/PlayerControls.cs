@@ -73,9 +73,10 @@ public class PlayerControls : MonoBehaviour {
 		{
 			if (chest.GetComponent<Chest>().isNextToPlayer())
 			{
-				if (chest.GetComponent<Chest>().Item != ItemType.EMPTY)
+				if (chest.GetComponent<Chest>().Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
+					GameObject.Find("Inventory").GetComponent<Inventory>().AddToInventory(chest.GetComponent<Chest>().Type);
 					chest.GetComponent<Chest>().TakeItem();
 				}
 			}

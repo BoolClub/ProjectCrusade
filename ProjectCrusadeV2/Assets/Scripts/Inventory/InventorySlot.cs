@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class InventorySlot : MonoBehaviour{
+public class InventorySlot : MonoBehaviour {
+
 
 	/// <summary>
-	/// The item in this inventory slot.
+	/// The item type.
 	/// </summary>
-	public ItemType Item;
+	public ItemType Type;
 
 	/// <summary>
 	/// The index in inventory.
@@ -16,7 +18,15 @@ public class InventorySlot : MonoBehaviour{
 
 	void Start()
 	{
-		//Default for all inventory slots
-		Item = ItemType.EMPTY;
+		Type = ItemType.EMPTY;
+	}
+
+	public void Update()
+	{
+
+		if (Type != ItemType.EMPTY)
+		{
+			GetComponentInParent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Type];
+		}
 	}
 }
