@@ -53,6 +53,11 @@ public class World : MonoBehaviour
 	/// </summary>
 	public GameObject[] Npcs;
 
+	/// <summary>
+	/// The treasure chests that are in the game world.
+	/// </summary>
+	public GameObject[] Chests;
+
 
 
 	// Use this for initialization

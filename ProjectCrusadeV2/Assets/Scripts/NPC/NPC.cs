@@ -36,10 +36,14 @@ public class NPC : MonoBehaviour {
 
 	void Update()
 	{
+		//Check for NPC-Player collisions.
+		CheckCollision();
+
 		//Draw the appropriate line of text
-		if (TextBox.isOpen())
+		if (GameObject.Find("TextBox(Clone)") != null && TextBox.isOpen())
 		{
 			(GameObject.Find("TextBox(Clone)").GetComponentInChildren<TextMesh>()).text = TextBox.Text[TextBox.CurrentSlide];
+			(GameObject.Find("TextBox(Clone)").GetComponentInChildren<SmartText>()).OnTextChanged();
 		}
 	}
 
@@ -49,31 +53,22 @@ public class NPC : MonoBehaviour {
 	/// <returns>The next to player.</returns>
 	public bool isNextToPlayer() { return NextToPlayer; }
 
-
 	/// <summary>
-	/// Ons the trigger enter2 d.
+	/// Checks for collision between this NPC and the player.
 	/// </summary>
-	/// <returns>The trigger enter2 d.</returns>
-	/// <param name="other">Other.</param>
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag.Equals("Player"))
+	/// <returns>The collision.</returns>
+	public void CheckCollision() { 
+		if (GetComponent<BoxCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
 		{
 			NextToPlayer = true;
 		}
-	}
-
-
-	/// <summary>
-	/// Ons the trigger exit2 d.
-	/// </summary>
-	/// <returns>The trigger exit2 d.</returns>
-	/// <param name="other">Other.</param>
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.tag.Equals("Player"))
-		{
+		else {
 			NextToPlayer = false;
+			if (TextBox.isOpen())
+			{
+				Object.Destroy(GameObject.Find("TextBox(Clone)"));
+				TextBox.toggle();
+			}
 		}
 	}
 }
