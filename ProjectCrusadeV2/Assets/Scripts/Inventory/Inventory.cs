@@ -110,6 +110,7 @@ public class Inventory : MonoBehaviour {
 				{
 					Slots[j, i].GetComponent<RectTransform>().anchoredPosition = new Vector3(-140f + j * (SlotSize + 2), -140f + i * (-SlotSize - 2), -4000);
 					Slots[j, i].SetActive(true);
+					Slots[j, i].GetComponent<Image>().color = new Color(255, 255, 255, 1f);
 				}
 			}
 		}
@@ -125,7 +126,7 @@ public class Inventory : MonoBehaviour {
 					}
 					else {
 						Slots[j,i].GetComponent<RectTransform>().anchoredPosition = new Vector3(-140f + j * (SlotSize + 2), -25f + i * (-SlotSize - 2), -4000);
-
+						Slots[j, i].GetComponent<Image>().color = new Color(255, 255, 255, 0.5f);
 					}
 				}
 			}

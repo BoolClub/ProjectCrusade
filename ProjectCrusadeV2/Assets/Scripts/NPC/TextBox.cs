@@ -14,8 +14,6 @@ public class TextBox
 	bool open;
 
 
-
-
 	/////////// Constructor /////////////
 	public TextBox()
 	{

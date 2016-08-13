@@ -1,23 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum ItemType {
+public enum ItemType
+{
 
 	EMPTY = 0,
-	APPLE = 1,
-	COIN = 2,
-	WOODEN_SWORD = 3,
-	BOW_AND_ARROW = 4,
-	MAGIC_WAND = 5,
-	MACE = 6,
-	CURVED_SWORD = 7,
-	ARROW = 8,
-	BREAD = 9,
-	IRON_SWORD = 10,
-	WATER = 11,
-	FLAMING_SWORD = 12,
-	HEALING_SWORD = 13,
-	ELECTRIC_SWORD = 14,
-	LONG_SWORD = 15,
-	STEEL_SWORD = 16,
+	Apple = 1,
+	Coin = 2,
+	WoodenSword = 3,
+	BowAndArrow = 4,
+	MagicWand = 5,
+	Mace = 6,
+	CurvedSword = 7,
+	Arrow = 8,
+	Bread = 9,
+	IronSword = 10,
+	Water = 11,
+	FlamingSword = 12,
+	HealingSword = 13,
+	ElectricSword = 14,
+	LongSword = 15,
+	SteelSword = 16,
 }

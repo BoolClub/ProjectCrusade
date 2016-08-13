@@ -78,6 +78,21 @@ public class PlayerControls : MonoBehaviour {
 					//Add item to player's inventory
 					GameObject.Find("Inventory").GetComponent<Inventory>().AddToInventory(chest.GetComponent<Chest>().Type);
 					chest.GetComponent<Chest>().TakeItem();
+
+
+
+					//Open a text box
+					if ((chest.GetComponent<Chest>()).TextBox.isOpen())
+					{
+						(chest.GetComponent<Chest>()).TextBox.nextSlide();
+					}
+					else {
+						(chest.GetComponent<Chest>()).TextBox.toggle();
+
+						GameObject textbox = Resources.Load("TextBox") as GameObject;
+						Instantiate(textbox, new Vector3(chest.transform.position.x + 0.75f, chest.transform.position.y + 1.4f, -3), Quaternion.identity);
+						break;
+					}
 				}
 			}
 		}
@@ -107,7 +122,7 @@ public class PlayerControls : MonoBehaviour {
 					(npc.GetComponent<NPC>()).TextBox.toggle();
 
 					GameObject textbox = Resources.Load("TextBox") as GameObject;
-					Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, 0), Quaternion.identity);
+					Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, -3), Quaternion.identity);
 					break;
 
 				}
