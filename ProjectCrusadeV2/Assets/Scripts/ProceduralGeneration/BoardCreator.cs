@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoardCreator : MonoBehaviour
 {
@@ -19,13 +22,13 @@ public class BoardCreator : MonoBehaviour
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
-	public GameObject player;
+
+	public GameObject ladder;                                 //This is the ladder that will take the player to the next floor.
 
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
 	private Room[] rooms;                                     // All the rooms that are created for this board.
 	private Corridor[] corridors;                             // All the corridors that connect the rooms.
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
-
 
 	private void Start()
 	{
@@ -41,6 +44,19 @@ public class BoardCreator : MonoBehaviour
 
 		InstantiateTiles();
 		InstantiateOuterWalls();
+
+		//Don't spawn a ladder on the green level, that will take the player to somewhere else.
+		if (SceneManager.GetActiveScene().buildIndex != 11)
+		{
+			ladder = Resources.Load("Ladder") as GameObject;
+			Room roomToPlaceLadderIn = rooms[numRooms.Random - 1];
+			Vector3 ladderPosition = new Vector3(UnityEngine.Random.Range(roomToPlaceLadderIn.xPos, roomToPlaceLadderIn.roomWidth - 1),
+												 UnityEngine.Random.Range(roomToPlaceLadderIn.yPos, roomToPlaceLadderIn.roomHeight - 1),
+												 -1);
+			ladder.transform.position = ladderPosition;
+			ladder.AddComponent<BoxCollider2D>().isTrigger = true;
+			Instantiate(ladder, ladderPosition, Quaternion.identity);
+		}
 	}
 
 
@@ -175,15 +191,18 @@ public class BoardCreator : MonoBehaviour
 		{
 			for (int j = 0; j < tiles[i].Length; j++)
 			{
-				if(tiles[i][j] == TileType.Floor) {
+				if(tiles[i][j] == TileType.Floor) 
+				{
 					// ... and instantiate a floor tile for it.
 					InstantiateFromArray(floorTiles, i, j);
 
-				// If the tile type is Wall...
-				} else if (tiles[i][j] == TileType.Wall)
+				
+				}// If the tile type is Wall...
+				else if (tiles[i][j] == TileType.Wall)
 				{
 					// ... instantiate a wall over the top.
-					InstantiateFromArray(wallTiles, i, j);
+					//InstantiateFromArray(wallTiles, i, j);
+					InstantiateWalls(wallTiles, i, j, DetermineSpriteIndex(i,j));
 				}
 			}
 		}
@@ -243,21 +262,116 @@ public class BoardCreator : MonoBehaviour
 	void InstantiateFromArray(GameObject[] prefabs, float xCoord, float yCoord)
 	{
 		// Create a random index for the array.
-		int randomIndex = Random.Range(0, prefabs.Length);
+		int randomIndex = UnityEngine.Random.Range(0, prefabs.Length);
 
 		// The position to be instantiated at is based on the coordinates.
 		Vector3 position = new Vector3(xCoord, yCoord, 0f);
 
 		// Create an instance of the prefab from the random index of the array.
-		GameObject tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+		GameObject tileInstance = null;
 
-		if (prefabs == wallTiles || prefabs == outerWallTiles)
+
+		//if (prefabs == wallTiles)
+		//{
+		//	tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+		//	tileInstance.AddComponent<BoxCollider2D>();
+
+		//	// Set the tile's parent to the board holder.
+		//	tileInstance.transform.parent = boardHolder.transform;
+		//}
+		//else 
+		//{
+			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+
+			// Set the tile's parent to the board holder.
+			tileInstance.transform.parent = boardHolder.transform;
+		//}
+	}
+
+
+	void InstantiateWalls(GameObject[] prefabs, float xCoord, int yCoord, int index)
+	{
+		Vector3 position = new Vector3(xCoord, yCoord, 0f);
+
+		GameObject tileInstance = null;
+
+		if (prefabs == wallTiles)
 		{
+			tileInstance = Instantiate(prefabs[index], position, Quaternion.identity) as GameObject;
 			tileInstance.AddComponent<BoxCollider2D>();
+
+			// Set the tile's parent to the board holder.
+			tileInstance.transform.parent = boardHolder.transform;
+		}
+	}
+
+
+	int DetermineSpriteIndex(int currentX, int currentY)
+	{
+		int index = 0;
+
+		//Outer wall
+		if (currentX == 0 || currentY == 0 || currentX == columns - 1 || currentY == rows - 1)
+		{
+			index = 4;
 		}
 
+		if (currentX > 0 && currentY > 0 && currentX < columns - 1 && currentY < rows - 1)
+		{
+			//Next to floors
+			if (tiles[currentX + 1][currentY] == TileType.Floor)
+				index = 0;
+			
+			if (tiles[currentX - 1][currentY] == TileType.Floor)
+				index = 1;
+			
+			if (tiles[currentX][currentY + 1] == TileType.Floor)
+				index = 2;
+			
+			if (tiles[currentX][currentY - 1] == TileType.Floor)
+				index = 3;
 
-		// Set the tile's parent to the board holder.
-		tileInstance.transform.parent = boardHolder.transform;
+			//All around walls
+			if (tiles[currentX + 1][currentY] == TileType.Wall && tiles[currentX - 1][currentY] == TileType.Wall
+			   && tiles[currentX][currentY + 1] == TileType.Wall && tiles[currentX][currentY - 1] == TileType.Wall)
+				index = 4;
+
+			//Corner tiles
+			if (tiles[currentX + 1][currentY] == TileType.Wall && tiles[currentX][currentY - 1] == TileType.Wall
+			    && tiles[currentX + 1][currentY - 1] == TileType.Floor)
+				index = 5;
+
+			if (tiles[currentX - 1][currentY] == TileType.Wall && tiles[currentX][currentY - 1] == TileType.Wall
+				&& tiles[currentX - 1][currentY - 1] == TileType.Floor)
+				index = 6;
+
+			if (tiles[currentX + 1][currentY] == TileType.Wall && tiles[currentX][currentY + 1] == TileType.Wall
+				&& tiles[currentX + 1][currentY + 1] == TileType.Floor)
+				index = 7;
+
+			if (tiles[currentX - 1][currentY] == TileType.Wall && tiles[currentX][currentY + 1] == TileType.Wall
+				&& tiles[currentX - 1][currentY + 1] == TileType.Floor)
+				index = 8;
+
+
+			//Other corners
+			if (tiles[currentX - 1][currentY] == TileType.Floor && tiles[currentX][currentY + 1] == TileType.Floor
+			    && tiles[currentX + 1][currentY] == TileType.Wall && tiles[currentX][currentY - 1] == TileType.Wall)
+				index = 9;
+
+			if (tiles[currentX + 1][currentY] == TileType.Floor && tiles[currentX][currentY + 1] == TileType.Floor
+				&& tiles[currentX - 1][currentY] == TileType.Wall && tiles[currentX][currentY - 1] == TileType.Wall)
+				index = 10;
+
+			if (tiles[currentX + 1][currentY] == TileType.Floor && tiles[currentX][currentY - 1] == TileType.Floor
+				&& tiles[currentX - 1][currentY] == TileType.Wall && tiles[currentX][currentY + 1] == TileType.Wall)
+				index = 12;
+
+			if (tiles[currentX - 1][currentY] == TileType.Floor && tiles[currentX][currentY - 1] == TileType.Floor
+				&& tiles[currentX + 1][currentY] == TileType.Wall && tiles[currentX][currentY + 1] == TileType.Wall)
+				index = 11;
+		}
+
+		return index;
 	}
 }
