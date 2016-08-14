@@ -9,6 +9,11 @@ public class PlayerControls : MonoBehaviour {
 	public World world;
 
 	/// <summary>
+	/// The direction sprites.
+	/// </summary>
+	public Sprite[] DirectionSprites;
+
+	/// <summary>
 	/// The speed of the player.
 	/// </summary>
 	public float speed;
@@ -24,14 +29,20 @@ public class PlayerControls : MonoBehaviour {
 	}
 
 	void Update () {
-		//You can only move when the inventory is not open.
-		if (GameObject.Find("Inventory").GetComponent<Inventory>().Open == false)
-		{
-			float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-			float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+		float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
+		//Update the player's sprite based on the button presse.
+		if (x > 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
+		if (x < 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2];
+		if (y > 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
+		if (y < 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
+
+
+		//Only move the player when the inventroy is not open.
+		if (GameObject.Find("Inventory").GetComponent<Inventory>().Open == false)
 			transform.Translate(x, y, 0);
-		}
+
 
 		//Check for other types of player input
 		CheckInput();
@@ -52,6 +63,14 @@ public class PlayerControls : MonoBehaviour {
 		{
 			NPCInteraction();
 			CheckInteraction();
+		}
+		if (Input.GetKeyDown(primaryUseKey))
+		{
+			//Primary use item
+		}
+		if (Input.GetKeyDown(secondaryUseKey))
+		{
+			//Secondary use item
 		}
 
 		//Open the inventory

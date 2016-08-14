@@ -50,13 +50,15 @@ public class BoardCreator : MonoBehaviour
 		{
 			ladder = Resources.Load("Ladder") as GameObject;
 			Room roomToPlaceLadderIn = rooms[numRooms.Random - 1];
-			Vector3 ladderPosition = new Vector3(UnityEngine.Random.Range(roomToPlaceLadderIn.xPos, roomToPlaceLadderIn.roomWidth - 1),
-												 UnityEngine.Random.Range(roomToPlaceLadderIn.yPos, roomToPlaceLadderIn.roomHeight - 1),
-												 -1);
+			Vector3 ladderPosition = new Vector3(roomToPlaceLadderIn.xPos, roomToPlaceLadderIn.yPos, -1);
 			ladder.transform.position = ladderPosition;
 			ladder.AddComponent<BoxCollider2D>().isTrigger = true;
 			Instantiate(ladder, ladderPosition, Quaternion.identity);
 		}
+
+		//Set the player's position.
+		Vector3 playerPos = new Vector3(rooms[0].xPos, rooms[0].yPos, -1);
+		GameObject.FindWithTag("Player").transform.position = playerPos;
 	}
 
 
@@ -108,12 +110,6 @@ public class BoardCreator : MonoBehaviour
 
 				// Setup the corridor based on the room that was just created.
 				corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
-			}
-
-			if (i.Equals(Mathf.Floor(rooms.Length * .5f)))
-			{
-				Vector3 playerPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
-				GameObject.FindWithTag("Player").transform.position = playerPos;
 			}
 		}
 
