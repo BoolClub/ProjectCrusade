@@ -5,7 +5,7 @@ using UnityEngine;
 /// The purpose of this class is to serve as a way for the player to use items. Just call the methods for primary
 /// and secondary use of the specified item type.
 /// </summary>
-public class PrimaryUseItems
+public class PrimaryUseItems : MonoBehaviour
 {
 
 
@@ -41,14 +41,19 @@ public class PrimaryUseItems
 		// BOW AND ARROW
 		if (type == ItemType.BowAndArrow)
 		{
-			// make sure that the player also has arrows in the inventory.
-			// shoot a projectile (arrow). Have an arrow script that does damage to an enemy if it is hit.
+			if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.Arrow))
+			{
+				GameObject arrow = Resources.Load("Arrow") as GameObject;
+				Instantiate(arrow, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
+			}
 		}
 
 		// MAGIC WAND
 		if (type == ItemType.MagicWand)
 		{
 			// shoot a projectile (magic bolt). Have an arrow script that does damage to an enemy if it is hit.
+			GameObject magicbolt = Resources.Load("Magic Bolt") as GameObject;
+			Instantiate(magicbolt, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
 		// MACE
@@ -66,7 +71,11 @@ public class PrimaryUseItems
 		// ARROW
 		if (type == ItemType.Arrow)
 		{
-			// arrows alone don't do anything, but if you also have a bow and arrow you can use this to shoot it
+			if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.BowAndArrow))
+			{
+				GameObject arrow = Resources.Load("Arrow") as GameObject;
+				Instantiate(arrow, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
+			}
 		}
 
 		// BREAD

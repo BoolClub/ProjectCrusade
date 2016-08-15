@@ -9,6 +9,11 @@ public class PlayerControls : MonoBehaviour {
 	public World world;
 
 	/// <summary>
+	/// The direction that the player is facing.
+	/// </summary>
+	public Direction Direction;
+
+	/// <summary>
 	/// The direction sprites.
 	/// </summary>
 	public Sprite[] DirectionSprites;
@@ -33,11 +38,30 @@ public class PlayerControls : MonoBehaviour {
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
 		//Update the player's sprite based on the button presse.
-		if (x > 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
-		if (x < 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2];
-		if (y > 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
-		if (y < 0) this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
-
+		if (x > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
+			Direction = Direction.East;
+			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
+		}
+		if (x < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2]; 
+			Direction = Direction.West;
+			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
+		}
+		if (y > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
+			Direction = Direction.North;
+			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
+		}
+		if (y < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
+			Direction = Direction.South;
+			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
+		}
 
 		//Only move the player when the inventroy is not open.
 		if (GameObject.Find("Inventory").GetComponent<Inventory>().Open == false)

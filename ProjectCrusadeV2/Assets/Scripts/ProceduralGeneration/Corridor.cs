@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
 // Enum to specify the direction is heading.
+// Also used for the player and certain other game objects.
 public enum Direction
 {
-    North, East, South, West,
+    North, East, South, West, NorthEast, SouthEast, SouthWest, NorthWest,
 }
 
 public class Corridor

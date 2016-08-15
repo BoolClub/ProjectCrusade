@@ -128,6 +128,27 @@ public class Inventory : MonoBehaviour {
 
 	}
 
+
+	/// <summary>
+	/// Returns whether or not the inventory contains the specified item.
+	/// </summary>
+	/// <param name="type">Type.</param>
+	public bool Contains(ItemType type)
+	{
+		for (int i = 0; i < Height; i++)
+		{
+			for (int j = 0; j < Width; j++)
+			{
+				if (Slots[j, i].GetComponent<InventorySlot>().Type == type)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
 	/// <summary>
 	/// Shows the full inventory when it is open and only shows the first ten items when it is closed.
 	/// </summary>

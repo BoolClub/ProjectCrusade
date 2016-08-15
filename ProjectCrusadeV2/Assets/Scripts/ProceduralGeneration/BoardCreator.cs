@@ -52,6 +52,8 @@ public class BoardCreator : MonoBehaviour
 		InstantiateTiles();
 		InstantiateOuterWalls();
 
+		SpawnEnemies();
+
 		//Don't spawn a ladder on the green level, that will take the player to somewhere else.
 		if (SceneManager.GetActiveScene().buildIndex != 11)
 		{
@@ -280,12 +282,16 @@ public class BoardCreator : MonoBehaviour
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
 
+			tileInstance.tag = "Wall";
+
 			//Add to the list of walls
 			Walls.Add(tileInstance);
 		}
 		else if(prefabs == floorTiles)
 		{
 			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+
+			tileInstance.tag = "Floor";
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
@@ -318,12 +324,35 @@ public class BoardCreator : MonoBehaviour
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
 
+			tileInstance.tag = "Wall";
+
 			//Add to the list of walls.
 			Walls.Add(tileInstance);
 		}
 
 		AllTiles.Add(tileInstance);
 	}
+
+
+	void SpawnEnemies()
+	{
+		for (int i = 0; i < corridors.Length; i++)
+		{
+			GameObject enemy = GameObject.Find("GameManager").GetComponent<GameManagerScript>().Enemies[UnityEngine.Random.Range(0,GameObject.Find("GameManager").GetComponent<GameManagerScript>().Enemies.Length - 1)] as GameObject;
+
+			Instantiate(enemy, new Vector3(corridors[i].startXPos, corridors[i].startYPos, -1), Quaternion.identity);
+
+			//Spawn an extra one
+			if(i % 2 != 0)
+				Instantiate(enemy, new Vector3(corridors[i].EndPositionX, corridors[i].EndPositionY, -1), Quaternion.identity);
+		}
+
+		foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+		{
+			go.transform.SetParent(GameObject.Find("EnemyHolder").transform);
+		}
+	}
+		
 
 	int DetermineSpriteIndex(int currentX, int currentY)
 	{

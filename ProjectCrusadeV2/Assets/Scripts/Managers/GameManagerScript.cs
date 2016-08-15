@@ -11,6 +11,11 @@ public class GameManagerScript : MonoBehaviour {
 	public Sprite[] ItemSprites;
 
 	/// <summary>
+	/// A list of all of the different types of enemies that could be spawned.
+	/// </summary>
+	public GameObject[] Enemies;
+
+	/// <summary>
 	/// This is an array that represents the different floors that the player must travel through.
 	/// </summary>
 	string[] Underground = {"Underground_1", "Underground_1_2", "Underground_2", "Underground_2_2", 
