@@ -15,18 +15,15 @@ public class InventorySlot : MonoBehaviour {
 	/// </summary>
 	public Vector2 IndexInInventory;
 
+	/// <summary>
+	/// The inventory slot for this item.
+	/// </summary>
+	public GameObject InvSlot;
+
 
 	void Start()
 	{
 		Type = ItemType.EMPTY;
 	}
 
-	public void Update()
-	{
-		//Some random number that would never be an item index.
-		if (!Type.Equals(ItemType.EMPTY))
-		{
-			GetComponentInParent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Type];
-		}
-	}
 }

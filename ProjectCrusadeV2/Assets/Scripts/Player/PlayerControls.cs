@@ -66,11 +66,11 @@ public class PlayerControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(primaryUseKey))
 		{
-			//Primary use item
+			PrimaryUseItems.PrimaryUse(GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
-			//Secondary use item
+			SecondaryUseItems.SecondaryUse(GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 
 		//Open the inventory

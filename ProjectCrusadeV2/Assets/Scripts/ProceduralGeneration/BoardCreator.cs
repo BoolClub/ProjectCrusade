@@ -30,10 +30,17 @@ public class BoardCreator : MonoBehaviour
 	private Corridor[] corridors;                             // All the corridors that connect the rooms.
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
+	[HideInInspector]
+	public List<GameObject> Walls;                            //All of the wall game objects
+	[HideInInspector]
+	public List<GameObject> AllTiles;						  //All of the tiles
+
 	private void Start()
 	{
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
+		Walls = new List<GameObject>();
+		AllTiles = new List<GameObject>();
 
 		SetupTilesArray();
 
@@ -52,15 +59,13 @@ public class BoardCreator : MonoBehaviour
 			Room roomToPlaceLadderIn = rooms[numRooms.Random - 1];
 			Vector3 ladderPosition = new Vector3(roomToPlaceLadderIn.xPos, roomToPlaceLadderIn.yPos, -1);
 			ladder.transform.position = ladderPosition;
-			ladder.AddComponent<BoxCollider2D>().isTrigger = true;
 			Instantiate(ladder, ladderPosition, Quaternion.identity);
 		}
 
 		//Set the player's position.
 		Vector3 playerPos = new Vector3(rooms[0].xPos, rooms[0].yPos, -1);
-		GameObject.FindWithTag("Player").transform.position = playerPos;
+		GameObject.FindWithTag("Player").GetComponent<PlayerControls>().StartPosition = playerPos;
 	}
-
 
 	void SetupTilesArray()
 	{
@@ -267,21 +272,26 @@ public class BoardCreator : MonoBehaviour
 		GameObject tileInstance = null;
 
 
-		//if (prefabs == wallTiles)
-		//{
-		//	tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
-		//	tileInstance.AddComponent<BoxCollider2D>();
+		if (prefabs == outerWallTiles)
+		{
+			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+			tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.55f, 0.55f);
 
-		//	// Set the tile's parent to the board holder.
-		//	tileInstance.transform.parent = boardHolder.transform;
-		//}
-		//else 
-		//{
+			// Set the tile's parent to the board holder.
+			tileInstance.transform.parent = boardHolder.transform;
+
+			//Add to the list of walls
+			Walls.Add(tileInstance);
+		}
+		else if(prefabs == floorTiles)
+		{
 			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
-		//}
+		}
+
+		AllTiles.Add(tileInstance);
 	}
 
 
@@ -294,13 +304,26 @@ public class BoardCreator : MonoBehaviour
 		if (prefabs == wallTiles)
 		{
 			tileInstance = Instantiate(prefabs[index], position, Quaternion.identity) as GameObject;
-			tileInstance.AddComponent<BoxCollider2D>();
+
+			//Outer wall tile as regular wall tile
+			if (index == 4)
+			{
+				tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.55f, 0.55f);
+			}
+			else
+			{
+				tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.45f, 0.45f);
+			}
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
-		}
-	}
 
+			//Add to the list of walls.
+			Walls.Add(tileInstance);
+		}
+
+		AllTiles.Add(tileInstance);
+	}
 
 	int DetermineSpriteIndex(int currentX, int currentY)
 	{
