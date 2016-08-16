@@ -43,7 +43,7 @@ public class PrimaryUseItems : MonoBehaviour
 		{
 			if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.Arrow))
 			{
-				GameObject arrow = Resources.Load("Arrow") as GameObject;
+				GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
 				Instantiate(arrow, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 			}
 		}
@@ -52,7 +52,7 @@ public class PrimaryUseItems : MonoBehaviour
 		if (type == ItemType.MagicWand)
 		{
 			// shoot a projectile (magic bolt). Have an arrow script that does damage to an enemy if it is hit.
-			GameObject magicbolt = Resources.Load("Magic Bolt") as GameObject;
+			GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
 			Instantiate(magicbolt, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
@@ -73,7 +73,7 @@ public class PrimaryUseItems : MonoBehaviour
 		{
 			if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.BowAndArrow))
 			{
-				GameObject arrow = Resources.Load("Arrow") as GameObject;
+				GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
 				Instantiate(arrow, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 			}
 		}
