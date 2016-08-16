@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: aa82b2f8d07db4932b47fe17afe59e0b
-timeCreated: 1471217746
+timeCreated: 1471309172
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,10 @@ TextureImporter:
     21300002: PlayerTexture_1
     21300004: PlayerTexture_2
     21300006: PlayerTexture_3
+    21300008: PlayerTexture_4
+    21300010: PlayerTexture_5
+    21300012: PlayerTexture_6
+    21300014: PlayerTexture_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,12 +64,12 @@ TextureImporter:
       name: PlayerTexture_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 24
+        x: 4
+        y: 33
         width: 24
         height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5231385, y: 0.4691489}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -73,12 +77,12 @@ TextureImporter:
       name: PlayerTexture_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 24
+        x: 28
+        y: 34
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -86,12 +90,12 @@ TextureImporter:
       name: PlayerTexture_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 24
+        x: 52
+        y: 33
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -99,12 +103,64 @@ TextureImporter:
       name: PlayerTexture_3
       rect:
         serializedVersion: 2
-        x: 72
-        y: 24
+        x: 76
+        y: 33
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerTexture_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 29
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5742362, y: 0.5742361}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerTexture_5
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 2
+        width: 29
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5742362, y: 0.5742361}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerTexture_6
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 2
+        width: 31
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5742362, y: 0.5742361}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerTexture_7
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 2
+        width: 31
+        height: 31
+      alignment: 9
+      pivot: {x: 0.5742362, y: 0.5742361}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

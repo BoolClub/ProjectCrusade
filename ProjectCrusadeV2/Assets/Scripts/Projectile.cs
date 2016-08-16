@@ -73,7 +73,6 @@ public class Projectile : MonoBehaviour {
 			// Do damage to the enemy
 			Destroy(this.gameObject);
 			other.GetComponent<Enemy>().Health.Value -= Damage.Value;
-			Debug.Log(other.GetComponent<Enemy>().Health.Value);
 		}
 	}
 }

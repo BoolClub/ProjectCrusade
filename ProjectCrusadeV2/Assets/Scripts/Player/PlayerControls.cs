@@ -38,30 +38,7 @@ public class PlayerControls : MonoBehaviour {
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
 		//Update the player's sprite based on the button presse.
-		if (x > 0)
-		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
-			Direction = Direction.East;
-			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
-		}
-		if (x < 0)
-		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2]; 
-			Direction = Direction.West;
-			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
-		}
-		if (y > 0)
-		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
-			Direction = Direction.North;
-			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
-		}
-		if (y < 0)
-		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
-			Direction = Direction.South;
-			(Resources.Load("Arrow") as GameObject).GetComponent<Projectile>().GetDirectionFromPlayer();
-		}
+		UpdatePlayerDirections(x, y);
 
 		//Only move the player when the inventroy is not open.
 		if (GameObject.Find("Inventory").GetComponent<Inventory>().Open == false)
@@ -170,6 +147,69 @@ public class PlayerControls : MonoBehaviour {
 
 				}
 			}
+		}
+	}
+
+	/// <summary>
+	/// Updates the direction.
+	/// </summary>
+	/// <returns>The direction.</returns>
+	void UpdateDirection()
+	{
+		Projectile[] array = FindObjectsOfType<Projectile>();
+		foreach (Projectile proj in array)
+		{
+			proj.GetComponent<Projectile>().GetDirectionFromPlayer();
+		}
+	}
+
+	/// <summary>
+	/// Updates the player direction based on the input.
+	/// </summary>
+	/// <returns>The player directions.</returns>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	void UpdatePlayerDirections(float x, float y)
+	{
+		if (x > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
+			Direction = Direction.East;
+		}
+		if (x < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2];
+			Direction = Direction.West;
+		}
+		if (y > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
+			Direction = Direction.North;
+		}
+		if (y < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
+			Direction = Direction.South;
+		}
+		if (x > 0 && y > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[6];
+			Direction = Direction.NorthEast;
+		}
+		if (x < 0 && y > 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[7];
+			Direction = Direction.NorthWest;
+		}
+		if (x < 0 && y < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[4];
+			Direction = Direction.SouthWest;
+		}
+		if (x > 0 && y < 0)
+		{
+			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[5];
+			Direction = Direction.SouthEast;
 		}
 	}
 }

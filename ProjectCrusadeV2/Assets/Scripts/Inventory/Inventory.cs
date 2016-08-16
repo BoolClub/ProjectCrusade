@@ -230,7 +230,7 @@ public class Inventory : MonoBehaviour {
 		//If the inventory is open you can move through every slot.
 		if (Open)
 		{
-			if (Input.GetAxis("Mouse ScrollWheel") > 0)
+			if (Input.GetAxis("Mouse ScrollWheel") < 0)
 			{
 				if (CurrentSlotIndex.x < Width - 1)
 					CurrentSlotIndex.Set(CurrentSlotIndex.x + 1, CurrentSlotIndex.y);
@@ -238,7 +238,7 @@ public class Inventory : MonoBehaviour {
 					if (CurrentSlotIndex.y < Height - 1)
 					CurrentSlotIndex.Set(0, CurrentSlotIndex.y + 1);
 			}
-			if (Input.GetAxis("Mouse ScrollWheel") < 0)
+			if (Input.GetAxis("Mouse ScrollWheel") > 0)
 			{
 				if (CurrentSlotIndex.x > 0)
 					CurrentSlotIndex.Set(CurrentSlotIndex.x - 1, CurrentSlotIndex.y);
@@ -249,12 +249,12 @@ public class Inventory : MonoBehaviour {
 		}
 		//If the inventory is not open you can only move through the first row
 		else {
-			if (Input.GetAxis("Mouse ScrollWheel") > 0)
+			if (Input.GetAxis("Mouse ScrollWheel") < 0)
 			{
 				if (CurrentSlotIndex.x < Width - 1)
 					CurrentSlotIndex.Set(CurrentSlotIndex.x + 1, CurrentSlotIndex.y);
 			}
-			if (Input.GetAxis("Mouse ScrollWheel") < 0)
+			if (Input.GetAxis("Mouse ScrollWheel") > 0)
 			{
 				if (CurrentSlotIndex.x > 0)
 					CurrentSlotIndex.Set(CurrentSlotIndex.x - 1, CurrentSlotIndex.y);
