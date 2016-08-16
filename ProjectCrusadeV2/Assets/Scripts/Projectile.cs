@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 /// <summary>
@@ -26,7 +27,7 @@ public class Projectile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GetDirectionFromPlayer();
-		Damage.Value = Mathf.Ceil(Damage.Random);
+		Damage.Value = (float)Math.Round(Damage.Random, 2);
 	}
 
 	/// <summary>

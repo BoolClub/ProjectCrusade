@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2ea6e832a42144b9b90386b923c64c53
-timeCreated: 1470712129
+timeCreated: 1471318572
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -22,6 +22,8 @@ TextureImporter:
     21300030: items_15
     21300032: items_16
     21300034: items_17
+    21300036: items_18
+    21300038: items_19
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -196,7 +198,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -204,8 +206,8 @@ TextureImporter:
       name: items_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 448
+        x: 320
+        y: 480
         width: 32
         height: 32
       alignment: 0
@@ -217,7 +219,7 @@ TextureImporter:
       name: items_11
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 448
         width: 32
         height: 32
@@ -230,8 +232,8 @@ TextureImporter:
       name: items_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 416
+        x: 64
+        y: 448
         width: 32
         height: 32
       alignment: 0
@@ -243,8 +245,8 @@ TextureImporter:
       name: items_13
       rect:
         serializedVersion: 2
-        x: 64
-        y: 416
+        x: 320
+        y: 448
         width: 32
         height: 32
       alignment: 0
@@ -256,8 +258,8 @@ TextureImporter:
       name: items_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 384
+        x: 0
+        y: 416
         width: 32
         height: 32
       alignment: 0
@@ -270,7 +272,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 352
+        y: 416
         width: 32
         height: 32
       alignment: 0
@@ -283,7 +285,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 320
+        y: 384
         width: 32
         height: 32
       alignment: 0
@@ -293,6 +295,32 @@ TextureImporter:
       tessellationDetail: 0
     - serializedVersion: 2
       name: items_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 352
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: items_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: items_19
       rect:
         serializedVersion: 2
         x: 64

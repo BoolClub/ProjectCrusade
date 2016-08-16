@@ -7,6 +7,20 @@ using UnityEngine;
 /// </summary>
 public class PrimaryUseItems : MonoBehaviour
 {
+	public const float WOODEN_SWORD_DAMAGE = 8;
+	public const float MACE_DAMAGE = 13;
+	public const float CURVED_SWORD_DAMAGE = 10;
+	public const float LONG_SWORD_DAMAGE = 7;
+	public const float IRON_SWORD_DAMAGE = 11;
+	public const float STEEL_SWORD_DAMAGE = 12;
+	public const float FLAMING_SWORD_DAMAGE = 20;
+	public const float HEALING_SWORD_DAMAGE = 15;
+	public const float ELECTRIC_SWORD_DAMAGE = 17;
+
+	// The hp that is stored by the healing sword.
+	public static float StoredHP = 0;
+
+
 
 
 	/// <summary>
@@ -35,7 +49,18 @@ public class PrimaryUseItems : MonoBehaviour
 		// WOODEN SWORD
 		if (type == ItemType.WoodenSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, WOODEN_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// BOW AND ARROW
@@ -51,7 +76,6 @@ public class PrimaryUseItems : MonoBehaviour
 		// MAGIC WAND
 		if (type == ItemType.MagicWand)
 		{
-			// shoot a projectile (magic bolt). Have an arrow script that does damage to an enemy if it is hit.
 			GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
 			Instantiate(magicbolt, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
@@ -59,13 +83,35 @@ public class PrimaryUseItems : MonoBehaviour
 		// MACE
 		if (type == ItemType.Mace)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, MACE_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// CURVED SWORD
 		if (type == ItemType.CurvedSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, CURVED_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// ARROW
@@ -91,7 +137,18 @@ public class PrimaryUseItems : MonoBehaviour
 		// IRON SWORD
 		if (type == ItemType.IronSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, IRON_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// WATER
@@ -110,6 +167,18 @@ public class PrimaryUseItems : MonoBehaviour
 			// attack an enemy if there is one in front of you. Also show a cool animation
 			// does fire damage in addition to regular damage (secondary use).
 			// has the possibility of burning the enemy.
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, FLAMING_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// HEALING SWORD
@@ -119,6 +188,19 @@ public class PrimaryUseItems : MonoBehaviour
 			// steal, then store, hp from the damage it does to an enemy.
 			// the stored hp can be used to heal the player (secondary use).
 			// No recharge time, but if there is no more hp stored in it then it will have no effect.
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, HEALING_SWORD_DAMAGE).Random, 2);
+					StoredHP += damage;
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// ELECTRIC SWORD
@@ -128,20 +210,63 @@ public class PrimaryUseItems : MonoBehaviour
 			// stuns the enemy for a few, short seconds.
 			// stuns all of the enemies on the map for 10 seconds.
 			// Must recharge after secondary use.
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, ELECTRIC_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// LONG SWORD
 		if (type == ItemType.LongSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, LONG_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 		// STEEL SWORD
 		if (type == ItemType.SteelSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, STEEL_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					InstantiateDamageLabel(enemy, damage);
+				}
+			}
 		}
 
 	}
 
+
+	public static void InstantiateDamageLabel(GameObject onTopOff, float damage)
+	{
+		GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
+		damagelabel.GetComponent<DamageLabel>().Text = "" + damage;
+		Instantiate(damagelabel,
+		            new Vector3(onTopOff.transform.position.x, onTopOff.transform.position.y, -2),
+					Quaternion.identity);
+	}
 } //End of primary use class

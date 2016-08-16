@@ -33,7 +33,7 @@ public class BoardCreator : MonoBehaviour
 	[HideInInspector]
 	public List<GameObject> Walls;                            //All of the wall game objects
 	[HideInInspector]
-	public List<GameObject> AllTiles;						  //All of the tiles
+	public List<GameObject> AllTiles;                         //All of the tiles
 
 	private void Start()
 	{

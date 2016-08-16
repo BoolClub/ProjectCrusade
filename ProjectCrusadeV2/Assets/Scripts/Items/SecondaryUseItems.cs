@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 
@@ -6,10 +7,8 @@ using System.Collections;
 /// The purpose of this class is to serve as a way for the player to use items. Just call the methods for primary
 /// and secondary use of the specified item type.
 /// </summary>
-public class SecondaryUseItems
+public class SecondaryUseItems : MonoBehaviour
 {
-
-
 	/// <summary>
 	/// Primary use of the specified item.
 	/// </summary>
@@ -32,7 +31,7 @@ public class SecondaryUseItems
 		// WOODEN SWORD
 		if (type == ItemType.WoodenSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// no secondary use for a wooden sword
 		}
 
 		// BOW AND ARROW
@@ -40,30 +39,32 @@ public class SecondaryUseItems
 		{
 			// make sure that the player also has arrows in the inventory.
 			// shoot a projectile (arrow). Have an arrow script that does damage to an enemy if it is hit.
+			// only a secondary use if you have a particular type of arrow.
 		}
 
 		// MAGIC WAND
 		if (type == ItemType.MagicWand)
 		{
-			// shoot a projectile (magic bolt). Have an arrow script that does damage to an enemy if it is hit.
+			GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt2") as GameObject;
+			Instantiate(magicbolt, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
 		// MACE
 		if (type == ItemType.Mace)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// no secondary use.
 		}
 
 		// CURVED SWORD
 		if (type == ItemType.CurvedSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// no secondary use
 		}
 
 		// ARROW
 		if (type == ItemType.Arrow)
 		{
-			// arrows alone don't do anything, but if you also have a bow and arrow you can use this to shoot it
+			// no secondary use for a regular arrow
 		}
 
 		// BREAD
@@ -75,7 +76,7 @@ public class SecondaryUseItems
 		// IRON SWORD
 		if (type == ItemType.IronSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// no secondary use
 		}
 
 		// WATER
@@ -90,15 +91,32 @@ public class SecondaryUseItems
 			// attack an enemy if there is one in front of you. Also show a cool animation
 			// does fire damage in addition to regular damage (secondary use).
 			// has the possibility of burning the enemy.
+			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			{
+				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				{
+					float damage = (float)Math.Round(new FloatRange(0, PrimaryUseItems.FLAMING_SWORD_DAMAGE).Random, 2);
+
+					// ANIMATE THE SWORD SWING
+
+					enemy.GetComponent<Enemy>().Health.Value -= damage;
+					PrimaryUseItems.InstantiateDamageLabel(enemy, damage);
+				}
+			}
+			//Shoot fire projectile
+			GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;
+			Instantiate(fire, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
 		// HEALING SWORD
 		if (type == ItemType.HealingSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
 			// steal, then store, hp from the damage it does to an enemy.
 			// the stored hp can be used to heal the player (secondary use).
 			// No recharge time, but if there is no more hp stored in it then it will have no effect.
+
+			GameObject.Find("HPBarFill").GetComponent<Healthbar>().health += PrimaryUseItems.StoredHP;
+			PrimaryUseItems.StoredHP = 0;
 		}
 
 		// ELECTRIC SWORD
