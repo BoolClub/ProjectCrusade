@@ -10,6 +10,39 @@ using System.Collections;
 public class SecondaryUseItems : MonoBehaviour
 {
 	/// <summary>
+	/// Handles recharging the swords.
+	/// </summary>
+	static float chargeTimeFlameSword = 200f;
+	static float chargeTimeElectricSword = 700f;
+
+	public static void ResetCharges()
+	{
+		// Reset the charges for the flame sword
+		if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.FlamingSword))
+		{
+			if (PrimaryUseItems.FlameSwordCharge != 5)
+			{
+				chargeTimeFlameSword -= 1f;
+				if (chargeTimeFlameSword <= 0)
+				{
+					PrimaryUseItems.FlameSwordCharge++;
+					chargeTimeFlameSword = 200f;
+				}
+			}
+		}
+		// Reset the charges for the electric sword
+		if (GameObject.Find("Inventory").GetComponent<Inventory>().Contains(ItemType.ElectricSword))
+		{
+			chargeTimeElectricSword += 0.5f;
+			if (chargeTimeElectricSword >= 700f)
+			{
+				chargeTimeElectricSword = 700f;
+			}
+		}
+	}
+
+
+	/// <summary>
 	/// Primary use of the specified item.
 	/// </summary>
 	/// <returns>The use.</returns>
@@ -19,19 +52,19 @@ public class SecondaryUseItems : MonoBehaviour
 		// APPLE
 		if (type == ItemType.Apple)
 		{
-			// there is no secondary use for an apple. You can only eat it (primary use).
+			// NO SECONDARY USE
 		}
 
 		// COIN
 		if (type == ItemType.Coin)
 		{
-			// trying to use a coin will not do anything
+			// NO SECONDARY USE
 		}
 
 		// WOODEN SWORD
 		if (type == ItemType.WoodenSword)
 		{
-			// no secondary use for a wooden sword
+			// NO SECONDARY USE
 		}
 
 		// BOW AND ARROW
@@ -52,66 +85,80 @@ public class SecondaryUseItems : MonoBehaviour
 		// MACE
 		if (type == ItemType.Mace)
 		{
-			// no secondary use.
+			// NO SECONDARY USE
 		}
 
 		// CURVED SWORD
 		if (type == ItemType.CurvedSword)
 		{
-			// no secondary use
+			// NO SECONDARY USE
 		}
 
 		// ARROW
 		if (type == ItemType.Arrow)
 		{
-			// no secondary use for a regular arrow
+			// NO SECONDARY USE
 		}
 
 		// BREAD
 		if (type == ItemType.Bread)
 		{
-			// there is no secondary use for bread. You can only eat it (primary use).
+			// NO SECONDARY USE
 		}
 
 		// IRON SWORD
 		if (type == ItemType.IronSword)
 		{
-			// no secondary use
+			// NO SECONDARY USE
 		}
 
 		// WATER
 		if (type == ItemType.Water)
 		{
-			// there is no secondary use for water. You can only drink it (primary use).
+			// NO SECONDARY USE
 		}
 
 		// FLAMING SWORD
 		if (type == ItemType.FlamingSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
 			// does fire damage in addition to regular damage (secondary use).
 			// has the possibility of burning the enemy.
-			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+			if (PrimaryUseItems.FlameSwordCharge > 0)
 			{
-				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+				float number = new FloatRange(0, 100).Random;
+				// The flame attack will only burn the enemy if it is an odd number less than 35.
+				bool willBurnEnemy = (!(number % 2).Equals(0) && number < 35) ? true : false;
+
+				foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
 				{
-					float damage = (float)Math.Round(new FloatRange(0, PrimaryUseItems.FLAMING_SWORD_DAMAGE).Random, 2);
+					if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
+					{
+						#pragma warning disable
+						float damage = (float)Math.Round(new FloatRange(0, PrimaryUseItems.FLAMING_SWORD_DAMAGE).Random, 2);
 
-					// ANIMATE THE SWORD SWING
+						// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					PrimaryUseItems.InstantiateDamageLabel(enemy, damage);
+						// Remove enemy health
+						enemy.GetComponent<Enemy>().DecreaseHealth(damage);
+
+						// Chance of burning
+						if (willBurnEnemy == true)
+							enemy.GetComponent<Enemy>().Burned = true;
+					}
 				}
+
+				//Shoot fire projectile
+				GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;
+				Instantiate(fire, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
+
+				PrimaryUseItems.FlameSwordCharge--;
 			}
-			//Shoot fire projectile
-			GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;
-			Instantiate(fire, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
 		// HEALING SWORD
 		if (type == ItemType.HealingSword)
 		{
-			// steal, then store, hp from the damage it does to an enemy.
+			// take, then store, hp from the damage it does to an enemy.
 			// the stored hp can be used to heal the player (secondary use).
 			// No recharge time, but if there is no more hp stored in it then it will have no effect.
 
@@ -122,22 +169,33 @@ public class SecondaryUseItems : MonoBehaviour
 		// ELECTRIC SWORD
 		if (type == ItemType.ElectricSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
 			// stuns the enemy for a few, short seconds.
 			// stuns all of the enemies on the map for 10 seconds.
 			// Must recharge after secondary use.
+
+			if (chargeTimeElectricSword.Equals(700f))
+			{
+				foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+				{
+					// Secondary use of the electric sword stuns all enemies on the map
+					enemy.GetComponent<Enemy>().Stunned = true;
+					enemy.GetComponent<Enemy>().stunTime = 15f;
+				}
+				chargeTimeElectricSword = 0;
+				ResetCharges();
+			}
 		}
 
 		// LONG SWORD
 		if (type == ItemType.LongSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// NO SECONDARY USE
 		}
 
 		// STEEL SWORD
 		if (type == ItemType.SteelSword)
 		{
-			// attack an enemy if there is one in front of you. Also show a cool animation
+			// NO SECONDARY USE
 		}
 	}
 

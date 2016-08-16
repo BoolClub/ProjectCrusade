@@ -20,6 +20,8 @@ public class PrimaryUseItems : MonoBehaviour
 	// The hp that is stored by the healing sword.
 	public static float StoredHP = 0;
 
+	// The amount of charge on swords
+	public static int FlameSwordCharge = 5;
 
 
 
@@ -57,8 +59,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -91,8 +93,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -108,8 +110,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -145,8 +147,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -167,6 +169,11 @@ public class PrimaryUseItems : MonoBehaviour
 			// attack an enemy if there is one in front of you. Also show a cool animation
 			// does fire damage in addition to regular damage (secondary use).
 			// has the possibility of burning the enemy.
+
+			float number = new FloatRange(0, 100).Random;
+			// The regular use will only burn the enemy if it is an odd number less than 20.
+			bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
 			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
 			{
 				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
@@ -175,8 +182,12 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
+
+					// Chance of burning
+					if (willBurnEnemy == true)
+						enemy.GetComponent<Enemy>().Burned = true;
 				}
 			}
 		}
@@ -193,12 +204,15 @@ public class PrimaryUseItems : MonoBehaviour
 				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
 				{
 					float damage = (float)Math.Round(new FloatRange(0, HEALING_SWORD_DAMAGE).Random, 2);
-					StoredHP += damage;
+
+					//Store one fourth of the damage you do
+					StoredHP += damage / 4;
+					Debug.Log(StoredHP);
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -210,6 +224,11 @@ public class PrimaryUseItems : MonoBehaviour
 			// stuns the enemy for a few, short seconds.
 			// stuns all of the enemies on the map for 10 seconds.
 			// Must recharge after secondary use.
+
+			float number = new FloatRange(0, 100).Random;
+			// The regular use will only stun the enemy if it is an odd number less than 20.
+			bool willStunEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
 			foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
 			{
 				if (GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>().IsTouching(enemy.GetComponent<BoxCollider2D>()))
@@ -218,8 +237,14 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
+
+					if (willStunEnemy == true)
+					{
+						enemy.GetComponent<Enemy>().Stunned = true;
+						enemy.GetComponent<Enemy>().stunTime = 5f;
+					}
 				}
 			}
 		}
@@ -235,8 +260,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -252,8 +277,8 @@ public class PrimaryUseItems : MonoBehaviour
 
 					// ANIMATE THE SWORD SWING
 
-					enemy.GetComponent<Enemy>().Health.Value -= damage;
-					InstantiateDamageLabel(enemy, damage);
+					// Decrease enemy health and create damage label.
+					enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 				}
 			}
 		}
@@ -269,4 +294,6 @@ public class PrimaryUseItems : MonoBehaviour
 		            new Vector3(onTopOff.transform.position.x, onTopOff.transform.position.y, -2),
 					Quaternion.identity);
 	}
+
+
 } //End of primary use class

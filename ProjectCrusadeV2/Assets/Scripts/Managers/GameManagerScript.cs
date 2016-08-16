@@ -51,7 +51,8 @@ public class GameManagerScript : MonoBehaviour {
 				}
 			}
 		}
+
+
+		SecondaryUseItems.ResetCharges();
 	}
-
-
 }

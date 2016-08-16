@@ -16,11 +16,22 @@ public class Enemy : MonoBehaviour {
 	/// </summary>
 	public FloatRange Health;
 
-
 	/// <summary>
 	/// The enemy sprite.
 	/// </summary>
 	public Sprite EnemySprite;
+
+	/// <summary>
+	/// Whether or not the enemy is burned. If it is, it should lose health every few seconds.
+	/// </summary>
+	public bool Burned;
+	float burnDelay = 4f;
+
+	/// <summary>
+	/// Whether or not the enemy is stunned. If it is, then it should not be able to move for while.
+	/// </summary>
+	public bool Stunned;
+	public float stunTime = 5f;
 
 
 
@@ -36,9 +47,62 @@ public class Enemy : MonoBehaviour {
 		//Constantly change the amount of damage the enemy will do in order to keep it random
 		Damage.Value = Damage.Random;
 
+		if (Burned)
+		{
+			BurnDamage();
+		}
+
+		if (Stunned)
+		{
+			StunEffects();
+		}
+
 		if (Health.Value <= 0)
 		{
 			Destroy(this.gameObject);
+		}
+	}
+
+
+	public void DecreaseHealth(float damage)
+	{
+		Health.Value -= damage;
+		PrimaryUseItems.InstantiateDamageLabel(this.gameObject, damage);
+	}
+
+	/// <summary>
+	/// Implements the effects of burning the enemy.
+	/// </summary>
+	/// <returns>The damage.</returns>
+	void BurnDamage()
+	{
+		if (burnDelay.Equals(4f))
+			DecreaseHealth(4f);
+
+		burnDelay -= 0.05f;
+
+		if (burnDelay <= 0)
+			burnDelay = 4f;
+	}
+
+	/// <summary>
+	/// Implements the effects of stunning the enemy.
+	/// </summary>
+	/// <returns>The effects.</returns>
+	void StunEffects()
+	{
+		if (stunTime > 0 && Stunned == true)
+		{
+			GetComponent<SpriteRenderer>().color = Color.yellow;
+		}
+
+		stunTime -= 0.02f;
+
+		if (stunTime <= 0)
+		{
+			stunTime = 5f;
+			Stunned = false;
+			GetComponent<SpriteRenderer>().color = Color.white;
 		}
 	}
 }
