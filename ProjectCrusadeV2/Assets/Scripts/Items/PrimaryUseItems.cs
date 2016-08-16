@@ -35,9 +35,9 @@ public class PrimaryUseItems : MonoBehaviour
 		// APPLE
 		if (type == ItemType.Apple)
 		{
-			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().health < 100f)
+			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health < 100f)
 			{
-				GameObject.Find("HPBarFill").GetComponent<Healthbar>().health += 7f;
+				GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += 7f;
 			}
 			GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
 		}
@@ -129,9 +129,9 @@ public class PrimaryUseItems : MonoBehaviour
 		// BREAD
 		if (type == ItemType.Bread)
 		{
-			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().health < 100f)
+			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health < 100f)
 			{
-				GameObject.Find("HPBarFill").GetComponent<Healthbar>().health += 15f;
+				GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += 15f;
 			}
 			GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
 		}
@@ -156,9 +156,9 @@ public class PrimaryUseItems : MonoBehaviour
 		// WATER
 		if (type == ItemType.Water)
 		{
-			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().health < 100f)
+			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health < 100f)
 			{
-				GameObject.Find("HPBarFill").GetComponent<Healthbar>().health += 5f;
+				GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += 5f;
 			}
 			GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
 		}
@@ -207,7 +207,6 @@ public class PrimaryUseItems : MonoBehaviour
 
 					//Store one fourth of the damage you do
 					StoredHP += damage / 4;
-					Debug.Log(StoredHP);
 
 					// ANIMATE THE SWORD SWING
 

@@ -162,7 +162,7 @@ public class SecondaryUseItems : MonoBehaviour
 			// the stored hp can be used to heal the player (secondary use).
 			// No recharge time, but if there is no more hp stored in it then it will have no effect.
 
-			GameObject.Find("HPBarFill").GetComponent<Healthbar>().health += PrimaryUseItems.StoredHP;
+			GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += PrimaryUseItems.StoredHP;
 			PrimaryUseItems.StoredHP = 0;
 		}
 

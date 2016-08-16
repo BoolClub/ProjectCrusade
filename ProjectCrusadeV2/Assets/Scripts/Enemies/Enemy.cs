@@ -63,11 +63,30 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		// if the enemy collides with the player, remove the player's health.
+		if (other.tag.Equals("Player"))
+		{
+			GameObject.Find("HPBarFill").GetComponent<Healthbar>().DecreaseHP(Damage.Value);
+		}
+	}
+
 
 	public void DecreaseHealth(float damage)
 	{
-		Health.Value -= damage;
+		float criticalHitRate = new FloatRange(0, 100).Random;
+		bool criticalHit = (!(criticalHitRate % 2).Equals(0) && criticalHitRate > 30 && criticalHitRate < 50) ? true : false;
+
+		if (criticalHit)
+			Health.Value -= damage * 1.5f;
+		else
+			Health.Value -= damage;
+		
 		PrimaryUseItems.InstantiateDamageLabel(this.gameObject, damage);
+
+		if (criticalHit)
+			GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;
 	}
 
 	/// <summary>

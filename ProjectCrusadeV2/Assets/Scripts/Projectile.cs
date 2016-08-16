@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour {
 	void Update () {
 
 		//Always moving forward, but accounting for its current rotation angle.
-			transform.Translate(Time.deltaTime * Speed, 0, 0);
+		transform.Translate(Time.deltaTime * Speed, 0, 0);
 	}
 
 
