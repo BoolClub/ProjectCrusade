@@ -47,7 +47,9 @@ public class Enemy : MonoBehaviour {
 		Damage.Value = Damage.Random;
 
 		// Check if touching player
-		HurtPlayerOnContact();
+		if(!Inventory.Open)
+			HurtPlayerOnContact();
+
 
 		if (Burned)
 			BurnDamage();

@@ -52,10 +52,47 @@ public class EnemyAI : MonoBehaviour {
 
 	void Update()
 	{
+		if(!Inventory.Open)
+			MoveEnemy();
+	}
+
+	/// <summary>
+	/// Handles the amount of time for when the enemy can move on its own.
+	/// </summary>
+	void Timer()
+	{
+		if (MoveTime > 0)
+		{
+			MoveTime -= 0.5f;
+		}
+
+		if (MoveTime <= 0)
+		{
+			CanMove = false;
+			WaitTime -= 1f;
+
+			if (WaitTime <= 0)
+			{
+				MoveTime = MOVE_TIME;
+				CanMove = true;
+				WaitTime = WAIT_TIME;
+			}
+		}
+	}
+
+
+	void ChangeDirection()
+	{
+		MoveDirection = (Direction)new IntRange(0, 8).Random;
+	}
+
+
+	void MoveEnemy()
+	{
 		// If the player is within the circle radius, then have the enemy start following it.
 		if (GetComponent<CircleCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
 		{
-			if(gameObject.GetComponent<Enemy>().Stunned == false)
+			if (gameObject.GetComponent<Enemy>().Stunned == false)
 				transform.position = Vector3.MoveTowards(transform.position, GameObject.FindWithTag("Player").transform.position, Time.deltaTime * speed);
 		}
 		else {
@@ -113,37 +150,6 @@ public class EnemyAI : MonoBehaviour {
 				Moving = false;
 				ChangeDirection();
 			}
-
 		}
-	}
-
-	/// <summary>
-	/// Handles the amount of time for when the enemy can move on its own.
-	/// </summary>
-	void Timer()
-	{
-		if (MoveTime > 0)
-		{
-			MoveTime -= 0.5f;
-		}
-
-		if (MoveTime <= 0)
-		{
-			CanMove = false;
-			WaitTime -= 1f;
-
-			if (WaitTime <= 0)
-			{
-				MoveTime = MOVE_TIME;
-				CanMove = true;
-				WaitTime = WAIT_TIME;
-			}
-		}
-	}
-
-
-	void ChangeDirection()
-	{
-		MoveDirection = (Direction)new IntRange(0, 8).Random;
 	}
 }

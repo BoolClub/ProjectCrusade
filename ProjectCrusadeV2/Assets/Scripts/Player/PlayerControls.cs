@@ -9,6 +9,11 @@ public class PlayerControls : MonoBehaviour {
 	public World world;
 
 	/// <summary>
+	/// The player's rigid body.
+	/// </summary>
+	Rigidbody2D Rigid;
+
+	/// <summary>
 	/// The direction that the player is facing.
 	/// </summary>
 	public Direction Direction;
@@ -31,6 +36,8 @@ public class PlayerControls : MonoBehaviour {
 
 	public void Start () {
 		transform.position = StartPosition;
+		gameObject.layer = 10;
+		Rigid = GetComponent<Rigidbody2D>();
 	}
 
 	void Update () {
@@ -41,13 +48,14 @@ public class PlayerControls : MonoBehaviour {
 		UpdatePlayerDirections(x, y);
 
 		//Only move the player when the inventroy is not open.
-		if (GameObject.Find("Inventory").GetComponent<Inventory>().Open == false)
-			transform.Translate(x, y, 0);
+		if (!Inventory.Open)
+			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
 
 		//Check for other types of player input
 		CheckInput();
 	}
+
 
 	/// <summary>
 	/// Checks the input.
@@ -77,7 +85,7 @@ public class PlayerControls : MonoBehaviour {
 		//Open the inventory
 		if (Input.GetKeyDown(KeyCode.I))
 		{
-			GameObject.Find("Inventory").GetComponent<Inventory>().Open = !GameObject.Find("Inventory").GetComponent<Inventory>().Open;
+			Inventory.Open = !Inventory.Open;
 		}
 	}
 

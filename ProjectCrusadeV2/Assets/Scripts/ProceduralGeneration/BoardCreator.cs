@@ -277,12 +277,13 @@ public class BoardCreator : MonoBehaviour
 		if (prefabs == outerWallTiles)
 		{
 			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
-			tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.55f, 0.55f);
+			tileInstance.AddComponent<BoxCollider2D>();
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
 
 			tileInstance.tag = "Wall";
+			tileInstance.layer = 9;
 
 			//Add to the list of walls
 			Walls.Add(tileInstance);
@@ -311,20 +312,13 @@ public class BoardCreator : MonoBehaviour
 		{
 			tileInstance = Instantiate(prefabs[index], position, Quaternion.identity) as GameObject;
 
-			//Outer wall tile as regular wall tile
-			if (index == 4)
-			{
-				tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.55f, 0.55f);
-			}
-			else
-			{
-				tileInstance.AddComponent<BoxCollider2D>().size = new Vector2(0.45f, 0.45f);
-			}
+			tileInstance.AddComponent<BoxCollider2D>();
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
 
 			tileInstance.tag = "Wall";
+			tileInstance.layer = 9;
 
 			//Add to the list of walls.
 			Walls.Add(tileInstance);
@@ -350,6 +344,7 @@ public class BoardCreator : MonoBehaviour
 		foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
 		{
 			go.transform.SetParent(GameObject.Find("EnemyHolder").transform);
+			go.layer = 10;
 		}
 	}
 		

@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour {
 	/// <summary>
 	/// Whether or not the full inventory is open. If not, only the first 10 slots wills show.
 	/// </summary>
-	public bool Open;
+	public static bool Open;
 
 	/// <summary>
 	/// The size of the slot.

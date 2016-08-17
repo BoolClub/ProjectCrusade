@@ -71,7 +71,7 @@ public class Projectile : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-		if (other.tag.Equals("Enemy"))
+		if (other.tag.Equals("Enemy") && other is BoxCollider2D)
 		{
 			// Do damage to the enemy
 			other.GetComponent<Enemy>().Health.Value -= Damage.Value;
