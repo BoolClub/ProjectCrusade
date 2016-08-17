@@ -4,6 +4,16 @@ using System.Collections;
 
 public class Inventory : MonoBehaviour {
 
+	#region References For Simplicity
+
+		/// <summary>
+		/// The game manager.
+		/// </summary>
+		GameManagerScript GameManager;
+
+	#endregion
+
+
 	/// <summary>
 	/// The width and height of the inventory
 	/// </summary>
@@ -17,7 +27,7 @@ public class Inventory : MonoBehaviour {
 	/// <summary>
 	/// Whether or not the full inventory is open. If not, only the first 10 slots wills show.
 	/// </summary>
-	public static bool Open;
+	public bool Open;
 
 	/// <summary>
 	/// The size of the slot.
@@ -43,6 +53,8 @@ public class Inventory : MonoBehaviour {
 
 	void Start()
 	{
+		GameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+
 		Slots = new GameObject[Width, Height];
 		CurrentSlotIndex = new Vector2();
 
@@ -53,20 +65,22 @@ public class Inventory : MonoBehaviour {
 			{
 				//Create the inventory slot
 				GameObject slot = new GameObject("Inventory Slot");
-				slot.AddComponent<InventorySlot>().IndexInInventory = new Vector2(j,i);
-				slot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
-				slot.GetComponent<InventorySlot>().InvSlot = slot;
-				slot.AddComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1f);
-				slot.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1f);
-				slot.GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
-				slot.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, SlotSize);
-				slot.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, SlotSize);
+				InventorySlot invSlot = slot.AddComponent<InventorySlot>();
+				RectTransform rTransform = slot.AddComponent<RectTransform>();
+				Image img = slot.AddComponent<Image>();
 
-				slot.GetComponent<RectTransform>().anchoredPosition = new Vector3(-140f + j * (SlotSize + 2), -140f + i * (-SlotSize - 2), -4000);
+				invSlot.IndexInInventory = new Vector2(j,i);
+				invSlot.Type = ItemType.EMPTY;
+				invSlot.InvSlot = slot;
+				rTransform.anchorMin = new Vector2(0.5f, 1f);
+				rTransform.anchorMax = new Vector2(0.5f, 1f);
+				rTransform.pivot = new Vector2(0.5f,0.5f);
+				rTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, SlotSize);
+				rTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, SlotSize);
+				rTransform.anchoredPosition = new Vector3(-140f + j * (SlotSize + 2), -140f + i * (-SlotSize - 2), -4000);
 
-				slot.AddComponent<CanvasRenderer>();
-				slot.AddComponent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[0]; ;
-				slot.GetComponent<RectTransform>().SetParent(this.transform, false);
+				img.sprite = GameManager.ItemSprites[0]; ;
+				rTransform.SetParent(this.transform, false);
 				Slots[j, i] = slot;
 			}
 		}
@@ -93,7 +107,7 @@ public class Inventory : MonoBehaviour {
 				if (!Slots[j, i].GetComponent<InventorySlot>().Type.Equals(ItemType.EMPTY))
 				{
 					Slots[j,i].transform.GetChild(0).GetComponent<Image>().enabled = true;
-					Slots[j, i].transform.GetChild(0).GetComponent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Slots[j,i].GetComponent<InventorySlot>().Type];
+					Slots[j, i].transform.GetChild(0).GetComponent<Image>().sprite = GameManager.ItemSprites[(int)Slots[j,i].GetComponent<InventorySlot>().Type];
 				}
 				else {
 					Slots[j, i].transform.GetChild(0).GetComponent<Image>().enabled = false;
@@ -201,16 +215,17 @@ public class Inventory : MonoBehaviour {
 			for (int j = 0; j < Width; j++)
 			{
 				GameObject itemImg = new GameObject("Item Image");
-				itemImg.AddComponent<RectTransform>();
-				itemImg.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1f);
-				itemImg.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1f);
-				itemImg.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
-				itemImg.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 30);
-				itemImg.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 30);
+				RectTransform rTransform = itemImg.AddComponent<RectTransform>();
+
+				rTransform.anchorMin = new Vector2(0.5f, 1f);
+				rTransform.anchorMax = new Vector2(0.5f, 1f);
+				rTransform.pivot = new Vector2(0.5f, 0.5f);
+				rTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 30);
+				rTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 30);
 				itemImg.transform.position = new Vector3(0,-15,0);
 
 				itemImg.AddComponent<CanvasRenderer>();
-				itemImg.AddComponent<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Slots[j,i].GetComponent<InventorySlot>().Type];
+				itemImg.AddComponent<Image>().sprite = GameManager.ItemSprites[(int)Slots[j,i].GetComponent<InventorySlot>().Type];
 
 				itemImg.transform.SetParent(Slots[j,i].transform, false);
 			}

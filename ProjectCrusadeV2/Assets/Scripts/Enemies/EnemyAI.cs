@@ -6,6 +6,35 @@ public class EnemyAI : MonoBehaviour {
 	const float MOVE_TIME = 50f;
 	const float WAIT_TIME = 50f;
 
+	#region Refrences For Simplicity
+
+		/// <summary>
+		/// The player. Used for grabbing information without having to keep calling GameObject.Find().
+		/// </summary>
+		PlayerControls Player;
+
+		/// <summary>
+		/// The enemy's rigid body.
+		/// </summary>
+		Rigidbody2D Rigid;
+
+		/// <summary>
+		/// The circle collider for this enemy.
+		/// </summary>
+		CircleCollider2D CircleColl;
+
+		/// <summary>
+		/// This enemy object's Enemy script
+		/// </summary>
+		Enemy ThisEnemyObject;
+
+		/// <summary>
+		/// The inventory.
+		/// </summary>
+		Inventory TheInventory;
+			
+	#endregion
+
 	/// <summary>
 	/// The speed of the game object.
 	/// </summary>
@@ -47,12 +76,17 @@ public class EnemyAI : MonoBehaviour {
 	void Start()
 	{
 		MoveDirection = (Direction)new IntRange(0, 8).Random;
+		Rigid = GetComponent<Rigidbody2D>();
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+		CircleColl = GetComponent<CircleCollider2D>();
+		ThisEnemyObject = GetComponent<Enemy>();
+		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
 	}
 
 
 	void Update()
 	{
-		if(!Inventory.Open)
+		if(!TheInventory.Open)
 			MoveEnemy();
 	}
 
@@ -89,11 +123,13 @@ public class EnemyAI : MonoBehaviour {
 
 	void MoveEnemy()
 	{
+		float movement = Time.deltaTime * speed;
+
 		// If the player is within the circle radius, then have the enemy start following it.
-		if (GetComponent<CircleCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
+		if (CircleColl.IsTouching(Player.GetComponent<BoxCollider2D>()))
 		{
-			if (gameObject.GetComponent<Enemy>().Stunned == false)
-				transform.position = Vector3.MoveTowards(transform.position, GameObject.FindWithTag("Player").transform.position, Time.deltaTime * speed);
+			if (ThisEnemyObject.Stunned == false)
+				Rigid.MovePosition(Vector2.MoveTowards(transform.position, Player.transform.position, movement));
 		}
 		else {
 
@@ -101,48 +137,52 @@ public class EnemyAI : MonoBehaviour {
 			Timer();
 
 			// the enemy can only move if CanMove is true and the enemy is not stunned.
-			if (CanMove == true && gameObject.GetComponent<Enemy>().Stunned == false)
+			if (CanMove == true && ThisEnemyObject.Stunned == false)
 			{
 				Moving = true;
 
 				if (MoveDirection == Direction.North)
-					transform.Translate(0, Time.deltaTime * speed, 0);
+					Rigid.MovePosition(new Vector2(transform.position.x, transform.position.y + movement));
 
 				if (MoveDirection == Direction.East)
-					transform.Translate(Time.deltaTime * speed, 0, 0);
+					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y));
 
 				if (MoveDirection == Direction.South)
-					transform.Translate(0, -(Time.deltaTime * speed), 0);
+					Rigid.MovePosition(new Vector2(transform.position.x, transform.position.y - movement));
 
 				if (MoveDirection == Direction.West)
-					transform.Translate(-(Time.deltaTime * speed), 0, 0);
+					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y));
 
 				if (MoveDirection == Direction.NorthEast)
 				{
-					Vector3 move = Vector3.right * speed * Time.deltaTime;
-					move += Vector3.up * speed * Time.deltaTime;
-					transform.Translate(move);
+					//Vector3 move = Vector3.right * speed * Time.deltaTime;
+					//move += Vector3.up * speed * Time.deltaTime;
+					//transform.Translate(move);
+					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y + movement));
 				}
 
 				if (MoveDirection == Direction.SouthEast)
 				{
-					Vector3 move = Vector3.right * speed * Time.deltaTime;
-					move += Vector3.down * speed * Time.deltaTime;
-					transform.Translate(move);
+					//Vector3 move = Vector3.right * speed * Time.deltaTime;
+					//move += Vector3.down * speed * Time.deltaTime;
+					//transform.Translate(move);
+					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y - movement));
 				}
 
 				if (MoveDirection == Direction.SouthWest)
 				{
-					Vector3 move = Vector3.left * speed * Time.deltaTime;
-					move += Vector3.down * speed * Time.deltaTime;
-					transform.Translate(move);
+					//Vector3 move = Vector3.left * speed * Time.deltaTime;
+					//move += Vector3.down * speed * Time.deltaTime;
+					//transform.Translate(move);
+					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y - movement));
 				}
 
 				if (MoveDirection == Direction.NorthWest)
 				{
-					Vector3 move = Vector3.right * speed * Time.deltaTime;
-					move += Vector3.up * speed * Time.deltaTime;
-					transform.Translate(move);
+					//Vector3 move = Vector3.right * speed * Time.deltaTime;
+					//move += Vector3.up * speed * Time.deltaTime;
+					//transform.Translate(move);
+					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y + movement));
 				}
 
 			}

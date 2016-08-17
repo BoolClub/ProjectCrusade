@@ -3,15 +3,39 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour {
 
+	#region References For Simplicity
+
+		/// <summary>
+		/// The player's rigid body.
+		/// </summary>
+		public Rigidbody2D Rigid;
+
+		/// <summary>
+		/// The sprite render.
+		/// </summary>
+		public SpriteRenderer SpriteRender;
+
+		/// <summary>
+		/// The inventory.
+		/// </summary>
+		public Inventory TheInventory;
+
+		/// <summary>
+		/// The textbox.
+		/// </summary>
+		public GameObject textbox;
+
+		/// <summary>
+		/// My box collider.
+		/// </summary>
+		public BoxCollider2D MyBoxCollider;
+
+	#endregion
+
 	/// <summary>
 	/// The world.
 	/// </summary>
 	public World world;
-
-	/// <summary>
-	/// The player's rigid body.
-	/// </summary>
-	Rigidbody2D Rigid;
 
 	/// <summary>
 	/// The direction that the player is facing.
@@ -38,6 +62,10 @@ public class PlayerControls : MonoBehaviour {
 		transform.position = StartPosition;
 		gameObject.layer = 10;
 		Rigid = GetComponent<Rigidbody2D>();
+		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+		SpriteRender = GetComponent<SpriteRenderer>();
+		textbox = Resources.Load("TextBox") as GameObject;
+		MyBoxCollider = GetComponent<BoxCollider2D>();
 	}
 
 	void Update () {
@@ -48,7 +76,7 @@ public class PlayerControls : MonoBehaviour {
 		UpdatePlayerDirections(x, y);
 
 		//Only move the player when the inventroy is not open.
-		if (!Inventory.Open)
+		if (!TheInventory.Open)
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
 
@@ -75,17 +103,17 @@ public class PlayerControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(primaryUseKey))
 		{
-			PrimaryUseItems.PrimaryUse(GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type);
+			PrimaryUseItems.PrimaryUse(TheInventory.CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
-			SecondaryUseItems.SecondaryUse(GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type);
+			SecondaryUseItems.SecondaryUse(TheInventory.CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 
 		//Open the inventory
 		if (Input.GetKeyDown(KeyCode.I))
 		{
-			Inventory.Open = !Inventory.Open;
+			TheInventory.Open = !TheInventory.Open;
 		}
 	}
 
@@ -104,7 +132,7 @@ public class PlayerControls : MonoBehaviour {
 				if (chest.GetComponent<Chest>().Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
-					GameObject.Find("Inventory").GetComponent<Inventory>().AddToInventory(chest.GetComponent<Chest>().Type);
+					TheInventory.AddToInventory(chest.GetComponent<Chest>().Type);
 					chest.GetComponent<Chest>().TakeItem();
 
 
@@ -117,7 +145,6 @@ public class PlayerControls : MonoBehaviour {
 					else {
 						(chest.GetComponent<Chest>()).TextBox.toggle();
 
-						GameObject textbox = Resources.Load("TextBox") as GameObject;
 						Instantiate(textbox, new Vector3(chest.transform.position.x + 0.75f, chest.transform.position.y + 1.4f, -3), Quaternion.identity);
 						break;
 					}
@@ -149,7 +176,6 @@ public class PlayerControls : MonoBehaviour {
 
 					(npc.GetComponent<NPC>()).TextBox.toggle();
 
-					GameObject textbox = Resources.Load("TextBox") as GameObject;
 					Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, -3), Quaternion.identity);
 					break;
 
@@ -181,42 +207,42 @@ public class PlayerControls : MonoBehaviour {
 	{
 		if (x > 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[3];
+			SpriteRender.sprite = DirectionSprites[3];
 			Direction = Direction.East;
 		}
 		if (x < 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[2];
+			SpriteRender.sprite = DirectionSprites[2];
 			Direction = Direction.West;
 		}
 		if (y > 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[1];
+			SpriteRender.sprite = DirectionSprites[1];
 			Direction = Direction.North;
 		}
 		if (y < 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[0];
+			SpriteRender.sprite = DirectionSprites[0];
 			Direction = Direction.South;
 		}
 		if (x > 0 && y > 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[6];
+			SpriteRender.sprite = DirectionSprites[6];
 			Direction = Direction.NorthEast;
 		}
 		if (x < 0 && y > 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[7];
+			SpriteRender.sprite = DirectionSprites[7];
 			Direction = Direction.NorthWest;
 		}
 		if (x < 0 && y < 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[4];
+			SpriteRender.sprite = DirectionSprites[4];
 			Direction = Direction.SouthWest;
 		}
 		if (x > 0 && y < 0)
 		{
-			this.GetComponent<SpriteRenderer>().sprite = DirectionSprites[5];
+			SpriteRender.sprite = DirectionSprites[5];
 			Direction = Direction.SouthEast;
 		}
 	}

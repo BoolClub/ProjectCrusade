@@ -3,6 +3,31 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
+	#region Refrences For Simplicity
+
+		/// <summary>
+		/// The inventory.
+		/// </summary>
+		Inventory TheInventory;
+
+		/// <summary>
+		/// My box collider.
+		/// </summary>
+		BoxCollider2D MyBoxCollider;
+
+		/// <summary>
+		/// The player.
+		/// </summary>
+		PlayerControls Player;
+
+		/// <summary>
+		/// The health bar.
+		/// </summary>
+		Healthbar TheHealthBar;
+
+	#endregion
+
+
 	/// <summary>
 	/// The amount of damage that this enemy will do to the player.
 	/// It is a random number between two values.
@@ -39,6 +64,10 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		Damage.Value = Damage.Random;
 		Health.Value = Health.Random;
+		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+		MyBoxCollider = GetComponent<BoxCollider2D>();
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 	}
 	
 	// Update is called once per frame
@@ -47,7 +76,7 @@ public class Enemy : MonoBehaviour {
 		Damage.Value = Damage.Random;
 
 		// Check if touching player
-		if(!Inventory.Open)
+		if(!TheInventory.Open)
 			HurtPlayerOnContact();
 
 
@@ -88,13 +117,13 @@ public class Enemy : MonoBehaviour {
 	/// <returns>The player on contac.</returns>
 	void HurtPlayerOnContact()
 	{
-		if (GetComponent<BoxCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
+		if (MyBoxCollider.IsTouching(Player.MyBoxCollider))
 		{
 			damageDelay -= 1f;
 
 			if (damageDelay <= 0)
 			{
-				GameObject.Find("HPBarFill").GetComponent<Healthbar>().DecreaseHP(Damage.Value);
+				TheHealthBar.DecreaseHP(Damage.Value);
 				damageDelay = 40f;
 			}
 		}

@@ -7,6 +7,21 @@ using UnityEngine;
 /// </summary>
 public class PrimaryUseItems : MonoBehaviour
 {
+	#region References For Simplicity
+
+		/// <summary>
+		/// The HP Bar.
+		/// </summary>
+		static Healthbar HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
+
+		/// <summary>
+		/// The inventory
+		/// </summary>
+		static Inventory TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+		
+	#endregion
+
+
 	public const float WOODEN_SWORD_DAMAGE = 8;
 	public const float MACE_DAMAGE = 13;
 	public const float CURVED_SWORD_DAMAGE = 10;
@@ -35,11 +50,11 @@ public class PrimaryUseItems : MonoBehaviour
 		// APPLE
 		if (type == ItemType.Apple)
 		{
-			if (GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health < 100f)
+			if (HPBar.Health < 100f)
 			{
-				GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += 7f;
+				HPBar.GetComponent<Healthbar>().Health += 7f;
 			}
-			GameObject.Find("Inventory").GetComponent<Inventory>().CurrentSlot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
+			TheInventory.CurrentSlot.GetComponent<InventorySlot>().Type = ItemType.EMPTY;
 		}
 
 		// COIN

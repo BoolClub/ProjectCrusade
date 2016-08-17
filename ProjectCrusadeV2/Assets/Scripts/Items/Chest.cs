@@ -3,6 +3,26 @@ using System.Collections;
 
 public class Chest : MonoBehaviour {
 
+	#region References For Simplicity
+
+		/// <summary>
+		/// The s renderer.
+		/// </summary>
+		SpriteRenderer sRenderer;
+
+		/// <summary>
+		/// The box collider
+		/// </summary>
+		BoxCollider2D BoxColl;
+
+		/// <summary>
+		/// The player.
+		/// </summary>
+		PlayerControls Player;
+
+	#endregion
+
+
 	/// <summary>
 	/// This is the item that this chest will give the player.
 	/// </summary>
@@ -28,6 +48,9 @@ public class Chest : MonoBehaviour {
 	{
 		TextBox = new TextBox();
 		TextBox.addText("You received a(n) " + Type);
+		sRenderer = GetComponent<SpriteRenderer>();
+		BoxColl = GetComponent<BoxCollider2D>();
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 	}
 
 	/// <summary>
@@ -47,9 +70,9 @@ public class Chest : MonoBehaviour {
 		//Change the sprite when the chest has been opened
 		if (Type == ItemType.EMPTY)
 		{
-			GetComponent<SpriteRenderer>().sprite = Opened;
+			sRenderer.sprite = Opened;
 		} else {
-			GetComponent<SpriteRenderer>().sprite = Closed;
+			sRenderer.sprite = Closed;
 		}
 	}
 
@@ -77,7 +100,7 @@ public class Chest : MonoBehaviour {
 	/// <returns>The collision.</returns>
 	public void CheckCollision()
 	{
-		if (GetComponent<BoxCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
+		if (BoxColl.IsTouching(Player.MyBoxCollider))
 		{
 			NextToPlayer = true;
 		}

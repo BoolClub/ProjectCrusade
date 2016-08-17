@@ -6,6 +6,32 @@ using UnityEngine.SceneManagement;
 
 public class BoardCreator : MonoBehaviour
 {
+	#region References For Simplicity
+
+		/// <summary>
+		/// The game manager.
+		/// </summary>
+		GameManagerScript GameManager;
+
+		/// <summary>
+		/// The player.
+		/// </summary>
+		PlayerControls Player;
+
+		/// <summary>
+		/// The enemy holder.
+		/// </summary>
+		GameObject EnemyHolder;
+
+		/// <summary>
+		/// The enemies
+		/// </summary>
+		public GameObject[] Enemies;
+
+
+	#endregion
+
+
 	// The type of tile that will be laid in a specific position.
 	public enum TileType
 	{
@@ -37,6 +63,10 @@ public class BoardCreator : MonoBehaviour
 
 	private void Start()
 	{
+		GameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+		EnemyHolder = GameObject.Find("EnemyHolder");
+
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 		Walls = new List<GameObject>();
@@ -66,7 +96,7 @@ public class BoardCreator : MonoBehaviour
 
 		//Set the player's position.
 		Vector3 playerPos = new Vector3(rooms[0].xPos, rooms[0].yPos, -1);
-		GameObject.FindWithTag("Player").GetComponent<PlayerControls>().StartPosition = playerPos;
+		Player.StartPosition = playerPos;
 	}
 
 	void SetupTilesArray()
@@ -332,7 +362,7 @@ public class BoardCreator : MonoBehaviour
 	{
 		for (int i = 0; i < corridors.Length; i++)
 		{
-			GameObject enemy = GameObject.Find("GameManager").GetComponent<GameManagerScript>().Enemies[UnityEngine.Random.Range(0,GameObject.Find("GameManager").GetComponent<GameManagerScript>().Enemies.Length - 1)] as GameObject;
+			GameObject enemy = GameManager.Enemies[UnityEngine.Random.Range(0,GameManager.Enemies.Length - 1)] as GameObject;
 
 			Instantiate(enemy, new Vector3(corridors[i].startXPos, corridors[i].startYPos, -1), Quaternion.identity);
 
@@ -341,9 +371,11 @@ public class BoardCreator : MonoBehaviour
 				Instantiate(enemy, new Vector3(corridors[i].EndPositionX, corridors[i].EndPositionY, -1), Quaternion.identity);
 		}
 
-		foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+		Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+		foreach (GameObject go in Enemies)
 		{
-			go.transform.SetParent(GameObject.Find("EnemyHolder").transform);
+			go.transform.SetParent(EnemyHolder.transform);
 			go.layer = 10;
 		}
 	}
