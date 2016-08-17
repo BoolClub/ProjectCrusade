@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 	/// It is a random number between two values.
 	/// </summary>
 	public FloatRange Damage;
+	float damageDelay = 40f;
 
 	/// <summary>
 	/// The amount of health that this enemy has.
@@ -34,8 +35,6 @@ public class Enemy : MonoBehaviour {
 	public float stunTime = 5f;
 
 
-
-
 	// Use this for initialization
 	void Start () {
 		Damage.Value = Damage.Random;
@@ -47,32 +46,24 @@ public class Enemy : MonoBehaviour {
 		//Constantly change the amount of damage the enemy will do in order to keep it random
 		Damage.Value = Damage.Random;
 
+		// Check if touching player
+		HurtPlayerOnContact();
+
 		if (Burned)
-		{
 			BurnDamage();
-		}
 
 		if (Stunned)
-		{
 			StunEffects();
-		}
 
 		if (Health.Value <= 0)
-		{
 			Destroy(this.gameObject);
-		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		// if the enemy collides with the player, remove the player's health.
-		if (other.tag.Equals("Player"))
-		{
-			GameObject.Find("HPBarFill").GetComponent<Healthbar>().DecreaseHP(Damage.Value);
-		}
-	}
-
-
+	/// <summary>
+	/// Decreases the health from the enemy.
+	/// </summary>
+	/// <returns>The health.</returns>
+	/// <param name="damage">Damage.</param>
 	public void DecreaseHealth(float damage)
 	{
 		float criticalHitRate = new FloatRange(0, 100).Random;
@@ -87,6 +78,24 @@ public class Enemy : MonoBehaviour {
 
 		if (criticalHit)
 			GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;
+	}
+
+	/// <summary>
+	/// Hurts the player on contact.
+	/// </summary>
+	/// <returns>The player on contac.</returns>
+	void HurtPlayerOnContact()
+	{
+		if (GetComponent<BoxCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
+		{
+			damageDelay -= 1f;
+
+			if (damageDelay <= 0)
+			{
+				GameObject.Find("HPBarFill").GetComponent<Healthbar>().DecreaseHP(Damage.Value);
+				damageDelay = 40f;
+			}
+		}
 	}
 
 	/// <summary>

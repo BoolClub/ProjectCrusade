@@ -153,6 +153,10 @@ public class SecondaryUseItems : MonoBehaviour
 
 				PrimaryUseItems.FlameSwordCharge--;
 			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "This item needs time to recharge.";
+			}
 		}
 
 		// HEALING SWORD
@@ -161,9 +165,15 @@ public class SecondaryUseItems : MonoBehaviour
 			// take, then store, hp from the damage it does to an enemy.
 			// the stored hp can be used to heal the player (secondary use).
 			// No recharge time, but if there is no more hp stored in it then it will have no effect.
-
-			GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += PrimaryUseItems.StoredHP;
-			PrimaryUseItems.StoredHP = 0;
+			if (PrimaryUseItems.StoredHP > 0)
+			{
+				GameObject.Find("HPBarFill").GetComponent<Healthbar>().Health += PrimaryUseItems.StoredHP;
+				PrimaryUseItems.StoredHP = 0;
+			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "There is no energy stored in this item.";
+			}
 		}
 
 		// ELECTRIC SWORD
@@ -183,6 +193,10 @@ public class SecondaryUseItems : MonoBehaviour
 				}
 				chargeTimeElectricSword = 0;
 				ResetCharges();
+			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "This item needs time to recharge.";
 			}
 		}
 

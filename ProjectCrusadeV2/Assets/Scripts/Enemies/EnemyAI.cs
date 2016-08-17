@@ -55,14 +55,16 @@ public class EnemyAI : MonoBehaviour {
 		// If the player is within the circle radius, then have the enemy start following it.
 		if (GetComponent<CircleCollider2D>().IsTouching(GameObject.FindWithTag("Player").GetComponent<BoxCollider2D>()))
 		{
-			transform.position = Vector3.MoveTowards(transform.position, GameObject.FindWithTag("Player").transform.position, Time.deltaTime * speed);
+			if(gameObject.GetComponent<Enemy>().Stunned == false)
+				transform.position = Vector3.MoveTowards(transform.position, GameObject.FindWithTag("Player").transform.position, Time.deltaTime * speed);
 		}
 		else {
 
 			// If the player is not close enough to the enemy, then just move the enemy around aimlessly.
 			Timer();
 
-			if (CanMove == true)
+			// the enemy can only move if CanMove is true and the enemy is not stunned.
+			if (CanMove == true && gameObject.GetComponent<Enemy>().Stunned == false)
 			{
 				Moving = true;
 

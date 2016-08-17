@@ -81,6 +81,9 @@ public class Inventory : MonoBehaviour {
 	void Update()
 	{
 		CheckInventoryOpen();
+		AddToInventory(ItemType.FlamingSword);
+		AddToInventory(ItemType.HealingSword);
+		AddToInventory(ItemType.ElectricSword);
 
 		for (int i = 0; i < Height; i++)
 		{
