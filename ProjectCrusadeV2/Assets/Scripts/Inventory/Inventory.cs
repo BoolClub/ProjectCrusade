@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour
+{
 
 	/// <summary>
 	/// The list of items that the player has.
@@ -32,13 +33,17 @@ public class Inventory : MonoBehaviour {
 
 
 
-	void Start () {
+	void Start()
+	{
 		Items = new Item[40];
 		CurrentSlot = 0;
-		InventorySlots = GameObject.FindGameObjectsWithTag("InventorySlot");
-
 		for (int i = 0; i < Items.Length; i++)
-			Items[i] = new Item(ItemType.EMPTY);
+			Items[i] = GameManagerScript.Items[i];
+	}
+
+	void Awake()
+	{
+		InventorySlots = GameObject.FindGameObjectsWithTag("InventorySlot");
 	}
 
 	void Update()
@@ -55,38 +60,42 @@ public class Inventory : MonoBehaviour {
 		//	Open = !Open;
 		//}
 
-		//Move the selected slot
-		MoveCurrentSlot();
+
+		if (GameObject.Find("Inventory") != null)
+		{
+			//Move the selected slot by scrolling
+			MoveCurrentSlot();
 
 
-		// Color the selected slot
-		ColorSelectedSlot();
+			// Color the selected slot
+			ColorSelectedSlot();
 
 
-		// If a slot does not have an item, set its image to blank
-		ColorBlankSlots();
+			// If a slot does not have an item, set its image to blank
+			ColorBlankSlots();
 
 
-		// Enable/Disable the quantity label if there is/isn't an item
-		EnableDisableQuantityLabel();
+			// Enable/Disable the quantity label if there is/isn't an item
+			EnableDisableQuantityLabel();
 
 
-		// Draw an item on each slot if that slot has an item.
-		DrawItemsOnSlots();
+			// Draw an item on each slot if that slot has an item.
+			DrawItemsOnSlots();
 
 
-		// Only make certain slots active if the inventory is open/closed.
-		ShowSlotsBasedOnInventoryOpen();
+			// Only make certain slots active if the inventory is open/closed.
+			ShowSlotsBasedOnOpenOrClosed();
+		}
 
 
 		// Interact with a selected item
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			if (Items[CurrentSlot].Type != ItemType.EMPTY)
-			{
-				Items[CurrentSlot].PrimaryUse();
-			}
-		}
+		//if (Input.GetKeyDown(KeyCode.U))
+		//{
+		//	if (Items[CurrentSlot].Type != ItemType.EMPTY)
+		//	{
+		//		Items[CurrentSlot].PrimaryUse();
+		//	}
+		//}
 	}
 
 	public void AddToInventory(Item itm)
@@ -230,7 +239,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 
-	void ShowSlotsBasedOnInventoryOpen()
+	void ShowSlotsBasedOnOpenOrClosed()
 	{
 		if (!Open)
 		{

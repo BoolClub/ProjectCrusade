@@ -3,12 +3,24 @@ using System.Collections;
 
 public class Item {
 
+	/// <summary>
+	/// The item type.
+	/// </summary>
 	public ItemType Type;
 
+	/// <summary>
+	/// Whether or not it is stackable.
+	/// </summary>
 	public bool Stackable;
 
+	/// <summary>
+	/// The quantity.
+	/// </summary>
 	public int Quantity = 1;
 
+	/// <summary>
+	/// The name.
+	/// </summary>
 	public string Name;
 
 

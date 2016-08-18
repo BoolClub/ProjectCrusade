@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class GameManagerScript : MonoBehaviour {
-	
+
+	/// <summary>
+	/// The item sprites.
+	/// </summary>
+	public static List<Item> Items = new List<Item>();
 
 	/// <summary>
 	/// An array of sprites for each item.
@@ -31,6 +35,9 @@ public class GameManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	public void Start () {
+		for (int i = 0; i < 40; i++)
+			Items.Add(new Item(ItemType.EMPTY));
+
 		if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 1
 		   && SceneManager.GetActiveScene().buildIndex != 2)
 		{
