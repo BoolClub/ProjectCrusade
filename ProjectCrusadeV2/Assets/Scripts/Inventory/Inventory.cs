@@ -73,6 +73,29 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 
+		// If a slot does not have an item, set its image to blank
+		for (int i = 0; i < Items.Length; i++)
+		{
+			if (Items[i].Type == ItemType.EMPTY)
+			{
+				GameObject slot = null;
+				for (int j = 0; j < InventorySlots.Length; j++)
+				{
+					if (InventorySlots[j].GetComponent<InventorySlot>().Index == i)
+					{
+						slot = InventorySlots[j];
+						break;
+					}
+				}
+
+				if (slot != null)
+				{
+					InventorySlots[i].transform.GetChild(0).GetComponentInChildren<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Items[i].Type];
+					InventorySlots[i].transform.GetChild(1).GetComponentInChildren<Text>().text = "" + Items[i].Quantity;
+				}
+			}
+		}
+
 		// Draw an item on each slot
 		for (int i = 0; i < Items.Length; i++)
 		{
