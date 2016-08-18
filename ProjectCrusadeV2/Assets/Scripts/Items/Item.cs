@@ -19,6 +19,22 @@ public class Item {
 		DetermineNameAndStackable();
 	}
 
+	// Adds itm to this item if they are stackable and of the same type. If not, it just sets the item.
+	public void Add(Item itm)
+	{
+		if (Type == itm.Type)
+		{
+			Quantity += itm.Quantity;
+		}
+		else {
+			Type = itm.Type;
+			Stackable = itm.Stackable;
+			Quantity = itm.Quantity;
+			Name = itm.Name;
+		}
+	}
+
+
 	public void DetermineNameAndStackable()
 	{
 		if (Type == ItemType.Apple)
@@ -46,9 +62,51 @@ public class Item {
 			Name = "Curved Sword";
 			Stackable = false;
 		}
-
-
-
+		if (Type == ItemType.ElectricSword)
+		{
+			Name = "Electric Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.FlamingSword)
+		{
+			Name = "Flaming Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.HealingSword)
+		{
+			Name = "Healing Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.IronSword)
+		{
+			Name = "Iron Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.LongSword)
+		{
+			Name = "Long Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.Mace)
+		{
+			Name = "Mace";
+			Stackable = false;
+		}
+		if (Type == ItemType.MagicWand)
+		{
+			Name = "Magic Wand";
+			Stackable = false;
+		}
+		if (Type == ItemType.SteelSword)
+		{
+			Name = "Steel Sword";
+			Stackable = false;
+		}
+		if (Type == ItemType.Water)
+		{
+			Name = "Water";
+			Stackable = true;
+		}
 		if (Type == ItemType.WoodenSword)
 		{
 			Name = "Wooden Sword";
@@ -56,57 +114,145 @@ public class Item {
 		}
 	}
 
-
-	public void Add(Item itm)
-	{
-		if (Type == itm.Type)
-		{
-			Quantity += itm.Quantity;
-		}
-		else {
-			Type = itm.Type;
-			Stackable = itm.Stackable;
-			Quantity = itm.Quantity;
-			Name = itm.Name;
-		}
-	}
-
-
+	/// <summary>
+	/// PRIMARY USE OF ITEMS.
+	/// </summary>
+	/// <returns>The use.</returns>
 	public void PrimaryUse()
 	{
 		if (Type == ItemType.Apple)
 		{
-			Debug.Log("Yum! An apple!");
+			
 		}
-		if (Type == ItemType.WoodenSword)
+		if (Type == ItemType.Arrow)
 		{
-			Debug.Log("Take that! *Swings Swords*");
+			
+		}
+		if (Type == ItemType.BowAndArrow)
+		{
+			
 		}
 		if (Type == ItemType.Bread)
 		{
-			Debug.Log("Awesome! Bread");
+			
+		}
+		if (Type == ItemType.CurvedSword)
+		{
+			
+		}
+		if (Type == ItemType.ElectricSword)
+		{
+			
+		}
+		if (Type == ItemType.FlamingSword)
+		{
+			
+		}
+		if (Type == ItemType.HealingSword)
+		{
+			
+		}
+		if (Type == ItemType.IronSword)
+		{
+			
+		}
+		if (Type == ItemType.LongSword)
+		{
+			
+		}
+		if (Type == ItemType.Mace)
+		{
+			
+		}
+		if (Type == ItemType.MagicWand)
+		{
+			
+		}
+		if (Type == ItemType.SteelSword)
+		{
+			
+		}
+		if (Type == ItemType.Water)
+		{
+			
+		}
+		if (Type == ItemType.WoodenSword)
+		{
+			
 		}
 	}
 
 
+	/// <summary>
+	/// SECONDARY USE OF ITEMS
+	/// </summary>
+	/// <returns>The use.</returns>
 	public void SecondaryUse()
 	{
 		if (Type == ItemType.Apple)
 		{
-			Debug.Log("Wow! That really is a tasty apple!");
+
 		}
-		if (Type == ItemType.WoodenSword)
+		if (Type == ItemType.Arrow)
 		{
-			Debug.Log("This is a really sharp sword.");
+
+		}
+		if (Type == ItemType.BowAndArrow)
+		{
+
 		}
 		if (Type == ItemType.Bread)
 		{
-			Debug.Log("This bread is still awesome.");
+
+		}
+		if (Type == ItemType.CurvedSword)
+		{
+
+		}
+		if (Type == ItemType.ElectricSword)
+		{
+
+		}
+		if (Type == ItemType.FlamingSword)
+		{
+
+		}
+		if (Type == ItemType.HealingSword)
+		{
+
+		}
+		if (Type == ItemType.IronSword)
+		{
+
+		}
+		if (Type == ItemType.LongSword)
+		{
+
+		}
+		if (Type == ItemType.Mace)
+		{
+
+		}
+		if (Type == ItemType.MagicWand)
+		{
+
+		}
+		if (Type == ItemType.SteelSword)
+		{
+
+		}
+		if (Type == ItemType.Water)
+		{
+
+		}
+		if (Type == ItemType.WoodenSword)
+		{
+
 		}
 	}
 
 	public override string ToString()
 	{
-		return "Name: " + Name + ", Quantity: " + Quantity;
+		return "Name: " + Name + ", Type: " + Type.ToString() + "Quantity: " + Quantity + ", Stackable: " + Stackable;
 	}
 }

@@ -29,6 +29,11 @@ public class Chest : MonoBehaviour {
 	public ItemType Type;
 
 	/// <summary>
+	/// The amount of the item in this chest.
+	/// </summary>
+	public int Quantity = 1;
+
+	/// <summary>
 	/// The sprites for when the chest is opened and closed.
 	/// </summary>
 	public Sprite Opened, Closed;
@@ -47,7 +52,18 @@ public class Chest : MonoBehaviour {
 	void Start()
 	{
 		TextBox = new TextBox();
-		TextBox.addText("You received a(n) " + Type);
+
+		Item temp = new Item(Type);
+		temp.Quantity = Quantity;
+		if (Quantity == 1)
+		{
+			TextBox.addText("You received " + temp.Quantity + " " + temp.Name);
+		}
+		else if (Quantity > 1)
+		{
+			TextBox.addText("You received " + temp.Quantity + " " + temp.Name + "s");
+		}
+
 		sRenderer = GetComponent<SpriteRenderer>();
 		BoxColl = GetComponent<BoxCollider2D>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
