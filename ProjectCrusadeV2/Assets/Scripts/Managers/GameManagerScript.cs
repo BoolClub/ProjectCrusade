@@ -32,14 +32,14 @@ public class GameManagerScript : MonoBehaviour {
 	/// <summary>
 	/// This is an array that represents the different floors that the player must travel through.
 	/// </summary>
-	string[] Underground = {"Underground_1", "Underground_1_2", "Underground_2", "Underground_2_2", 
+	public string[] Underground = {"Underground_1", "Underground_1_2", "Underground_2", "Underground_2_2", 
 							"Underground_3", "Underground_3_2", "Underground_4", "Underground_4_2", 
 							"Underground_Boss"};
 
 	/// <summary>
 	/// The current floor that the player is on by its index in the array above.
 	/// </summary>
-	int CurrentFloor;
+	public int CurrentFloor;
 
 
 	// Use this for initialization
@@ -56,18 +56,6 @@ public class GameManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 1
-		   && SceneManager.GetActiveScene().buildIndex != 2)
-		{
-			if (GetComponent<BoardCreator>().ladder != null)
-			{
-				if (Player.MyBoxCollider.IsTouching(Ladder.GetComponent<BoxCollider2D>()))
-				{
-					CurrentFloor++;
-					SceneManager.LoadScene(Underground[CurrentFloor - 3]);
-				}
-			}
-		}
 		SecondaryUseItems.ResetCharges();
 	}
 

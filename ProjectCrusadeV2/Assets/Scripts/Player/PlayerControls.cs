@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerControls : MonoBehaviour {
@@ -29,6 +30,11 @@ public class PlayerControls : MonoBehaviour {
 		/// My box collider.
 		/// </summary>
 		public BoxCollider2D MyBoxCollider;
+
+		/// <summary>
+		/// The gm.
+		/// </summary>
+		GameManagerScript GM;
 
 	#endregion
 
@@ -66,6 +72,7 @@ public class PlayerControls : MonoBehaviour {
 		SpriteRender = GetComponent<SpriteRenderer>();
 		textbox = Resources.Load("TextBox") as GameObject;
 		MyBoxCollider = GetComponent<BoxCollider2D>();
+		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 	}
 
 	void Update () {
@@ -82,6 +89,15 @@ public class PlayerControls : MonoBehaviour {
 
 		//Check for other types of player input
 		CheckInput();
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.name == "Ladder(Clone)")
+		{
+			GM.CurrentFloor++;
+			SceneManager.LoadScene(GM.Underground[GM.CurrentFloor - 3]);
+		}
 	}
 
 
