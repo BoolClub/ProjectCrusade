@@ -10,6 +10,11 @@ public class Inventory : MonoBehaviour {
 	public Item[] Items;
 
 	/// <summary>
+	/// Whether or not the inventory is open.
+	/// </summary>
+	public bool Open;
+
+	/// <summary>
 	/// The first empty space in the inventory.
 	/// </summary>
 	public int FirstEmpty = 0;
@@ -45,7 +50,56 @@ public class Inventory : MonoBehaviour {
 			AddToInventory(new Item(ItemType.Bread));
 		}
 
+		if (Input.GetKeyDown(KeyCode.I))
+		{
+			Open = !Open;
+		}
+
 		//Move the selected slot
+		MoveCurrentSlot();
+
+
+		// Color the selected slot
+		ColorSelectedSlot();
+
+
+		// If a slot does not have an item, set its image to blank
+		ColorBlankSlots();
+
+
+		// Enable/Disable the quantity label if there is/isn't an item
+		EnableDisableQuantityLabel();
+
+
+		// Draw an item on each slot if that slot has an item.
+		DrawItemsOnSlots();
+
+
+		// Only make certain slots active if the inventory is open/closed.
+		ShowSlotsBasedOnInventoryOpen();
+
+
+		// Interact with a selected item
+		InteractWithSelectedItem();
+	}
+
+	public void AddToInventory(Item itm)
+	{
+		for (int i = 0; i < Items.Length; i++)
+		{
+			if (Items[i].Type == ItemType.EMPTY || (Items[i].Type == itm.Type && Items[i].Stackable))
+			{
+				FirstEmpty = i;
+				break;
+			}
+		}
+
+		Items[FirstEmpty].Add(itm);
+	}
+
+
+	void MoveCurrentSlot()
+	{
 		if (Input.GetAxis("Mouse ScrollWheel") > 0)
 		{
 			if (CurrentSlot > 0)
@@ -60,8 +114,11 @@ public class Inventory : MonoBehaviour {
 				CurrentSlot++;
 			}
 		}
+	}
 
-		// Color the selected slot
+
+	void ColorSelectedSlot()
+	{
 		foreach (GameObject go in InventorySlots)
 		{
 			if (go.GetComponent<InventorySlot>().Index == CurrentSlot)
@@ -72,8 +129,11 @@ public class Inventory : MonoBehaviour {
 				go.GetComponent<Image>().color = Color.white;
 			}
 		}
+	}
 
-		// If a slot does not have an item, set its image to blank
+
+	void ColorBlankSlots()
+	{
 		for (int i = 0; i < Items.Length; i++)
 		{
 			if (Items[i].Type == ItemType.EMPTY)
@@ -95,8 +155,11 @@ public class Inventory : MonoBehaviour {
 				}
 			}
 		}
+	}
 
-		// Draw an item on each slot
+
+	void DrawItemsOnSlots()
+	{
 		for (int i = 0; i < Items.Length; i++)
 		{
 			if (Items[i].Type != ItemType.EMPTY)
@@ -118,8 +181,11 @@ public class Inventory : MonoBehaviour {
 				}
 			}
 		}
+	}
 
-		// Interact with a selected item
+
+	void InteractWithSelectedItem()
+	{
 		if (Input.GetKeyDown(KeyCode.U))
 		{
 			if (Items[CurrentSlot].Type != ItemType.EMPTY)
@@ -129,19 +195,66 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	public void AddToInventory(Item itm)
+
+	void EnableDisableQuantityLabel()
 	{
 		for (int i = 0; i < Items.Length; i++)
 		{
-			if (Items[i].Type == ItemType.EMPTY || (Items[i].Type == itm.Type && Items[i].Stackable))
+			if (Items[i].Type == ItemType.EMPTY)
 			{
-				FirstEmpty = i;
-				break;
+				GameObject slot = null;
+				for (int j = 0; j < InventorySlots.Length; j++)
+				{
+					if (InventorySlots[j].GetComponent<InventorySlot>().Index == i)
+					{
+						slot = InventorySlots[j];
+						break;
+					}
+				}
+
+				if (slot != null)
+				{
+					slot.transform.GetChild(1).GetComponentInChildren<Text>().enabled = false;
+				}
+			}
+			else {
+				GameObject slot = null;
+				for (int j = 0; j < InventorySlots.Length; j++)
+				{
+					if (InventorySlots[j].GetComponent<InventorySlot>().Index == i)
+					{
+						slot = InventorySlots[j];
+						break;
+					}
+				}
+
+				if (slot != null)
+				{
+					slot.transform.GetChild(1).GetComponentInChildren<Text>().enabled = true;
+				}
 			}
 		}
-
-		Items[FirstEmpty].Add(itm);
 	}
 
 
-}
+	void ShowSlotsBasedOnInventoryOpen()
+	{
+		if (!Open)
+		{
+			for (int i = 0; i < Items.Length; i++)
+			{
+				if (InventorySlots[i].GetComponent<InventorySlot>().Index >= 10)
+				{
+					InventorySlots[i].SetActive(false);
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < Items.Length; i++)
+			{
+				InventorySlots[i].SetActive(true);
+			}
+		}
+	}
+
+} //End of inventory class
