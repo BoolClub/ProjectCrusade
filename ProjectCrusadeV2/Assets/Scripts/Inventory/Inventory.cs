@@ -50,10 +50,10 @@ public class Inventory : MonoBehaviour {
 			AddToInventory(new Item(ItemType.Bread));
 		}
 
-		if (Input.GetKeyDown(KeyCode.I))
-		{
-			Open = !Open;
-		}
+		//if (Input.GetKeyDown(KeyCode.I))
+		//{
+		//	Open = !Open;
+		//}
 
 		//Move the selected slot
 		MoveCurrentSlot();
@@ -80,7 +80,13 @@ public class Inventory : MonoBehaviour {
 
 
 		// Interact with a selected item
-		InteractWithSelectedItem();
+		if (Input.GetKeyDown(KeyCode.U))
+		{
+			if (Items[CurrentSlot].Type != ItemType.EMPTY)
+			{
+				Items[CurrentSlot].PrimaryUse();
+			}
+		}
 	}
 
 	public void AddToInventory(Item itm)
@@ -182,19 +188,6 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 	}
-
-
-	void InteractWithSelectedItem()
-	{
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			if (Items[CurrentSlot].Type != ItemType.EMPTY)
-			{
-				Items[CurrentSlot].Use();
-			}
-		}
-	}
-
 
 	void EnableDisableQuantityLabel()
 	{

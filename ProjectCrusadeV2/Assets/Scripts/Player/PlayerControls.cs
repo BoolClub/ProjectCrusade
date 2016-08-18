@@ -16,6 +16,10 @@ public class PlayerControls : MonoBehaviour {
 		/// </summary>
 		public SpriteRenderer SpriteRender;
 
+		/// <summary>
+		/// The inventory.
+		/// </summary>
+		Inventory inventory;
 
 		/// <summary>
 		/// The textbox.
@@ -68,6 +72,7 @@ public class PlayerControls : MonoBehaviour {
 		textbox = Resources.Load("TextBox") as GameObject;
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+		inventory = this.gameObject.GetComponent<Inventory>();
 	}
 
 	void Update () {
@@ -118,15 +123,18 @@ public class PlayerControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(primaryUseKey))
 		{
-			
+			if(inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
+				inventory.Items[inventory.CurrentSlot].PrimaryUse();
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
+			
 		}
 
 		//Open the inventory
 		if (Input.GetKeyDown(KeyCode.I))
 		{
+			inventory.Open = !inventory.Open;
 		}
 	}
 

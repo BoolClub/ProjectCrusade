@@ -72,7 +72,7 @@ public class Item {
 	}
 
 
-	public void Use()
+	public void PrimaryUse()
 	{
 		if (Type == ItemType.Apple)
 		{
