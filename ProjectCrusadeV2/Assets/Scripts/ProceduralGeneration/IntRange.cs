@@ -6,6 +6,7 @@ public class IntRange
 {
 	public int m_Min;       // The minimum value in this range.
 	public int m_Max;       // The maximum value in this range.
+	private int int_value;
 
 
     // Constructor to set the values.
@@ -15,7 +16,14 @@ public class IntRange
         m_Max = max;
     }
 
-    // Get a random value from the range.
+	public int Value
+	{
+		get { return int_value; }
+		set { int_value = value; }
+	}
+
+
+	// Get a random value from the range.
 	public int Random
     {
 		get { return UnityEngine.Random.Range(m_Min, m_Max); }

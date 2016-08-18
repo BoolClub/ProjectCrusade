@@ -32,6 +32,11 @@ public class GameManagerScript : MonoBehaviour {
 	/// </summary>
 	public int CurrentFloor;
 
+	/// <summary>
+	/// Floor items holder.
+	/// </summary>
+	public GameObject FloorItemsHolder;
+
 
 	// Use this for initialization
 	public void Start () {
@@ -47,6 +52,10 @@ public class GameManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorItem"))
+		{
+			obj.transform.SetParent(FloorItemsHolder.transform);
+		}
 	}
 
 }

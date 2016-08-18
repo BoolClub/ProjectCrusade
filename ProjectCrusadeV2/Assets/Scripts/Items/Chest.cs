@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Chest : MonoBehaviour {
 
@@ -77,10 +77,13 @@ public class Chest : MonoBehaviour {
 		CheckCollision();
 
 		//Draw the appropriate line of text
-		if (GameObject.Find("TextBox(Clone)") != null && TextBox.isOpen())
+		foreach (GameObject tb in GameObject.FindGameObjectsWithTag("TextBoxClone"))
 		{
-			(GameObject.Find("TextBox(Clone)").GetComponentInChildren<TextMesh>()).text = TextBox.Text[TextBox.CurrentSlide];
-			(GameObject.Find("TextBox(Clone)").GetComponentInChildren<SmartText>()).OnTextChanged();
+			if (tb != null && TextBox.isOpen())
+			{
+				tb.GetComponentInChildren<TextMesh>().text = TextBox.Text[TextBox.CurrentSlide];
+				tb.GetComponentInChildren<SmartText>().OnTextChanged();
+			}
 		}
 
 		//Change the sprite when the chest has been opened

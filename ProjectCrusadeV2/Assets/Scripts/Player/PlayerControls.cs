@@ -168,7 +168,7 @@ public class PlayerControls : MonoBehaviour {
 					else {
 						chestComp.TextBox.toggle();
 
-						Instantiate(textbox, new Vector3(chest.transform.position.x + 0.75f, chest.transform.position.y + 1.4f, -3), Quaternion.identity);
+						Instantiate(textbox, new Vector3(transform.position.x + 0.75f, transform.position.y + 1.4f, -3), Quaternion.identity);
 						break;
 					}
 				}

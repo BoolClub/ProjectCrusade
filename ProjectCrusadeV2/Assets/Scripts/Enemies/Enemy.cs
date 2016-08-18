@@ -20,6 +20,11 @@ public class Enemy : MonoBehaviour {
 		/// </summary>
 		Healthbar TheHealthBar;
 
+		/// <summary>
+		/// The this renderer.
+		/// </summary>
+		SpriteRenderer ThisRenderer;
+
 	#endregion
 
 
@@ -50,14 +55,29 @@ public class Enemy : MonoBehaviour {
 	/// <summary>
 	/// Whether or not the enemy is burned. If it is, it should lose health every few seconds.
 	/// </summary>
+	[HideInInspector]
 	public bool Burned;
 	float burnDelay = 4f;
 
 	/// <summary>
 	/// Whether or not the enemy is stunned. If it is, then it should not be able to move for while.
 	/// </summary>
+	[HideInInspector]
 	public bool Stunned;
+	[HideInInspector]
 	public float stunTime = 5f;
+
+	/// <summary>
+	/// The item drop percentage.
+	/// </summary>
+	[Range(0,100)]
+	public float ItemDropPercentage = 50f;
+
+	/// <summary>
+	/// The list of items that this enemy could potentially drop.
+	/// </summary>
+	public GameObject[] ItemDropPrefabs;
+
 
 
 	// Use this for initialization
@@ -67,6 +87,7 @@ public class Enemy : MonoBehaviour {
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
+		ThisRenderer = GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -79,13 +100,19 @@ public class Enemy : MonoBehaviour {
 
 
 		if (Burned)
+		{
+			ThisRenderer.color = Color.red;
 			BurnDamage();
+		}
+		else {
+			ThisRenderer.color = Color.white;
+		}
 
 		if (Stunned)
 			StunEffects();
 
 		if (Health.Value <= 0)
-			Destroy(this.gameObject);
+			DestroyEnemy();
 	}
 
 	/// <summary>
@@ -111,6 +138,27 @@ public class Enemy : MonoBehaviour {
 				GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;
 			}
 		}
+	}
+
+	void DestroyEnemy()
+	{
+		float randomNum = UnityEngine.Random.Range(0, 100);
+		bool willDropItem = false;
+
+		if (randomNum <= ItemDropPercentage)
+		{
+			willDropItem = true;
+		}
+
+		if (willDropItem)
+		{
+			int item = (int)UnityEngine.Random.Range(0, ItemDropPrefabs.Length);
+			Instantiate(ItemDropPrefabs[item], new Vector3(transform.position.x,
+			                                               transform.position.y,
+			                                              -0.5f), Quaternion.identity);
+		}
+
+		Destroy(this.gameObject);
 	}
 
 	/// <summary>
@@ -159,7 +207,7 @@ public class Enemy : MonoBehaviour {
 	{
 		if (stunTime > 0 && Stunned == true)
 		{
-			GetComponent<SpriteRenderer>().color = Color.yellow;
+			ThisRenderer.color = Color.yellow;
 		}
 
 		stunTime -= 0.02f;
@@ -168,7 +216,7 @@ public class Enemy : MonoBehaviour {
 		{
 			stunTime = 5f;
 			Stunned = false;
-			GetComponent<SpriteRenderer>().color = Color.white;
+			ThisRenderer.color = Color.white;
 		}
 	}
 }
