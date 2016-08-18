@@ -15,6 +15,7 @@ public class Item {
 
 	public float StoredHP = 0;
 	public int FlameSwordCharge = 5;
+	public float chargeTimeElectricSword = 700f;
 
 	#region References For Simplicity
 
@@ -24,6 +25,8 @@ public class Item {
 
 		GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
 		GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
+		GameObject magicbolt2 = Resources.Load("Projectiles/Magic Bolt2") as GameObject;
+		GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;	
 
 	#endregion
 
@@ -294,66 +297,84 @@ public class Item {
 	/// <returns>The use.</returns>
 	public void SecondaryUse()
 	{
-		if (Type == ItemType.Apple)
-		{
+		if (Type == ItemType.Apple) { }
+		if (Type == ItemType.Arrow) { }
+		if (Type == ItemType.BowAndArrow) { }
+		if (Type == ItemType.Bread) { }
+		if (Type == ItemType.CurvedSword) { }
 
-		}
-		if (Type == ItemType.Arrow)
+		if (Type == ItemType.ElectricSword) 
 		{
-
+			if (chargeTimeElectricSword.Equals(700f))
+			{
+				foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+				{
+					// Secondary use of the electric sword stuns all enemies on the map
+					Enemy en = enemy.GetComponent<Enemy>();
+					en.Stunned = true;
+					en.stunTime = 15f;
+				}
+				chargeTimeElectricSword = 0;
+			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "This item needs time to recharge.";
+			}
 		}
-		if (Type == ItemType.BowAndArrow)
+
+		if (Type == ItemType.FlamingSword) 
 		{
+			if (FlameSwordCharge > 0)
+			{
+				float number = new FloatRange(0, 100).Random;
+				bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
 
+				// Chance of burning
+				if (willBurnEnemy == true)
+					HurtEnemy(FLAMING_SWORD_DAMAGE, true, false);
+				else
+					HurtEnemy(FLAMING_SWORD_DAMAGE, false, false);
+				
+
+				//Shoot fire projectile
+				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				MonoBehaviour.Instantiate(fire, Player.transform.position, Quaternion.identity);
+
+				FlameSwordCharge--;
+			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "This item needs time to recharge.";
+			}
 		}
-		if (Type == ItemType.Bread)
+
+		if (Type == ItemType.HealingSword) 
 		{
-
+			if (StoredHP > 0)
+			{
+				HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
+				HPBar.Health += StoredHP;
+				StoredHP = 0;
+			}
+			else {
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().enabled = true;
+				GameObject.FindWithTag("Label").GetComponent<TextLabel>().Text = "There is no energy stored in this item.";
+			}
 		}
-		if (Type == ItemType.CurvedSword)
+
+		if (Type == ItemType.IronSword) { }
+		if (Type == ItemType.LongSword) { }
+		if (Type == ItemType.Mace) { }
+
+		if (Type == ItemType.MagicWand) 
 		{
-
+			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+			MonoBehaviour.Instantiate(magicbolt2, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
-		if (Type == ItemType.ElectricSword)
-		{
 
-		}
-		if (Type == ItemType.FlamingSword)
-		{
-
-		}
-		if (Type == ItemType.HealingSword)
-		{
-
-		}
-		if (Type == ItemType.IronSword)
-		{
-
-		}
-		if (Type == ItemType.LongSword)
-		{
-
-		}
-		if (Type == ItemType.Mace)
-		{
-
-		}
-		if (Type == ItemType.MagicWand)
-		{
-
-		}
-		if (Type == ItemType.SteelSword)
-		{
-
-		}
-		if (Type == ItemType.Water)
-		{
-
-		}
-		if (Type == ItemType.WoodenSword)
-		{
-
-		}
+		if (Type == ItemType.SteelSword) { }
+		if (Type == ItemType.Water) { }
+		if (Type == ItemType.WoodenSword) { }
 	}
 
 
