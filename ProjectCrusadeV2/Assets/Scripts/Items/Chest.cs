@@ -11,7 +11,7 @@ public class Chest : MonoBehaviour {
 		SpriteRenderer sRenderer;
 
 		/// <summary>
-		/// The box collider
+		/// The box collide	r
 		/// </summary>
 		BoxCollider2D BoxColl;
 

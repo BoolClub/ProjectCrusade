@@ -6,11 +6,6 @@ public class Enemy : MonoBehaviour {
 	#region Refrences For Simplicity
 
 		/// <summary>
-		/// The inventory.
-		/// </summary>
-		Inventory TheInventory;
-
-		/// <summary>
 		/// My box collider.
 		/// </summary>
 		BoxCollider2D MyBoxCollider;
@@ -64,7 +59,6 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		Damage.Value = Damage.Random;
 		Health.Value = Health.Random;
-		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
@@ -76,7 +70,6 @@ public class Enemy : MonoBehaviour {
 		Damage.Value = Damage.Random;
 
 		// Check if touching player
-		if(!TheInventory.Open)
 			HurtPlayerOnContact();
 
 
@@ -105,7 +98,6 @@ public class Enemy : MonoBehaviour {
 		else
 			Health.Value -= damage;
 		
-		PrimaryUseItems.InstantiateDamageLabel(this.gameObject, damage);
 
 		if (criticalHit)
 			GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;

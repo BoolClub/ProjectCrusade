@@ -5,19 +5,6 @@ using System.IO;
 
 public class GameManagerScript : MonoBehaviour {
 	
-	#region Refrences For Simplicity
-
-		/// <summary>
-		/// The player. Used for grabbing information without having to keep calling GameObject.Find().
-		/// </summary>
-		PlayerControls Player;
-
-		/// <summary>
-		/// The ladder.
-		/// </summary>
-		GameObject Ladder;
-
-	#endregion
 
 	/// <summary>
 	/// An array of sprites for each item.
@@ -49,14 +36,10 @@ public class GameManagerScript : MonoBehaviour {
 		{
 			CurrentFloor = SceneManager.GetActiveScene().buildIndex;
 		}
-
-		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-		Ladder = GameObject.Find("Ladder(Clone)");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		SecondaryUseItems.ResetCharges();
 	}
 
 }

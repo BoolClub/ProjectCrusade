@@ -16,10 +16,6 @@ public class PlayerControls : MonoBehaviour {
 		/// </summary>
 		public SpriteRenderer SpriteRender;
 
-		/// <summary>
-		/// The inventory.
-		/// </summary>
-		public Inventory TheInventory;
 
 		/// <summary>
 		/// The textbox.
@@ -68,7 +64,6 @@ public class PlayerControls : MonoBehaviour {
 		transform.position = StartPosition;
 		gameObject.layer = 10;
 		Rigid = GetComponent<Rigidbody2D>();
-		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
 		SpriteRender = GetComponent<SpriteRenderer>();
 		textbox = Resources.Load("TextBox") as GameObject;
 		MyBoxCollider = GetComponent<BoxCollider2D>();
@@ -83,7 +78,6 @@ public class PlayerControls : MonoBehaviour {
 		UpdatePlayerDirections(x, y);
 
 		//Only move the player when the inventroy is not open.
-		if (!TheInventory.Open)
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
 
@@ -114,22 +108,24 @@ public class PlayerControls : MonoBehaviour {
 
 		if (Input.GetKeyDown(interactionKey))
 		{
-			NPCInteraction();
-			CheckInteraction();
+			if (world != null)
+			{
+				if (world.Npcs.Length > 0)
+					NPCInteraction();
+				if (world.Chests.Length > 0)
+					CheckInteraction();
+			}
 		}
 		if (Input.GetKeyDown(primaryUseKey))
 		{
-			PrimaryUseItems.PrimaryUse(TheInventory.CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
-			SecondaryUseItems.SecondaryUse(TheInventory.CurrentSlot.GetComponent<InventorySlot>().Type);
 		}
 
 		//Open the inventory
 		if (Input.GetKeyDown(KeyCode.I))
 		{
-			TheInventory.Open = !TheInventory.Open;
 		}
 	}
 
@@ -148,7 +144,6 @@ public class PlayerControls : MonoBehaviour {
 				if (chest.GetComponent<Chest>().Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
-					TheInventory.AddToInventory(chest.GetComponent<Chest>().Type);
 					chest.GetComponent<Chest>().TakeItem();
 
 

@@ -28,11 +28,6 @@ public class EnemyAI : MonoBehaviour {
 		/// </summary>
 		Enemy ThisEnemyObject;
 
-		/// <summary>
-		/// The inventory.
-		/// </summary>
-		Inventory TheInventory;
-			
 	#endregion
 
 	/// <summary>
@@ -80,13 +75,11 @@ public class EnemyAI : MonoBehaviour {
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		CircleColl = GetComponent<CircleCollider2D>();
 		ThisEnemyObject = GetComponent<Enemy>();
-		TheInventory = GameObject.Find("Inventory").GetComponent<Inventory>();
 	}
 
 
 	void Update()
 	{
-		if(!TheInventory.Open)
 			MoveEnemy();
 	}
 
