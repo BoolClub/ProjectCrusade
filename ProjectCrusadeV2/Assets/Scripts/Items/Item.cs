@@ -22,6 +22,9 @@ public class Item {
 		public PlayerControls Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		public Inventory TheInventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
 
+		GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
+		GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
+
 	#endregion
 
 
@@ -176,7 +179,6 @@ public class Item {
 			if (TheInventory.Contains(ItemType.BowAndArrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-				GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -187,7 +189,6 @@ public class Item {
 			if (TheInventory.Contains(ItemType.Arrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-				GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 			}
 		}
@@ -210,14 +211,16 @@ public class Item {
 		if (Type == ItemType.ElectricSword)
 		{
 			float number = new FloatRange(0, 100).Random;
-			// The regular use will only stun the enemy if it is an odd number less than 20.
 			bool willStunEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
 
 			// Chanec of stunning
 			if (willStunEnemy == true)
 			{
 				Enemy enem = HurtEnemy(ELECTRIC_SWORD_DAMAGE, false, true);
-				enem.stunTime = 5f;
+				if (enem != null)
+				{
+					enem.stunTime = 5f;
+				}
 			}
 			else {
 				HurtEnemy(ELECTRIC_SWORD_DAMAGE, false, false);
@@ -227,7 +230,6 @@ public class Item {
 		if (Type == ItemType.FlamingSword)
 		{
 			float number = new FloatRange(0, 100).Random;
-			// The regular use will only burn the enemy if it is an odd number less than 20.
 			bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
 
 			// Chance of burning
@@ -261,7 +263,6 @@ public class Item {
 		if (Type == ItemType.MagicWand)
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-			GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
 			MonoBehaviour.Instantiate(magicbolt, Player.transform.position, Quaternion.identity);
 		}
 

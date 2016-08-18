@@ -88,11 +88,11 @@ public class World : MonoBehaviour
 		obj.transform.localScale = new Vector3(TILE_SCALE, TILE_SCALE, 1);
 		obj.isStatic = true;
 		obj.AddComponent(typeof(SpriteRenderer));
-		(obj.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Tile_Sprites[sprite_index];
+		obj.GetComponent<SpriteRenderer>().sprite = Tile_Sprites[sprite_index];
 		if (name.Equals("Wall"))
 		{
 			obj.AddComponent(typeof(BoxCollider2D));
-			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).size = new Vector2(0.46f, 0.46f);
+			obj.GetComponent<BoxCollider2D>().size = new Vector2(0.46f, 0.46f);
 			obj.transform.SetParent(BackgroundHolder[2].transform);
 		}
 		else {
@@ -103,17 +103,17 @@ public class World : MonoBehaviour
 		if (sprite_index == (int)UnitySpriteIndices.RED_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.RED_DOOR_RIGHT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_LEFT || sprite_index == (int)UnitySpriteIndices.BLUE_DOOR_RIGHT)
 		{
 			obj.AddComponent(typeof(BoxCollider2D));
-			(obj.GetComponent("BoxCollider2D") as BoxCollider2D).isTrigger = true;
+			obj.GetComponent<BoxCollider2D>().isTrigger = true;
 			obj.AddComponent(typeof(Door));
-			(obj.GetComponent("Door") as Door).Position = new Vector2(x, y);
+			obj.GetComponent<Door>().Position = new Vector2(x, y);
 
-			if (x == 15 && y == Dimension_Y - 17) (obj.GetComponent("Door") as Door).Destination = "House_1";
-			if (x == 31 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
-			if (x == 32 && y == Dimension_Y - 20) (obj.GetComponent("Door") as Door).Destination = "Church";
-			if (x == 17 && y == Dimension_Y - 32) (obj.GetComponent("Door") as Door).Destination = "House_1";
-			if (x == 35 && y == Dimension_Y - 33) (obj.GetComponent("Door") as Door).Destination = "House_1";
-			if (x == 19 && y == Dimension_Y - 1) (obj.GetComponent("Door") as Door).Destination = "Underground_1";
-			if (x == 20 && y == Dimension_Y - 1) (obj.GetComponent("Door") as Door).Destination = "Underground_1";
+			if (x == 15 && y == Dimension_Y - 17) obj.GetComponent<Door>().Destination = "House_1";
+			if (x == 31 && y == Dimension_Y - 20) obj.GetComponent<Door>().Destination = "Church";
+			if (x == 32 && y == Dimension_Y - 20) obj.GetComponent<Door>().Destination = "Church";
+			if (x == 17 && y == Dimension_Y - 32) obj.GetComponent<Door>().Destination = "House_1";
+			if (x == 35 && y == Dimension_Y - 33) obj.GetComponent<Door>().Destination = "House_1";
+			if (x == 19 && y == Dimension_Y - 1) obj.GetComponent<Door>().Destination = "Underground_1";
+			if (x == 20 && y == Dimension_Y - 1) obj.GetComponent<Door>().Destination = "Underground_1";
 		}
 
 		Tiles[x, y] = obj;

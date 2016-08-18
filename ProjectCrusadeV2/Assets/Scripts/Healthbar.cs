@@ -10,23 +10,34 @@ public class Healthbar : MonoBehaviour {
 	[Range(0,100)]
 	public float Health = 100f;
 
+	/// <summary>
+	/// The hp image.
+	/// </summary>
+	Image hpImage;
+
+
+	void Start()
+	{
+		hpImage = GetComponent<Image>();
+	}
+
 
 	void Update()
 	{
 		//Always make sure the fill bar represents the health amount
-		GetComponent<Image>().fillAmount = Health / 100;
+		hpImage.fillAmount = Health / 100;
 
 		//Update the color of the health bar.
 		if(Health > 60) 
 		{
-			GetComponent<Image>().color = Color.green;
+			hpImage.color = Color.green;
 		} 
 		else if (Health <= 60 && Health > 30)
 		{
-			GetComponent<Image>().color = Color.yellow;
+			hpImage.color = Color.yellow;
 		}
 		else {
-			GetComponent<Image>().color = Color.red;
+			hpImage.color = Color.red;
 		}
 	}
 

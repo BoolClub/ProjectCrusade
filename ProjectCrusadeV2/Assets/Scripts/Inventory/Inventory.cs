@@ -4,6 +4,11 @@ using System.Collections;
 
 public class Inventory : MonoBehaviour
 {
+	#region References For Simplicity
+
+		GameManagerScript GM;
+
+	#endregion
 
 	/// <summary>
 	/// The list of items that the player has.
@@ -26,6 +31,11 @@ public class Inventory : MonoBehaviour
 	public GameObject[] InventorySlots;
 
 	/// <summary>
+	/// The inventory object.
+	/// </summary>
+	public GameObject InventoryObject;
+
+	/// <summary>
 	/// The currently selected slot.
 	/// </summary>
 	public int CurrentSlot;
@@ -35,10 +45,12 @@ public class Inventory : MonoBehaviour
 
 	void Start()
 	{
+		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 		Items = new Item[40];
 		CurrentSlot = 0;
 		for (int i = 0; i < Items.Length; i++)
 			Items[i] = GameManagerScript.Items[i];
+		InventoryObject = GameObject.Find("Inventory");
 	}
 
 	void Awake()
@@ -68,7 +80,7 @@ public class Inventory : MonoBehaviour
 		//}
 
 
-		if (GameObject.Find("Inventory") != null)
+		if (InventoryObject != null)
 		{
 			//Move the selected slot by scrolling
 			MoveCurrentSlot();
@@ -158,12 +170,13 @@ public class Inventory : MonoBehaviour
 	{
 		foreach (GameObject go in InventorySlots)
 		{
+			Image img = go.GetComponent<Image>();
 			if (go.GetComponent<InventorySlot>().Index == CurrentSlot)
 			{
-				go.GetComponent<Image>().color = Color.green;
+				img.color = Color.green;
 			}
 			else {
-				go.GetComponent<Image>().color = Color.white;
+				img.color = Color.white;
 			}
 		}
 	}
@@ -187,7 +200,7 @@ public class Inventory : MonoBehaviour
 
 				if (slot != null)
 				{
-					InventorySlots[i].transform.GetChild(0).GetComponentInChildren<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Items[i].Type];
+					InventorySlots[i].transform.GetChild(0).GetComponentInChildren<Image>().sprite = GM.ItemSprites[(int)Items[i].Type];
 					InventorySlots[i].transform.GetChild(1).GetComponentInChildren<Text>().text = "" + Items[i].Quantity;
 				}
 			}
@@ -213,7 +226,7 @@ public class Inventory : MonoBehaviour
 
 				if (slot != null)
 				{
-					slot.transform.GetChild(0).GetComponentInChildren<Image>().sprite = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ItemSprites[(int)Items[i].Type];
+					slot.transform.GetChild(0).GetComponentInChildren<Image>().sprite = GM.ItemSprites[(int)Items[i].Type];
 					slot.transform.GetChild(1).GetComponentInChildren<Text>().text = "" + Items[i].Quantity;
 				}
 			}

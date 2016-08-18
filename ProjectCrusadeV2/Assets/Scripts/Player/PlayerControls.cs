@@ -149,22 +149,24 @@ public class PlayerControls : MonoBehaviour {
 	{
 		foreach (GameObject chest in world.Chests)
 		{
-			if (chest.GetComponent<Chest>().isNextToPlayer())
+			Chest chestComp = chest.GetComponent<Chest>();
+
+			if (chestComp.isNextToPlayer())
 			{
-				if (chest.GetComponent<Chest>().Type != ItemType.EMPTY)
+				if (chestComp.Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
-					GameObject.FindWithTag("Player").GetComponent<Inventory>().AddToInventory(new Item(chest.GetComponent<Chest>().Type));
-					chest.GetComponent<Chest>().TakeItem();
+					inventory.AddToInventory(new Item(chestComp.Type));
+					chestComp.TakeItem();
 
 
 					//Open a text box
-					if ((chest.GetComponent<Chest>()).TextBox.isOpen())
+					if (chestComp.TextBox.isOpen())
 					{
-						(chest.GetComponent<Chest>()).TextBox.nextSlide();
+						chestComp.TextBox.nextSlide();
 					}
 					else {
-						(chest.GetComponent<Chest>()).TextBox.toggle();
+						chestComp.TextBox.toggle();
 
 						Instantiate(textbox, new Vector3(chest.transform.position.x + 0.75f, chest.transform.position.y + 1.4f, -3), Quaternion.identity);
 						break;
@@ -183,19 +185,21 @@ public class PlayerControls : MonoBehaviour {
 	{
 		foreach (GameObject npc in world.Npcs)
 		{
-			if ((npc.GetComponent<NPC>()).isNextToPlayer())
+			NPC npcComp = npc.GetComponent<NPC>();
+
+			if (npcComp.isNextToPlayer())
 			{
 				//There is already a text box open
-				if ((npc.GetComponent<NPC>()).TextBox.isOpen())
+				if (npcComp.TextBox.isOpen())
 				{
 
-					(npc.GetComponent<NPC>()).TextBox.nextSlide();
+					npcComp.TextBox.nextSlide();
 
 					//There are no text boxes open already
 				}
 				else {
 
-					(npc.GetComponent<NPC>()).TextBox.toggle();
+					npcComp.TextBox.toggle();
 
 					Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, -3), Quaternion.identity);
 					break;
