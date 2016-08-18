@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerControls : MonoBehaviour {
+	KeyCode primaryUseKey = KeyCode.Z;
+	KeyCode secondaryUseKey = KeyCode.X;
+	KeyCode interactionKey = KeyCode.C;
 
 	#region References For Simplicity
 
@@ -79,8 +82,10 @@ public class PlayerControls : MonoBehaviour {
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
+
 		//Update the player's sprite based on the button presse.
 		UpdatePlayerDirections(x, y);
+
 
 		//Only move the player when the inventroy is not open.
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
@@ -106,13 +111,11 @@ public class PlayerControls : MonoBehaviour {
 	/// <returns>The input.</returns>
 	void CheckInput()
 	{
-		KeyCode primaryUseKey = KeyCode.Z;
-		KeyCode secondaryUseKey = KeyCode.X;
-		KeyCode interactionKey = KeyCode.C;
-
 
 		if (Input.GetKeyDown(interactionKey))
 		{
+			PickupItemsOffGround(interactionKey);
+
 			if (world != null)
 			{
 				if (world.Npcs.Length > 0)
@@ -139,7 +142,24 @@ public class PlayerControls : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Pickup the items off ground.
+	/// </summary>
+	/// <returns>The items off ground.</returns>
+	/// <param name="k">K.</param>
+	void PickupItemsOffGround(KeyCode k)
+	{
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorItem"))
+		{
+			FloorItem fItem = obj.GetComponent<FloorItem>();
 
+			if (fItem.IsNextToPlayer)
+			{
+				inventory.AddToInventory(new Item(fItem.Type, fItem.Quantity.Value));
+				fItem.timer = 0;
+			}
+		}
+	}
 
 	/// <summary>
 	/// Checks for interaction with things other than NPCs

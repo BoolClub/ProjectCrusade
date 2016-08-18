@@ -9,12 +9,18 @@ public class FloorItem : MonoBehaviour {
 	/// <summary>
 	/// The type of item.
 	/// </summary>
-	public ItemType itm;
+	public ItemType Type;
 
 	/// <summary>
 	/// The quantity of the item.
 	/// </summary>
 	public IntRange Quantity;
+
+	/// <summary>
+	/// Is next to the player or not
+	/// </summary>
+	[HideInInspector]
+	public bool IsNextToPlayer;
 
 	/// <summary>
 	/// The textbox that displays what the user got.
@@ -29,14 +35,16 @@ public class FloorItem : MonoBehaviour {
 	/// <summary>
 	/// The timer.
 	/// </summary>
-	float timer = 500f;
+	[HideInInspector]
+	public float timer = 500f;
 
 
 
 	// Use this for initialization
 	void Start () {
 		TextBox = new TextBox();
-		Item i = new Item(itm);
+		Quantity.Value = Quantity.Random;
+		Item i = new Item(Type);
 		TextBox.addText("Press \"c\" to pick up the " + i.Name);
 		textboxObj = Resources.Load("TextBox") as GameObject;
 	}
@@ -55,6 +63,11 @@ public class FloorItem : MonoBehaviour {
 		}
 
 		// Destroy the item after some time.
+		DestroyFloorItem();
+	}
+
+	public void DestroyFloorItem()
+	{
 		timer -= 0.5f;
 		if (timer <= 0)
 		{
@@ -74,16 +87,12 @@ public class FloorItem : MonoBehaviour {
 	{
 		if (other.tag.Equals("Player"))
 		{
+			IsNextToPlayer = true;
+			
 			if (TextBox.isOpen() == false)
 			{
 				TextBox.setOpen(true);
 				Instantiate(textboxObj, new Vector3(transform.position.x + 0.75f, transform.position.y + 1.4f, -3), Quaternion.identity);
-			}
-
-			if (Input.GetKeyDown(KeyCode.C))
-			{
-				GameObject.FindWithTag("Player").GetComponent<Inventory>().AddToInventory(new Item(itm, Quantity.Value));
-				Destroy(this.gameObject);
 			}
 		}
 
@@ -94,6 +103,8 @@ public class FloorItem : MonoBehaviour {
 	{
 		if (other.tag.Equals("Player"))
 		{
+			IsNextToPlayer = false;
+
 			if (TextBox.isOpen()) {
 				TextBox.setOpen(false);
 				Object.Destroy(GameObject.Find("TextBox(Clone)"));
