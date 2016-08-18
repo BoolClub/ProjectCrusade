@@ -44,15 +44,22 @@ public class Inventory : MonoBehaviour
 	void Awake()
 	{
 		InventorySlots = GameObject.FindGameObjectsWithTag("InventorySlot");
+		if (Items != null)
+		{
+			foreach (Item itm in Items)
+			{
+				itm.HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
+				itm.Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				itm.TheInventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
+			}
+		}
 	}
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.H))
 		{
-			AddToInventory(new Item(ItemType.WoodenSword));
-			AddToInventory(new Item(ItemType.Apple));
-			AddToInventory(new Item(ItemType.Bread));
+			AddToInventory(new Item((ItemType)(new IntRange(0,17).Random)));
 		}
 
 		//if (Input.GetKeyDown(KeyCode.I))
@@ -85,6 +92,10 @@ public class Inventory : MonoBehaviour
 
 			// Only make certain slots active if the inventory is open/closed.
 			ShowSlotsBasedOnOpenOrClosed();
+
+
+			// Remove an item from the inventory if its quantity is zero
+			RemoveItemsIfQuantityZero();
 		}
 
 
@@ -110,6 +121,17 @@ public class Inventory : MonoBehaviour
 		}
 
 		Items[FirstEmpty].Add(itm);
+	}
+
+
+	public bool Contains(ItemType itm)
+	{
+		foreach (Item i in Items)
+		{
+			if (i.Type == itm)
+				return true;
+		}
+		return false;
 	}
 
 
@@ -255,6 +277,18 @@ public class Inventory : MonoBehaviour
 			for (int i = 0; i < Items.Length; i++)
 			{
 				InventorySlots[i].SetActive(true);
+			}
+		}
+	}
+
+
+	void RemoveItemsIfQuantityZero()
+	{
+		foreach (Item itm in Items)
+		{
+			if (itm.Quantity <= 0)
+			{
+				itm.Type = ItemType.EMPTY;
 			}
 		}
 	}

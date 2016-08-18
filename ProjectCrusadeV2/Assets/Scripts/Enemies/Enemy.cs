@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour {
 
 
 	/// <summary>
+	/// Whether or not this enemy is next to the player.
+	/// </summary>
+	public bool IsNextToPlayer;
+
+	/// <summary>
 	/// The amount of damage that this enemy will do to the player.
 	/// It is a random number between two values.
 	/// </summary>
@@ -97,10 +102,15 @@ public class Enemy : MonoBehaviour {
 			Health.Value -= damage * 1.5f;
 		else
 			Health.Value -= damage;
-		
+
 
 		if (criticalHit)
-			GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;
+		{
+			if (GameObject.Find("DamageLabel(Clone)") != null)
+			{
+				GameObject.Find("DamageLabel(Clone)").GetComponent<TextMesh>().color = Color.yellow;
+			}
+		}
 	}
 
 	/// <summary>
@@ -111,6 +121,8 @@ public class Enemy : MonoBehaviour {
 	{
 		if (MyBoxCollider.IsTouching(Player.MyBoxCollider))
 		{
+			IsNextToPlayer = true;
+
 			damageDelay -= 1f;
 
 			if (damageDelay <= 0)
@@ -118,6 +130,9 @@ public class Enemy : MonoBehaviour {
 				TheHealthBar.DecreaseHP(Damage.Value);
 				damageDelay = 40f;
 			}
+		}
+		else {
+			IsNextToPlayer = false;
 		}
 	}
 
