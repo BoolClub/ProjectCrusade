@@ -128,7 +128,8 @@ public class PlayerControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
-			
+			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
+				inventory.Items[inventory.CurrentSlot].SecondaryUse();
 		}
 
 		//Open the inventory

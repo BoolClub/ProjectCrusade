@@ -88,6 +88,23 @@ public class Item {
 		}
 	}
 
+
+	public void SecondaryUse()
+	{
+		if (Type == ItemType.Apple)
+		{
+			Debug.Log("Wow! That really is a tasty apple!");
+		}
+		if (Type == ItemType.WoodenSword)
+		{
+			Debug.Log("This is a really sharp sword.");
+		}
+		if (Type == ItemType.Bread)
+		{
+			Debug.Log("This bread is still awesome.");
+		}
+	}
+
 	public override string ToString()
 	{
 		return "Name: " + Name + ", Quantity: " + Quantity;
