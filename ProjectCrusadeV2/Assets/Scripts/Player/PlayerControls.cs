@@ -118,6 +118,7 @@ public class PlayerControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(primaryUseKey))
 		{
+			
 		}
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
@@ -144,8 +145,8 @@ public class PlayerControls : MonoBehaviour {
 				if (chest.GetComponent<Chest>().Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
+					GameObject.FindWithTag("Player").GetComponent<Inventory>().AddToInventory(new Item(chest.GetComponent<Chest>().Type));
 					chest.GetComponent<Chest>().TakeItem();
-
 
 
 					//Open a text box
