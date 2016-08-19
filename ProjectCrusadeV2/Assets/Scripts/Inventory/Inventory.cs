@@ -126,16 +126,22 @@ public class Inventory : MonoBehaviour
 
 	public void AddToInventory(Item itm)
 	{
-		for (int i = 0; i < Items.Length; i++)
+		if (!IsFull())
 		{
-			if (Items[i].Type == ItemType.EMPTY || (Items[i].Type == itm.Type && Items[i].Stackable))
+			for (int i = 0; i < Items.Length; i++)
 			{
-				FirstEmpty = i;
-				break;
+				if (Items[i].Type == ItemType.EMPTY || (Items[i].Type == itm.Type && Items[i].Stackable))
+				{
+					FirstEmpty = i;
+					break;
+				}
 			}
-		}
 
-		Items[FirstEmpty].Add(itm);
+			Items[FirstEmpty].Add(itm);
+		}
+		else {
+			Debug.Log("Inventory is full.");
+		}
 	}
 
 
@@ -160,6 +166,19 @@ public class Inventory : MonoBehaviour
 			}
 		}
 		return null;
+	}
+
+
+	public bool IsFull()
+	{
+		foreach (Item itm in Items)
+		{
+			if (itm.Type == ItemType.EMPTY)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 
