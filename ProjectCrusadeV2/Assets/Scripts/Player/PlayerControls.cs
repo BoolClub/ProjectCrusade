@@ -82,10 +82,8 @@ public class PlayerControls : MonoBehaviour {
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
-
 		//Update the player's sprite based on the button presse.
 		UpdatePlayerDirections(x, y);
-
 
 		//Only move the player when the inventroy is not open.
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
@@ -111,18 +109,10 @@ public class PlayerControls : MonoBehaviour {
 	/// <returns>The input.</returns>
 	void CheckInput()
 	{
-<<<<<<< Updated upstream
-
-		if (Input.GetKeyDown(interactionKey))
-		{
-			PickupItemsOffGround(interactionKey);
-
-=======
 		if (Input.GetKeyDown(interactionKey))
 		{
 			PickupItemsOffGround(interactionKey);
 			
->>>>>>> Stashed changes
 			if (world != null)
 			{
 				if (world.Npcs.Length > 0)
@@ -159,17 +149,10 @@ public class PlayerControls : MonoBehaviour {
 		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorItem"))
 		{
 			FloorItem fItem = obj.GetComponent<FloorItem>();
-<<<<<<< Updated upstream
-
-			if (fItem.IsNextToPlayer)
-			{
-				inventory.AddToInventory(new Item(fItem.Type, fItem.Quantity.Value));
-=======
  
 			if (fItem.IsNextToPlayer)
 			{
 				inventory.AddToInventory(new Item(fItem.itm, fItem.Quantity.Value));
->>>>>>> Stashed changes
 				fItem.timer = 0;
 			}
 		}
