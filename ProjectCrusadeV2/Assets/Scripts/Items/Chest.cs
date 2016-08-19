@@ -22,6 +22,15 @@ public class Chest : MonoBehaviour {
 
 	#endregion
 
+	/// <summary>
+	/// Whether or not this chest should choose a random item to give the player.
+	/// </summary>
+	public bool Randomize;
+
+	/// <summary>
+	/// A list of items to randomly give the player if Randomize is true.
+	/// </summary>
+	public ItemType[] RandomItems;
 
 	/// <summary>
 	/// This is the item that this chest will give the player.
@@ -58,8 +67,16 @@ public class Chest : MonoBehaviour {
 	{
 		TextBox = new TextBox();
 
+		if (Randomize == true)
+		{
+			int randomIndex = UnityEngine.Random.Range(0, RandomItems.Length);
+			Type = RandomItems[randomIndex];
+			Quantity = 1;
+		}
+
 		temp = new Item(Type);
 		temp.Quantity = Quantity;
+
 		if (Quantity == 1)
 		{
 			TextBox.addText("You received " + temp.Quantity + " " + temp.Name);

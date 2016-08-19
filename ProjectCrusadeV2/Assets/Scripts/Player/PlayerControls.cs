@@ -210,7 +210,7 @@ public class PlayerControls : MonoBehaviour {
 				if (chestComp.Type != ItemType.EMPTY)
 				{
 					//Add item to player's inventory
-					inventory.AddToInventory(new Item(chestComp.Type));
+					inventory.AddToInventory(new Item(chestComp.Type, chestComp.Quantity));
 					chestComp.TakeItem();
 
 
