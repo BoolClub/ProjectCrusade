@@ -1,29 +1,24 @@
 fileFormatVersion: 2
 guid: 2ea6e832a42144b9b90386b923c64c53
-timeCreated: 1471318572
+timeCreated: 1471570057
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: items_0
-    21300002: items_1
-    21300004: items_2
-    21300006: items_3
-    21300008: items_4
-    21300010: items_5
-    21300012: items_6
-    21300014: items_7
-    21300016: items_8
-    21300018: items_9
-    21300020: items_10
-    21300022: items_11
-    21300024: items_12
-    21300026: items_13
-    21300028: items_14
-    21300030: items_15
-    21300032: items_16
-    21300034: items_17
-    21300036: items_18
-    21300038: items_19
+    21300000: Items_0
+    21300002: Items_1
+    21300004: Items_2
+    21300006: Items_3
+    21300008: Items_4
+    21300010: Items_5
+    21300012: Items_6
+    21300014: Items_7
+    21300016: Items_8
+    21300018: Items_9
+    21300020: Items_10
+    21300022: Items_11
+    21300024: Items_12
+    21300026: Items_13
+    21300028: Items_14
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -73,7 +68,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: items_0
+      name: Items_0
       rect:
         serializedVersion: 2
         x: 0
@@ -86,7 +81,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_1
+      name: Items_1
       rect:
         serializedVersion: 2
         x: 32
@@ -99,7 +94,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_2
+      name: Items_2
       rect:
         serializedVersion: 2
         x: 64
@@ -112,7 +107,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_3
+      name: Items_3
       rect:
         serializedVersion: 2
         x: 96
@@ -125,7 +120,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_4
+      name: Items_4
       rect:
         serializedVersion: 2
         x: 128
@@ -138,7 +133,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_5
+      name: Items_5
       rect:
         serializedVersion: 2
         x: 160
@@ -151,7 +146,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_6
+      name: Items_6
       rect:
         serializedVersion: 2
         x: 192
@@ -164,59 +159,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 480
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: items_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 480
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: items_9
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 480
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: items_10
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 480
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: items_11
+      name: Items_7
       rect:
         serializedVersion: 2
         x: 0
@@ -229,10 +172,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_12
+      name: Items_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 448
         width: 32
         height: 32
@@ -242,20 +185,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_13
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 448
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: items_14
+      name: Items_9
       rect:
         serializedVersion: 2
         x: 0
@@ -268,10 +198,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_15
+      name: Items_10
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 416
         width: 32
         height: 32
@@ -281,10 +211,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_16
+      name: Items_11
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 384
         width: 32
         height: 32
@@ -294,10 +224,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_17
+      name: Items_12
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 352
         width: 32
         height: 32
@@ -307,10 +237,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_18
+      name: Items_13
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 320
         width: 32
         height: 32
@@ -320,10 +250,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: items_19
+      name: Items_14
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 288
         width: 32
         height: 32

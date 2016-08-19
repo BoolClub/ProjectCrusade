@@ -34,6 +34,11 @@ public class Chest : MonoBehaviour {
 	public int Quantity = 1;
 
 	/// <summary>
+	/// The temp.
+	/// </summary>
+	public Item temp;
+
+	/// <summary>
 	/// The sprites for when the chest is opened and closed.
 	/// </summary>
 	public Sprite Opened, Closed;
@@ -53,7 +58,7 @@ public class Chest : MonoBehaviour {
 	{
 		TextBox = new TextBox();
 
-		Item temp = new Item(Type);
+		temp = new Item(Type);
 		temp.Quantity = Quantity;
 		if (Quantity == 1)
 		{

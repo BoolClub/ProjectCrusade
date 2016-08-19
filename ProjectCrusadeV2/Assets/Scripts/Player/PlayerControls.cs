@@ -113,11 +113,11 @@ public class PlayerControls : MonoBehaviour {
 		{
 			PickupItemsOffGround(interactionKey);
 			
-			if (world != null)
+			if (GM != null)
 			{
-				if (world.Npcs.Length > 0)
+				if (GM.Npcs.Length > 0)
 					NPCInteraction();
-				if (world.Chests.Length > 0)
+				if (GM.Chests.Length > 0)
 					CheckInteraction();
 			}
 		}
@@ -164,7 +164,7 @@ public class PlayerControls : MonoBehaviour {
 	/// <returns>The interaction.</returns>
 	void CheckInteraction()
 	{
-		foreach (GameObject chest in world.Chests)
+		foreach (GameObject chest in GM.Chests)
 		{
 			Chest chestComp = chest.GetComponent<Chest>();
 
@@ -200,7 +200,7 @@ public class PlayerControls : MonoBehaviour {
 	/// <returns>The nteraction.</returns>
 	void NPCInteraction()
 	{
-		foreach (GameObject npc in world.Npcs)
+		foreach (GameObject npc in GM.Npcs)
 		{
 			NPC npcComp = npc.GetComponent<NPC>();
 

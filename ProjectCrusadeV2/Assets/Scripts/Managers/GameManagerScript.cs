@@ -37,6 +37,17 @@ public class GameManagerScript : MonoBehaviour {
 	/// </summary>
 	public GameObject FloorItemsHolder;
 
+	/// <summary>
+	/// All of the NPCs in the game world.
+	/// </summary>
+	public GameObject[] Npcs;
+
+	/// <summary>
+	/// The treasure chests that are in the game world.
+	/// </summary>
+	public GameObject[] Chests;
+
+
 
 	// Use this for initialization
 	public void Start () {
@@ -47,6 +58,15 @@ public class GameManagerScript : MonoBehaviour {
 		   && SceneManager.GetActiveScene().buildIndex != 2)
 		{
 			CurrentFloor = SceneManager.GetActiveScene().buildIndex;
+		}
+	}
+
+ 	void Awake()
+	{
+		if (Items.Count < 40)
+		{
+			for (int i = 0; i < 40; i++)
+				Items.Add(new Item(ItemType.EMPTY));
 		}
 	}
 	

@@ -49,12 +49,15 @@ public class Inventory : MonoBehaviour
 		Items = new Item[40];
 		CurrentSlot = 0;
 		for (int i = 0; i < Items.Length; i++)
+		{
 			Items[i] = GameManagerScript.Items[i];
+		}
 		InventoryObject = GameObject.Find("Inventory");
 	}
 
 	void Awake()
 	{
+		InventoryObject = GameObject.Find("Inventory");
 		InventorySlots = GameObject.FindGameObjectsWithTag("InventorySlot");
 		if (Items != null)
 		{
@@ -71,7 +74,7 @@ public class Inventory : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.H))
 		{
-			AddToInventory(new Item((ItemType)(new IntRange(0,17).Random)));
+			AddToInventory(new Item((ItemType)(new IntRange(1,15).Random)));
 		}
 
 		//if (Input.GetKeyDown(KeyCode.I))

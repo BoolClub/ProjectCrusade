@@ -49,7 +49,8 @@ public class BoardCreator : MonoBehaviour
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
 
-	public GameObject ladder;                                 //This is the ladder that will take the player to the next floor.
+	public GameObject ladder;                                 // This is the ladder that will take the player to the next floor.
+	public GameObject chest;								  // The treasure 
 
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
 	private Room[] rooms;                                     // All the rooms that are created for this board.
@@ -61,11 +62,14 @@ public class BoardCreator : MonoBehaviour
 	[HideInInspector]
 	public List<GameObject> AllTiles;                         //All of the tiles
 
+
+
 	private void Start()
 	{
 		GameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		EnemyHolder = GameObject.Find("EnemyHolder");
+		chest = Resources.Load("Chest") as GameObject;
 
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
@@ -83,6 +87,8 @@ public class BoardCreator : MonoBehaviour
 		InstantiateOuterWalls();
 
 		SpawnEnemies();
+
+		SpawnTreasureChests();
 
 		//Don't spawn a ladder on the green level, that will take the player to somewhere else.
 		if (SceneManager.GetActiveScene().buildIndex != 11)
@@ -377,6 +383,31 @@ public class BoardCreator : MonoBehaviour
 		{
 			go.transform.SetParent(EnemyHolder.transform);
 			go.layer = 10;
+		}
+	}
+
+
+	void SpawnTreasureChests()
+	{
+		Chest chestComp = chest.GetComponent<Chest>();
+		Transform parentT = GameObject.Find("TreasureChestHolder").transform;
+
+		for (int i = 0; i < rooms.Length; i++)
+		{
+			if (i % 4 == 0)
+			{
+				chestComp.temp = new Item((ItemType)UnityEngine.Random.Range(1,15), UnityEngine.Random.Range(0, 24));
+				chestComp.Type = chestComp.temp.Type;
+				Instantiate(chest, new Vector3(rooms[i].xPos, rooms[i].yPos, -1), Quaternion.identity);
+			}
+		}
+
+		GameObject[] array = GameObject.FindGameObjectsWithTag("Chest");
+		GameManager.Chests = array;
+
+		foreach (GameObject obj in array)
+		{
+			obj.transform.SetParent(parentT);
 		}
 	}
 		
