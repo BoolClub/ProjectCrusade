@@ -42,8 +42,8 @@ public class FloorItem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TextBox = new TextBox();
-		Item i = new Item(itm);
 		Quantity.Value = Quantity.Random;
+		Item i = new Item(itm);
 		TextBox.addText("Press \"c\" to pick up the " + i.Name);
 		textboxObj = Resources.Load("TextBox") as GameObject;
 	}

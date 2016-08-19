@@ -56,6 +56,7 @@ public class Item {
 	public Item(ItemType type)
 	{
 		Type = type;
+		Quantity = 1;
 		DetermineNameAndStackable();
 	}
 	public Item(ItemType type, int quantity)

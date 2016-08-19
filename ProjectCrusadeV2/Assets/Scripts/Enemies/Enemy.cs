@@ -104,7 +104,6 @@ public class Enemy : MonoBehaviour {
 		// Check if touching player
 			HurtPlayerOnContact();
 
-
 		if (Burned)
 		{
 			ThisRenderer.color = Color.red;
@@ -156,7 +155,7 @@ public class Enemy : MonoBehaviour {
 			willDropItem = true;
 		}
 
-		if (willDropItem)
+		if (willDropItem && ItemDropPrefabs != null && ItemDropPrefabs.Length > 0)
 		{
 			int item = (int)UnityEngine.Random.Range(0, ItemDropPrefabs.Length);
 			Instantiate(ItemDropPrefabs[item], new Vector3(transform.position.x,

@@ -369,7 +369,7 @@ public class BoardCreator : MonoBehaviour
 	{
 		for (int i = 0; i < corridors.Length; i++)
 		{
-			GameObject enemy = GameManager.Enemies[UnityEngine.Random.Range(0,GameManager.Enemies.Length - 1)] as GameObject;
+			GameObject enemy = GameManager.Enemies[UnityEngine.Random.Range(0,GameManager.Enemies.Length)] as GameObject;
 
 			Instantiate(enemy, new Vector3(corridors[i].startXPos, corridors[i].startYPos, -1), Quaternion.identity);
 
