@@ -317,7 +317,6 @@ public class BoardCreator : MonoBehaviour
 		if (prefabs == outerWallTiles)
 		{
 			tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
-			tileInstance.AddComponent<BoxCollider2D>();
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
@@ -351,8 +350,6 @@ public class BoardCreator : MonoBehaviour
 		if (prefabs == wallTiles)
 		{
 			tileInstance = Instantiate(prefabs[index], position, Quaternion.identity) as GameObject;
-
-			tileInstance.AddComponent<BoxCollider2D>();
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
