@@ -28,6 +28,10 @@ public class BoardCreator : MonoBehaviour
 		/// </summary>
 		public GameObject[] Enemies;
 
+		/// <summary>
+		/// A list of the possible items that can be found in treasure chests on this floor. 
+		/// </summary>
+		public ItemType[] PossibleChestSpawns;
 
 	#endregion
 
@@ -396,9 +400,10 @@ public class BoardCreator : MonoBehaviour
 		{
 			if (i % 4 == 0)
 			{
-				chestComp.temp = new Item((ItemType)UnityEngine.Random.Range(1,15), UnityEngine.Random.Range(0, 24));
+				int randomItemChoice = UnityEngine.Random.Range(0, PossibleChestSpawns.Length);
+				chestComp.temp = new Item(PossibleChestSpawns[randomItemChoice], UnityEngine.Random.Range(0, 24));
 				chestComp.Type = chestComp.temp.Type;
-				Instantiate(chest, new Vector3(rooms[i].xPos, rooms[i].yPos, -1), Quaternion.identity);
+				Instantiate(chest, new Vector3(rooms[i].xPos + 5, rooms[i].yPos + 5, -1), Quaternion.identity);
 			}
 		}
 
