@@ -25,6 +25,11 @@ public class Enemy : MonoBehaviour {
 		/// </summary>
 		SpriteRenderer ThisRenderer;
 
+		/// <summary>
+		/// The rigid.
+		/// </summary>
+		Rigidbody2D Rigid;
+
 	#endregion
 
 
@@ -88,6 +93,7 @@ public class Enemy : MonoBehaviour {
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 		ThisRenderer = GetComponent<SpriteRenderer>();
+		Rigid = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -208,6 +214,7 @@ public class Enemy : MonoBehaviour {
 		if (stunTime > 0 && Stunned == true)
 		{
 			ThisRenderer.color = Color.yellow;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 
 		stunTime -= 0.02f;
@@ -217,6 +224,8 @@ public class Enemy : MonoBehaviour {
 			stunTime = 5f;
 			Stunned = false;
 			ThisRenderer.color = Color.white;
+			Rigid.constraints = RigidbodyConstraints2D.None;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
 	}
 }

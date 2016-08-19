@@ -199,6 +199,7 @@ public class Item {
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
+				TheInventory.Find(ItemType.Arrow).Quantity--;
 			}
 		}
 

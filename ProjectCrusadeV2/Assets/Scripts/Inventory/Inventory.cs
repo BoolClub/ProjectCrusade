@@ -150,6 +150,19 @@ public class Inventory : MonoBehaviour
 	}
 
 
+	public Item Find(ItemType type)
+	{
+		foreach (Item itm in Items)
+		{
+			if (itm.Type == type)
+			{
+				return itm;
+			}
+		}
+		return null;
+	}
+
+
 	void MoveCurrentSlot()
 	{
 		if (Input.GetAxis("Mouse ScrollWheel") > 0)
