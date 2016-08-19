@@ -33,9 +33,18 @@ public class FloorItem : MonoBehaviour {
 	GameObject textboxObj;
 
 	/// <summary>
+	/// Is next to the player or not
+	/// </summary>
+	/// [HideInInspector]
+	public bool IsNextToPlayer;
+
+	/// <summary>
 	/// The timer.
 	/// </summary>
+<<<<<<< Updated upstream
 	[HideInInspector]
+=======
+>>>>>>> Stashed changes
 	public float timer = 500f;
 
 
@@ -43,8 +52,13 @@ public class FloorItem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TextBox = new TextBox();
+<<<<<<< Updated upstream
 		Quantity.Value = Quantity.Random;
 		Item i = new Item(Type);
+=======
+		Item i = new Item(itm);
+		Quantity.Value = Quantity.Random;
+>>>>>>> Stashed changes
 		TextBox.addText("Press \"c\" to pick up the " + i.Name);
 		textboxObj = Resources.Load("TextBox") as GameObject;
 	}
@@ -64,6 +78,7 @@ public class FloorItem : MonoBehaviour {
 
 		// Destroy the item after some time.
 		DestroyFloorItem();
+<<<<<<< Updated upstream
 	}
 
 	public void DestroyFloorItem()
@@ -81,14 +96,37 @@ public class FloorItem : MonoBehaviour {
 				}
 			}
 		}
+=======
+>>>>>>> Stashed changes
 	}
+
+	public void DestroyFloorItem()
+	{
+ 		timer -= 0.5f;
+ 		if (timer <= 0)
+ 		{
+ 			Destroy(this.gameObject);
+ 			foreach (GameObject tb in GameObject.FindGameObjectsWithTag("TextBoxClone"))
+ 			{
+ 				if (tb != null && TextBox.isOpen())
+ 				{
+ 					Destroy(tb);
+ 					break;
+ 				}
+ 			}
+ 		}
+}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag.Equals("Player"))
 		{
 			IsNextToPlayer = true;
+<<<<<<< Updated upstream
 			
+=======
+
+>>>>>>> Stashed changes
 			if (TextBox.isOpen() == false)
 			{
 				TextBox.setOpen(true);
