@@ -121,15 +121,23 @@ public class PlayerControls : MonoBehaviour {
 					CheckInteraction();
 			}
 		}
+
 		if (Input.GetKeyDown(primaryUseKey))
 		{
 			if(inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
 				inventory.Items[inventory.CurrentSlot].PrimaryUse();
 		}
+
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
 			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
 				inventory.Items[inventory.CurrentSlot].SecondaryUse();
+		}
+
+		// Removes an item from the inventory.
+		if (Input.GetKeyDown(KeyCode.V))
+		{
+			inventory.Items[inventory.CurrentSlot].Remove();
 		}
 
 		//Open the inventory

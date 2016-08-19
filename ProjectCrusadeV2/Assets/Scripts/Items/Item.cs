@@ -87,6 +87,11 @@ public class Item {
 		}
 	}
 
+	public void Remove()
+	{
+		Type = ItemType.EMPTY;
+		Quantity = 0;
+	}
 
 	public void DetermineNameAndStackable()
 	{
