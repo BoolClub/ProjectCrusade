@@ -47,6 +47,12 @@ public class PlayerControls : MonoBehaviour {
 	public World world;
 
 	/// <summary>
+	/// The text box for the ladder.
+	/// </summary>
+	TextBox ladderTB;
+	bool IsNextToLadder;
+
+	/// <summary>
 	/// The direction that the player is facing.
 	/// </summary>
 	public Direction Direction;
@@ -72,6 +78,8 @@ public class PlayerControls : MonoBehaviour {
 		gameObject.layer = 10;
 		Rigid = GetComponent<Rigidbody2D>();
 		SpriteRender = GetComponent<SpriteRenderer>();
+		ladderTB = new TextBox();
+		ladderTB.addText("Press \"c\" to use the ladder");
 		textbox = Resources.Load("TextBox") as GameObject;
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
@@ -82,13 +90,19 @@ public class PlayerControls : MonoBehaviour {
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
+
 		//Update the player's sprite based on the button presse.
 		UpdatePlayerDirections(x, y);
+
 
 		//Only move the player when the inventroy is not open.
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
 
+		//Draw the appropriate line of text
+		textbox.GetComponentInChildren<TextMesh>().text = ladderTB.Text[ladderTB.CurrentSlide];
+		textbox.GetComponentInChildren<SmartText>().OnTextChanged();
+			
 		//Check for other types of player input
 		CheckInput();
 	}
@@ -97,8 +111,18 @@ public class PlayerControls : MonoBehaviour {
 	{
 		if (other.gameObject.name == "Ladder(Clone)")
 		{
-			GM.CurrentFloor++;
-			SceneManager.LoadScene(GM.Underground[GM.CurrentFloor - 3]);
+			IsNextToLadder = true;
+			Instantiate(textbox, new Vector3(transform.position.x + 0.75f, transform.position.y + 1.4f, -3), Quaternion.identity);
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D other)
+	{
+		if (other.gameObject.name == "Ladder(Clone)")
+		{
+			IsNextToLadder = false;
+			ladderTB.setOpen(false);
+			Object.Destroy(GameObject.Find("TextBox(Clone)"));
 		}
 	}
 
@@ -112,6 +136,11 @@ public class PlayerControls : MonoBehaviour {
 		if (Input.GetKeyDown(interactionKey))
 		{
 			PickupItemsOffGround(interactionKey);
+
+			if(IsNextToLadder) {
+				GM.CurrentFloor++;
+				SceneManager.LoadScene(GM.Underground[GM.CurrentFloor - 3]);
+			}
 			
 			if (GM != null)
 			{
