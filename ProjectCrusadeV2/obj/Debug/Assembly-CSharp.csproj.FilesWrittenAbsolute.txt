@@ -16,3 +16,4 @@
 /Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/adeolauthman/Documents/AdeolasCodingStuff/CSharp_Projects/ProjectCrusadeV2/Temp/bin/Debug/pseudoSinCos.dll
