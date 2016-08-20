@@ -30,6 +30,11 @@ public class Enemy : MonoBehaviour {
 		/// </summary>
 		Rigidbody2D Rigid;
 
+		/// <summary>
+		/// The procedural.
+		/// </summary>
+		BoardCreator Procedural;
+
 	#endregion
 
 
@@ -94,6 +99,7 @@ public class Enemy : MonoBehaviour {
 		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 		ThisRenderer = GetComponent<SpriteRenderer>();
 		Rigid = GetComponent<Rigidbody2D>();
+		Procedural = GameObject.Find("GameManager").GetComponent<BoardCreator>();
 	}
 	
 	// Update is called once per frame
@@ -164,6 +170,7 @@ public class Enemy : MonoBehaviour {
 		}
 
 		Destroy(this.gameObject);
+		Procedural.Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 	}
 
 	/// <summary>

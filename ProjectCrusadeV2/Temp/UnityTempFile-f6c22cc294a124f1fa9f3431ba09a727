@@ -107,6 +107,7 @@
 'Assets/Scripts/Door.cs'
 'Assets/Scripts/Enemies/Enemy.cs'
 'Assets/Scripts/Enemies/EnemyAI.cs'
+'Assets/Scripts/Enemies/EnemySpawner.cs'
 'Assets/Scripts/Healthbar.cs'
 'Assets/Scripts/Inventory/Inventory.cs'
 'Assets/Scripts/Inventory/InventorySlot.cs'

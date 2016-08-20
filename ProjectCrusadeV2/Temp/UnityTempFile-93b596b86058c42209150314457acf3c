@@ -6,6 +6,7 @@
 -r:'/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll'
 -r:'/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll'
 -r:'/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll'
+-r:'Assets/2DLightAsset/Scripts/Helpers/pseudoSinCos.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll'
 -r:'/Applications/Unity/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Common.dll'
 -r:'/Applications/Unity/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll'
@@ -90,6 +91,11 @@
 -define:UNITY_EDITOR_OSX
 -define:UNITY_TEAM_LICENSE
 -define:CROSS_PLATFORM_INPUT
+'Assets/2DLightAsset/Examples/RigidBodyInterpolationSolution/FollowLight2d.cs'
+'Assets/2DLightAsset/Scripts/2DLight/DynamicLight.cs'
+'Assets/2DLightAsset/Scripts/Helpers/interface_touch.cs'
+'Assets/2DLightAsset/Scripts/Helpers/interface_touch2.cs'
+'Assets/2DLightAsset/Scripts/rotate.cs'
 'Assets/Scripts/ArrayConversion.cs'
 'Assets/Scripts/CrossPlatformInput/CrossPlatformInputInitialize.cs'
 'Assets/Scripts/CrossPlatformInput/Scripts/AxisTouchButton.cs'

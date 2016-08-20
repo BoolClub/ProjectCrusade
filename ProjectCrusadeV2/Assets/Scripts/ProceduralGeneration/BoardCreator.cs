@@ -387,6 +387,26 @@ public class BoardCreator : MonoBehaviour
 		}
 	}
 
+	public void SpawnSingleEnemy()
+	{
+		// Create a random enemy from the list of possible spawns.
+		GameObject enemy = GameManager.Enemies[UnityEngine.Random.Range(0, GameManager.Enemies.Length)] as GameObject;
+
+		// Find a random corridor to place the enemy in.
+		Corridor randomCorridor = corridors[UnityEngine.Random.Range(0,corridors.Length)];
+
+		Instantiate(enemy, new Vector3(randomCorridor.startXPos, randomCorridor.startYPos, -1), Quaternion.identity);
+
+		enemy.tag = "Enemy";
+
+		Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+		foreach (GameObject go in Enemies)
+		{
+			go.transform.SetParent(EnemyHolder.transform);
+			go.layer = 10;
+		}
+	}
 
 	void SpawnTreasureChests()
 	{
