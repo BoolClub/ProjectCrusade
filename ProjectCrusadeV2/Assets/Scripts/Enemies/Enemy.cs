@@ -108,7 +108,19 @@ public class Enemy : MonoBehaviour {
 		Damage.Value = Damage.Random;
 
 		// Check if touching player
+		if(!Player.inventory.Open)
 			HurtPlayerOnContact();
+
+
+		if (Player.inventory.Open)
+		{
+			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+		}
+		else {
+			Rigid.constraints = RigidbodyConstraints2D.None;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+
 
 		if (Burned)
 		{

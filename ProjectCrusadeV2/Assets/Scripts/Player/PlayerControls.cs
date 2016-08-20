@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour {
 		/// <summary>
 		/// The inventory.
 		/// </summary>
-		Inventory inventory;
+		public Inventory inventory;
 
 		/// <summary>
 		/// The textbox.
@@ -96,13 +96,24 @@ public class PlayerControls : MonoBehaviour {
 
 
 		//Only move the player when the inventroy is not open.
+		if(!inventory.Open)
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
+
+		// Make sure to freeze the position of the player when paused
+		if (inventory.Open) {
+			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+		}
+		else {
+			Rigid.constraints = RigidbodyConstraints2D.None;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
 
 		//Draw the appropriate line of text
 		textbox.GetComponentInChildren<TextMesh>().text = ladderTB.Text[ladderTB.CurrentSlide];
 		textbox.GetComponentInChildren<SmartText>().OnTextChanged();
 			
+
 		//Check for other types of player input
 		CheckInput();
 	}
@@ -153,14 +164,20 @@ public class PlayerControls : MonoBehaviour {
 
 		if (Input.GetKeyDown(primaryUseKey))
 		{
-			if(inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
-				inventory.Items[inventory.CurrentSlot].PrimaryUse();
+			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
+			{
+				if(!inventory.Open || inventory.Items[inventory.CurrentSlot].InventoryUseEnabled == true)
+					inventory.Items[inventory.CurrentSlot].PrimaryUse();
+			}
 		}
 
 		if (Input.GetKeyDown(secondaryUseKey))
 		{
 			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
-				inventory.Items[inventory.CurrentSlot].SecondaryUse();
+			{
+				if (!inventory.Open || inventory.Items[inventory.CurrentSlot].InventoryUseEnabled == true)
+					inventory.Items[inventory.CurrentSlot].SecondaryUse();
+			}
 		}
 
 		// Removes an item from the inventory.

@@ -80,6 +80,7 @@ public class EnemyAI : MonoBehaviour {
 
 	void Update()
 	{
+		if(!Player.inventory.Open)
 			MoveEnemy();
 	}
 

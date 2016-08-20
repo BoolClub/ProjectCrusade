@@ -51,18 +51,23 @@ public class Item {
 	/// </summary>
 	public string Name;
 
+	/// <summary>
+	/// Whether or not the item can be used even if the inventory is open.
+	/// </summary>
+	public bool InventoryUseEnabled;
+
 
 
 	public Item(ItemType type)
 	{
 		Type = type;
 		Quantity = 1;
-		DetermineNameAndStackable();
+		SetupItem();
 	}
 	public Item(ItemType type, int quantity)
 	{
 		Type = type;
-		DetermineNameAndStackable();
+		SetupItem();
 		if (Stackable == true)
 		{
 			Quantity = quantity;
@@ -85,6 +90,7 @@ public class Item {
 			Stackable = itm.Stackable;
 			Quantity = itm.Quantity;
 			Name = itm.Name;
+			InventoryUseEnabled = itm.InventoryUseEnabled;
 		}
 	}
 
@@ -94,82 +100,97 @@ public class Item {
 		Quantity = 0;
 	}
 
-	public void DetermineNameAndStackable()
+	public void SetupItem()
 	{
 		if (Type == ItemType.Apple)
 		{
 			Name = "Apple";
 			Stackable = true;
+			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.Arrow)
 		{
 			Name = "Arrow";
 			Stackable = true;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.BowAndArrow)
 		{
 			Name = "Bow";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Bread)
 		{
 			Name = "Bread";
 			Stackable = true;
+			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.CurvedSword)
 		{
 			Name = "Curved Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.ElectricSword)
 		{
 			Name = "Electric Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.FlamingSword)
 		{
 			Name = "Flaming Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.HealingSword)
 		{
 			Name = "Healing Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.IronSword)
 		{
 			Name = "Iron Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.LongSword)
 		{
 			Name = "Long Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Mace)
 		{
 			Name = "Mace";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.MagicWand)
 		{
 			Name = "Magic Wand";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.SteelSword)
 		{
 			Name = "Steel Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Water)
 		{
 			Name = "Water";
 			Stackable = true;
+			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.WoodenSword)
 		{
 			Name = "Wooden Sword";
 			Stackable = false;
+			InventoryUseEnabled = false;
 		}
 	}
 
