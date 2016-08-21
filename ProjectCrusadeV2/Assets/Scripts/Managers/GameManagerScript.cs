@@ -47,6 +47,16 @@ public class GameManagerScript : MonoBehaviour {
 	/// </summary>
 	public GameObject[] Chests;
 
+	/// <summary>
+	/// Whether or not the game is paused.
+	/// </summary>
+	public bool Paused;
+
+	/// <summary>
+	/// The pause object
+	/// </summary>
+	public GameObject PauseOverlay;
+
 
 
 	// Use this for initialization
@@ -75,6 +85,22 @@ public class GameManagerScript : MonoBehaviour {
 		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorItem"))
 		{
 			obj.transform.SetParent(FloorItemsHolder.transform);
+		}
+
+
+		PauseOverlay.transform.position = new Vector3(GameObject.FindWithTag("Player").transform.position.x,
+		                                              GameObject.FindWithTag("Player").transform.position.y,
+													  PauseOverlay.transform.position.z);
+
+
+		if (Paused == true)
+		{
+			PauseOverlay.SetActive(true);
+			PauseOverlay.transform.GetChild(0).gameObject.SetActive(true);
+		}
+		else {
+			PauseOverlay.SetActive(false);
+			PauseOverlay.transform.GetChild(0).gameObject.SetActive(false);
 		}
 	}
 

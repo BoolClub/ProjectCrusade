@@ -37,7 +37,7 @@ public class PlayerControls : MonoBehaviour {
 		/// <summary>
 		/// The gm.
 		/// </summary>
-		GameManagerScript GM;
+		public GameManagerScript GM;
 
 	#endregion
 
@@ -96,12 +96,12 @@ public class PlayerControls : MonoBehaviour {
 
 
 		//Only move the player when the inventroy is not open.
-		if(!inventory.Open)
+		if(!GM.Paused)
 			Rigid.MovePosition(new Vector2(this.transform.position.x + x, this.transform.position.y + y));
 
 
 		// Make sure to freeze the position of the player when paused
-		if (inventory.Open) {
+		if (GM.Paused) {
 			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 		else {
@@ -186,10 +186,16 @@ public class PlayerControls : MonoBehaviour {
 			inventory.Items[inventory.CurrentSlot].Remove();
 		}
 
-		//Open the inventory
+		// Open the inventory
 		if (Input.GetKeyDown(KeyCode.I))
 		{
 			inventory.Open = !inventory.Open;
+		}
+
+		// Pause the game
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			GM.Paused = !GM.Paused;
 		}
 	}
 

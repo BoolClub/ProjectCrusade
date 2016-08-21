@@ -423,7 +423,7 @@ public class Item {
 			{
 				damage = (float)Math.Round(new FloatRange(0, Damage).Random, 2);
 
-				InstantiateDamageLabel(enemy, damage);
+				//InstantiateDamageLabel(enemy, damage);
 
 				// Decrease enemy health and create damage label.
 				enemy.GetComponent<Enemy>().DecreaseHealth(damage);
@@ -440,7 +440,7 @@ public class Item {
 			{
 				float damage = (float)Math.Round(new FloatRange(0, Damage).Random, 2);
 
-				InstantiateDamageLabel(enemy, damage);
+				//InstantiateDamageLabel(enemy, damage);
 
 				// Decrease enemy health and create damage label.
 				enm = enemy.GetComponent<Enemy>();

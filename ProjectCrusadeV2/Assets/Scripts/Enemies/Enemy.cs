@@ -108,11 +108,11 @@ public class Enemy : MonoBehaviour {
 		Damage.Value = Damage.Random;
 
 		// Check if touching player
-		if(!Player.inventory.Open)
+		if(!Player.GM.Paused)
 			HurtPlayerOnContact();
 
 
-		if (Player.inventory.Open)
+		if (Player.GM.Paused)
 		{
 			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
@@ -145,6 +145,12 @@ public class Enemy : MonoBehaviour {
 	/// <param name="damage">Damage.</param>
 	public void DecreaseHealth(float damage)
 	{
+		GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
+		damagelabel.GetComponent<DamageLabel>().Text = "" + damage;
+		MonoBehaviour.Instantiate(damagelabel.gameObject,
+		                          new Vector3(this.transform.position.x, this.transform.position.y, -2),
+									Quaternion.identity);
+		
 		float criticalHitRate = new FloatRange(0, 100).Random;
 		bool criticalHit = (!(criticalHitRate % 2).Equals(0) && criticalHitRate > 30 && criticalHitRate < 50) ? true : false;
 
