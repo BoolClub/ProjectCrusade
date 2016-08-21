@@ -51,11 +51,6 @@ public class Item {
 	/// </summary>
 	public string Name;
 
-	/// <summary>
-	/// Whether or not the item can be used even if the inventory is open.
-	/// </summary>
-	public bool InventoryUseEnabled;
-
 
 
 	public Item(ItemType type)
@@ -90,7 +85,6 @@ public class Item {
 			Stackable = itm.Stackable;
 			Quantity = itm.Quantity;
 			Name = itm.Name;
-			InventoryUseEnabled = itm.InventoryUseEnabled;
 		}
 	}
 
@@ -106,91 +100,76 @@ public class Item {
 		{
 			Name = "Apple";
 			Stackable = true;
-			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.Arrow)
 		{
 			Name = "Arrow";
 			Stackable = true;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.BowAndArrow)
 		{
 			Name = "Bow";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Bread)
 		{
 			Name = "Bread";
 			Stackable = true;
-			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.CurvedSword)
 		{
 			Name = "Curved Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.ElectricSword)
 		{
 			Name = "Electric Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.FlamingSword)
 		{
 			Name = "Flaming Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.HealingSword)
 		{
 			Name = "Healing Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.IronSword)
 		{
 			Name = "Iron Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.LongSword)
 		{
 			Name = "Long Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Mace)
 		{
 			Name = "Mace";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.MagicWand)
 		{
 			Name = "Magic Wand";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.SteelSword)
 		{
 			Name = "Steel Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 		if (Type == ItemType.Water)
 		{
 			Name = "Water";
 			Stackable = true;
-			InventoryUseEnabled = true;
 		}
 		if (Type == ItemType.WoodenSword)
 		{
 			Name = "Wooden Sword";
 			Stackable = false;
-			InventoryUseEnabled = false;
 		}
 	}
 
@@ -203,9 +182,9 @@ public class Item {
 		if (Type == ItemType.Apple)
 		{
 			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (HPBar.Health < 100f)
+			if (Healthbar.Health < 100f)
 			{
-				HPBar.Health += 7f;
+				Healthbar.Health += 7f;
 			}
 			Quantity--;
 		}
@@ -233,9 +212,9 @@ public class Item {
 		if (Type == ItemType.Bread)
 		{
 			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (HPBar.Health < 100f)
+			if (Healthbar.Health < 100f)
 			{
-				HPBar.Health += 15f;
+				Healthbar.Health += 15f;
 			}
 			Quantity--;
 		}
@@ -311,9 +290,9 @@ public class Item {
 		if (Type == ItemType.Water)
 		{
 			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (HPBar.Health < 100f)
+			if (Healthbar.Health < 100f)
 			{
-				HPBar.Health += 5f;
+				Healthbar.Health += 5f;
 			}
 			Quantity--;
 		}
@@ -387,7 +366,7 @@ public class Item {
 			if (StoredHP > 0)
 			{
 				HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-				HPBar.Health += StoredHP;
+				Healthbar.Health += StoredHP;
 				StoredHP = 0;
 			}
 			else {

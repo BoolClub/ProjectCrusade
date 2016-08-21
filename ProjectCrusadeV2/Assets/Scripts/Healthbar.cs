@@ -8,7 +8,7 @@ public class Healthbar : MonoBehaviour {
 	/// The current amount of health
 	/// </summary>
 	[Range(0,100)]
-	public float Health = 100f;
+	public static float Health = 100f;
 
 	/// <summary>
 	/// The hp image.

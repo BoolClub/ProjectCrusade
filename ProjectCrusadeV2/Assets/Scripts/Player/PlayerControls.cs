@@ -166,8 +166,7 @@ public class PlayerControls : MonoBehaviour {
 		{
 			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
 			{
-				if(!inventory.Open || inventory.Items[inventory.CurrentSlot].InventoryUseEnabled == true)
-					inventory.Items[inventory.CurrentSlot].PrimaryUse();
+				inventory.Items[inventory.CurrentSlot].PrimaryUse();
 			}
 		}
 
@@ -175,8 +174,7 @@ public class PlayerControls : MonoBehaviour {
 		{
 			if (inventory.Items[inventory.CurrentSlot].Type != ItemType.EMPTY)
 			{
-				if (!inventory.Open || inventory.Items[inventory.CurrentSlot].InventoryUseEnabled == true)
-					inventory.Items[inventory.CurrentSlot].SecondaryUse();
+				inventory.Items[inventory.CurrentSlot].SecondaryUse();
 			}
 		}
 
