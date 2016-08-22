@@ -94,7 +94,6 @@ public class PlayerControls : MonoBehaviour {
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
 		float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
-
 		//Update the player's sprite based on the button presse.
 		UpdatePlayerDirections(x, y);
 

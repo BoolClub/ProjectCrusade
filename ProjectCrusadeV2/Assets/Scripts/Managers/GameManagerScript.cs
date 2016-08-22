@@ -6,6 +6,11 @@ using System.IO;
 public class GameManagerScript : MonoBehaviour {
 
 	/// <summary>
+	/// The transitions.
+	/// </summary>
+	public TransitionManager Transitions;
+
+	/// <summary>
 	/// The item sprites.
 	/// </summary>
 	public static List<Item> Items = new List<Item>();
@@ -61,6 +66,9 @@ public class GameManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	public void Start () {
+		Transitions.Type = FadeType.Fade_In;
+		Transitions.PlayTransition = true;
+
 		for (int i = 0; i < 40; i++)
 			Items.Add(new Item(ItemType.EMPTY));
 
@@ -91,7 +99,6 @@ public class GameManagerScript : MonoBehaviour {
 		PauseOverlay.transform.position = new Vector3(GameObject.FindWithTag("Player").transform.position.x,
 		                                              GameObject.FindWithTag("Player").transform.position.y,
 													  PauseOverlay.transform.position.z);
-
 
 		if (Paused == true)
 		{
