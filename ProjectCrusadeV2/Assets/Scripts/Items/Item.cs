@@ -17,6 +17,9 @@ public class Item {
 	public int FlameSwordCharge = 5;
 	public float chargeTimeElectricSword = 700f;
 
+	public delegate void WeaponExtras(ItemType itemType, Enemy enem);
+	public WeaponExtras PerformWeaponExtra;
+
 	#region References For Simplicity
 
 		public Healthbar HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
@@ -96,6 +99,8 @@ public class Item {
 
 	public void SetupItem()
 	{
+		PerformWeaponExtra = new WeaponExtras(CalculateWeaponExtras);
+
 		if (Type == ItemType.Apple)
 		{
 			Name = "Apple";
@@ -181,11 +186,7 @@ public class Item {
 	{
 		if (Type == ItemType.Apple)
 		{
-			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (Healthbar.Health < 100f)
-			{
-				Healthbar.Health += 7f;
-			}
+			Healthbar.AddHP(7f);
 			Quantity--;
 		}
 
@@ -211,69 +212,44 @@ public class Item {
 
 		if (Type == ItemType.Bread)
 		{
-			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (Healthbar.Health < 100f)
-			{
-				Healthbar.Health += 15f;
-			}
+			Healthbar.AddHP(15f);
 			Quantity--;
 		}
 
 		if (Type == ItemType.CurvedSword)
 		{
-			HurtEnemy(CURVED_SWORD_DAMAGE);
+			HurtEnemy(CURVED_SWORD_DAMAGE, null);
 		}
 
 		if (Type == ItemType.ElectricSword)
 		{
-			float number = new FloatRange(0, 100).Random;
-			bool willStunEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
-
-			// Chanec of stunning
-			if (willStunEnemy == true)
-			{
-				Enemy enem = HurtEnemy(ELECTRIC_SWORD_DAMAGE, false, true);
-				if (enem != null)
-				{
-					enem.stunTime = 5f;
-				}
-			}
-			else {
-				HurtEnemy(ELECTRIC_SWORD_DAMAGE, false, false);
-			}
+			HurtEnemy(ELECTRIC_SWORD_DAMAGE, PerformWeaponExtra);
 		}
 
 		if (Type == ItemType.FlamingSword)
 		{
-			float number = new FloatRange(0, 100).Random;
-			bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
-
-			// Chance of burning
-			if (willBurnEnemy == true)
-				HurtEnemy(FLAMING_SWORD_DAMAGE, true, false);
-			else
-				HurtEnemy(FLAMING_SWORD_DAMAGE, false, false);
+			HurtEnemy(FLAMING_SWORD_DAMAGE, PerformWeaponExtra);
 		}
 
 		if (Type == ItemType.HealingSword)
 		{
 			//Store one fourth of the damage you do
-			StoredHP += HurtEnemy(HEALING_SWORD_DAMAGE) / 4;
+			StoredHP += HurtEnemy(HEALING_SWORD_DAMAGE, null) / 4;
 		}
 
 		if (Type == ItemType.IronSword)
 		{
-			HurtEnemy(IRON_SWORD_DAMAGE);
+			HurtEnemy(IRON_SWORD_DAMAGE, null);
 		}
 
 		if (Type == ItemType.LongSword)
 		{
-			HurtEnemy(LONG_SWORD_DAMAGE);
+			HurtEnemy(LONG_SWORD_DAMAGE, null);
 		}
 
 		if (Type == ItemType.Mace)
 		{
-			HurtEnemy(MACE_DAMAGE);
+			HurtEnemy(MACE_DAMAGE, null);
 		}
 
 		if (Type == ItemType.MagicWand)
@@ -284,22 +260,18 @@ public class Item {
 
 		if (Type == ItemType.SteelSword)
 		{
-			HurtEnemy(STEEL_SWORD_DAMAGE);
+			HurtEnemy(STEEL_SWORD_DAMAGE, null);
 		}
 
 		if (Type == ItemType.Water)
 		{
-			HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
-			if (Healthbar.Health < 100f)
-			{
-				Healthbar.Health += 5f;
-			}
+			Healthbar.AddHP(5f);
 			Quantity--;
 		}
 
 		if (Type == ItemType.WoodenSword)
 		{
-			HurtEnemy(WOODEN_SWORD_DAMAGE);
+			HurtEnemy(WOODEN_SWORD_DAMAGE, null);
 		}
 	}
 
@@ -339,15 +311,7 @@ public class Item {
 		{
 			if (FlameSwordCharge > 0)
 			{
-				float number = new FloatRange(0, 100).Random;
-				bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
-
-				// Chance of burning
-				if (willBurnEnemy == true)
-					HurtEnemy(FLAMING_SWORD_DAMAGE, true, false);
-				else
-					HurtEnemy(FLAMING_SWORD_DAMAGE, false, false);
-				
+				HurtEnemy(FLAMING_SWORD_DAMAGE, PerformWeaponExtra);
 
 				//Shoot fire projectile
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
@@ -393,7 +357,7 @@ public class Item {
 
 
 
-	float HurtEnemy(float Damage)
+	float HurtEnemy(float Damage, WeaponExtras extra)
 	{
 		float damage = 0;
 		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -402,7 +366,11 @@ public class Item {
 			{
 				damage = (float)Math.Round(new FloatRange(0, Damage).Random, 2);
 
-				//InstantiateDamageLabel(enemy, damage);
+				// Carry out the extra function of the item if it has one.
+				if (extra != null)
+				{
+					extra(this.Type, enemy.GetComponent<Enemy>());
+				}
 
 				// Decrease enemy health and create damage label.
 				enemy.GetComponent<Enemy>().DecreaseHealth(damage);
@@ -410,33 +378,55 @@ public class Item {
 		}
 		return damage;
 	}
-	Enemy HurtEnemy(float Damage, bool Burn, bool Stun)
+   	Enemy GetEnemy()
 	{
 		Enemy enm = null;
 		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
 		{
 			if (enemy.GetComponent<Enemy>().IsNextToPlayer)
 			{
-				float damage = (float)Math.Round(new FloatRange(0, Damage).Random, 2);
-
-				//InstantiateDamageLabel(enemy, damage);
-
-				// Decrease enemy health and create damage label.
-				enm = enemy.GetComponent<Enemy>();
-				enm.DecreaseHealth(damage);
-
-				if (Burn == true)
-				{
-					enm.Burned = true;
-				}
-				if (Stun == true)
-				{
-					enm.Stunned = true;
-				}
+						enm = enemy.GetComponent<Enemy>();
 			}
 		}
 		return enm;
 	}
+
+
+
+	private void CalculateWeaponExtras(ItemType itemType, Enemy enem)
+	{
+		if (itemType == ItemType.ElectricSword)
+		{
+			// Calculate the added effect of stunning the enemy
+			float number = new FloatRange(0, 100).Random;
+			bool willStunEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
+			// Chanec of stunning
+			if (willStunEnemy == true)
+			{
+				if (enem != null)
+				{
+					enem.stunTime = 5f;
+				}
+			}
+		}
+
+		if (itemType == ItemType.FlamingSword)
+		{
+			// Chance of burning the nemey
+			float number = new FloatRange(0, 100).Random;
+			bool willBurnEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
+			if (willBurnEnemy == true)
+			{
+				if (enem != null)
+				{
+					enem.Burned = true;
+				}
+			}
+		}
+	}
+
 
 	public void InstantiateDamageLabel(GameObject onTopOff, float damage)
 	{

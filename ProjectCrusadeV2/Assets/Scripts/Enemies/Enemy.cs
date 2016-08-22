@@ -16,11 +16,6 @@ public class Enemy : MonoBehaviour {
 		PlayerControls Player;
 
 		/// <summary>
-		/// The health bar.
-		/// </summary>
-		Healthbar TheHealthBar;
-
-		/// <summary>
 		/// The this renderer.
 		/// </summary>
 		SpriteRenderer ThisRenderer;
@@ -96,7 +91,6 @@ public class Enemy : MonoBehaviour {
 		Health.Value = Health.Random;
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-		TheHealthBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 		ThisRenderer = GetComponent<SpriteRenderer>();
 		Rigid = GetComponent<Rigidbody2D>();
 		Procedural = GameObject.Find("GameManager").GetComponent<BoardCreator>();
@@ -205,7 +199,7 @@ public class Enemy : MonoBehaviour {
 
 			if (damageDelay <= 0)
 			{
-				TheHealthBar.DecreaseHP(Damage.Value);
+				Healthbar.DecreaseHP(Damage.Value);
 				damageDelay = 40f;
 			}
 		}

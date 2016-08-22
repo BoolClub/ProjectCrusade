@@ -46,8 +46,24 @@ public class Healthbar : MonoBehaviour {
 	/// </summary>
 	/// <returns>The hp.</returns>
 	/// <param name="amount">Amount.</param>
-	public void DecreaseHP(float amount)
+	public static void DecreaseHP(float amount)
 	{
 		Health -= amount;
+	}
+
+	/// <summary>
+	/// Adds to the hp.
+	/// </summary>
+	/// <returns>The hp.</returns>
+	/// <param name="amount">Amount.</param>
+	public static void AddHP(float amount)
+	{
+		if (Health + amount <= 100)
+		{
+			Health += amount;
+		}
+		else {
+			Health = 100;
+		}
 	}
 }

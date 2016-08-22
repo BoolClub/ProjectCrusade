@@ -70,15 +70,14 @@ public class FloorItem : MonoBehaviour {
  		timer -= 0.5f;
  		if (timer <= 0)
  		{
- 			Destroy(this.gameObject);
  			foreach (GameObject tb in GameObject.FindGameObjectsWithTag("TextBoxClone"))
  			{
  				if (tb != null && TextBox.isOpen())
  				{
  					Destroy(tb);
- 					break;
  				}
  			}
+			Destroy(this.gameObject);
  		}
 }
 
@@ -106,8 +105,10 @@ public class FloorItem : MonoBehaviour {
 
 			if (TextBox.isOpen()) {
 				TextBox.setOpen(false);
-				Object.Destroy(GameObject.Find("TextBox(Clone)"));
 			}
+
+			foreach (GameObject tb in GameObject.FindGameObjectsWithTag("TextBoxClone"))
+				Destroy(tb);
 		}
 	}
 
