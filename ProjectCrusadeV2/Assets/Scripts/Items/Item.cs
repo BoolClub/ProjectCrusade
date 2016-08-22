@@ -195,6 +195,7 @@ public class Item {
 			if (TheInventory.Contains(ItemType.BowAndArrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -205,6 +206,7 @@ public class Item {
 			if (TheInventory.Contains(ItemType.Arrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				TheInventory.Find(ItemType.Arrow).Quantity--;
 			}
@@ -255,6 +257,7 @@ public class Item {
 		if (Type == ItemType.MagicWand)
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
 			MonoBehaviour.Instantiate(magicbolt, Player.transform.position, Quaternion.identity);
 		}
 
@@ -346,6 +349,7 @@ public class Item {
 		if (Type == ItemType.MagicWand) 
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+			magicbolt2.GetComponent<Projectile>().Launcher = Player.gameObject;
 			MonoBehaviour.Instantiate(magicbolt2, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
@@ -385,7 +389,7 @@ public class Item {
 		{
 			if (enemy.GetComponent<Enemy>().IsNextToPlayer)
 			{
-						enm = enemy.GetComponent<Enemy>();
+				enm = enemy.GetComponent<Enemy>();
 			}
 		}
 		return enm;

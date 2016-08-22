@@ -296,7 +296,7 @@ public class PlayerControls : MonoBehaviour {
 		Projectile[] array = FindObjectsOfType<Projectile>();
 		foreach (Projectile proj in array)
 		{
-			proj.GetComponent<Projectile>().GetDirectionFromPlayer();
+			proj.GetComponent<Projectile>().GetDirectionFromLauncher();
 		}
 	}
 

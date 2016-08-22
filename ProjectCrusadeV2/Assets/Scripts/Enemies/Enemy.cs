@@ -106,13 +106,16 @@ public class Enemy : MonoBehaviour {
 			HurtPlayerOnContact();
 
 
-		if (Player.GM.Paused)
+		if (Rigid != null)
 		{
-			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
-		}
-		else {
-			Rigid.constraints = RigidbodyConstraints2D.None;
-			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+			if (Player.GM.Paused)
+			{
+				Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+			}
+			else {
+				Rigid.constraints = RigidbodyConstraints2D.None;
+				Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+			}
 		}
 
 

@@ -8,6 +8,11 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
 
 	/// <summary>
+	/// The game object that is launching the projectile.
+	/// </summary>
+	public GameObject Launcher;
+
+	/// <summary>
 	/// The direction.
 	/// </summary>
 	public Direction direction;
@@ -24,9 +29,8 @@ public class Projectile : MonoBehaviour {
 
 
 
-	// Use this for initialization
 	void Start () {
-		GetDirectionFromPlayer();
+		GetDirectionFromLauncher();
 		Damage.Value = (float)Math.Round(Damage.Random, 2);
 	}
 
@@ -34,9 +38,17 @@ public class Projectile : MonoBehaviour {
 	/// Makes sure the projectile is facing in the same direction as the player.
 	/// </summary>
 	/// <returns>The direction from player.</returns>
-	public void GetDirectionFromPlayer()
+	public void GetDirectionFromLauncher()
 	{
-		direction = GameObject.FindWithTag("Player").GetComponent<PlayerControls>().Direction;
+		if (Launcher.GetComponent<PlayerControls>() != null)
+		{
+			direction = Launcher.GetComponent<PlayerControls>().Direction;
+		}
+		else if (Launcher.GetComponent<GoodNPCBoss>() != null)
+		{
+			direction = Launcher.GetComponent<GoodNPCBoss>().Direction;
+		}
+
 
 		if (direction == Direction.North)
 			transform.Rotate(new Vector3(0,0,90));
@@ -71,19 +83,40 @@ public class Projectile : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-		if (other.tag.Equals("Enemy") && other is BoxCollider2D)
+		// Launched by player
+		if (!Launcher.tag.Equals("Enemy"))
 		{
-			// Do damage to the enemy
-			other.GetComponent<Enemy>().Health.Value -= Damage.Value;
+			if (other.tag.Equals("Enemy") && other is BoxCollider2D)
+			{
+				// Do damage to the enemy
+				other.GetComponent<Enemy>().Health.Value -= Damage.Value;
 
-			// Create a damage label object to display how much damage was done to the enemy.
-			GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
-			damagelabel.GetComponent<DamageLabel>().Text = "" + Damage.Value;
-			Instantiate(damagelabel,
-			            new Vector3(other.transform.position.x, other.transform.position.y, -2), 
-			            Quaternion.identity);
+				// Create a damage label object to display how much damage was done to the enemy.
+				GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
+				damagelabel.GetComponent<DamageLabel>().Text = "" + Damage.Value;
+				Instantiate(damagelabel,
+							new Vector3(other.transform.position.x, other.transform.position.y, -2),
+							Quaternion.identity);
 
-			Destroy(this.gameObject);
+				Destroy(this.gameObject);
+			}
+		}
+		// Launched by enemy or boss
+		else if(Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
+			if (other.tag.Equals("Player") && other is BoxCollider2D)
+			{
+				// Do damage to the enemy
+				Healthbar.DecreaseHP(Damage.Value);
+
+				// Create a damage label object to display how much damage was done to the enemy.
+				GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
+				damagelabel.GetComponent<DamageLabel>().Text = "" + Damage.Value;
+				Instantiate(damagelabel,
+							new Vector3(other.transform.position.x, other.transform.position.y, -2),
+							Quaternion.identity);
+
+				Destroy(this.gameObject);
+			}
 		}
 	}
 }
