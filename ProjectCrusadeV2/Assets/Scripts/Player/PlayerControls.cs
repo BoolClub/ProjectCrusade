@@ -28,6 +28,8 @@ public class PlayerControls : MonoBehaviour {
 		/// The textbox.
 		/// </summary>
 		public GameObject textbox;
+		TextMesh tbTextMesh;
+		SmartText smartText;
 
 		/// <summary>
 		/// My box collider.
@@ -81,6 +83,8 @@ public class PlayerControls : MonoBehaviour {
 		ladderTB = new TextBox();
 		ladderTB.addText("Press \"c\" to use the ladder");
 		textbox = Resources.Load("TextBox") as GameObject;
+		tbTextMesh = textbox.GetComponentInChildren<TextMesh>();
+		smartText = textbox.GetComponentInChildren<SmartText>();
 		MyBoxCollider = GetComponent<BoxCollider2D>();
 		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 		inventory = this.gameObject.GetComponent<Inventory>();
@@ -110,8 +114,8 @@ public class PlayerControls : MonoBehaviour {
 		}
 
 		//Draw the appropriate line of text
-		textbox.GetComponentInChildren<TextMesh>().text = ladderTB.Text[ladderTB.CurrentSlide];
-		textbox.GetComponentInChildren<SmartText>().OnTextChanged();
+		tbTextMesh.text = ladderTB.Text[ladderTB.CurrentSlide];
+		smartText.OnTextChanged();
 			
 
 		//Check for other types of player input

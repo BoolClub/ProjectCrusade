@@ -83,7 +83,7 @@ public class Inventory : MonoBehaviour
 		//}
 
 
-		if (InventoryObject != null)
+		if (InventoryObject != null && !GM.Paused)
 		{
 			//Move the selected slot by scrolling
 			MoveCurrentSlot();
