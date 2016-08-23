@@ -584,6 +584,8 @@ public class Item {
 	{
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
+		magicbolt3.GetComponent<Projectile>().AimAt = null;
+		magicbolt3.GetComponent<Projectile>().AimAtPosition = new Vector3();
 
 		Player.Direction = Direction.North;
 		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x, Player.transform.position.y + 1), Quaternion.identity);

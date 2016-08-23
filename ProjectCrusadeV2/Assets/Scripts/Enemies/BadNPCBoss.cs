@@ -75,6 +75,10 @@ public class BadNPCBoss : MonoBehaviour {
 	// Has the boss shoot out multiple attacks in different directions, all in less than 1 second.
 	IEnumerator MultiShotAttack()
 	{
+		Direction = Direction.South;
+		randomProj.GetComponent<Projectile>().AimAt = Player;
+		randomProj.GetComponent<Projectile>().AimAtPosition = Player.transform.position;
+
 		Direction = Direction.West;
 		Instantiate(randomProj, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
 		yield return new WaitForSeconds(0.2f);
