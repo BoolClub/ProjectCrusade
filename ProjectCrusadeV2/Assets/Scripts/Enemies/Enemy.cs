@@ -73,6 +73,18 @@ public class Enemy : MonoBehaviour {
 	public float stunTime = 5f;
 
 	/// <summary>
+	/// Whether or not the enemy is frozen.
+	/// </summary>
+	public bool Frozen;
+	float frozenTime = 500f;
+
+	/// <summary>
+	/// Whether or not the enemy is poisoned.
+	/// </summary>
+	public bool Poisoned;
+	float poisonDelay = 4f;
+
+	/// <summary>
 	/// The item drop percentage.
 	/// </summary>
 	[Range(0,100)]
@@ -128,8 +140,23 @@ public class Enemy : MonoBehaviour {
 			ThisRenderer.color = Color.white;
 		}
 
+
 		if (Stunned)
 			StunEffects();
+
+
+		if (Frozen)
+			FreezeEffects();
+
+
+		if (Poisoned)
+		{
+			ThisRenderer.color = Color.magenta;
+			PoisonEffects();
+		}
+		else {
+			ThisRenderer.color = Color.white;
+		}
 
 		if (Health.Value <= 0)
 			DestroyEnemy();
@@ -249,4 +276,45 @@ public class Enemy : MonoBehaviour {
 			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
 	}
+
+	/// <summary>
+	/// Handles the effects of freezing.
+	/// </summary>
+	/// <returns>The effects.</returns>
+	void FreezeEffects()
+	{
+		if (frozenTime > 0 && Frozen == true)
+		{
+			ThisRenderer.color = Color.cyan;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+		}
+
+		frozenTime -= 0.02f;
+
+		if (frozenTime <= 0)
+		{
+			frozenTime = 5f;
+			Frozen = false;
+			ThisRenderer.color = Color.white;
+			Rigid.constraints = RigidbodyConstraints2D.None;
+			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+	}
+
+	/// <summary>
+	/// Handles the effects of poison.
+	/// </summary>
+	/// <returns>The effects.</returns>
+	void PoisonEffects()
+	{
+		if (poisonDelay.Equals(4f))
+			DecreaseHealth(4f);
+
+		poisonDelay -= 0.05f;
+
+		if (poisonDelay <= 0)
+			poisonDelay = 4f;
+	}
+
+
 }

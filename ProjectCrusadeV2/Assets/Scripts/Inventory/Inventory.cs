@@ -74,7 +74,7 @@ public class Inventory : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.H))
 		{
-			AddToInventory(new Item((ItemType)(new IntRange(1,15).Random)));
+			AddToInventory(new Item((ItemType)(new IntRange(1,20).Random)));
 		}
 
 		//if (Input.GetKeyDown(KeyCode.I))

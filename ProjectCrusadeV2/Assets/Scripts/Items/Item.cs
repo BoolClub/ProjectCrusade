@@ -12,6 +12,7 @@ public class Item {
 	public const float FLAMING_SWORD_DAMAGE = 20;
 	public const float HEALING_SWORD_DAMAGE = 15;
 	public const float ELECTRIC_SWORD_DAMAGE = 17;
+	public const float ICE_SWORD_DAMAGE = 16;
 
 	public float StoredHP = 0;
 	public int FlameSwordCharge = 5;
@@ -27,9 +28,12 @@ public class Item {
 		public Inventory TheInventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
 
 		GameObject arrow = Resources.Load("Projectiles/Arrow") as GameObject;
+		GameObject poisonarrow = Resources.Load("Projectiles/Poison Arrow") as GameObject;
 		GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
 		GameObject magicbolt2 = Resources.Load("Projectiles/Magic Bolt2") as GameObject;
-		GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;	
+		GameObject magicbolt4 = Resources.Load("Projectiles/Magic Bolt4") as GameObject;
+		GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;
+		GameObject iceshard = Resources.Load("Projectiles/Ice Shard") as GameObject;
 
 	#endregion
 
@@ -141,6 +145,11 @@ public class Item {
 			Name = "Healing Sword";
 			Stackable = false;
 		}
+		if (Type == ItemType.IceSword)
+		{
+			Name = "Ice Sword";
+			Stackable = false;
+		}
 		if (Type == ItemType.IronSword)
 		{
 			Name = "Iron Sword";
@@ -159,6 +168,21 @@ public class Item {
 		if (Type == ItemType.MagicWand)
 		{
 			Name = "Magic Wand";
+			Stackable = false;
+		}
+		if (Type == ItemType.Meat)
+		{
+			Name = "Meat";
+			Stackable = true;
+		}
+		if (Type == ItemType.PoisonArrow)
+		{
+			Name = "Poison Arrow";
+			Stackable = true;
+		}
+		if (Type == ItemType.Staff)
+		{
+			Name = "Staff";
 			Stackable = false;
 		}
 		if (Type == ItemType.SteelSword)
@@ -239,6 +263,11 @@ public class Item {
 			StoredHP += HurtEnemy(HEALING_SWORD_DAMAGE, null) / 4;
 		}
 
+		if (Type == ItemType.IceSword)
+		{
+			HurtEnemy(ICE_SWORD_DAMAGE, PerformWeaponExtra);
+		}
+
 		if (Type == ItemType.IronSword)
 		{
 			HurtEnemy(IRON_SWORD_DAMAGE, null);
@@ -259,6 +288,30 @@ public class Item {
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
 			MonoBehaviour.Instantiate(magicbolt, Player.transform.position, Quaternion.identity);
+		}
+
+		if (Type == ItemType.Meat)
+		{
+			Healthbar.AddHP(25f);
+			Quantity--;
+		}
+
+		if (Type == ItemType.PoisonArrow)
+		{
+			if (TheInventory.Contains(ItemType.BowAndArrow))
+			{
+				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				poisonarrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				MonoBehaviour.Instantiate(poisonarrow, Player.transform.position, Quaternion.identity);
+				Quantity--;
+			}
+		}
+
+		if (Type == ItemType.Staff)
+		{
+			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+			magicbolt4.GetComponent<Projectile>().Launcher = Player.gameObject;
+			MonoBehaviour.Instantiate(magicbolt4, Player.transform.position, Quaternion.identity);
 		}
 
 		if (Type == ItemType.SteelSword)
@@ -343,6 +396,16 @@ public class Item {
 			}
 		}
 
+		if (Type == ItemType.IceSword)
+		{
+			HurtEnemy(ICE_SWORD_DAMAGE, PerformWeaponExtra);
+
+			//Shoot ice shard projectile
+			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+			iceshard.GetComponent<Projectile>().Launcher = Player.gameObject;
+			MonoBehaviour.Instantiate(iceshard, Player.transform.position, Quaternion.identity);
+		}
+
 		if (Type == ItemType.IronSword) { }
 		if (Type == ItemType.LongSword) { }
 		if (Type == ItemType.Mace) { }
@@ -352,6 +415,18 @@ public class Item {
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			magicbolt2.GetComponent<Projectile>().Launcher = Player.gameObject;
 			MonoBehaviour.Instantiate(magicbolt2, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
+		}
+
+		if (Type == ItemType.Meat) { }
+
+		if (Type == ItemType.PoisonArrow)
+		{
+			// None right now, but all arrows will have a secondary use later (shoot three arrows at a time).
+		}
+
+		if (Type == ItemType.Staff)
+		{
+			// This magic item will have a secondary use later on as well.
 		}
 
 		if (Type == ItemType.SteelSword) { }
@@ -450,6 +525,21 @@ public class Item {
 				if (enem != null)
 				{
 					enem.Burned = true;
+				}
+			}
+		}
+
+		if (itemType == ItemType.IceSword)
+		{
+			// Chance of freezing the nemey
+			float number = new FloatRange(0, 100).Random;
+			bool willFreezeEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
+			if (willFreezeEnemy == true)
+			{
+				if (enem != null)
+				{
+					enem.Frozen = true;
 				}
 			}
 		}

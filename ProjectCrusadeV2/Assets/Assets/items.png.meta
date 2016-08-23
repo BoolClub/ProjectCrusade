@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2ea6e832a42144b9b90386b923c64c53
-timeCreated: 1471570057
+timeCreated: 1471957824
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -19,6 +19,10 @@ TextureImporter:
     21300024: Items_12
     21300026: Items_13
     21300028: Items_14
+    21300030: Items_15
+    21300032: Items_16
+    21300034: Items_17
+    21300036: Items_18
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -188,8 +192,8 @@ TextureImporter:
       name: Items_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 416
+        x: 96
+        y: 448
         width: 32
         height: 32
       alignment: 0
@@ -201,8 +205,8 @@ TextureImporter:
       name: Items_10
       rect:
         serializedVersion: 2
-        x: 32
-        y: 416
+        x: 192
+        y: 448
         width: 32
         height: 32
       alignment: 0
@@ -214,8 +218,8 @@ TextureImporter:
       name: Items_11
       rect:
         serializedVersion: 2
-        x: 32
-        y: 384
+        x: 0
+        y: 416
         width: 32
         height: 32
       alignment: 0
@@ -228,7 +232,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 352
+        y: 416
         width: 32
         height: 32
       alignment: 0
@@ -240,8 +244,8 @@ TextureImporter:
       name: Items_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 320
+        x: 0
+        y: 384
         width: 32
         height: 32
       alignment: 0
@@ -254,7 +258,59 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Items_15
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 352
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Items_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 320
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Items_17
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 288
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Items_18
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
         width: 32
         height: 32
       alignment: 0

@@ -133,6 +133,23 @@ public class Projectile : MonoBehaviour {
 							new Vector3(other.transform.position.x, other.transform.position.y, -2),
 							Quaternion.identity);
 
+
+				// If this is a poison arrow then calculate the chance of poisoning the enemy
+				if (this.gameObject.name.Equals("Poison Arrow(Clone)"))
+				{
+					float number = new FloatRange(0, 100).Random;
+					bool willPoisonEnemy = (!(number % 2).Equals(0) && number < 20) ? true : false;
+
+					if (willPoisonEnemy == true)
+					{
+						if (other.GetComponent<Enemy>() != null)
+						{
+							other.GetComponent<Enemy>().Frozen = true;
+						}
+					}
+				}
+
+
 				Destroy(this.gameObject);
 			}
 		}
