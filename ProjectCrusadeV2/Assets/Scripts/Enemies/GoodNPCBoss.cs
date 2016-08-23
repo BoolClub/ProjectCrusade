@@ -10,6 +10,11 @@ public class GoodNPCBoss : MonoBehaviour {
 	GameObject Player;
 
 	/// <summary>
+	/// The gm.
+	/// </summary>
+	GameManagerScript GM;
+
+	/// <summary>
 	/// The enemy script attached to this boss.
 	/// </summary>
 	Enemy EnemyScript;
@@ -41,31 +46,35 @@ public class GoodNPCBoss : MonoBehaviour {
 		Direction = Direction.South;
 		Player = GameObject.FindWithTag("Player");
 		EnemyScript = GetComponent<Enemy>();
+		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 	}
 
 	void Update()
 	{
-		if (Projectiles != null)
+		if (!GM.Paused)
 		{
-			if (WaitTime >= WAIT_TIME)
+			if (Projectiles != null)
 			{
-				// Choose a random projectile from the list
-				int RandIndex = new IntRange(0, Projectiles.Length).Random;
-				randomProj = Projectiles[RandIndex];
-				randomProj.GetComponent<Projectile>().Launcher = this.gameObject;
+				if (WaitTime >= WAIT_TIME)
+				{
+					// Choose a random projectile from the list
+					int RandIndex = new IntRange(0, Projectiles.Length).Random;
+					randomProj = Projectiles[RandIndex];
+					randomProj.GetComponent<Projectile>().Launcher = this.gameObject;
 
-				// Launch projectiles from the list.
-				if (RandIndex == 0)
-					StartCoroutine(FistThrowAttack());
-				if(RandIndex == 1)
-					StartCoroutine(MultiShotAttack());
-			}
+					// Launch projectiles from the list.
+					if (RandIndex == 0)
+						StartCoroutine(FistThrowAttack());
+					if (RandIndex == 1)
+						StartCoroutine(MultiShotAttack());
+				}
 
-			WaitTime -= 0.5f;
+				WaitTime -= 0.5f;
 
-			if (WaitTime <= 0)
-			{
-				WaitTime = WAIT_TIME;
+				if (WaitTime <= 0)
+				{
+					WaitTime = WAIT_TIME;
+				}
 			}
 		}
 

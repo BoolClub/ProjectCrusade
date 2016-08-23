@@ -13,6 +13,11 @@ public class Projectile : MonoBehaviour {
 	Rigidbody2D Rigid;
 
 	/// <summary>
+	/// The GM.
+	/// </summary>
+	GameManagerScript GM;
+
+	/// <summary>
 	/// The game object that is launching the projectile.
 	/// </summary>
 	public GameObject Launcher;
@@ -45,6 +50,7 @@ public class Projectile : MonoBehaviour {
 
 	void Start () {
 		Rigid = GetComponent<Rigidbody2D>();
+		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 		if (AimAt != null)
 		{
 			AimAtPosition = AimAt.transform.position;
@@ -89,24 +95,27 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Always moving forward, but accounting for its current rotation angle.
-		if (AimAt == null)
+		if (!GM.Paused)
 		{
-			transform.Translate(Time.deltaTime * Speed, 0, 0);
-		}
-		else {
-			// Move towards the aimed at position.
-			Rigid.MovePosition(Vector3.MoveTowards(transform.position,
-			                                       AimAtPosition,
-												   Time.deltaTime * Speed));
-		}
+			//Always moving forward, but accounting for its current rotation angle.
+			if (AimAt == null)
+			{
+				transform.Translate(Time.deltaTime * Speed, 0, 0);
+			}
+			else {
+				// Move towards the aimed at position.
+				Rigid.MovePosition(Vector3.MoveTowards(transform.position,
+													   AimAtPosition,
+													   Time.deltaTime * Speed));
+			}
 
-		// Just destroy the object if it reaches the player but the player moves out of the way.
-		if (PlusMinus(transform.position.x, AimAtPosition.x, 0.5f) 
-		    && PlusMinus(transform.position.y, AimAtPosition.y, 0.5f))
-		{
-			// Play fade out animation.
-			Destroy(this.gameObject);
+			// Just destroy the object if it reaches the player but the player moves out of the way.
+			if (PlusMinus(transform.position.x, AimAtPosition.x, 0.5f)
+				&& PlusMinus(transform.position.y, AimAtPosition.y, 0.5f))
+			{
+				// Play fade out animation.
+				Destroy(this.gameObject);
+			}
 		}
 	}
 

@@ -11,6 +11,11 @@ public class BadNPCBoss : MonoBehaviour {
 	GameObject Player;
 
 	/// <summary>
+	/// The gm.
+	/// </summary>
+	GameManagerScript GM;
+
+	/// <summary>
 	/// The enemy script attached to this boss.
 	/// </summary>
 	Enemy EnemyScript;
@@ -59,16 +64,20 @@ public class BadNPCBoss : MonoBehaviour {
 		Direction = Direction.South;
 		Player = GameObject.FindWithTag("Player");
 		EnemyScript = GetComponent<Enemy>();
+		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 	}
 
 	void Update()
 	{
-		if (Projectiles != null)
+		if (!GM.Paused)
 		{
-			ShootProjectiles();
-		}
+			if (Projectiles != null)
+			{
+				ShootProjectiles();
+			}
 
-		MoveBossAroundTheMap();
+			MoveBossAroundTheMap();
+		}
 
 		if (EnemyScript.Health.Value <= 0)
 		{

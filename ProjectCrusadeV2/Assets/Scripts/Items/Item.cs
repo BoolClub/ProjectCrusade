@@ -222,6 +222,9 @@ public class Item {
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				arrow.GetComponent<Projectile>().AimAt = null;
+				arrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -233,6 +236,9 @@ public class Item {
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				arrow.GetComponent<Projectile>().AimAt = null;
+				arrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				TheInventory.Find(ItemType.Arrow).Quantity--;
 			}
@@ -289,6 +295,9 @@ public class Item {
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt.GetComponent<Projectile>().AimAt = null;
+			magicbolt.GetComponent<Projectile>().AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(magicbolt, Player.transform.position, Quaternion.identity);
 		}
 
@@ -304,6 +313,9 @@ public class Item {
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				poisonarrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				poisonarrow.GetComponent<Projectile>().Launcher = Player.gameObject;
+				poisonarrow.GetComponent<Projectile>().AimAt = null;
+				poisonarrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(poisonarrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -313,6 +325,9 @@ public class Item {
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt3.GetComponent<Projectile>().AimAt = null;
+			magicbolt3.GetComponent<Projectile>().AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(magicbolt3, Player.transform.position, Quaternion.identity);
 		}
 
@@ -374,6 +389,9 @@ public class Item {
 				//Shoot fire projectile
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				fire.GetComponent<Projectile>().Launcher = Player.gameObject;
+				fire.GetComponent<Projectile>().Launcher = Player.gameObject;
+				fire.GetComponent<Projectile>().AimAt = null;
+				fire.GetComponent<Projectile>().AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(fire, Player.transform.position, Quaternion.identity);
 
 				FlameSwordCharge--;
@@ -404,6 +422,9 @@ public class Item {
 			//Shoot ice shard projectile
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			iceshard.GetComponent<Projectile>().Launcher = Player.gameObject;
+			iceshard.GetComponent<Projectile>().Launcher = Player.gameObject;
+			iceshard.GetComponent<Projectile>().AimAt = null;
+			iceshard.GetComponent<Projectile>().AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(iceshard, Player.transform.position, Quaternion.identity);
 		}
 
@@ -415,6 +436,9 @@ public class Item {
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 			magicbolt2.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt2.GetComponent<Projectile>().Launcher = Player.gameObject;
+			magicbolt2.GetComponent<Projectile>().AimAt = null;
+			magicbolt2.GetComponent<Projectile>().AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(magicbolt2, GameObject.FindWithTag("Player").transform.position, Quaternion.identity);
 		}
 
