@@ -263,25 +263,28 @@ public class PlayerControls : MonoBehaviour {
 	{
 		foreach (GameObject npc in GM.Npcs)
 		{
-			NPC npcComp = npc.GetComponent<NPC>();
-
-			if (npcComp.isNextToPlayer())
+			if (npc.GetComponent<NPC>() != null)
 			{
-				//There is already a text box open
-				if (npcComp.TextBox.isOpen())
+				NPC npcComp = npc.GetComponent<NPC>();
+
+				if (npcComp.isNextToPlayer())
 				{
+					//There is already a text box open
+					if (npcComp.TextBox.isOpen())
+					{
 
-					npcComp.TextBox.nextSlide();
+						npcComp.TextBox.nextSlide();
 
-					//There are no text boxes open already
-				}
-				else {
+						//There are no text boxes open already
+					}
+					else {
 
-					npcComp.TextBox.toggle();
+						npcComp.TextBox.toggle();
 
-					Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, -3), Quaternion.identity);
-					break;
+						Instantiate(textbox, new Vector3(npc.transform.position.x + 0.75f, npc.transform.position.y + 1.4f, -3), Quaternion.identity);
+						break;
 
+					}
 				}
 			}
 		}

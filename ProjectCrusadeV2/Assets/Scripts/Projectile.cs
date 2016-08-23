@@ -119,9 +119,9 @@ public class Projectile : MonoBehaviour {
 		}
 
 		// Launched by player
-		if (!Launcher.tag.Equals("Enemy"))
+		if (Launcher.tag.Equals("Player"))
 		{
-			if (other.tag.Equals("Enemy") && other is BoxCollider2D)
+			if ((other.tag.Equals("Enemy") || other.tag.Equals("Boss")) && other is BoxCollider2D)
 			{
 				// Do damage to the enemy
 				other.GetComponent<Enemy>().Health.Value -= Damage.Value;

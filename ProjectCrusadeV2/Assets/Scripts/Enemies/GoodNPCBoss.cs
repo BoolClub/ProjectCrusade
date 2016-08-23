@@ -10,6 +10,11 @@ public class GoodNPCBoss : MonoBehaviour {
 	GameObject Player;
 
 	/// <summary>
+	/// The enemy script attached to this boss.
+	/// </summary>
+	Enemy EnemyScript;
+
+	/// <summary>
 	/// The direction that the boss is facing in.
 	/// </summary>
 	public Direction Direction;
@@ -35,6 +40,7 @@ public class GoodNPCBoss : MonoBehaviour {
 	{
 		Direction = Direction.South;
 		Player = GameObject.FindWithTag("Player");
+		EnemyScript = GetComponent<Enemy>();
 	}
 
 	void Update()
@@ -63,6 +69,20 @@ public class GoodNPCBoss : MonoBehaviour {
 			}
 		}
 
+		// Handle sequence for beating the boss
+		if (EnemyScript.Health.Value <= 0)
+		{
+			StartCoroutine(BeatBossSequence());
+		}
+
+	}
+
+	// Plays through particular events after the boss looses.
+	IEnumerator BeatBossSequence()
+	{
+		// Play animation of monster being blown up.
+		yield return new WaitForSeconds(10);
+		EnemyScript.DestroyEnemy();
 	}
 
 

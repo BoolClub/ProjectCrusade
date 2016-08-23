@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void DestroyEnemy()
+	public void DestroyEnemy()
 	{
 		float randomNum = UnityEngine.Random.Range(0, 100);
 		bool willDropItem = false;

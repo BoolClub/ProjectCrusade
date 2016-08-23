@@ -381,12 +381,35 @@ public class Item {
 				enemy.GetComponent<Enemy>().DecreaseHealth(damage);
 			}
 		}
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Boss"))
+		{
+			if (enemy.GetComponent<Enemy>().IsNextToPlayer)
+			{
+				damage = (float)Math.Round(new FloatRange(0, Damage).Random, 2);
+
+				// Carry out the extra function of the item if it has one.
+				if (extra != null)
+				{
+					extra(this.Type, enemy.GetComponent<Enemy>());
+				}
+
+				// Decrease enemy health and create damage label.
+				enemy.GetComponent<Enemy>().DecreaseHealth(damage);
+			}
+		}
 		return damage;
 	}
    	Enemy GetEnemy()
 	{
 		Enemy enm = null;
 		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+		{
+			if (enemy.GetComponent<Enemy>().IsNextToPlayer)
+			{
+				enm = enemy.GetComponent<Enemy>();
+			}
+		}
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Boss"))
 		{
 			if (enemy.GetComponent<Enemy>().IsNextToPlayer)
 			{
