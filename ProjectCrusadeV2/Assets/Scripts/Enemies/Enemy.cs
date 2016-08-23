@@ -134,13 +134,16 @@ public class Enemy : MonoBehaviour {
 			ThisRenderer.color = Color.white;
 		}
 
+		if (this.gameObject.GetComponent<GoodNPCBoss>() == null &&
+		   this.gameObject.GetComponent<BadNPCBoss>() == null)
+		{
+			if (Stunned)
+				StunEffects();
 
-		if (Stunned)
-			StunEffects();
 
-
-		if (Frozen)
-			FreezeEffects();
+			if (Frozen)
+				FreezeEffects();
+		}
 
 
 		if (Poisoned)
