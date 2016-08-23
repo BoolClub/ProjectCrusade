@@ -4,7 +4,7 @@
 // Also used for the player and certain other game objects.
 public enum Direction
 {
-    North, East, South, West, NorthEast, SouthEast, SouthWest, NorthWest,
+    North = 1, East = 2, South = -1, West = -2, NorthEast = 3, SouthEast = 4, SouthWest = -3, NorthWest = -4,
 }
 
 public class Corridor

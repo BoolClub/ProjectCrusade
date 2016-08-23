@@ -318,6 +318,7 @@ public class Item {
 
 				//Shoot fire projectile
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+				fire.GetComponent<Projectile>().Launcher = Player.gameObject;
 				MonoBehaviour.Instantiate(fire, Player.transform.position, Quaternion.identity);
 
 				FlameSwordCharge--;

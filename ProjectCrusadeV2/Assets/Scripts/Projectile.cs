@@ -8,6 +8,11 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
 
 	/// <summary>
+	/// The rigidbody 2D.
+	/// </summary>
+	Rigidbody2D Rigid;
+
+	/// <summary>
 	/// The game object that is launching the projectile.
 	/// </summary>
 	public GameObject Launcher;
@@ -27,9 +32,23 @@ public class Projectile : MonoBehaviour {
 	/// </summary>
 	public FloatRange Damage;
 
+	/// <summary>
+	/// The game object to aim this projectile at.
+	/// </summary>
+	public GameObject AimAt;
+
+	/// <summary>
+	/// The position of the object that it should aim at.
+	/// </summary>
+	public Vector3 AimAtPosition;
 
 
 	void Start () {
+		Rigid = GetComponent<Rigidbody2D>();
+		if (AimAt != null)
+		{
+			AimAtPosition = AimAt.transform.position;
+		}
 		GetDirectionFromLauncher();
 		Damage.Value = (float)Math.Round(Damage.Random, 2);
 	}
@@ -51,7 +70,7 @@ public class Projectile : MonoBehaviour {
 
 
 		if (direction == Direction.North)
-			transform.Rotate(new Vector3(0,0,90));
+			transform.Rotate(new Vector3(0, 0, 90));
 		if (direction == Direction.East)
 			transform.Rotate(new Vector3(0, 0, 0));
 		if (direction == Direction.South)
@@ -70,9 +89,25 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		//Always moving forward, but accounting for its current rotation angle.
-		transform.Translate(Time.deltaTime * Speed, 0, 0);
+		if (AimAt == null)
+		{
+			transform.Translate(Time.deltaTime * Speed, 0, 0);
+		}
+		else {
+			// Move towards the aimed at position.
+			Rigid.MovePosition(Vector3.MoveTowards(transform.position,
+			                                       AimAtPosition,
+												   Time.deltaTime * Speed));
+		}
+
+		// Just destroy the object if it reaches the player but the player moves out of the way.
+		if (PlusMinus(transform.position.x, AimAtPosition.x, 0.5f) 
+		    && PlusMinus(transform.position.y, AimAtPosition.y, 0.5f))
+		{
+			// Play fade out animation.
+			Destroy(this.gameObject);
+		}
 	}
 
 
@@ -111,5 +146,22 @@ public class Projectile : MonoBehaviour {
 				Destroy(this.gameObject);
 			}
 		}
+	}
+
+
+	/// <summary>
+	/// Returns whether or not the first number is equal to the second number, give or take plusOrMinus.
+	/// </summary>
+	/// <returns>The minus.</returns>
+	/// <param name="num1">Num1.</param>
+	/// <param name="num2">Num2.</param>
+	/// <param name="plusOrMinus">Plusminus.</param>
+	public bool PlusMinus(float num1, float num2, float plusOrMinus)
+	{
+		if (num1 <= num2 + plusOrMinus && num1 >= num2 - plusOrMinus)
+		{
+			return true;
+		}
+		return false;
 	}
 }
