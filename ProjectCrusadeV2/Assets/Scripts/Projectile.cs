@@ -102,18 +102,11 @@ public class Projectile : MonoBehaviour {
 			}
 		}
 		// Launched by enemy or boss
-		else if(Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
+		if(Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
 			if (other.tag.Equals("Player") && other is BoxCollider2D)
 			{
 				// Do damage to the enemy
 				Healthbar.DecreaseHP(Damage.Value);
-
-				// Create a damage label object to display how much damage was done to the enemy.
-				GameObject damagelabel = Resources.Load("DamageLabel") as GameObject;
-				damagelabel.GetComponent<DamageLabel>().Text = "" + Damage.Value;
-				Instantiate(damagelabel,
-							new Vector3(other.transform.position.x, other.transform.position.y, -2),
-							Quaternion.identity);
 
 				Destroy(this.gameObject);
 			}

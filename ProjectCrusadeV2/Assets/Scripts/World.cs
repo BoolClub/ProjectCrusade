@@ -84,6 +84,7 @@ public class World : MonoBehaviour
 			obj.AddComponent(typeof(BoxCollider2D));
 			obj.GetComponent<BoxCollider2D>().size = new Vector2(0.46f, 0.46f);
 			obj.transform.SetParent(BackgroundHolder[2].transform);
+			obj.tag = "Wall";
 		}
 		else {
 			obj.transform.SetParent(BackgroundHolder[1].transform);
