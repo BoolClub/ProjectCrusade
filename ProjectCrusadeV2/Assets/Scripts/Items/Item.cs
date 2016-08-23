@@ -18,6 +18,7 @@ public class Item {
 	public int FlameSwordCharge = 5;
 	public float chargeTimeElectricSword = 700f;
 
+	// Used for adding extra effects for certain items.
 	public delegate void WeaponExtras(ItemType itemType, Enemy enem);
 	public WeaponExtras PerformWeaponExtra;
 
@@ -428,6 +429,8 @@ public class Item {
 		{
 			// This magic item will have a secondary use later on as well.
 			// The player will be able to shoot magic bolts in all different directions just like the first boss.
+			MonoBehaviour mb = GameObject.Find("GameManager").GetComponent<MonoBehaviour>();
+			mb.StartCoroutine(MultiShotMagicAttack());
 		}
 
 		if (Type == ItemType.SteelSword) { }
@@ -560,5 +563,45 @@ public class Item {
 	public override string ToString()
 	{
 		return "Name: " + Name + ", Type: " + Type.ToString() + "Quantity: " + Quantity + ", Stackable: " + Stackable;
+	}
+
+	/* This is for the secondary use of the staff. It is the same as it is in the boss class, but fitted to
+	suit the player. Shoots a magic bolt in all directions. */
+
+	IEnumerator MultiShotMagicAttack()
+	{
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+		magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
+
+		Player.Direction = Direction.North;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x, Player.transform.position.y + 1), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.NorthEast;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x + 1, Player.transform.position.y + 1), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.East;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x + 1, Player.transform.position.y), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.SouthEast;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x + 1, Player.transform.position.y - 1), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.South;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x, Player.transform.position.y - 1), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.SouthWest;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x - 1, Player.transform.position.y - 1), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.West;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x - 1, Player.transform.position.y), Quaternion.identity);
+		yield return new WaitForSeconds(0.001f);
+
+		Player.Direction = Direction.NorthWest;
+		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x - 1, Player.transform.position.y + 1), Quaternion.identity);
 	}
 }
