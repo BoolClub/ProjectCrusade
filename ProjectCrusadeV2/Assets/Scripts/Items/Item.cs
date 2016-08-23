@@ -31,7 +31,7 @@ public class Item {
 		GameObject poisonarrow = Resources.Load("Projectiles/Poison Arrow") as GameObject;
 		GameObject magicbolt = Resources.Load("Projectiles/Magic Bolt") as GameObject;
 		GameObject magicbolt2 = Resources.Load("Projectiles/Magic Bolt2") as GameObject;
-		GameObject magicbolt4 = Resources.Load("Projectiles/Magic Bolt4") as GameObject;
+		GameObject magicbolt3 = Resources.Load("Projectiles/Magic Bolt3") as GameObject;
 		GameObject fire = Resources.Load("Projectiles/Fire Bolt") as GameObject;
 		GameObject iceshard = Resources.Load("Projectiles/Ice Shard") as GameObject;
 
@@ -310,8 +310,8 @@ public class Item {
 		if (Type == ItemType.Staff)
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-			magicbolt4.GetComponent<Projectile>().Launcher = Player.gameObject;
-			MonoBehaviour.Instantiate(magicbolt4, Player.transform.position, Quaternion.identity);
+			magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
+			MonoBehaviour.Instantiate(magicbolt3, Player.transform.position, Quaternion.identity);
 		}
 
 		if (Type == ItemType.SteelSword)
@@ -427,6 +427,7 @@ public class Item {
 		if (Type == ItemType.Staff)
 		{
 			// This magic item will have a secondary use later on as well.
+			// The player will be able to shoot magic bolts in all different directions just like the first boss.
 		}
 
 		if (Type == ItemType.SteelSword) { }
