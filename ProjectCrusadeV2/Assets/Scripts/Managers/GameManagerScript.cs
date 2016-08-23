@@ -11,6 +11,12 @@ public class GameManagerScript : MonoBehaviour {
 	public TransitionManager Transitions;
 
 	/// <summary>
+	/// The player.
+	/// </summary>
+	PlayerControls Player;
+	public bool UsedStaff;
+
+	/// <summary>
 	/// The item sprites.
 	/// </summary>
 	public static List<Item> Items = new List<Item>();
@@ -68,6 +74,7 @@ public class GameManagerScript : MonoBehaviour {
 	public void Start () {
 		Transitions.Type = FadeType.Fade_In;
 		Transitions.PlayTransition = true;
+		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 
 		for (int i = 0; i < 40; i++)
 			Items.Add(new Item(ItemType.EMPTY));
@@ -96,8 +103,8 @@ public class GameManagerScript : MonoBehaviour {
 		}
 
 
-		PauseOverlay.transform.position = new Vector3(GameObject.FindWithTag("Player").transform.position.x,
-		                                              GameObject.FindWithTag("Player").transform.position.y,
+		PauseOverlay.transform.position = new Vector3(Player.gameObject.transform.position.x,
+		                                              Player.gameObject.transform.position.y,
 													  PauseOverlay.transform.position.z);
 
 		if (Paused == true)
@@ -108,6 +115,16 @@ public class GameManagerScript : MonoBehaviour {
 		else {
 			PauseOverlay.SetActive(false);
 			PauseOverlay.transform.GetChild(0).gameObject.SetActive(false);
+		}
+
+
+		// Moving to church scene after beating the first boss.
+		if (Transitions.Finished && Transitions.Type == FadeType.Fade_Out && Player.inventory.Contains(ItemType.Staff))
+		{
+			UsedStaff = true;
+
+			if (UsedStaff == true)
+				SceneManager.LoadScene(13);
 		}
 	}
 

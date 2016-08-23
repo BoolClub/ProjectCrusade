@@ -63,7 +63,6 @@ public class Inventory : MonoBehaviour
 		{
 			foreach (Item itm in Items)
 			{
-				itm.HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 				itm.Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 				itm.TheInventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
 			}

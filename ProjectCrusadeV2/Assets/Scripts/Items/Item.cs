@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 
@@ -24,7 +25,7 @@ public class Item {
 
 	#region References For Simplicity
 
-		public Healthbar HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
+		public GameManagerScript GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 		public PlayerControls Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		public Inventory TheInventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
 
@@ -387,7 +388,6 @@ public class Item {
 		{
 			if (StoredHP > 0)
 			{
-				HPBar = GameObject.Find("HPBarFill").GetComponent<Healthbar>();
 				Healthbar.Health += StoredHP;
 				StoredHP = 0;
 			}
@@ -429,8 +429,20 @@ public class Item {
 		{
 			// This magic item will have a secondary use later on as well.
 			// The player will be able to shoot magic bolts in all different directions just like the first boss.
-			MonoBehaviour mb = GameObject.Find("GameManager").GetComponent<MonoBehaviour>();
-			mb.StartCoroutine(MultiShotMagicAttack());
+
+			if (SceneManager.GetActiveScene().buildIndex != 12)
+			{
+				MonoBehaviour mb = GameObject.Find("GameManager").GetComponent<MonoBehaviour>();
+				mb.StartCoroutine(MultiShotMagicAttack());
+			}
+			else {
+				// Teleport the player back to the church
+				GM.Transitions.Reset();
+				GM.Transitions.Type = FadeType.Fade_Out;
+				GM.Transitions.PlayTransition = true;
+				GM.Transitions.BeginFade(-1);
+			}
+
 		}
 
 		if (Type == ItemType.SteelSword) { }
