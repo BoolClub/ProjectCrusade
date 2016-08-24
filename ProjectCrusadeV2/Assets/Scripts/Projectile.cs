@@ -128,7 +128,7 @@ public class Projectile : MonoBehaviour {
 		}
 
 		// Launched by player
-		if (Launcher.tag.Equals("Player"))
+		if (Launcher != null && Launcher.tag.Equals("Player"))
 		{
 			if ((other.tag.Equals("Enemy") || other.tag.Equals("Boss")) && other is BoxCollider2D)
 			{
@@ -163,7 +163,7 @@ public class Projectile : MonoBehaviour {
 			}
 		}
 		// Launched by enemy or boss
-		if(Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
+		if(Launcher != null && Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
 			if (other.tag.Equals("Player") && other is BoxCollider2D)
 			{
 				// Do damage to the enemy

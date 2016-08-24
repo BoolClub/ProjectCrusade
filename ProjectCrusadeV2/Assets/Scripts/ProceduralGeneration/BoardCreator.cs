@@ -94,8 +94,8 @@ public class BoardCreator : MonoBehaviour
 
 		SpawnTreasureChests();
 
-		//Don't spawn a ladder on the green level, that will take the player to somewhere else.
-		if (SceneManager.GetActiveScene().buildIndex != 11)
+		//Don't spawn a ladder on the boss level, that will take the player to somewhere else.
+		if (SceneManager.GetActiveScene().buildIndex != 13 && SceneManager.GetActiveScene().buildIndex != 14)
 		{
 			ladder = Resources.Load("Ladder") as GameObject;
 			Room roomToPlaceLadderIn = rooms[numRooms.Random - 1];
@@ -375,29 +375,8 @@ public class BoardCreator : MonoBehaviour
 
 			//Spawn an extra one
 			if(i % 2 != 0)
-				Instantiate(enemy, new Vector3(corridors[i].EndPositionX, corridors[i].EndPositionY, -1), Quaternion.identity);
+				Instantiate(enemy, new Vector3(corridors[i].startXPos, corridors[i].startYPos, -1), Quaternion.identity);
 		}
-
-		Enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-		foreach (GameObject go in Enemies)
-		{
-			go.transform.SetParent(EnemyHolder.transform);
-			go.layer = 10;
-		}
-	}
-
-	public void SpawnSingleEnemy()
-	{
-		// Create a random enemy from the list of possible spawns.
-		GameObject enemy = GameManager.Enemies[UnityEngine.Random.Range(0, GameManager.Enemies.Length)] as GameObject;
-
-		// Find a random corridor to place the enemy in.
-		Corridor randomCorridor = corridors[UnityEngine.Random.Range(0,corridors.Length)];
-
-		Instantiate(enemy, new Vector3(randomCorridor.startXPos, randomCorridor.startYPos, -1), Quaternion.identity);
-
-		enemy.tag = "Enemy";
 
 		Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 

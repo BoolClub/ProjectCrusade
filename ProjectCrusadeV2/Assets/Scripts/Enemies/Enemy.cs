@@ -156,7 +156,12 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (Health.Value <= 0)
-			DestroyEnemy();
+		{
+			if (GetComponent<GoodNPCBoss>() == null && GetComponent<BadNPCBoss>() == null)
+			{
+				DestroyEnemy();
+			}
+		}
 	}
 
 	/// <summary>

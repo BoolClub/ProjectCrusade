@@ -152,13 +152,13 @@ public class PlayerControls : MonoBehaviour {
 			PickupItemsOffGround(interactionKey);
 
 			if(IsNextToLadder) {
-				GM.CurrentFloor++;
-				SceneManager.LoadScene(GM.Underground[GM.CurrentFloor - 3]);
+				GameManagerScript.CurrentFloor++;
+				SceneManager.LoadScene(GM.Underground[GameManagerScript.CurrentFloor]);
 			}
 			
 			if (GM != null)
 			{
-				if (GM.Npcs.Length > 0)
+				if (GM.Npcs.Count > 0)
 					NPCInteraction();
 				if (GM.Chests.Length > 0)
 					CheckInteraction();

@@ -454,7 +454,7 @@ public class Item {
 			// This magic item will have a secondary use later on as well.
 			// The player will be able to shoot magic bolts in all different directions just like the first boss.
 
-			if (SceneManager.GetActiveScene().buildIndex != 12)
+			if (SceneManager.GetActiveScene().buildIndex != 14)
 			{
 				MonoBehaviour mb = GameObject.Find("GameManager").GetComponent<MonoBehaviour>();
 				mb.StartCoroutine(MultiShotMagicAttack());

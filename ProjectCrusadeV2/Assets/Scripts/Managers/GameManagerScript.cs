@@ -41,7 +41,7 @@ public class GameManagerScript : MonoBehaviour {
 	/// <summary>
 	/// The current floor that the player is on by its index in the array above.
 	/// </summary>
-	public int CurrentFloor;
+	public static int CurrentFloor = 0;
 
 	/// <summary>
 	/// Floor items holder.
@@ -51,7 +51,7 @@ public class GameManagerScript : MonoBehaviour {
 	/// <summary>
 	/// All of the NPCs in the game world.
 	/// </summary>
-	public GameObject[] Npcs;
+	public List<GameObject> Npcs;
 
 	/// <summary>
 	/// The treasure chests that are in the game world.
@@ -68,6 +68,16 @@ public class GameManagerScript : MonoBehaviour {
 	/// </summary>
 	public GameObject PauseOverlay;
 
+	/// <summary>
+	/// The priest npc.
+	/// </summary>
+	public GameObject PriestNPC;
+
+	/// <summary>
+	/// The good npc.
+	/// </summary>
+	public GameObject goodNPC;
+
 
 
 	// Use this for initialization
@@ -76,14 +86,16 @@ public class GameManagerScript : MonoBehaviour {
 		Transitions.PlayTransition = true;
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 
+		if (SceneManager.GetActiveScene().buildIndex == 15)
+		{
+			PriestNPC = GameObject.Find("PriestNPC");
+			goodNPC = GameObject.Find("GoodGuyNPC");
+			Npcs.Add(goodNPC);
+			goodNPC.SetActive(false);
+		}
+
 		for (int i = 0; i < 40; i++)
 			Items.Add(new Item(ItemType.EMPTY));
-
-		if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 1
-		   && SceneManager.GetActiveScene().buildIndex != 2)
-		{
-			CurrentFloor = SceneManager.GetActiveScene().buildIndex;
-		}
 	}
 
  	void Awake()
@@ -124,7 +136,7 @@ public class GameManagerScript : MonoBehaviour {
 			UsedStaff = true;
 
 			if (UsedStaff == true)
-				SceneManager.LoadScene(13);
+				SceneManager.LoadScene(15);
 		}
 	}
 

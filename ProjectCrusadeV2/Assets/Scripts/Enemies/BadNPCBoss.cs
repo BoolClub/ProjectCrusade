@@ -65,6 +65,10 @@ public class BadNPCBoss : MonoBehaviour {
 		Player = GameObject.FindWithTag("Player");
 		EnemyScript = GetComponent<Enemy>();
 		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+		GM.PriestNPC.GetComponent<NPC>().TextBox.clear();
+		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("Hm... It's seems you have beaten me...");
+		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("You may be safe for now, but know this: I will return to take over the world someday!");
+		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("Hahahahahaha!!!");
 	}
 
 	void Update()
@@ -81,6 +85,7 @@ public class BadNPCBoss : MonoBehaviour {
 
 		if (EnemyScript.Health.Value <= 0)
 		{
+			GM.PriestNPC.SetActive(true);
 			EnemyScript.DestroyEnemy();
 		}
 	}
