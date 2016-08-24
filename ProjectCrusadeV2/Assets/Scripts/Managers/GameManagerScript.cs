@@ -133,10 +133,18 @@ public class GameManagerScript : MonoBehaviour {
 		// Moving to church scene after beating the first boss.
 		if (Transitions.Finished && Transitions.Type == FadeType.Fade_Out && Player.inventory.Contains(ItemType.Staff))
 		{
-			UsedStaff = true;
-
-			if (UsedStaff == true)
+			if (SceneManager.GetActiveScene().buildIndex == 14)
+			{
 				SceneManager.LoadScene(15);
+			}
+		}
+
+		if (Transitions.Finished && Transitions.Type == FadeType.Fade_Out)
+		{
+			if (SceneManager.GetActiveScene().buildIndex == 15)
+			{
+				SceneManager.LoadScene(16);
+			}
 		}
 	}
 

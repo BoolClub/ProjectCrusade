@@ -161,9 +161,7 @@ public class Projectile : MonoBehaviour {
 
 				Destroy(this.gameObject);
 			}
-		}
-		// Launched by enemy or boss
-		if(Launcher != null && Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
+		} else if(Launcher != null && Launcher.tag.Equals("Enemy") || Launcher.tag.Equals("Boss")) {
 			if (other.tag.Equals("Player") && other is BoxCollider2D)
 			{
 				// Do damage to the enemy

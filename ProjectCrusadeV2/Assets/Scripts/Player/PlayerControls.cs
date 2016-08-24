@@ -207,14 +207,19 @@ public class PlayerControls : MonoBehaviour {
 	/// <param name="k">K.</param>
 	void PickupItemsOffGround(KeyCode k)
 	{
-		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorItem"))
+		GameObject[] arr = GameObject.FindGameObjectsWithTag("FloorItem");
+
+		if (arr != null)
 		{
-			FloorItem fItem = obj.GetComponent<FloorItem>();
- 
-			if (fItem.IsNextToPlayer)
+			foreach (GameObject obj in arr)
 			{
-				inventory.AddToInventory(new Item(fItem.itm, fItem.Quantity.Value));
-				fItem.timer = 0;
+				FloorItem fItem = obj.GetComponent<FloorItem>();
+
+				if (fItem.IsNextToPlayer)
+				{
+					inventory.AddToInventory(new Item(fItem.itm, fItem.Quantity.Value));
+					fItem.timer = 0;
+				}
 			}
 		}
 	}
