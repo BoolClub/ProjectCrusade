@@ -71,11 +71,10 @@ public class Inventory : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.H))
-		{
-			AddToInventory(new Item((ItemType)(new IntRange(1,20).Random)));
-		}
-
+		//if (Input.GetKeyDown(KeyCode.H))
+		//{
+		//	AddToInventory(new Item((ItemType)(new IntRange(1,20).Random)));
+		//}
 		//if (Input.GetKeyDown(KeyCode.I))
 		//{
 		//	Open = !Open;
@@ -139,7 +138,7 @@ public class Inventory : MonoBehaviour
 			Items[FirstEmpty].Add(itm);
 		}
 		else {
-			Debug.Log("Inventory is full.");
+			// Debug.Log("Inventory is full.");
 		}
 	}
 
@@ -197,6 +196,27 @@ public class Inventory : MonoBehaviour
 				CurrentSlot++;
 			}
 		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+			CurrentSlot = 0;
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+			CurrentSlot = 1;
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+			CurrentSlot = 2;
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+			CurrentSlot = 3;
+		if (Input.GetKeyDown(KeyCode.Alpha5))
+			CurrentSlot = 4;
+		if (Input.GetKeyDown(KeyCode.Alpha6))
+			CurrentSlot = 5;
+		if (Input.GetKeyDown(KeyCode.Alpha7))
+			CurrentSlot = 6;
+		if (Input.GetKeyDown(KeyCode.Alpha8))
+			CurrentSlot = 7;
+		if (Input.GetKeyDown(KeyCode.Alpha9))
+			CurrentSlot = 8;
+		if (Input.GetKeyDown(KeyCode.Alpha0))
+			CurrentSlot = 9;
 	}
 
 
