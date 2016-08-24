@@ -6,7 +6,7 @@ public class MainMenuManager : MonoBehaviour {
 
 	TransitionManager TM;
 
-	bool start,htp;
+	bool start,htp,back;
 
 
 	// Use this for initialization
@@ -24,6 +24,10 @@ public class MainMenuManager : MonoBehaviour {
 		{
 			SceneManager.LoadScene("HowToPlay");
 		}
+		if (TM.Finished && TM.Type == FadeType.Fade_Out && back == true)
+		{
+			SceneManager.LoadScene("MainMenu");
+		}
 	}
 
 
@@ -31,6 +35,7 @@ public class MainMenuManager : MonoBehaviour {
 	{
 		start = true;
 		htp = false;
+		back = false;
 		TM.Reset();
 		TM.Type = FadeType.Fade_Out;
 		TM.PlayTransition = true;
@@ -41,6 +46,18 @@ public class MainMenuManager : MonoBehaviour {
 	{
 		start = false;
 		htp = true;
+		back = false;
+		TM.Reset();
+		TM.Type = FadeType.Fade_Out;
+		TM.PlayTransition = true;
+		TM.BeginFade(-1);
+	}
+
+	public void BackToMainMenu()
+	{
+		start = false;
+		htp = false;
+		back = true;
 		TM.Reset();
 		TM.Type = FadeType.Fade_Out;
 		TM.PlayTransition = true;
