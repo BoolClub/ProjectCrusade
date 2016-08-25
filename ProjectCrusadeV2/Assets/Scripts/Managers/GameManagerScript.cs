@@ -139,6 +139,14 @@ public class GameManagerScript : MonoBehaviour {
 				SceneManager.LoadScene(16);
 			}
 		}
+
+		if (Transitions.Finished && Transitions.Type == FadeType.Fade_Out)
+		{
+			if (Healthbar.Health <= 0)
+			{
+				SceneManager.LoadScene("PlayerLoseScene");
+			}
+		}
 	}
 
 }

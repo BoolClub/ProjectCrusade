@@ -50,7 +50,8 @@ public class PriestNPC_2 : MonoBehaviour {
 
 				GM.goodNPC.GetComponent<NPC>().TextBox.clear();
 				GM.goodNPC.GetComponent<NPC>().TextBox.addText("You did it! You saved me, our town, and the whole world! You are forever in our debt!");
-				GM.goodNPC.GetComponent<NPC>().TextBox.addText("Now we can all live in peace knowing that the storm has passed!");
+				GM.goodNPC.GetComponent<NPC>().TextBox.addText("And now that we have the sacred key back, we can all live in peace once again");
+				GM.goodNPC.GetComponent<NPC>().TextBox.addText("The storm has passed, and it's all thanks to you!");
 				GM.goodNPC.GetComponent<NPC>().TextBox.addText("");
 
 				GM.Npcs.Remove(this.gameObject);

@@ -120,6 +120,17 @@ public class PlayerControls : MonoBehaviour {
 
 		//Check for other types of player input
 		CheckInput();
+
+
+		// Player loses.
+		if (Healthbar.Health <= 0)
+		{
+			GM.Transitions.Reset();
+			GM.Transitions.Type = FadeType.Fade_Out;
+			GM.Transitions.PlayTransition = true;
+			GM.Transitions.BeginFade(-1);
+			gameObject.SetActive(false);
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D other)
