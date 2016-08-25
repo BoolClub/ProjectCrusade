@@ -270,7 +270,7 @@ public class PlayerControls : MonoBehaviour {
 	{
 		foreach (GameObject npc in GM.Npcs)
 		{
-			if (npc.GetComponent<NPC>() != null)
+			if (npc != null)
 			{
 				NPC npcComp = npc.GetComponent<NPC>();
 

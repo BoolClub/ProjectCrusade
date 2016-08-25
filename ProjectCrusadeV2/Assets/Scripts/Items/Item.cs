@@ -461,6 +461,7 @@ public class Item {
 			}
 			else {
 				// Teleport the player back to the church
+				GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
 				GM.Transitions.Reset();
 				GM.Transitions.Type = FadeType.Fade_Out;
 				GM.Transitions.PlayTransition = true;
