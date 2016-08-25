@@ -52,6 +52,7 @@ public class BadNPCBoss : MonoBehaviour {
 	Vector3[] TeleportPositions = {new Vector3(46,68.11f,-1), new Vector3(58.2f, 68f, -1),
 								   new Vector3(60.4f,58f,-1), new Vector3(42.3f,54.9f,-1),
 								   new Vector3(50.6f,51f,-1), new Vector3(51.55f,66f,-1) };
+
 	/// <summary>
 	/// The index of the current position.
 	/// </summary>
@@ -82,6 +83,12 @@ public class BadNPCBoss : MonoBehaviour {
 		if (!GM.Paused)
 		{
 			// Always rotate towards player.
+			if (Player != null)
+			{
+				Vector3 difference = Player.transform.position - transform.position;
+				float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+				transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 90);
+			}
 
 			if (Projectiles != null)
 			{
