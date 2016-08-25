@@ -137,6 +137,7 @@
 'Assets/Scripts/ProceduralGeneration/Corridor.cs'
 'Assets/Scripts/ProceduralGeneration/FloatRange.cs'
 'Assets/Scripts/ProceduralGeneration/IntRange.cs'
+'Assets/Scripts/ProceduralGeneration/Ladder.cs'
 'Assets/Scripts/ProceduralGeneration/Room.cs'
 'Assets/Scripts/Projectile.cs'
 'Assets/Scripts/TextLabel.cs'

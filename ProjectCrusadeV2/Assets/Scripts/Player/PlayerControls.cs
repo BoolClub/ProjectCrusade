@@ -53,6 +53,7 @@ public class PlayerControls : MonoBehaviour {
 	/// </summary>
 	TextBox ladderTB;
 	bool IsNextToLadder;
+	Ladder ladderComp;
 
 	/// <summary>
 	/// The direction that the player is facing.
@@ -123,16 +124,17 @@ public class PlayerControls : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if (other.gameObject.name == "Ladder(Clone)")
+		if (other.gameObject.name == "Ladder")
 		{
 			IsNextToLadder = true;
+			ladderComp = other.gameObject.GetComponent<Ladder>();
 			Instantiate(textbox, new Vector3(transform.position.x + 0.75f, transform.position.y + 1.4f, -3), Quaternion.identity);
 		}
 	}
 
 	void OnCollisionExit2D(Collision2D other)
 	{
-		if (other.gameObject.name == "Ladder(Clone)")
+		if (other.gameObject.name == "Ladder")
 		{
 			IsNextToLadder = false;
 			ladderTB.setOpen(false);
@@ -153,7 +155,7 @@ public class PlayerControls : MonoBehaviour {
 
 			if(IsNextToLadder) {
 				GameManagerScript.CurrentFloor++;
-				SceneManager.LoadScene(GM.Underground[GameManagerScript.CurrentFloor]);
+				SceneManager.LoadScene(ladderComp.Destination);
 			}
 			
 			if (GM != null)

@@ -97,11 +97,9 @@ public class BoardCreator : MonoBehaviour
 		//Don't spawn a ladder on the boss level, that will take the player to somewhere else.
 		if (SceneManager.GetActiveScene().buildIndex != 13 && SceneManager.GetActiveScene().buildIndex != 14)
 		{
-			ladder = Resources.Load("Ladder") as GameObject;
 			Room roomToPlaceLadderIn = rooms[numRooms.Random - 1];
 			Vector3 ladderPosition = new Vector3(roomToPlaceLadderIn.xPos, roomToPlaceLadderIn.yPos, -1);
 			ladder.transform.position = ladderPosition;
-			Instantiate(ladder, ladderPosition, Quaternion.identity);
 		}
 
 		//Set the player's position.

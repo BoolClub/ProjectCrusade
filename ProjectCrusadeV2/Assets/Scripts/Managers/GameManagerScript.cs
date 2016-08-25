@@ -32,13 +32,6 @@ public class GameManagerScript : MonoBehaviour {
 	public GameObject[] Enemies;
 
 	/// <summary>
-	/// This is an array that represents the different floors that the player must travel through.
-	/// </summary>
-	public string[] Underground = {"Underground_1", "Underground_1_2", "Underground_2", "Underground_2_2", 
-							"Underground_3", "Underground_3_2", "Underground_4", "Underground_4_2", 
-							"Underground_Boss"};
-
-	/// <summary>
 	/// The current floor that the player is on by its index in the array above.
 	/// </summary>
 	public static int CurrentFloor = 0;
