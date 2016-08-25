@@ -48,11 +48,6 @@ public class Enemy : MonoBehaviour {
 	public FloatRange Health;
 
 	/// <summary>
-	/// The enemy sprite.
-	/// </summary>
-	public Sprite EnemySprite;
-
-	/// <summary>
 	/// Whether or not the enemy is burned. If it is, it should lose health every few seconds.
 	/// </summary>
 	[HideInInspector]

@@ -16,6 +16,11 @@ public class BadNPCBoss : MonoBehaviour {
 	GameManagerScript GM;
 
 	/// <summary>
+	/// The sprite.
+	/// </summary>
+	public Sprite sprite;
+
+	/// <summary>
 	/// The enemy script attached to this boss.
 	/// </summary>
 	Enemy EnemyScript;
@@ -69,12 +74,15 @@ public class BadNPCBoss : MonoBehaviour {
 		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("Hm... It's seems you have beaten me...");
 		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("You may be safe for now, but know this: I will return to take over the world someday!");
 		GM.PriestNPC.GetComponent<NPC>().TextBox.addText("Hahahahahaha!!!");
+		GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 
 	void Update()
 	{
 		if (!GM.Paused)
 		{
+			// Always rotate towards player.
+
 			if (Projectiles != null)
 			{
 				ShootProjectiles();

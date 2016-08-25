@@ -24,6 +24,12 @@ public class EnemyAI : MonoBehaviour {
 		CircleCollider2D CircleColl;
 
 		/// <summary>
+		/// The renderer.
+		/// </summary>
+		#pragma warning disable
+		SpriteRenderer renderer;
+
+		/// <summary>
 		/// This enemy object's Enemy script
 		/// </summary>
 		Enemy ThisEnemyObject;
@@ -66,12 +72,18 @@ public class EnemyAI : MonoBehaviour {
 	/// </summary>
 	bool ShouldChangeDirection;
 
+	/// <summary>
+	/// The sprites for each direction of the enemy
+	/// </summary>
+	public Sprite[] EnemyDirectionSprites;
+
 
 
 	void Start()
 	{
 		MoveDirection = (Direction)new IntRange(0, 8).Random;
 		Rigid = GetComponent<Rigidbody2D>();
+		renderer = GetComponent<SpriteRenderer>();
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 		CircleColl = GetComponent<CircleCollider2D>();
 		ThisEnemyObject = GetComponent<Enemy>();
@@ -136,22 +148,31 @@ public class EnemyAI : MonoBehaviour {
 				Moving = true;
 
 				if (MoveDirection == Direction.North)
+				{
+					renderer.sprite = EnemyDirectionSprites[0];
 					Rigid.MovePosition(new Vector2(transform.position.x, transform.position.y + movement));
-
+				}
 				if (MoveDirection == Direction.East)
+				{
+					renderer.sprite = EnemyDirectionSprites[1];
 					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y));
-
+				}
 				if (MoveDirection == Direction.South)
+				{
+					renderer.sprite = EnemyDirectionSprites[2];
 					Rigid.MovePosition(new Vector2(transform.position.x, transform.position.y - movement));
-
+				}
 				if (MoveDirection == Direction.West)
+				{
+					renderer.sprite = EnemyDirectionSprites[3];
 					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y));
-
+				}
 				if (MoveDirection == Direction.NorthEast)
 				{
 					//Vector3 move = Vector3.right * speed * Time.deltaTime;
 					//move += Vector3.up * speed * Time.deltaTime;
 					//transform.Translate(move);
+					renderer.sprite = EnemyDirectionSprites[4];
 					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y + movement));
 				}
 
@@ -160,6 +181,7 @@ public class EnemyAI : MonoBehaviour {
 					//Vector3 move = Vector3.right * speed * Time.deltaTime;
 					//move += Vector3.down * speed * Time.deltaTime;
 					//transform.Translate(move);
+					renderer.sprite = EnemyDirectionSprites[5];
 					Rigid.MovePosition(new Vector2(transform.position.x + movement, transform.position.y - movement));
 				}
 
@@ -168,6 +190,7 @@ public class EnemyAI : MonoBehaviour {
 					//Vector3 move = Vector3.left * speed * Time.deltaTime;
 					//move += Vector3.down * speed * Time.deltaTime;
 					//transform.Translate(move);
+					renderer.sprite = EnemyDirectionSprites[6];
 					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y - movement));
 				}
 
@@ -176,6 +199,7 @@ public class EnemyAI : MonoBehaviour {
 					//Vector3 move = Vector3.right * speed * Time.deltaTime;
 					//move += Vector3.up * speed * Time.deltaTime;
 					//transform.Translate(move);
+					renderer.sprite = EnemyDirectionSprites[7];
 					Rigid.MovePosition(new Vector2(transform.position.x - movement, transform.position.y + movement));
 				}
 

@@ -15,6 +15,22 @@ public class GoodNPCBoss : MonoBehaviour {
 	GameManagerScript GM;
 
 	/// <summary>
+	/// sprite renderer.
+	/// </summary>
+	#pragma warning disable
+	SpriteRenderer renderer;
+
+	/// <summary>
+	/// The sprite.
+	/// </summary>
+	public Sprite firstSprite;
+
+	/// <summary>
+	/// The sprite.
+	/// </summary>
+	public Sprite secondSprite;
+
+	/// <summary>
 	/// The enemy script attached to this boss.
 	/// </summary>
 	Enemy EnemyScript;
@@ -47,6 +63,8 @@ public class GoodNPCBoss : MonoBehaviour {
 		Player = GameObject.FindWithTag("Player");
 		EnemyScript = GetComponent<Enemy>();
 		GM = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+		renderer = GetComponent<SpriteRenderer>();
+		renderer.sprite = firstSprite;
 	}
 
 	void Update()
@@ -98,6 +116,8 @@ public class GoodNPCBoss : MonoBehaviour {
 	// Has the boss throw his fists at the player.
 	IEnumerator FistThrowAttack()
 	{
+		renderer.sprite = secondSprite;
+
 		Direction = Direction.South;
 		randomProj.GetComponent<Projectile>().AimAt = Player;
 		randomProj.GetComponent<Projectile>().AimAtPosition = Player.transform.position;
@@ -108,11 +128,15 @@ public class GoodNPCBoss : MonoBehaviour {
 		randomProj.GetComponent<Projectile>().AimAt = Player;
 		randomProj.GetComponent<Projectile>().AimAtPosition = Player.transform.position;
 		Instantiate(randomProj, new Vector2(transform.position.x + 5, transform.position.y), Quaternion.identity);
+
+		renderer.sprite = firstSprite;
 	}
 
 	// Has the boss shoot out multiple attacks in different directions, all in less than 1 second.
 	IEnumerator MultiShotAttack()
 	{
+		renderer.sprite = secondSprite;
+
 		Direction = Direction.West;
 		Instantiate(randomProj, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
 		yield return new WaitForSeconds(0.2f);
@@ -131,5 +155,7 @@ public class GoodNPCBoss : MonoBehaviour {
 
 		Direction = Direction.East;
 		Instantiate(randomProj, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
+
+		renderer.sprite = firstSprite;
 	}
 }
