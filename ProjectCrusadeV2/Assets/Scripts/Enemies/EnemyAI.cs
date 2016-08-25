@@ -134,8 +134,11 @@ public class EnemyAI : MonoBehaviour {
 		// If the player is within the circle radius, then have the enemy start following it.
 		if (CircleColl.IsTouching(Player.GetComponent<BoxCollider2D>()))
 		{
-			if (ThisEnemyObject.Stunned == false)
+			if (ThisEnemyObject.Stunned == false && ThisEnemyObject.Frozen == false)
+			{
+				ChangeRotationBasedOnWherePlayerIs();
 				Rigid.MovePosition(Vector2.MoveTowards(transform.position, Player.transform.position, movement));
+			}
 		}
 		else {
 
@@ -210,4 +213,81 @@ public class EnemyAI : MonoBehaviour {
 			}
 		}
 	}
+
+
+
+	void ChangeRotationBasedOnWherePlayerIs()
+	{
+		if (PlusMinus(transform.position.y, Player.gameObject.transform.position.y, 0.5f))
+		{
+			if (Player.gameObject.transform.position.x > this.transform.position.x)
+			{
+				renderer.sprite = EnemyDirectionSprites[1];
+			}
+			else if (Player.gameObject.transform.position.x < this.transform.position.x)
+			{
+				renderer.sprite = EnemyDirectionSprites[3];
+			}
+		} 
+		else if (PlusMinus(transform.position.x, Player.gameObject.transform.position.x, 0.5f))
+		{
+			if (Player.gameObject.transform.position.y > this.transform.position.y)
+			{
+				renderer.sprite = EnemyDirectionSprites[0];
+			}
+			else if (Player.gameObject.transform.position.y < this.transform.position.y)
+			{
+				renderer.sprite = EnemyDirectionSprites[2];
+			}
+		}
+		else {
+			if (Player.gameObject.transform.position.y > this.transform.position.y)
+			{
+				if (Player.gameObject.transform.position.x > this.transform.position.x)
+				{
+					renderer.sprite = EnemyDirectionSprites[4];
+				}
+				else if (Player.gameObject.transform.position.x < this.transform.position.x)
+				{
+					renderer.sprite = EnemyDirectionSprites[7];
+				}
+				else {
+					renderer.sprite = EnemyDirectionSprites[0];
+				}
+			}
+			else {
+				if (Player.gameObject.transform.position.x > this.transform.position.x)
+				{
+					renderer.sprite = EnemyDirectionSprites[5];
+				}
+				else if (Player.gameObject.transform.position.x < this.transform.position.x)
+				{
+					renderer.sprite = EnemyDirectionSprites[6];
+				}
+				else {
+					renderer.sprite = EnemyDirectionSprites[2];
+				}
+			}
+		}
+
+	}
+
+	/// <summary>
+	/// Returns whether or not the first number is equal to the second number, give or take plusOrMinus.
+	/// </summary>
+	/// <returns>The minus.</returns>
+	/// <param name="num1">Num1.</param>
+	/// <param name="num2">Num2.</param>
+	/// <param name="plusOrMinus">Plusminus.</param>
+	public bool PlusMinus(float num1, float num2, float plusOrMinus)
+	{
+		if (num1 <= num2 + plusOrMinus && num1 >= num2 - plusOrMinus)
+		{
+			return true;
+		}
+		return false;
+	}
+
+
+
 }
