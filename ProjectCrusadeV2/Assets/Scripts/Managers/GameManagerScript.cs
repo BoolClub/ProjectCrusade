@@ -77,6 +77,7 @@ public class GameManagerScript : MonoBehaviour {
 	public void Start () {
 		Transitions.Type = FadeType.Fade_In;
 		Transitions.PlayTransition = true;
+		Healthbar.Health = 100;
 		Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
 
 		if (SceneManager.GetActiveScene().buildIndex == 15)

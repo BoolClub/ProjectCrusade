@@ -64,6 +64,8 @@ public class BoardCreator : MonoBehaviour
 	[HideInInspector]
 	public List<GameObject> Walls;                            //All of the wall game objects
 	[HideInInspector]
+	public List<GameObject> Floors;                            //All of the floor game objects
+	[HideInInspector]
 	public List<GameObject> AllTiles;                         //All of the tiles
 
 
@@ -78,6 +80,7 @@ public class BoardCreator : MonoBehaviour
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 		Walls = new List<GameObject>();
+		Floors = new List<GameObject>();
 		AllTiles = new List<GameObject>();
 
 		SetupTilesArray();
@@ -103,8 +106,7 @@ public class BoardCreator : MonoBehaviour
 		}
 
 		//Set the player's position.
-		Vector3 playerPos = new Vector3(rooms[0].xPos, rooms[0].yPos, -1);
-		Player.StartPosition = playerPos;
+		SetPlayerPosition();
 	}
 
 	void SetupTilesArray()
@@ -333,6 +335,9 @@ public class BoardCreator : MonoBehaviour
 
 			// Set the tile's parent to the board holder.
 			tileInstance.transform.parent = boardHolder.transform;
+
+			//Add to the list of floors
+			Floors.Add(tileInstance);
 		}
 
 		AllTiles.Add(tileInstance);
@@ -409,7 +414,14 @@ public class BoardCreator : MonoBehaviour
 			obj.transform.SetParent(parentT);
 		}
 	}
-		
+
+	void SetPlayerPosition()
+	{
+		Room roomToPlacePlayerIn = rooms[UnityEngine.Random.Range(0,rooms.Length)];
+		Vector3 playerPosition = new Vector3(roomToPlacePlayerIn.xPos, roomToPlacePlayerIn.yPos, -1);
+		Player.StartPosition = playerPosition;
+		Player.transform.position = playerPosition;
+	}
 
 	int DetermineSpriteIndex(int currentX, int currentY)
 	{
@@ -478,5 +490,21 @@ public class BoardCreator : MonoBehaviour
 		}
 
 		return index;
+	}
+
+	/// <summary>
+	/// Returns whether or not the first number is equal to the second number, give or take plusOrMinus.
+	/// </summary>
+	/// <returns>The minus.</returns>
+	/// <param name="num1">Num1.</param>
+	/// <param name="num2">Num2.</param>
+	/// <param name="plusOrMinus">Plusminus.</param>
+	public bool PlusMinus(float num1, float num2, float plusOrMinus)
+	{
+		if (num1 <= num2 + plusOrMinus && num1 >= num2 - plusOrMinus)
+		{
+			return true;
+		}
+		return false;
 	}
 }
