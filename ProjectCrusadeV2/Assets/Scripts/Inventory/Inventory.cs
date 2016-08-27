@@ -143,6 +143,15 @@ public class Inventory : MonoBehaviour
 	}
 
 
+	public void Clear()
+	{
+		foreach (Item itm in GameManagerScript.Items)
+		{
+			itm.Remove();
+		}
+	}
+
+
 	public bool Contains(ItemType itm)
 	{
 		foreach (Item i in Items)
