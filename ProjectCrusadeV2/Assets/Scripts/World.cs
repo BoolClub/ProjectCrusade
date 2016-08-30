@@ -518,6 +518,12 @@ public class World : MonoBehaviour
 
 				if (GameMap[i, j] == (int)TiledSpriteIndices.WOOD_FLOOR)
 					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.WOOD_FLOOR);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STREET_LAMP_2_TOP)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.STREET_LAMP_2_TOP);
+
+				if (GameMap[i, j] == (int)TiledSpriteIndices.STREET_LAMP_2_BOTTOM)
+					CreateTile("Tile", i, Dimension_Y - j, (int)UnitySpriteIndices.STREET_LAMP_2_BOTTOM);
 			}
 		}
 	}
