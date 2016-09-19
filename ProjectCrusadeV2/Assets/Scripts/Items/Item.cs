@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 
 public class Item {
+	// Weapon damages
 	public const float WOODEN_SWORD_DAMAGE = 8;
 	public const float MACE_DAMAGE = 13;
 	public const float CURVED_SWORD_DAMAGE = 10;
@@ -15,9 +16,11 @@ public class Item {
 	public const float ELECTRIC_SWORD_DAMAGE = 17;
 	public const float ICE_SWORD_DAMAGE = 16;
 
+	// Special weapon qualities
 	public float StoredHP = 0;
 	public int FlameSwordCharge = 5;
 	public float chargeTimeElectricSword = 700f;
+	public float RechargeTime_FlameSword = 0f;
 
 	// Used for adding extra effects for certain items.
 	public delegate void WeaponExtras(ItemType itemType, Enemy enem);
@@ -221,10 +224,11 @@ public class Item {
 			if (TheInventory.Contains(ItemType.BowAndArrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				arrow.GetComponent<Projectile>().AimAt = null;
-				arrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
+				Projectile proj = arrow.GetComponent<Projectile>();
+				proj.Launcher = Player.gameObject;
+				proj.Launcher = Player.gameObject;
+				proj.AimAt = null;
+				proj.AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -235,10 +239,11 @@ public class Item {
 			if (TheInventory.Contains(ItemType.Arrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				arrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				arrow.GetComponent<Projectile>().AimAt = null;
-				arrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
+				Projectile proj = arrow.GetComponent<Projectile>();
+				proj.Launcher = Player.gameObject;
+				proj.Launcher = Player.gameObject;
+				proj.AimAt = null;
+				proj.AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(arrow, Player.transform.position, Quaternion.identity);
 				TheInventory.Find(ItemType.Arrow).Quantity--;
 			}
@@ -294,10 +299,11 @@ public class Item {
 		if (Type == ItemType.MagicWand)
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
-			magicbolt.GetComponent<Projectile>().Launcher = Player.gameObject;
-			magicbolt.GetComponent<Projectile>().AimAt = null;
-			magicbolt.GetComponent<Projectile>().AimAtPosition = new Vector3();
+			Projectile proj = magicbolt.GetComponent<Projectile>();
+			proj.Launcher = Player.gameObject;
+			proj.Launcher = Player.gameObject;
+			proj.AimAt = null;
+			proj.AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(magicbolt, Player.transform.position, Quaternion.identity);
 		}
 
@@ -312,10 +318,11 @@ public class Item {
 			if (TheInventory.Contains(ItemType.BowAndArrow))
 			{
 				Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-				poisonarrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				poisonarrow.GetComponent<Projectile>().Launcher = Player.gameObject;
-				poisonarrow.GetComponent<Projectile>().AimAt = null;
-				poisonarrow.GetComponent<Projectile>().AimAtPosition = new Vector3();
+				Projectile proj = poisonarrow.GetComponent<Projectile>();
+				proj.Launcher = Player.gameObject;
+				proj.Launcher = Player.gameObject;
+				proj.AimAt = null;
+				proj.AimAtPosition = new Vector3();
 				MonoBehaviour.Instantiate(poisonarrow, Player.transform.position, Quaternion.identity);
 				Quantity--;
 			}
@@ -324,10 +331,11 @@ public class Item {
 		if (Type == ItemType.Staff)
 		{
 			Player = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
-			magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
-			magicbolt3.GetComponent<Projectile>().Launcher = Player.gameObject;
-			magicbolt3.GetComponent<Projectile>().AimAt = null;
-			magicbolt3.GetComponent<Projectile>().AimAtPosition = new Vector3();
+			Projectile proj = magicbolt3.GetComponent<Projectile>();
+			proj.Launcher = Player.gameObject;
+			proj.Launcher = Player.gameObject;
+			proj.AimAt = null;
+			proj.AimAtPosition = new Vector3();
 			MonoBehaviour.Instantiate(magicbolt3, Player.transform.position, Quaternion.identity);
 		}
 
@@ -356,7 +364,10 @@ public class Item {
 	public void SecondaryUse()
 	{
 		if (Type == ItemType.Apple) { }
-		if (Type == ItemType.Arrow) { }
+		if (Type == ItemType.Arrow) 
+		{
+			
+		}
 		if (Type == ItemType.BowAndArrow) { }
 		if (Type == ItemType.Bread) { }
 		if (Type == ItemType.CurvedSword) { }
@@ -643,4 +654,5 @@ public class Item {
 		Player.Direction = Direction.NorthWest;
 		MonoBehaviour.Instantiate(magicbolt3, new Vector2(Player.transform.position.x - 1, Player.transform.position.y + 1), Quaternion.identity);
 	}
+
 }

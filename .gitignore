@@ -13,3 +13,7 @@ ProjectCrusade/bin/
 
 ProjectCrusade/obj/
 *.csproj
+
+*.dll
+
+*.dll
