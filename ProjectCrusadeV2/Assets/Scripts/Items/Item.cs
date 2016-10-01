@@ -4,13 +4,13 @@ using System;
 using System.Collections;
 
 public class Item {
-	// Weapon damages
-	public const float WOODEN_SWORD_DAMAGE = 8;
-	public const float MACE_DAMAGE = 13;
-	public const float CURVED_SWORD_DAMAGE = 10;
-	public const float LONG_SWORD_DAMAGE = 7;
-	public const float IRON_SWORD_DAMAGE = 11;
-	public const float STEEL_SWORD_DAMAGE = 12;
+	// Weapon damages. These are all maximums.
+	public const float WOODEN_SWORD_DAMAGE = 4;
+	public const float MACE_DAMAGE = 8.5f;
+	public const float CURVED_SWORD_DAMAGE = 5.5f;
+	public const float LONG_SWORD_DAMAGE = 7.5f;
+	public const float IRON_SWORD_DAMAGE = 9;
+	public const float STEEL_SWORD_DAMAGE = 10;
 	public const float FLAMING_SWORD_DAMAGE = 20;
 	public const float HEALING_SWORD_DAMAGE = 15;
 	public const float ELECTRIC_SWORD_DAMAGE = 17;
@@ -108,7 +108,7 @@ public class Item {
 
 	public void SetupItem()
 	{
-		PerformWeaponExtra = new WeaponExtras(CalculateWeaponExtras);
+		PerformWeaponExtra = new WeaponExtras(FigureOutWeaponExtras);
 
 		if (Type == ItemType.Apple)
 		{
@@ -548,7 +548,7 @@ public class Item {
 
 
 
-	private void CalculateWeaponExtras(ItemType itemType, Enemy enem)
+	private void FigureOutWeaponExtras(ItemType itemType, Enemy enem)
 	{
 		if (itemType == ItemType.ElectricSword)
 		{

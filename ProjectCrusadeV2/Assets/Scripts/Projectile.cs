@@ -153,7 +153,7 @@ public class Projectile : MonoBehaviour {
 					{
 						if (other.GetComponent<Enemy>() != null)
 						{
-							other.GetComponent<Enemy>().Frozen = true;
+							other.GetComponent<Enemy>().Poisoned = true;
 						}
 					}
 				}

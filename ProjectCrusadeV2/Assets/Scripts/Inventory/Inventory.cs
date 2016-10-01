@@ -53,9 +53,6 @@ public class Inventory : MonoBehaviour
 			Items[i] = GameManagerScript.Items[i];
 		}
 		InventoryObject = GameObject.Find("Inventory");
-
-		AddToInventory(new Item(ItemType.Arrow, 50));
-		AddToInventory(new Item(ItemType.BowAndArrow, 1));
 	}
 
 	void Awake()
@@ -391,7 +388,6 @@ public class Inventory : MonoBehaviour
 				if (itm.chargeTimeElectricSword < 700)
 				{
 					itm.chargeTimeElectricSword += 1;
-					Debug.Log(itm.chargeTimeElectricSword);
 				}
 				else {
 					itm.chargeTimeElectricSword = 700;
@@ -406,7 +402,6 @@ public class Inventory : MonoBehaviour
 					if (itm.RechargeTime_FlameSword < 350)
 					{
 						itm.RechargeTime_FlameSword += 1;
-						Debug.Log(itm.RechargeTime_FlameSword + ", " + itm.FlameSwordCharge);
 					}
 					else {
 						itm.FlameSwordCharge += 1;

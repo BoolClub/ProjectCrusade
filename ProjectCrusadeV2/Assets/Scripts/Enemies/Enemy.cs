@@ -104,7 +104,8 @@ public class Enemy : MonoBehaviour {
 
 		// Check if touching player
 		if(!Player.GM.Paused)
-			HurtPlayerOnContact();
+			if(!Frozen && !Stunned) 	// Should not hurt the player if stunned or frozen.
+				HurtPlayerOnContact();
 
 
 		if (Rigid != null)
@@ -125,19 +126,28 @@ public class Enemy : MonoBehaviour {
 			ThisRenderer.color = Color.red;
 			BurnDamage();
 		}
-		else {
-			ThisRenderer.color = Color.white;
-		}
 
-		if (this.gameObject.GetComponent<GoodNPCBoss>() == null &&
-		   this.gameObject.GetComponent<BadNPCBoss>() == null)
+		// If the enemy is not one of the bosses.
+		if (this.gameObject.GetComponent<GoodNPCBoss>() == null && this.gameObject.GetComponent<BadNPCBoss>() == null)
 		{
 			if (Stunned)
+			{
+				ThisRenderer.color = Color.yellow;
 				StunEffects();
+			}
+			else {
+				ThisRenderer.color = Color.white;
+			}
 
 
 			if (Frozen)
+			{
+				ThisRenderer.color = Color.cyan;
 				FreezeEffects();
+			}
+			else {
+				ThisRenderer.color = Color.white;
+			}
 		}
 
 
@@ -257,7 +267,6 @@ public class Enemy : MonoBehaviour {
 	{
 		if (stunTime > 0 && Stunned == true)
 		{
-			ThisRenderer.color = Color.yellow;
 			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 
@@ -267,7 +276,6 @@ public class Enemy : MonoBehaviour {
 		{
 			stunTime = 5f;
 			Stunned = false;
-			ThisRenderer.color = Color.white;
 			Rigid.constraints = RigidbodyConstraints2D.None;
 			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
